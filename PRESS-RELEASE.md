@@ -30,7 +30,7 @@ Once the project moves into development, the press release can be used as a touc
   Fire up Savvy Shopper, select the category you're looking for, and ask a question over chat.
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
+  "Savvy Shopper will change your life and revolutionize how you find the products you're looking for" - Alex Autem
 
 ## How to Get Started ##
   All it takes is a few fingers and a question! Open Savvy Shopper and ask away!
@@ -39,4 +39,4 @@ Once the project moves into development, the press release can be used as a touc
   When I wanted to find a new line of all natural hair products I fired up Savvy Shopper and got an expert recommendations.
 
 ## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+  Our team is thrilled about each new user that experiences Savvy Shopper. Ask us a question today!
