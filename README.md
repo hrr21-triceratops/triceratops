@@ -1,12 +1,12 @@
-# Project Name
+# Savvy Shopper
 
-> Pithy project description
+Need advice, suggestions, or a second opinion? Download Savvy Shopper, a convenient and fun way to connect with experts for advice. Instead of spending time trying to find the best brand for your new home stereo system, ask one of our experts and they'll help you narrow down to the best options.
 
 ## Team
 
-  - __Product Owner__: teamMember
-  - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
+  - __Product Owner__: Tony Hyde
+  - __Scrum Master__: Alex Autem
+  - __Development Team Members__: Andy Walz
 
 ## Table of Contents
 
