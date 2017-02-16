@@ -6,10 +6,12 @@ const cors = require('cors');
 const chatRoutes = require('./routes/chatRoutes.js');
 const expertRoutes = require('./routes/expertRoutes.js');
 const userRoutes = require('./routes/userRoutes');
+const morgan = require('morgan');
 
-//Global App Routing
+//Global App Middleware that applies to all routes
 app.use(bodyparser());
 app.use(cors());
+app.use(morgan('dev'));
 
 //Routing and Custom Middleware for each route
 app.use('/api', chatRoutes);
