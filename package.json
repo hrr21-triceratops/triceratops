@@ -1,0 +1,35 @@
+{
+  "name": "savvyshopper",
+  "version": "1.0.0",
+  "description": "an expert for almost anything",
+  "main": "server.js",
+  "scripts": {
+    "test": "test",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tonyhyde/SavvyShopper.git"
+  },
+  "keywords": [
+    "savvyShopper"
+  ],
+  "author": "Tony Hyde",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tonyhyde/SavvyShopper/issues"
+  },
+  "homepage": "https://github.com/tonyhyde/SavvyShopper#readme",
+  "dependencies": {
+    "body-parser": "^1.16.1",
+    "cors": "^2.8.1",
+    "express": "^4.14.1",
+    "live-server": "^1.2.0",
+    "mongoose": "^4.8.2",
+    "morgan": "^1.8.1",
+    "nodemon": "^1.11.0",
+    "pg": "^6.1.2",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.30.2"
+  }
+}
