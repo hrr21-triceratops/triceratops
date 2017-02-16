@@ -26,6 +26,8 @@ mongod
 
 npm start
 
+node ./seed.js
+
 //Endpoints For Review
 
 //experts
