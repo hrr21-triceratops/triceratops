@@ -1,5 +1,11 @@
 ### node etc ###
 
+node_modules
+faq.html
+node_modules/
+bower_components/
+.env
+
 # Logs
 logs
 *.log
@@ -23,9 +29,3 @@ coverage
 # Compiled Dirs (http://nodejs.org/api/addons.html)
 build/
 dist/
-
-# Dependency directorys
-# Deployed apps should consider commenting these lines out:
-# see https://npmjs.org/doc/faq.html#Should-I-check-my-node_modules-folder-into-git
-node_modules/
-bower_components/

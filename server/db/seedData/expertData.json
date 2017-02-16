@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "expertName":"expert1@abc.com",
+    "expertRating": 4,
+    "expertise": {
+      "Home": true,
+      "Mens Fashion": true,
+      "Sports": false,
+      "Entertainment": false,
+      "Womens Fashion": false,
+      "Garden": false
+    },
+    "expertAvailable": true
+  },
+  {
+    "id": 2,
+    "expertName":"expert2@abc.com",
+    "expertRating": 3,
+    "expertise": {
+      "Home": false,
+      "Mens Fashion": false,
+      "Sports": true,
+      "Entertainment": false,
+      "Womens Fashion": false,
+      "Garden": false
+    },
+    "expertAvailable": false
+  },
+  {
+    "id": 3,
+    "expertName":"expert3@abc.com",
+    "expertRating": 5,
+    "expertise": {
+      "Home": false,
+      "Mens Fashion": false,
+      "Sports": false,
+      "Entertainment": true,
+      "Womens Fashion": false,
+      "Garden": false
+    },
+    "expertAvailable": true
+  }
+]
