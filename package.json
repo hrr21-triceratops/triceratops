@@ -4,7 +4,7 @@
   "description": "an expert for almost anything",
   "main": "server.js",
   "scripts": {
-    "test": "test",
+    "test": "node server-tests/server-tests.js",
     "start": "nodemon server/server.js"
   },
   "repository": {
