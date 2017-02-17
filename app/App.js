@@ -13,7 +13,9 @@ import {
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import Swiper from 'react-native-swiper';
+
 var Login = require('./components/login.js');
+var Signup = require('./components/signup.js');
 
 /////////////////////////////
 /////  react-navigation /////

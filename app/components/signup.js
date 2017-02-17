@@ -3,7 +3,6 @@ var ReactNative = require('react-native');
 var t = require('tcomb-form-native');
 
 var {
-  AppRegistry,
   AsyncStorage,
   StyleSheet,
   Text,
@@ -23,7 +22,7 @@ var Person = t.struct({
 
 const options = {};
 
-var AwesomeProject = React.createClass({
+var Signup = React.createClass({
 
   async _onValueChange(item, selectedValue) {
     try {
@@ -32,25 +31,11 @@ var AwesomeProject = React.createClass({
       console.log('AsyncStorage error: ' + error.message);
     }
   },
-  async _getProtectedQuote() {
-    var DEMO_TOKEN = await AsyncStorage.getItem(STORAGE_KEY);
-    fetch("http://localhost:3001/api/protected/random-quote", {
-      method: "GET",
-      headers: {
-        'Authorization': 'Bearer ' + DEMO_TOKEN
-      }
-    })
-    .then((response) => response.text())
-    .then((quote) => {
-      AlertIOS.alert(
-        "Chuck Norris Quote:", quote)
-    })
-    .done();
-  },
+
   _userSignup() {
     var value = this.refs.form.getValue();
     if (value) { // if validation fails, value will be null
-      fetch("http://localhost:3001/users", {
+      fetch("http://localhost:2300/api/users", {
         method: "POST",
         headers: {
           'Accept': 'application/json',
@@ -65,51 +50,18 @@ var AwesomeProject = React.createClass({
       .then((responseData) => {
         this._onValueChange(STORAGE_KEY, responseData.id_token),
         AlertIOS.alert(
-          "Signup Success!",
-          "Click the button to get a Chuck Norris quote!"
+          "Signup Success!"
         )
       })
       .done();
     }
   },
-  _userLogin() {
-  var value = this.refs.form.getValue();
-    if (value) { // if validation fails, value will be null
-      fetch("http://localhost:3001/sessions/create", {
-        method: "POST",
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: value.username,
-          password: value.password,
-        })
-      })
-      .then((response) => response.json())
-      .then((responseData) => {
-        AlertIOS.alert(
-          "Login Success!",
-          "Click the button to get a Chuck Norris quote!"
-        ),
-        this._onValueChange(STORAGE_KEY, responseData.id_token)
-      })
-      .done();
-    }
-  },
-  async _userLogout() {
-    try {
-      await AsyncStorage.removeItem(STORAGE_KEY);
-      AlertIOS.alert("Logout Success!")
-    } catch (error) {
-      console.log('AsyncStorage error: ' + error.message);
-    }
-  },
+
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.row}>
-          <Text style={styles.title}>Signup/Login below for Chuck Norris Quotes!</Text>
+          <Text style={styles.title}>Signup to Find an Expert!</Text>
         </View>
         <View style={styles.row}>
           <Form
@@ -121,14 +73,6 @@ var AwesomeProject = React.createClass({
         <View style={styles.row}>
           <TouchableHighlight style={styles.button} onPress={this._userSignup} underlayColor='#99d9f4'>
             <Text style={styles.buttonText}>Signup</Text>
-          </TouchableHighlight>
-          <TouchableHighlight style={styles.button} onPress={this._userLogin} underlayColor='#99d9f4'>
-            <Text style={styles.buttonText}>Login</Text>
-          </TouchableHighlight>
-        </View>
-        <View style={styles.row}>
-          <TouchableHighlight onPress={this._getProtectedQuote} style={styles.button}>
-            <Text style={styles.buttonText}>Get a Chuck Norris Quote!</Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -165,3 +109,5 @@ var styles = StyleSheet.create({
     justifyContent: 'center'
   },
 });
+
+module.exports = Signup;
