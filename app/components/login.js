@@ -44,8 +44,6 @@ var Login = React.createClass({
         body: JSON.stringify({
           username: value.username,
           password: value.password,
-          userRating: 0,
-          userPreferences: {}
         })
       })
       .then((response) => response.json())
@@ -111,3 +109,5 @@ var styles = StyleSheet.create({
     justifyContent: 'center'
   },
 });
+
+module.exports = Login;

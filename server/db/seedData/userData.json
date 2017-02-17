@@ -2,6 +2,7 @@
   {
     "id": 1,
     "username":"john@cnet.com",
+    "password": "abc",
     "userRating": 3,
     "userPreferences": {
       "Home": true,
@@ -15,6 +16,7 @@
   {
     "id": 2,
     "username":"jimmy@abc.com",
+    "password": "abc",
     "userRating": 4,
     "userPreferences": {
       "Home": true,
@@ -28,6 +30,7 @@
   {
     "id": 3,
     "username":"rachel@abc.com",
+    "password": "abc",
     "userRating": 5,
     "userPreferences": {
       "Home": true,

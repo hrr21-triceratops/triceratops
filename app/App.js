@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import Swiper from 'react-native-swiper';
+var Login = require('./components/login.js');
 
 /////////////////////////////
 /////  react-navigation /////
@@ -26,19 +27,7 @@ class HomeScreen extends React.Component {
     const { navigate } = this.props.navigation;
     return (
       <View>
-        <Text>Hello, Shopper!</Text>
-        <TouchableHighlight
-          style={styles.button}
-          onPress={() => navigate('Chat', { user: 'Simon' })}
-          underlayColor='#99d9f4'>
-          <Text style={styles.buttonText}>Chat with an Expert</Text>
-        </TouchableHighlight>
-        <TouchableHighlight
-          style={styles.button}
-          onPress={() => navigate('Swipe', { user: 'Simon' })}
-          underlayColor='#99d9f4'>
-          <Text style={styles.buttonText}>Swiper View</Text>
-        </TouchableHighlight>
+        <Login />
       </View>
     );
   }
