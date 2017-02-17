@@ -3,9 +3,15 @@ var router = express.Router();
 var sequelize = require('../db/connections.js').sequelize;
 const Sequelize = require('sequelize');
 const userModel = require('../db/schemas/userSchema.js');
+<<<<<<< HEAD
 const expertModel = require('../db/schemas/expertSchema.js');
 
 
+=======
+var _ = require('lodash');
+var config = require('./config');
+var jwt = require('jsonwebtoken');
+>>>>>>> Insert correct api routes into login component
 
 // middleware that is specific to this router
 // router.use(function timeLog (req, res, next) {
@@ -59,6 +65,7 @@ router.get('/users/:id/:userType', function(req, res) {
   });
 });
 
+<<<<<<< HEAD
 //find user by username
 
 router.get('/users/username/:username', function(req, res) {
@@ -103,4 +110,12 @@ LIMIT `+count+`;
 //http://localhost:2300/api/users/topActiveExperts/food
 //http://localhost:2300/api/users/topActiveExperts/sports
 
+=======
+router.post('/users/login', function(req, res) {
+  userModel.findAll().then(function(users) {
+     res.json(users);
+  });
+});
+
+>>>>>>> Insert correct api routes into login component
 module.exports = router;
