@@ -21,31 +21,35 @@ var Signup = require('./components/signup.js');
 /////  react-navigation /////
 /////////////////////////////
 
-class HomeScreen extends React.Component {
+class LoginScreen extends React.Component {
   static navigationOptions = {
-    title: 'Savvy Shopper',
+    title: 'Savvy Shopper Login',
   };
   render() {
     const { navigate } = this.props.navigation;
     return (
       <View>
         <Login />
+        <Button
+          onPress={() => navigate('NewUser')}
+          title='Signup to Find an Expert!'
+        />
       </View>
     );
   }
 }
 
-class ChatScreen extends React.Component {
+class SignupScreen extends React.Component {
   static navigationOptions = {
     // Nav options can be defined as a function of the navigation prop:
-    title: ({ state }) => `Chat with ${state.params.user}`,
+    title: ({ state }) => `Savvy Shopper Signup`,
   };
   render() {
     // The screen's current route is passed in to `props.navigation.state`:
     const { params } = this.props.navigation.state;
     return (
       <View>
-        <Text>Your expert is {params.user}</Text>
+        <Signup />
       </View>
     );
   }
@@ -130,8 +134,8 @@ var styles = StyleSheet.create({
 ///////////////////////////////
 
 const app = StackNavigator({
-  Home: { screen: HomeScreen },
-  Chat: { screen: ChatScreen },
+  Home: { screen: LoginScreen },
+  NewUser: { screen: SignupScreen },
   Swipe: { screen: SwipeScreen },
 });
 

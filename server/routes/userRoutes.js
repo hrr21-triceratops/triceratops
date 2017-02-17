@@ -144,5 +144,35 @@ router.post('/users/login', function(req, res) {
   });
 });
 
+<<<<<<< HEAD
 >>>>>>> Insert correct api routes into login component
+=======
+// SIGNUP NEW USER
+router.post('/users', function(req, res) {
+  var username = req.body.username;
+  var password = req.body.password;
+
+  if (!username || !password) {
+    return res.status(400).send("Missing username or password.");
+  }
+
+  userModel.findOne({ where: {username: req.body.username}}).then(function(user) {
+    if (user) {
+      return res.status(400).send("User already exists.");
+    }
+
+    userModel.create({
+      username: username,
+      password: password,
+      userRating: 0,
+      userPreferences: {}
+    }).then(function(user) {
+      res.status(201).send({
+        id_token: createToken(user)
+      });
+    });
+  });
+});
+
+>>>>>>> Allow users to signup for new accounts
 module.exports = router;
