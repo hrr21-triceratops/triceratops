@@ -9,7 +9,7 @@ const expertModel = require('../db/schemas/expertSchema.js');
 
 =======
 var _ = require('lodash');
-var config = require('./config');
+var config = require('./../config.json');
 var jwt = require('jsonwebtoken');
 >>>>>>> Insert correct api routes into login component
 
@@ -113,10 +113,14 @@ LIMIT `+count+`;
   });
 });
 
+<<<<<<< HEAD
 //http://localhost:2300/api/users/topActiveExperts/food
 //http://localhost:2300/api/users/topActiveExperts/sports
 
 =======
+=======
+// LOGIN EXISTING USER
+>>>>>>> Complete basic login functionality
 router.post('/users/login', function(req, res) {
   var username = req.body.username;
   var password = req.body.password;

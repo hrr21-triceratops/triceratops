@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [{
   "id": 1,
   "username": "triceratops1@gmail.com",
@@ -34,3 +35,49 @@
   "active": true,
   "closedChatSessions": []
 }]
+=======
+[
+  {
+    "id": 1,
+    "username":"john@cnet.com",
+    "password": "abc",
+    "userRating": 3,
+    "userPreferences": {
+      "Home": true,
+      "Mens Fashion": false,
+      "Sports": true,
+      "Entertainment": false,
+      "Womens Fashion": true,
+      "Garden": false
+    }
+  },
+  {
+    "id": 2,
+    "username":"jimmy@abc.com",
+    "password": "abc",
+    "userRating": 4,
+    "userPreferences": {
+      "Home": true,
+      "Mens Fashion": true,
+      "Sports": false,
+      "Entertainment": false,
+      "Womens Fashion": false,
+      "Garden": false
+    }
+  },
+  {
+    "id": 3,
+    "username":"rachel@abc.com",
+    "password": "abc",
+    "userRating": 5,
+    "userPreferences": {
+      "Home": true,
+      "Mens Fashion": false,
+      "Sports": false,
+      "Entertainment": false,
+      "Womens Fashion": true,
+      "Garden": true
+    }
+  }
+]
+>>>>>>> Complete basic login functionality

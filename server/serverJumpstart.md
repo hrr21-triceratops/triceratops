@@ -14,7 +14,7 @@ createdb savvyshopper
 
 createdb savvyshopper-test
 
-psql
+psql postgres
 
 \l //shows databases
 
