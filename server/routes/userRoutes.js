@@ -11,6 +11,10 @@ var jwt = require('jsonwebtoken');
 //   next()
 // })
 
+function createToken(user) {
+  return jwt.sign(_.omit(user, 'password'), config.secret, { expiresIn: 60*60*5 });
+}
+
 router.get('/users', function(req, res) {
   userModel.findAll().then(function(users) {
      res.json(users);
@@ -18,8 +22,25 @@ router.get('/users', function(req, res) {
 });
 
 router.post('/users/login', function(req, res) {
-  userModel.findAll().then(function(users) {
-     res.json(users);
+  var username = req.body.username;
+  var password = req.body.password;
+
+  if (!username || !password) {
+    return res.status(400).send("Missing username or password.");
+  }
+
+  userModel.findOne({ where: {username: req.body.username}}).then(function(user) {
+    if (!user) {
+      return res.status(401).send("User does not exist.");
+    }
+
+    if (user.password !== password) {
+      return res.status(401).send("Incorrect password.");
+    }
+
+    res.status(201).send({
+      id_token: createToken(user)
+    });
   });
 });
 
