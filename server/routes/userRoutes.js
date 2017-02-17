@@ -4,6 +4,7 @@ const userModel = require('../db/schemas/userSchema.js');
 var _ = require('lodash');
 var config = require('./../config.json');
 var jwt = require('jsonwebtoken');
+var bcrypt = require('bcrypt-nodejs');
 
 // middleware that is specific to this router
 // router.use(function timeLog (req, res, next) {
@@ -35,12 +36,14 @@ router.post('/users/login', function(req, res) {
       return res.status(401).send("User does not exist.");
     }
 
-    if (user.password !== password) {
-      return res.status(401).send("Incorrect password.");
-    }
+    bcrypt.compare(password, user.get('password'), function(err, match) {
+      if (!match) {
+        return res.status(401).send("Incorrect password.");
+      }
 
-    res.status(201).send({
-      id_token: createToken(user)
+      res.status(201).send({
+        id_token: createToken(user)
+      });
     });
   });
 });
@@ -59,14 +62,16 @@ router.post('/users', function(req, res) {
       return res.status(400).send("User already exists.");
     }
 
-    userModel.create({
-      username: username,
-      password: password,
-      userRating: 0,
-      userPreferences: {}
-    }).then(function(user) {
-      res.status(201).send({
-        id_token: createToken(user)
+    bcrypt.hash(password, null, null, function(err, hash) {
+      userModel.create({
+        username: username,
+        password: hash,
+        userRating: 0,
+        userPreferences: {}
+      }).then(function(user) {
+        res.status(201).send({
+          id_token: createToken(user)
+        });
       });
     });
   });
