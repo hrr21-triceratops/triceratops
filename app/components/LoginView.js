@@ -8,12 +8,9 @@ import {
   AlertIOS,
 } from 'react-native';
 
-var ShopperView = require('./ShopperView.js');
-// var AppView = require('./AppView');
 var STORAGE_KEY = 'id_token';
 
-class LoginView extends Component {
-
+export default class LoginView extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -62,13 +59,8 @@ class LoginView extends Component {
           ),
           this._onValueChange(STORAGE_KEY, responseData.id_token)
           this.props.navigator.push({
-            title: 'Savvy Shopper',
-            component: ShopperView,
-            passProps: {
-              username: username,
-              password: password
-            },
-          });
+            name: 'Shopper',
+          })
         }
       })
       .done();
@@ -79,7 +71,7 @@ class LoginView extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>
-          Sign In
+          Sign In / Current Scene: {this.props.title}
         </Text>
         <View>
           <TextInput
@@ -100,9 +92,9 @@ class LoginView extends Component {
           </TouchableHighlight>
         </View>
       </View>
-    );
+    )
   }
-};
+}
 
 var styles = StyleSheet.create({
   container: {
@@ -143,5 +135,3 @@ var styles = StyleSheet.create({
     justifyContent: 'center'
   },
 });
-
-module.exports = LoginView;
