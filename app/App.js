@@ -3,16 +3,13 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View,
   NavigatorIOS,
 } from 'react-native';
-import Swiper from 'react-native-swiper';
 
 var LoginView = require('./components/LoginView.js');
-// var Signup = require('./components/signup.js');
 
-var app = React.createClass({
-  render: function() {
+class app extends Component {
+  render() {
     return (
       <NavigatorIOS
         style={styles.navigationContainer}
@@ -22,7 +19,7 @@ var app = React.createClass({
         }} />
     );
   }
-});
+}
 
 var styles = StyleSheet.create({
   navigationContainer: {
