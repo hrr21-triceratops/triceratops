@@ -7,7 +7,6 @@ import {
   View,
   AlertIOS,
 } from 'react-native';
-import Swiper from 'react-native-swiper';
 
 var ShopperView = require('./ShopperView.js');
 // var AppView = require('./AppView');
@@ -84,16 +83,16 @@ class LoginView extends Component {
         </Text>
         <View>
           <TextInput
-            placeholder="Username"
-            onChange={(event) => this.setState({username: event.nativeEvent.text})}
+            placeholder="username"
+            onChangeText={(text) => this.setState({username: text})}
             style={styles.formInput}
-            value={this.state.username} />
+          />
           <TextInput
-            placeholder="Password"
+            placeholder="password"
             secureTextEntry={true}
-            onChange={(event) => this.setState({password: event.nativeEvent.text})}
+            onChangeText={(text) => this.setState({password: text})}
             style={styles.formInput}
-            value={this.state.password} />
+          />
           <TouchableHighlight
             onPress={(this._userLogin.bind(this))}
             style={styles.button}>
