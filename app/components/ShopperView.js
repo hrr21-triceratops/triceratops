@@ -17,7 +17,7 @@ export default class ShopperView extends Component {
 
   render() {
     return (
-      <Swiper style={styles.wrapper} showsButtons={true}>
+      <Swiper style={styles.wrapper} loop={false} showsButtons={true}>
         <View style={styles.slide1}>
           <CategoryView />
         </View>

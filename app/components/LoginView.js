@@ -94,7 +94,7 @@ export default class LoginView extends Component {
         </View>
         <View>
           <Text
-            onPress={ () => this._navigate('Signup') }
+            onPress={() => this._navigate('Signup')}
             style={styles.text}>Sign Up to be a Savvy Shopper</Text>
         </View>
       </View>

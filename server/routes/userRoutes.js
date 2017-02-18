@@ -24,13 +24,18 @@ var bcrypt = require('bcrypt-nodejs');
 // })
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 //get all users
 =======
+=======
+// CREATE JSON WEB TOKEN
+>>>>>>> Create framework for category view
 function createToken(user) {
   return jwt.sign(_.omit(user, 'password'), config.secret, { expiresIn: 60*60*5 });
 }
 >>>>>>> Add login route to api for adding json tokens to session
 
+// GET ALL USERS
 router.get('/users', function(req, res) {
   userModel.findAll().then(function(users) {
     res.json(users);
@@ -184,5 +189,9 @@ router.post('/users', function(req, res) {
   });
 });
 
+<<<<<<< HEAD
 >>>>>>> Allow users to signup for new accounts
 module.exports = router;
+=======
+module.exports = router;
+>>>>>>> Create framework for category view
