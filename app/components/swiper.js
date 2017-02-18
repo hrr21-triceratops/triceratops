@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View
 } from 'react-native';
-
 import Swiper from 'react-native-swiper';
 
 var styles = StyleSheet.create({
@@ -54,4 +52,4 @@ var swiper = React.createClass({
   }
 })
 
-// AppRegistry.registerComponent('myproject', () => swiper);
+module.exports = swiper;

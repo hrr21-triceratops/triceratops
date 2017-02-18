@@ -7,7 +7,9 @@ import {
   View,
   AlertIOS,
 } from 'react-native';
+import Swiper from 'react-native-swiper';
 
+var ShopperView = require('./ShopperView.js');
 // var AppView = require('./AppView');
 var STORAGE_KEY = 'id_token';
 
@@ -32,11 +34,6 @@ class LoginView extends Component {
   _userLogin() {
     var username = this.state.username;
     var password = this.state.password;
-
-    AlertIOS.alert(
-      username, password
-    )
-
     if (!this.state.username || !this.state.password) {
       AlertIOS.alert(
         'Missing Username or Password.'
@@ -65,7 +62,14 @@ class LoginView extends Component {
             'Login Successful!'
           ),
           this._onValueChange(STORAGE_KEY, responseData.id_token)
-          // REROUTE FROM onSubmitPressedBelow
+          this.props.navigator.push({
+            title: 'Savvy Shopper',
+            component: ShopperView,
+            passProps: {
+              username: username,
+              password: password
+            },
+          });
         }
       })
       .done();
@@ -99,17 +103,6 @@ class LoginView extends Component {
       </View>
     );
   }
-
-  onSubmitPressed() {
-    this.props.navigator.push({
-      title: 'Savvy Shopper',
-      component: AppView,
-      passProps: {
-        username: this.state.username,
-        password: this.state.password
-      },
-    });
-  }
 };
 
 var styles = StyleSheet.create({
@@ -128,27 +121,27 @@ var styles = StyleSheet.create({
     marginRight: 5,
     marginBottom: 5,
     marginTop: 5,
-    flex: 1,
     fontSize: 18,
     borderWidth: 1,
     borderColor: "#555555",
     borderRadius: 8,
     color: "#555555"
   },
-  button: {
-    height: 36,
-    flex: 1,
-    backgroundColor: "#555555",
-    borderColor: "#555555",
-    borderWidth: 1,
-    borderRadius: 8,
-    marginTop: 10,
-    justifyContent: "center"
-  },
   buttonText: {
     fontSize: 18,
-    color: "#ffffff",
-    alignSelf: "center"
+    color: 'white',
+    alignSelf: 'center'
+  },
+  button: {
+    height: 36,
+    backgroundColor: '#48BBEC',
+    borderColor: '#48BBEC',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginTop: 5,
+    marginBottom: 10,
+    alignSelf: 'stretch',
+    justifyContent: 'center'
   },
 });
 
