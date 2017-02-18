@@ -12,10 +12,12 @@ var bcrypt = require('bcrypt-nodejs');
 //   next()
 // })
 
+// CREATE JSON WEB TOKEN
 function createToken(user) {
   return jwt.sign(_.omit(user, 'password'), config.secret, { expiresIn: 60*60*5 });
 }
 
+// GET ALL USERS
 router.get('/users', function(req, res) {
   userModel.findAll().then(function(users) {
      res.json(users);
