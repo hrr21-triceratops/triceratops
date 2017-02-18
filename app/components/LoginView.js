@@ -11,6 +11,7 @@ import {
 var STORAGE_KEY = 'id_token';
 
 export default class LoginView extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -25,6 +26,12 @@ export default class LoginView extends Component {
     } catch (error) {
       console.log('AsyncStorage error: ' + error.message);
     }
+  }
+
+  _navigate(scene) {
+    this.props.navigator.push({
+      name: scene
+    })
   }
 
   _userLogin() {
@@ -48,19 +55,13 @@ export default class LoginView extends Component {
       })
       .then((response) => response.json())
       .then((responseData) => {
-        console.log(responseData);
         if (!responseData) {
           AlertIOS.alert(
             'Incorrect Username or Password.'
           )
         } else {
-          AlertIOS.alert(
-            'Login Successful!'
-          ),
           this._onValueChange(STORAGE_KEY, responseData.id_token)
-          this.props.navigator.push({
-            name: 'Shopper',
-          })
+          this._navigate('Shopper')
         }
       })
       .done();
@@ -71,7 +72,7 @@ export default class LoginView extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>
-          Sign In / Current Scene: {this.props.title}
+          Sign In
         </Text>
         <View>
           <TextInput
@@ -91,6 +92,11 @@ export default class LoginView extends Component {
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableHighlight>
         </View>
+        <View>
+          <Text
+            onPress={ () => this._navigate('Signup') }
+            style={styles.text}>Sign Up to be a Savvy Shopper</Text>
+        </View>
       </View>
     )
   }
@@ -105,6 +111,9 @@ var styles = StyleSheet.create({
   title: {
     fontSize: 18,
     marginBottom: 10
+  },
+  text: {
+    alignSelf: 'center'
   },
   formInput: {
     height: 36,

@@ -1,26 +1,16 @@
-var React = require('react');
-var ReactNative = require('react-native');
-var t = require('tcomb-form-native');
-
-var {
-  AsyncStorage,
+import React, { Component } from 'react';
+import {
   StyleSheet,
   Text,
-  View,
+  TextInput,
   TouchableHighlight,
+  View,
   AlertIOS,
-} = ReactNative;
+} from 'react-native';
 
 var STORAGE_KEY = 'id_token';
 
-var Form = t.form.Form;
 
-var Person = t.struct({
-  username: t.String,
-  password: t.String
-});
-
-const options = {};
 
 var Signup = React.createClass({
 
