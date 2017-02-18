@@ -48,10 +48,16 @@ var Login = React.createClass({
       })
       .then((response) => response.json())
       .then((responseData) => {
-        AlertIOS.alert(
-          "Login Success!"
-        ),
-        this._onValueChange(STORAGE_KEY, responseData.id_token)
+        if (!responseData) {
+          AlertIOS.alert(
+            'Incorrect Username or Password.'
+          )
+        } else {
+          AlertIOS.alert(
+            'Login Successful!'
+          ),
+          this._onValueChange(STORAGE_KEY, responseData.id_token)
+        }
       })
       .done();
     }
