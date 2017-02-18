@@ -4,7 +4,7 @@ import {
   Text,
 } from 'react-native';
 
-export default class ShopperView extends Component {
+export default class ExpertView extends Component {
   constructor(props) {
     super(props);
   }
@@ -12,7 +12,7 @@ export default class ShopperView extends Component {
   render() {
     return (
       <View>
-        <Text>Shopper View</Text>
+        <Text>Expert View</Text>
       </View>
     )
   }
