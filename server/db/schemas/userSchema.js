@@ -7,6 +7,7 @@ var userModel = sequelize.define('user', {
     type: Sequelize.STRING,
     primaryKey: true
   },
+  password: Sequelize.STRING,
   userRating: Sequelize.INTEGER,
   userPreferences: Sequelize.JSONB
 });
