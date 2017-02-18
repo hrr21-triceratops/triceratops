@@ -5,6 +5,9 @@ import {
   StyleSheet,
 } from 'react-native';
 import Swiper from 'react-native-swiper';
+import CategoryView from './shoppers/CategoryView';
+import ChatHistoryView from './shoppers/ChatHistoryView';
+import AccountView from './shoppers/AccountView';
 
 export default class ShopperView extends Component {
 
@@ -16,13 +19,13 @@ export default class ShopperView extends Component {
     return (
       <Swiper style={styles.wrapper} showsButtons={true}>
         <View style={styles.slide1}>
-          <Text style={styles.text}>Categories</Text>
+          <CategoryView />
         </View>
         <View style={styles.slide2}>
-          <Text style={styles.text}>Chat History</Text>
+          <ChatHistoryView />
         </View>
         <View style={styles.slide3}>
-          <Text style={styles.text}>Account Preferences</Text>
+          <AccountView />
         </View>
       </Swiper>
     )
