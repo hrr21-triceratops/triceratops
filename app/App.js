@@ -14,7 +14,7 @@ import {
 import { StackNavigator } from 'react-navigation';
 import Swiper from 'react-native-swiper';
 
-var Login = require('./components/login.js');
+var LoginView = require('./components/LoginView.js');
 var Signup = require('./components/signup.js');
 
 /////////////////////////////
@@ -29,7 +29,7 @@ class LoginScreen extends React.Component {
     const { navigate } = this.props.navigation;
     return (
       <View>
-        <Login />
+        <LoginView />
         <Button
           onPress={() => navigate('NewUser')}
           title='Signup to Find an Expert!'
@@ -107,26 +107,9 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#92BBD9',
   },
-  text: {
-    color: '#fff',
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
-  buttonText: {
-    fontSize: 18,
-    color: 'white',
-    alignSelf: 'center'
-  },
-  button: {
-    height: 36,
-    backgroundColor: '#48BBEC',
-    borderColor: '#48BBEC',
-    borderWidth: 1,
-    borderRadius: 8,
-    marginBottom: 10,
-    alignSelf: 'stretch',
-    justifyContent: 'center'
-  },
+  navigationContainer: {
+    flex: 1
+  }
 })
 
 ///////////////////////////////
