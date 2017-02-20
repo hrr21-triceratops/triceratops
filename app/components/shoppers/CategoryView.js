@@ -1,14 +1,34 @@
 import React, { Component } from 'react';
 import {
   View,
+  ScrollView,
   Text,
   StyleSheet,
   TouchableHighlight,
   AlertIOS,
+  Image,
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 
+//eventually, replace with a call to API for categories?
 var categories = ['HOME', 'FOOD', 'TECH', 'WOMEN\'S FASHION', 'MEN\'S FASHION', 'ENTERTAINMENT'];
+
+let loadCategoryImage = function(category){
+  switch(category){
+    case 'home':
+      return require('./../../assets/imgs/home.jpg');
+    case 'men\'s\ fashion':
+      return require('./../../assets/imgs/mens-fashion.jpg');
+    case 'women\'s\ fashion':
+      return require('./../../assets/imgs/womens-fashion.jpg');
+    case 'tech':
+      return require('./../../assets/imgs/tech.jpg');
+    case 'food':
+      return require('./../../assets/imgs/food.jpg');
+    case 'entertainment':
+      return require('./../../assets/imgs/entertainment.jpg');
+  }
+}
 
 export default class CategoryView extends Component {
 
@@ -19,36 +39,53 @@ export default class CategoryView extends Component {
   render() {
     return (
       <View>
-      {categories.map(function(category) {
-        return (
-          <TouchableHighlight
-            onPress={() => AlertIOS.alert('Finding Expert!')}
-            style={styles.button}
-            key={category}>
-            <Text style={styles.buttonText}>{category}</Text>
-          </TouchableHighlight>
-        )
-      })}
+        <Text style={styles.header}>SAVVY SHOPPER</Text>
+        <ScrollView style={styles.wrapper}>
+        {categories.map(function(category) {
+          return (
+            <TouchableHighlight
+              onPress={() => AlertIOS.alert('Finding Expert!')}
+              style={styles.category}
+              key={category}>
+              <View>
+                <Image style={styles.image} source={loadCategoryImage(category.toLowerCase())}></Image>
+                <Text style={styles.buttonText}>{category}</Text>
+              </View>
+            </TouchableHighlight>
+          )
+        })}
+        </ScrollView>
       </View>
     )
   }
 }
 
 var styles = StyleSheet.create({
+  header: {
+    textAlign: 'center',
+    marginTop: 30,
+    fontSize: 36,
+    color: '#FFFFFF',
+  },
   buttonText: {
+    flex: 1,
+    padding: 4,
     fontSize: 22,
     color: 'white',
-    alignSelf: 'center'
-  },
-  button: {
-    height: 50,
-    width: 310,
-    backgroundColor: '#48BBEC',
-    borderColor: '#48BBEC',
-    borderWidth: 1,
-    marginTop: 2,
-    marginBottom: 2,
+    borderColor: '#FFFFFF',
     alignSelf: 'stretch',
-    justifyContent: 'center'
+    backgroundColor: '#48BBEC',
+    textAlign: 'center',
+  },
+  image: {
+    flex: 1,
+    width: 310,
+    height: 160,
+  },
+  category: {
+    marginBottom: 14,
+  },
+  wrapper: {
+    marginTop: 24,
   },
 });
