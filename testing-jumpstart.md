@@ -26,3 +26,7 @@ You can also write out helpful functions to return data to test at the top or bo
 check that all servers/databases the app needs are running
 
 run 'npm test' from the main directory in terminal
+
+
+OTHER NOTES:
+Need to export the path to './App.js' from index file for tests to be able to pass
