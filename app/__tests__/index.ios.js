@@ -51,12 +51,20 @@ describe('Category View', () => {
   // }
 
   const tree = renderer.create(
-      <ShopperView />
+      <CategoryView />
     ).toJSON();
-  const categoryTree = tree.children;
-  // should render 3 views
+
   it('should have a type of view', () => {
-    console.log("CATEGORY TREE", categoryTree);
-    expect(categoryTree.type).toBe('View');
+    expect(tree.type).toBe('View');
+  });
+
+  it('should have three children', () => {
+    expect(tree.children.length).toBe(3);
   });
 });
+
+
+
+
+
+
