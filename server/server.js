@@ -29,3 +29,31 @@ const PORT = 2300;
 app.listen(PORT, function(req, res) {
   console.log('listening on port: ' + PORT);
 });
+
+///////////////////////////////////
+///// Web Socket Server Setup /////
+///////////////////////////////////
+
+const WebSocket = require('ws');
+const wss = new WebSocket.Server({
+  perMessageDeflate: false,
+  port: 2400
+});
+
+wss.on('connection', function(wsConnect) {
+  console.log('New client connected.');
+
+  wsConnect.on('message', function(data) {
+    console.log('New message:', data);
+    // BROADCAST MESSAGE TO ALL CLIENTS
+    wss.clients.forEach(function(client) {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(data);
+      }
+    });
+  });
+
+  wsConnect.on('close', function() {
+    console.log('Client disconnected.');
+  });
+});
