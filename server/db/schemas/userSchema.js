@@ -2,12 +2,13 @@ var Sequelize = require('sequelize');
 var sequelize = require('../connections.js').sequelize;
 
 var userModel = sequelize.define('user', {
-  id: { type: Sequelize.INTEGER, autoIncrement: true },
-  username: {
-    type: Sequelize.STRING,
-    primaryKey: true
-  },
-  userRating: Sequelize.INTEGER,
+  id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
+  username: Sequelize.STRING,
+  password: Sequelize.STRING,
+  averageRating: { type: Sequelize.DECIMAL(10, 2), defaultValue: 0},
+  shopperExpert: Sequelize.BOOLEAN,
+  active: Sequelize.BOOLEAN,
+  closedChatSessions: Sequelize.ARRAY(Sequelize.INTEGER),
   userPreferences: Sequelize.JSONB
 });
 

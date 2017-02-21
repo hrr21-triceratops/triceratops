@@ -1,22 +1,6 @@
-[
-  {
-    "to": "expert1@abc.com",
-    "from": "john@cnet.com",
-    "message": "I definitely think that McDonalds is an amazing choice!"
-  },
-  {
-    "to": "jimmy@abc.com",
-    "from": "expert3@abc.com",
-    "message": "Bears or Bulls game this weekend?"
-  },
-  {
-    "to": "rachel@abc.com",
-    "from": "expert2@abc.com",
-    "message": "Looking for a bluetooth speaker!"
-  },
-  {
-    "to": "expert2@abc.com",
-    "from":  "rachel@abc.com",
-    "message": "I've got a speaker for you"
-  }
-]
+[{
+  "chatSessionID": 1,
+  "senderID": 1,
+  "receiverID": 2,
+  "message": "Hi, looking for new headphones"
+}]

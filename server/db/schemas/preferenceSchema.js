@@ -1,8 +1,8 @@
-var Sequelize = require('sequelize');
-var sequelize = require('../connections.js').sequelize;
+const Sequelize = require('sequelize');
+const sequelize = require('../connections.js').sequelize;
 const userModel = require('./userSchema.js');
 
-var expertModel = sequelize.define('expert', {
+var preferenceModel = sequelize.define('preference', {
   id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
   home: Sequelize.BOOLEAN,
   food: Sequelize.BOOLEAN,
@@ -13,12 +13,12 @@ var expertModel = sequelize.define('expert', {
   entertainment: Sequelize.BOOLEAN
 });
 
-userModel.hasOne(expertModel); //1:1 - 1 set of expertise per user
-//adds field userId references table users ('id') on expertModel
+userModel.hasOne(preferenceModel); //1:1 - 1 set of preferences per user
+//adds field userId references table users ('id') on preferenceModel
 
-expertModel.sync({force: false}).then(function () {
+preferenceModel.sync().then(function() {
   //force true drops table if it exists, so set to false for easy seeding
-  console.log('experts table created');
+  console.log('prefs table created');
 });
 
-module.exports = expertModel;
+module.exports = preferenceModel;
