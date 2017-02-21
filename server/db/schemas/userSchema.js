@@ -2,7 +2,6 @@ var Sequelize = require('sequelize');
 var sequelize = require('../connections.js').sequelize;
 
 var userModel = sequelize.define('user', {
-<<<<<<< HEAD
   id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
   username: Sequelize.STRING,
   password: Sequelize.STRING,
@@ -10,15 +9,6 @@ var userModel = sequelize.define('user', {
   shopperExpert: Sequelize.BOOLEAN,
   active: Sequelize.BOOLEAN,
   closedChatSessions: Sequelize.ARRAY(Sequelize.INTEGER),
-=======
-  id: { type: Sequelize.INTEGER, autoIncrement: true },
-  username: {
-    type: Sequelize.STRING,
-    primaryKey: true
-  },
-  password: Sequelize.STRING,
-  userRating: Sequelize.INTEGER,
->>>>>>> Insert correct api routes into login component
   userPreferences: Sequelize.JSONB
 });
 
