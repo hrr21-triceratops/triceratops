@@ -21,8 +21,8 @@ export default class AccountView extends Component {
         <Text style={styles.text}>Home</Text>
         <Text style={styles.text}>Food</Text>
         <Text style={styles.text}>Tech</Text>
-        <Text style={styles.text}>Women's Fashion</Text>
-        <Text style={styles.text}>Men's Fashion</Text>
+        <Text style={styles.text}>Women\'s Fashion</Text>
+        <Text style={styles.text}>Men\'s Fashion</Text>
         <Text style={styles.text}>Entertainment</Text>
         <TouchableHighlight
           onPress={() => AlertIOS.alert('Setting up expert account...')}
