@@ -1,41 +1,36 @@
-[
-  {
-    "id": 1,
-    "username":"john@cnet.com",
-    "userRating": 3,
-    "userPreferences": {
-      "Home": true,
-      "Mens Fashion": false,
-      "Sports": true,
-      "Entertainment": false,
-      "Womens Fashion": true,
-      "Garden": false
-    }
-  },
-  {
-    "id": 2,
-    "username":"jimmy@abc.com",
-    "userRating": 4,
-    "userPreferences": {
-      "Home": true,
-      "Mens Fashion": true,
-      "Sports": false,
-      "Entertainment": false,
-      "Womens Fashion": false,
-      "Garden": false
-    }
-  },
-  {
-    "id": 3,
-    "username":"rachel@abc.com",
-    "userRating": 5,
-    "userPreferences": {
-      "Home": true,
-      "Mens Fashion": false,
-      "Sports": false,
-      "Entertainment": false,
-      "Womens Fashion": true,
-      "Garden": true
-    }
-  }
-]
+[{
+  "id": 1,
+  "username": "triceratops1@gmail.com",
+  "password": "123",
+  "averageRating": 4.5,
+  "shopperExpert": true,
+  "active": true,
+  "closedChatSessions": []
+},
+{
+  "id": 2,
+  "username": "triceratops2@gmail.com",
+  "password": "123",
+  "averageRating": 3.5,
+  "shopperExpert": true,
+  "active": false,
+  "closedChatSessions": []
+},
+{
+  "id": 3,
+  "username": "triceratops3@gmail.com",
+  "password": "123",
+  "averageRating": 3.5,
+  "shopperExpert": false,
+  "active": false,
+  "closedChatSessions": []
+},
+{
+  "id": 4,
+  "username": "triceratops4@gmail.com",
+  "password": "123",
+  "averageRating": 4.75,
+  "shopperExpert": true,
+  "active": true,
+  "closedChatSessions": []
+}]

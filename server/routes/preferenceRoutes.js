@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const expertModel = require('../db/schemas/expertSchema.js');
-
+const preferenceModel = require('../db/schemas/preferenceSchema.js');
 
 // middleware that is specific to this router
 // router.use(function timeLog (req, res, next) {
@@ -9,9 +8,9 @@ const expertModel = require('../db/schemas/expertSchema.js');
 //   next()
 // })
 
-router.get('/experts', function(req, res) {
-  expertModel.findAll().then(function(experts) {
-     res.json(experts);
+router.get('/preferences', function(req, res) {
+  preferenceModel.findAll().then(function(preferences) {
+     res.json(preferences);
   });
 });
 

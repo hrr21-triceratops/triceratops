@@ -16,9 +16,9 @@ router.get('/chat/messages', function(req, res) {
 
 router.post('/chat/:message', function(req, res) {
   chatModel.create({
-  "userId": req.body.userId,
-  "expertId": req.body.expertId,
-  "message": req.body.message
+    "to": "expert1@abc.com",
+    "from": "john@cnet.com",
+    "message": "I definitely think that McDonalds is an amazing choice!"
   }, function(err, newMessageAdded) {
     res.send(newMessageAdded);
   });
