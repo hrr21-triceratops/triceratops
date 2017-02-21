@@ -14,15 +14,18 @@ export default class ChatView extends Component {
     };
   }
 
+  // automatically runs when component loads
   componentDidMount() {
+    // opens new websocket connection
     this.ws = new WebSocket('ws://localhost:2400/');
 
+    // runs when websocket connection opens
     this.ws.onopen = () => {
-      // connection opened
       console.log('WebSocket Open.');
       this.ws.send('Testing 123'); // send a message
     };
 
+    // runs when websocket server broadcasts new message
     this.ws.onmessage = (e) => {
       // a message was received
       console.log('New Message:', e.data);
@@ -32,11 +35,13 @@ export default class ChatView extends Component {
       });
     };
 
+    // runs on websocket error
     this.ws.onerror = (e) => {
       // an error occurred
       console.log('Error:', e.message);
     };
 
+    // runs when websocket connection is closed
     this.ws.onclose = (e) => {
       // connection closed
       console.log('WebSocket Closed.', e.code, e.reason);
