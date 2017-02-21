@@ -13,6 +13,7 @@ import LoginView from './components/LoginView';
 import SignupView from './components/SignupView';
 import ShopperView from './components/ShopperView';
 import ExpertView from './components/ExpertView';
+import ChatView from './components/ChatView';
 
 //setup the app component to register with App registry, everything happens inside of this wrapper
 class app extends Component {
@@ -29,6 +30,9 @@ class app extends Component {
     }
     if (route.name === 'Expert') {
       return <ExpertView navigator={navigator} />
+    }
+    if (route.name === 'Chat') {
+      return <ChatView navigator={navigator} />
     }
   }
 
