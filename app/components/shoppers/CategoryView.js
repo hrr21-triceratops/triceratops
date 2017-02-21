@@ -13,6 +13,7 @@ import Swiper from 'react-native-swiper';
 //eventually, replace with a call to API for categories?
 var categories = ['HOME', 'FOOD', 'TECH', 'WOMEN\'S FASHION', 'MEN\'S FASHION', 'ENTERTAINMENT'];
 
+//current work around for dynamically loadign assets
 let loadCategoryImage = function(category){
   switch(category){
     case 'home':
@@ -40,9 +41,12 @@ export default class CategoryView extends Component {
     return (
       <View>
         <Text style={styles.header}>SAVVY SHOPPER</Text>
+        <Text style={styles.headerCopy}>Choose a category and ask a question</Text>
         <ScrollView style={styles.wrapper}>
         {categories.map(function(category) {
           return (
+            //Need to replace AlertIOS with function to call API and connect to chat with expert in category
+            //Need to set current category on the state
             <TouchableHighlight
               onPress={() => AlertIOS.alert('Finding Expert!')}
               style={styles.category}
@@ -63,8 +67,14 @@ export default class CategoryView extends Component {
 var styles = StyleSheet.create({
   header: {
     textAlign: 'center',
-    marginTop: 30,
-    fontSize: 36,
+    marginTop: 20,
+    fontSize: 30,
+    color: '#FFFFFF',
+  },
+  headerCopy: {
+    textAlign: 'center',
+    marginTop: 7,
+    fontSize: 16,
     color: '#FFFFFF',
   },
   buttonText: {
