@@ -167,4 +167,10 @@ router.post('/users', function(req, res) {
   });
 });
 
+router.post('/users/login', function(req, res) {
+  userModel.findAll().then(function(users) {
+     res.json(users);
+  });
+});
+
 module.exports = router;
