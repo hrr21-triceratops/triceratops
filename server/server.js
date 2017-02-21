@@ -25,54 +25,55 @@ app.use('/api', ratingRoutes);
 app.use('/api', categoryRoutes);
 
 
-const PORT = 2300;
-app.listen(PORT, function(req, res) {
-  console.log('listening on port: ' + PORT);
-});
+// MOVED UNDER SOCKET.IO SETUP
+// const PORT = 2300;
+// app.listen(PORT, function(req, res) {
+//   console.log('listening on port: ' + PORT);
+// });
 
 /////////////////////////////////////
 ////////// SOCKET.IO SETUP //////////
 /////////////////////////////////////
 
 const os = require('os');
-const socketIO = require('socket.io');
-const io = socketIO.listen(app);
-io.sockets.on('connection', function(socket) {
-  // convenience function to log server messages on the client
-  function log() {
-    var array = ['Message from server:'];
-    array.push.apply(array, arguments);
-    socket.emit('log', array);
-  }
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
 
-  socket.on('message', function(message) {
-    log('Client said: ', message);
-    // for a real app, would be room-only (not broadcast)
-    socket.broadcast.emit('message', message);
+io.on('connection', function(socket) {
+  console.log('Client connected...');
+
+  socket.on('join', function(data) {
+    console.log('Client joined:', data);
+    socket.emit('messages', 'Hello from server.');
   });
 
-  socket.on('create or join', function(room) {
-    log('Received request to create or join room ' + room);
-
-    var numClients = io.sockets.sockets.length;
-    log('Room ' + room + ' now has ' + numClients + ' client(s)');
-
-    if (numClients === 1) {
-      socket.join(room);
-      log('Client ID ' + socket.id + ' created room ' + room);
-      socket.emit('created', room, socket.id);
-
-    } else if (numClients === 2) {
-      log('Client ID ' + socket.id + ' joined room ' + room);
-      io.sockets.in(room).emit('join', room);
-      socket.join(room);
-      socket.emit('joined', room, socket.id);
-      io.sockets.in(room).emit('ready');
-
-    } else { // max two clients
-      socket.emit('full', room);
-    }
+  socket.on('messages', function(data) {
+    socket.emit('broad', data);
+    socket.broadcast.emit('broad', data);
   });
+
+  // socket.on('create or join', function(room) {
+  //   log('Received request to create or join room ' + room);
+
+  //   var numClients = io.sockets.sockets.length;
+  //   log('Room ' + room + ' now has ' + numClients + ' client(s)');
+
+  //   if (numClients === 1) {
+  //     socket.join(room);
+  //     log('Client ID ' + socket.id + ' created room ' + room);
+  //     socket.emit('created', room, socket.id);
+
+  //   } else if (numClients === 2) {
+  //     log('Client ID ' + socket.id + ' joined room ' + room);
+  //     io.sockets.in(room).emit('join', room);
+  //     socket.join(room);
+  //     socket.emit('joined', room, socket.id);
+  //     io.sockets.in(room).emit('ready');
+
+  //   } else { // max two clients
+  //     socket.emit('full', room);
+  //   }
+  // });
 
   socket.on('ipaddr', function() {
     var ifaces = os.networkInterfaces();
@@ -85,6 +86,8 @@ io.sockets.on('connection', function(socket) {
     }
   });
 });
+
+server.listen(2300);
 
 ///////////////////////////////////
 ///// Web Socket Server Setup /////
