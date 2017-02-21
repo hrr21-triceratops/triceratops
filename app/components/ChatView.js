@@ -19,42 +19,49 @@ export default class ChatView extends Component {
 
   // automatically runs when component loads
   componentDidMount() {
-    // opens new websocket connection
-    this.ws = new WebSocket('ws://localhost:2400/');
+    this.isInitiator;
+    this.room = '12345'; // userId to keep things simple?
 
-    // runs when websocket connection opens
-    this.ws.onopen = () => {
-      console.log('WebSocket Open.');
-      this.ws.send('Testing 123'); // send a message
-    };
+    this.socket = io.connect();
 
-    // runs when websocket server broadcasts new message
-    this.ws.onmessage = (e) => {
+    console.log('Message from client: Asking to join room ' + room);
+    this.socket.emit('create or join', room);
+
+    this.socket.on('created', function(room, clientId) {
+      this.isInitiator = true;
+    });
+
+    this.socket.on('full', function(room) {
+      console.log('Message from client: Room ' + room + ' is full :^(');
+    });
+
+    this.socket.on('ipaddr', function(ipaddr) {
+      console.log('Message from client: Server IP address is ' + ipaddr);
+    });
+
+    this.socket.on('joined', function(room, clientId) {
+      this.isInitiator = false;
+    });
+
+    this.socket.on('log', function(array) {
+      console.log.apply(console, array);
+    });
+
+    socket.on('chat message', function(msg) {
       // a message was received
-      console.log('New Message:', e.data);
+      console.log('New Message:', msg);
       // Add to state's messages array (bind 'this')
       this.setState({
-        messages: this.state.messages.concat([e.data])
+        messages: this.state.messages.concat([msg])
       });
-    };
-
-    // runs on websocket error
-    this.ws.onerror = (e) => {
-      // an error occurred
-      console.log('Error:', e.message);
-    };
-
-    // runs when websocket connection is closed
-    this.ws.onclose = (e) => {
-      // connection closed
-      console.log('WebSocket Closed.', e.code, e.reason);
-    };
+    });
   }
 
   sendMessage() {
     console.log('Sending Message.');
-    this.ws.send(this.state.message);
+    this.socket.emit('chat message', this.state.message);
     this.setState({message: ''});
+    return false;
   }
 
   render() {
@@ -129,3 +136,43 @@ var styles = StyleSheet.create({
     justifyContent: 'center'
   },
 });
+
+// // automatically runs when component loads
+//   componentDidMount() {
+//     // opens new websocket connection
+//     this.ws = new WebSocket('ws://localhost:2400/');
+
+//     // runs when websocket connection opens
+//     this.ws.onopen = () => {
+//       console.log('WebSocket Open.');
+//       this.ws.send('Testing 123'); // send a message
+//     };
+
+//     // runs when websocket server broadcasts new message
+//     this.ws.onmessage = (e) => {
+//       // a message was received
+//       console.log('New Message:', e.data);
+//       // Add to state's messages array (bind 'this')
+//       this.setState({
+//         messages: this.state.messages.concat([e.data])
+//       });
+//     };
+
+//     // runs on websocket error
+//     this.ws.onerror = (e) => {
+//       // an error occurred
+//       console.log('Error:', e.message);
+//     };
+
+//     // runs when websocket connection is closed
+//     this.ws.onclose = (e) => {
+//       // connection closed
+//       console.log('WebSocket Closed.', e.code, e.reason);
+//     };
+//   }
+
+//   sendMessage() {
+//     console.log('Sending Message.');
+//     this.ws.send(this.state.message);
+//     this.setState({message: ''});
+//   }
