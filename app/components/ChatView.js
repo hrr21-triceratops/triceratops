@@ -3,6 +3,8 @@ import {
   View,
   Text,
   StyleSheet,
+  TextInput,
+  TouchableHighlight,
 } from 'react-native';
 
 export default class ChatView extends Component {
@@ -10,7 +12,8 @@ export default class ChatView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: ['First!']
+      message: '',
+      messages: []
     };
   }
 
@@ -48,20 +51,72 @@ export default class ChatView extends Component {
     };
   }
 
+  sendMessage() {
+    console.log('Sending Message.');
+    this.ws.send(this.state.message);
+  }
+
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <Text style={styles.text}>Chat Session</Text>
         <Text style={styles.text}>{this.state.messages}</Text>
+        <View>
+          <TextInput
+            placeholder="type message here"
+            onChangeText={(text) => this.setState({message: text})}
+            style={styles.formInput}
+          />
+          <TouchableHighlight
+            onPress={(this.sendMessage.bind(this))}
+            style={styles.button}>
+            <Text style={styles.buttonText}>Send Message</Text>
+          </TouchableHighlight>
+        </View>
       </View>
     )
   }
 }
 
 var styles = StyleSheet.create({
+    container: {
+    padding: 30,
+    marginTop: 65,
+    alignItems: "stretch"
+  },
+  title: {
+    fontSize: 18,
+    marginBottom: 10
+  },
   text: {
-    color: 'black',
-    fontSize: 30,
-    fontWeight: 'bold',
-  }
+    alignSelf: 'center'
+  },
+  formInput: {
+    height: 36,
+    padding: 10,
+    marginRight: 5,
+    marginBottom: 5,
+    marginTop: 5,
+    fontSize: 18,
+    borderWidth: 1,
+    borderColor: "#555555",
+    borderRadius: 8,
+    color: "#555555"
+  },
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    alignSelf: 'center'
+  },
+  button: {
+    height: 36,
+    backgroundColor: '#48BBEC',
+    borderColor: '#48BBEC',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginTop: 5,
+    marginBottom: 10,
+    alignSelf: 'stretch',
+    justifyContent: 'center'
+  },
 });
