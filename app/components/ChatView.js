@@ -8,26 +8,53 @@ import {
 } from 'react-native';
 import io from 'socket.io-client';
 
-const socket = io('http://localhost:2300');
-
 export default class ChatView extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       message: '',
-      messages: []
+      messages: ['Placeholder']
     };
   }
 
   // automatically runs when component loads
   componentDidMount() {
-    // DO STUFF
+    this.socket = io('http://localhost:2300');
+
+    this.isInitiator = null;
+    this.room = '12345';
+
+    console.log('Client joining room...');
+    this.socket.emit('create or join', this.room);
+
+    this.socket.on('created', function(room, clientId) {
+      isInitiator = true;
+    });
+
+    this.socket.on('message', (message) => {
+      console.log('Incoming Message:', message);
+      this.setState({
+        messages: this.state.messages.concat([message])
+      });
+    });
+
+    this.socket.on('full', function(room) {
+      console.log('Room is full.');
+    });
+
+    this.socket.on('ipaddr', function(ipaddr) {
+      console.log('Server IP address is', ipaddr);
+    });
+
+    this.socket.on('joined', function(room, clientId) {
+      isInitiator = false;
+    });
   }
 
   sendMessage() {
     console.log('Sending Message.');
-    this.socket.emit('chat message', this.state.message);
+    this.socket.emit('message', this.state.message);
     this.setState({message: ''});
     return false;
   }
@@ -104,6 +131,9 @@ var styles = StyleSheet.create({
     justifyContent: 'center'
   },
 });
+
+
+////////// WEB SOCKET SETUP //////////
 
 // // automatically runs when component loads
 //   componentDidMount() {
