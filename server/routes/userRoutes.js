@@ -3,19 +3,12 @@ var router = express.Router();
 var sequelize = require('../db/connections.js').sequelize;
 const Sequelize = require('sequelize');
 const userModel = require('../db/schemas/userSchema.js');
-<<<<<<< HEAD
 const expertModel = require('../db/schemas/expertSchema.js');
 
-
-=======
 var _ = require('lodash');
 var config = require('./../config.json');
 var jwt = require('jsonwebtoken');
-<<<<<<< HEAD
->>>>>>> Insert correct api routes into login component
-=======
 var bcrypt = require('bcrypt-nodejs');
->>>>>>> Add bcrypt hashing to user passwords on signup
 
 // middleware that is specific to this router
 // router.use(function timeLog (req, res, next) {
@@ -23,17 +16,10 @@ var bcrypt = require('bcrypt-nodejs');
 //   next()
 // })
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-//get all users
-=======
-=======
 // CREATE JSON WEB TOKEN
->>>>>>> Create framework for category view
 function createToken(user) {
   return jwt.sign(_.omit(user, 'password'), config.secret, { expiresIn: 60*60*5 });
 }
->>>>>>> Add login route to api for adding json tokens to session
 
 // GET ALL USERS
 router.get('/users', function(req, res) {
@@ -80,7 +66,6 @@ router.get('/users/:id/:userType', function(req, res) {
   });
 });
 
-<<<<<<< HEAD
 //find user by username
 
 router.get('/users/username/:username', function(req, res) {
@@ -122,14 +107,10 @@ LIMIT `+count+`;
   });
 });
 
-<<<<<<< HEAD
 //http://localhost:2300/api/users/topActiveExperts/food
 //http://localhost:2300/api/users/topActiveExperts/sports
 
-=======
-=======
 // LOGIN EXISTING USER
->>>>>>> Complete basic login functionality
 router.post('/users/login', function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
@@ -157,9 +138,6 @@ router.post('/users/login', function(req, res) {
   });
 });
 
-<<<<<<< HEAD
->>>>>>> Insert correct api routes into login component
-=======
 // SIGNUP NEW USER
 router.post('/users', function(req, res) {
   var username = req.body.username;
@@ -189,9 +167,4 @@ router.post('/users', function(req, res) {
   });
 });
 
-<<<<<<< HEAD
->>>>>>> Allow users to signup for new accounts
 module.exports = router;
-=======
-module.exports = router;
->>>>>>> Create framework for category view
