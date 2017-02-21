@@ -54,13 +54,22 @@ export default class ChatView extends Component {
   sendMessage() {
     console.log('Sending Message.');
     this.ws.send(this.state.message);
+    this.setState({message: ''});
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Chat Session</Text>
-        <Text style={styles.text}>{this.state.messages}</Text>
+        <Text style={styles.title}>Chat Session</Text>
+        <View>
+          {this.state.messages.map(function(msg) {
+            return (
+              <View key={msg}>
+                <Text style={styles.text}>{msg}</Text>
+              </View>
+            )
+          })}
+        </View>
         <View>
           <TextInput
             placeholder="type message here"
