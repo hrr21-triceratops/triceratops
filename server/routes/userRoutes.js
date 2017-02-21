@@ -167,6 +167,7 @@ router.post('/users', function(req, res) {
   });
 });
 
+// LOGIN EXISTING USER
 router.post('/users/login', function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
