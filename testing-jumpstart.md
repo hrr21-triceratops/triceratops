@@ -2,7 +2,8 @@
 
 Travis CI is setup to run tests automatically on each pull request to the main repo and build.
 
-tests live in the tests folder:
+### Server tests ###
+Server tests live in the tests folder:
   server-tests.js
   api-tests.js
   database-tests.js
@@ -21,8 +22,24 @@ A block of functionality should be tested by writing one describe block per piec
 
 You can also write out helpful functions to return data to test at the top or bottom of the test file
 
-### to run code against all tests locally: ###
+#### to run code against all tests locally: ####
 
 check that all servers/databases the app needs are running
-
 run 'npm test' from the main directory in terminal
+
+### App tests ###
+App tests live in the app/__tests__ folder
+  index.ios.js
+  NEED TO SPLIT FILES INTO TEST FILES FOR EACH COMPONENT
+
+Tests are written using Jest. See the list of expectations you can use to test output here: https://facebook.github.io/jest/docs/expect.html#content
+
+An important concept of testing functions inside of components in React is 'mocks' --NEED TO GET A BETTER GRASP ON THEM AND AN EXAMPLE SETUP
+
+A block of functionality should be tested by writing one describe block per piece of functionality. Use nested it statements to test each aspect of the piece you are testing.
+
+#### to run code against all tests locally ####
+check that all the servers/databases are running
+run npm test from the app directory
+
+
