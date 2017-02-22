@@ -45,7 +45,8 @@ io.on('connection', function(socket) {
   socket.on('message', function(message) {
     console.log('New Message:', message);
     // for a real app, would be room-only (not broadcast)
-    socket.emit('message', message);
+    io.emit('message', message);
+    // socket.emit('message', message);
     // socket.broadcast.emit('message', message);
   });
 
@@ -87,4 +88,7 @@ io.on('connection', function(socket) {
   });
 });
 
-server.listen(2300);
+const PORT = 2300;
+server.listen(PORT, function(req, res) {
+  console.log('listening on port: ' + PORT);
+});

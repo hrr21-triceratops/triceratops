@@ -41,9 +41,9 @@ class app extends Component {
       //React native navigator component, sets a default route for when the app is launched
       // modified initial route for testing to be shopper page
       <Navigator
-        style={{ flex: 1 }}
-        initialRoute={{ name: 'Chat' }}
-        renderScene={ this.renderScene }
+        style={{flex: 1}}
+        initialRoute={{name: 'Chat'}}
+        renderScene={this.renderScene}
       />
     );
   }
