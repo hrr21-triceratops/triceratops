@@ -31,8 +31,6 @@ let loadCategoryImage = function(category){
   }
 }
 
-var categories = ['HOME', 'FOOD', 'TECH', 'WOMEN\'S FASHION', 'MEN\'S FASHION', 'ENTERTAINMENT'];
-
 export default class CategoryView extends Component {
 
   constructor(props) {
