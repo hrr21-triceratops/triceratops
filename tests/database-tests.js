@@ -1,13 +1,19 @@
 var chai = require('chai');
-var chaiHttp = require('chai-http')
-chai.use(chaiHttp);
+var expect = require('chai').expect;
+var request = require('request');
 
 //
 // TESTS
 //
 describe('api/users', function(){
-  it('it should get all the users', function(){
-    chai.assert.isDefined(chai.request('http://localhost:2300').get('api/users'), 'no users are defined');
+  it('it should get all the users', function(done){
+    request.get('http://localhost:2300', function(err, res, body) {
+      if(err){
+        console.log("ERROR", err);
+      }
+      expect(res.body).to.exist;
+      done();
+    });
   });
 });
 
