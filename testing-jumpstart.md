@@ -12,11 +12,18 @@ tests are written in using Mocha as a taskrunner and Chai as an assertion librar
 
 A block of functionality should be tested by writing one describe block per piece of functionality. Use nested it statements to test each aspect of the piece you are testing.
 
+The chai expect library is loaded along with a request library for making HTTP requests to endpoints
+
 //EXAMPLE TEST TO GET USERS:
   describe('FUNCTIONALITY_TO_TEST', function(){
     it('DESCRIBE_WHAT_FUNCTIONALITY_SHOULD_BE_DOING', function(){
-      //had some difficulty loading up the server so hardcoded localhost for now
-      chai.assert.isDefined(chai.request('http://localhost:2300').get('api/users'), 'no users are defined');
+      request.get('API_ENDPOINT_TO_TEST', function(err, res, body){
+        if(err){
+          console.log("ERROR", err);
+        }
+        expect(res.body).to.exist;
+        done();
+      });
     });
   });
 
