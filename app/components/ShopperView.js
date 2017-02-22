@@ -14,19 +14,23 @@ export default class ShopperView extends Component {
 
   constructor(props) {
     super(props);
+    this.user = {
+      id: 3,
+      username: "triceratops3@gmail.com"
+    }
   }
 
   render() {
     return (
       <Swiper style={styles.wrapper} loop={false} showsButtons={true}>
         <View style={styles.slide1}>
-          <CategoryView />
+          <CategoryView navigator={this.props.navigator} user={this.user} />
         </View>
         <View style={styles.slide2}>
-          <ChatHistoryView />
+          <ChatHistoryView navigator={this.props.navigator} user={this.user} />
         </View>
         <View style={styles.slide3}>
-          <AccountView />
+          <AccountView navigator={this.props.navigator} user={this.user} />
         </View>
       </Swiper>
     )

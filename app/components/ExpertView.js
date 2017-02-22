@@ -3,26 +3,34 @@ import {
   View,
   Text,
   StyleSheet,
+  Image,
 } from 'react-native';
 import Swiper from 'react-native-swiper';
+import CategoryView from './shoppers/CategoryView';
+import ChatHistoryView from './shoppers/ChatHistoryView';
+import AccountView from './shoppers/AccountView';
 
 export default class ExpertView extends Component {
 
   constructor(props) {
     super(props);
+    this.user = {
+      id: 1,
+      username: "triceratops1@gmail.com"
+    }
   }
 
   render() {
     return (
-      <Swiper style={styles.wrapper} showsButtons={true}>
+      <Swiper style={styles.wrapper} loop={false} showsButtons={true}>
         <View style={styles.slide1}>
-          <Text style={styles.text}>Expert Categories</Text>
+          <CategoryView />
         </View>
         <View style={styles.slide2}>
-          <Text style={styles.text}>Expert Chat</Text>
+          <ChatHistoryView />
         </View>
         <View style={styles.slide3}>
-          <Text style={styles.text}>Expert Account</Text>
+          <AccountView />
         </View>
       </Swiper>
     )
@@ -36,19 +44,19 @@ var styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#9DD6EB',
+    backgroundColor: '#97CAE5',
   },
   slide2: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#97CAE5',
+    backgroundColor: '#9DD6EB',
   },
   slide3: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#92BBD9',
+    backgroundColor: '#97CAE5',
   },
   text: {
     color: '#fff',
