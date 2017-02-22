@@ -14,7 +14,7 @@ export default class ChatView extends Component {
     super(props);
     this.state = {
       message: '',
-      messages: ['Placeholder']
+      messages: []
     };
   }
 
