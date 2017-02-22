@@ -45,7 +45,7 @@ io.on('connection', function(socket) {
   socket.on('message', function(message) {
     console.log('New Message:', message);
     // for a real app, would be room-only (not broadcast)
-    io.sockets.emit('message', message);
+    socket.emit('message', message);
     // socket.broadcast.emit('message', message);
   });
 
