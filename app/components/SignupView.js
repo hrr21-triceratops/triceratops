@@ -20,7 +20,7 @@ export default class SignupView extends Component {
     };
   }
 
-  async _onValueChange(item, selectedValue) {
+  async onValueChange(item, selectedValue) {
     try {
       await AsyncStorage.setItem(item, selectedValue);
     } catch (error) {
@@ -28,13 +28,13 @@ export default class SignupView extends Component {
     }
   }
 
-  _navigate(scene) {
+  navigate(scene) {
     this.props.navigator.push({
       name: scene
     })
   }
 
-  _userSignup() {
+  userSignup() {
     var username = this.state.username;
     var password = this.state.password;
     if (!this.state.username || !this.state.password) {
@@ -60,8 +60,8 @@ export default class SignupView extends Component {
             'User already exists!'
           )
         } else {
-          this._onValueChange(STORAGE_KEY, responseData.id_token)
-          this._navigate('Shopper')
+          this.onValueChange(STORAGE_KEY, responseData.id_token)
+          this.navigate('Shopper')
         }
       })
       .done();
@@ -87,14 +87,14 @@ export default class SignupView extends Component {
             style={styles.formInput}
           />
           <TouchableHighlight
-            onPress={(this._userSignup.bind(this))}
+            onPress={(this.userSignup.bind(this))}
             style={styles.button}>
             <Text style={styles.buttonText}>Sign Up</Text>
           </TouchableHighlight>
         </View>
         <View>
           <Text
-            onPress={() => this._navigate('Login')}
+            onPress={() => this.navigate('Login')}
             style={styles.text}>Login to Account</Text>
         </View>
       </View>
