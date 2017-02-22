@@ -13,7 +13,7 @@ import Swiper from 'react-native-swiper';
 //eventually, replace with a call to API for categories?
 var categories = ['HOME', 'FOOD', 'TECH', 'WOMEN\'S FASHION', 'MEN\'S FASHION', 'ENTERTAINMENT'];
 
-//current work around for dynamically loadign assets
+//current work around for dynamically loading assets
 let loadCategoryImage = function(category){
   switch(category){
     case 'home':
@@ -30,8 +30,6 @@ let loadCategoryImage = function(category){
       return require('./../../assets/imgs/entertainment.jpg');
   }
 }
-
-var categories = ['HOME', 'FOOD', 'TECH', 'WOMEN\'S FASHION', 'MEN\'S FASHION', 'ENTERTAINMENT'];
 
 export default class CategoryView extends Component {
 

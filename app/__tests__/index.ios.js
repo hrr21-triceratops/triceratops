@@ -50,6 +50,11 @@ describe('Category View', () => {
   it('should have three children', () => {
     expect(tree.children.length).toBe(3);
   });
+
+  it('should load static assets', () => {
+    let mock = jest.mock();
+    expect(mock.mock.calls.length).toBeGreaterThan(0);
+  });
 });
 
 
