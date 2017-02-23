@@ -56,16 +56,6 @@ export default class EChatView extends Component {
     })
     .done();
 
-<<<<<<< HEAD
-=======
-    socket.on('message', (message) => {
-      console.log('Incoming Message:', message);
-      this.setState({
-        messages: this.state.messages.concat([message])
-      });
-    });
->>>>>>> Get chatroom working
-
   }
 
   sendMessage() {

@@ -12,7 +12,6 @@ export default class ECategoryView extends Component {
     super(props);
   }
 
-<<<<<<< HEAD
   openChat() {
     this.props.navigator.push({
       name: 'EChat'
@@ -23,12 +22,6 @@ export default class ECategoryView extends Component {
     return (
       <View>
         <Text>Categories</Text>
-=======
-  render() {
-    return (
-      <View>
-        <Text style={styles.text}>Expert Category View</Text>
->>>>>>> Remove function from expert category view
       </View>
     )
     // return (
