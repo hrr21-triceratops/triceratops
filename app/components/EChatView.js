@@ -45,16 +45,16 @@ export default class EChatView extends Component {
         console.log('*** JOINING ROOM ***', user.room);
         this.socket.emit('joinRoom', user.room);
         room = user.room;
+        this.socket.on('message', (message) => {
+          console.log('Incoming Message:', message);
+          this.setState({
+            messages: this.state.messages.concat([message])
+          });
+        });
       }
     })
     .done();
 
-    this.socket.on('message', (message) => {
-      console.log('Incoming Message:', message);
-      this.setState({
-        messages: this.state.messages.concat([message])
-      });
-    });
 
   }
 
