@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import {
   View,
+  ScrollView,
   Text,
   StyleSheet,
+  TouchableHighlight,
+  AlertIOS,
+  Image,
+  Navigator,
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 
