@@ -25,11 +25,6 @@ it('renders correctly', () => {
 
 // Test the shopper view
 describe('Shopper View', () => {
-  // let shopperView;
-
-  // function renderView(props, states){
-
-  // }
   const tree = renderer.create(
       <ShopperView />
     ).toJSON();
@@ -44,12 +39,6 @@ describe('Shopper View', () => {
 });
 
 describe('Category View', () => {
-  // function renderView(view){
-  //   console.log("CategoryView", CategoryView);
-  //   console.log("view", view);
-  //   return view.render();
-  // }
-
   const tree = renderer.create(
       <CategoryView />
     ).toJSON();
@@ -60,6 +49,11 @@ describe('Category View', () => {
 
   it('should have three children', () => {
     expect(tree.children.length).toBe(3);
+  });
+
+  it('should load static assets', () => {
+    let mock = jest.mock();
+    expect(mock.mock.calls.length).toBeGreaterThan(0);
   });
 });
 
