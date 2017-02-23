@@ -92,7 +92,8 @@ io.on('connection', function(socket) {
   });
 
   // on closed connection
-    // send messages to mongo database
+    // send messages to mongo database (initiated client-side)
+    // navigate to rating view (client-side)
 });
 
 const PORT = process.env.PORT || 2300;
