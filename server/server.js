@@ -92,6 +92,7 @@ io.on('connection', function(socket) {
   });
 
   // on closed connection
+    // send messages to mongo database
 });
 
 const PORT = process.env.PORT || 2300;

@@ -1,35 +1,10 @@
 import React, { Component } from 'react';
 import {
   View,
-  ScrollView,
   Text,
   StyleSheet,
-  TouchableHighlight,
-  AlertIOS,
-  Image,
 } from 'react-native';
 import Swiper from 'react-native-swiper';
-
-//eventually, replace with a call to API for categories?
-var categories = ['HOME', 'FOOD', 'TECH', 'WOMEN\'S FASHION', 'MEN\'S FASHION', 'ENTERTAINMENT'];
-
-//current work around for dynamically loadign assets
-let loadCategoryImage = function(category){
-  switch(category){
-    case 'home':
-      return require('./../../assets/imgs/home.jpg');
-    case 'men\'s\ fashion':
-      return require('./../../assets/imgs/mens-fashion.jpg');
-    case 'women\'s\ fashion':
-      return require('./../../assets/imgs/womens-fashion.jpg');
-    case 'tech':
-      return require('./../../assets/imgs/tech.jpg');
-    case 'food':
-      return require('./../../assets/imgs/food.jpg');
-    case 'entertainment':
-      return require('./../../assets/imgs/entertainment.jpg');
-  }
-}
 
 export default class ECategoryView extends Component {
 
@@ -37,6 +12,7 @@ export default class ECategoryView extends Component {
     super(props);
   }
 
+<<<<<<< HEAD
   openChat() {
     this.props.navigator.push({
       name: 'EChat'
@@ -47,6 +23,12 @@ export default class ECategoryView extends Component {
     return (
       <View>
         <Text>Categories</Text>
+=======
+  render() {
+    return (
+      <View>
+        <Text style={styles.text}>Expert Category View</Text>
+>>>>>>> Remove function from expert category view
       </View>
     )
     // return (
@@ -76,37 +58,9 @@ export default class ECategoryView extends Component {
 }
 
 var styles = StyleSheet.create({
-  header: {
-    textAlign: 'center',
-    marginTop: 20,
+  text: {
+    color: '#fff',
     fontSize: 30,
-    color: '#FFFFFF',
-  },
-  headerCopy: {
-    textAlign: 'center',
-    marginTop: 7,
-    fontSize: 16,
-    color: '#FFFFFF',
-  },
-  buttonText: {
-    flex: 1,
-    padding: 4,
-    fontSize: 22,
-    color: 'white',
-    borderColor: '#FFFFFF',
-    alignSelf: 'stretch',
-    backgroundColor: '#48BBEC',
-    textAlign: 'center',
-  },
-  image: {
-    flex: 1,
-    width: 310,
-    height: 160,
-  },
-  category: {
-    marginBottom: 14,
-  },
-  wrapper: {
-    marginTop: 24,
-  },
+    fontWeight: 'bold',
+  }
 });
