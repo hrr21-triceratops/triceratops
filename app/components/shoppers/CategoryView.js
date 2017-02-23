@@ -7,8 +7,10 @@ import {
   TouchableHighlight,
   AlertIOS,
   Image,
+  Navigator,
 } from 'react-native';
 import Swiper from 'react-native-swiper';
+import ChatView from '../ChatView';
 
 //eventually, replace with a call to API for categories?
 var categories = ['HOME', 'FOOD', 'TECH', 'WOMEN\'S FASHION', 'MEN\'S FASHION', 'ENTERTAINMENT'];
@@ -37,6 +39,10 @@ export default class CategoryView extends Component {
     super(props);
   }
 
+  renderScene(route, navigator){
+    return <ChatView navigator={navigator}/>
+  }
+
   render() {
     return (
       <View>
@@ -48,7 +54,7 @@ export default class CategoryView extends Component {
             //Need to replace AlertIOS with function to call API and connect to chat with expert in category
             //Need to set current category on the state
             <TouchableHighlight
-              onPress={() => AlertIOS.alert('Finding Expert!')}
+              onPress={() => {return <Navigator initialRoute={{name: 'Chat'}} renderScene={this.renderScene}/>}}
               style={styles.category}
               key={category}>
               <View>
