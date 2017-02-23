@@ -55,15 +55,15 @@ export default class CategoryView extends Component {
           return (
             //Need to replace AlertIOS with function to call API and connect to chat with expert in category
             //Need to set current category on the state
-            <TouchableHighlight
-              onPress={(this.openChat.bind(this))}
-              style={styles.category}
-              key={category}>
-              <View>
-                <Image style={styles.image} source={loadCategoryImage(category.toLowerCase())}></Image>
-                <Text style={styles.buttonText}>{category}</Text>
-              </View>
-            </TouchableHighlight>
+            // <TouchableHighlight
+            //   onPress={(this.openChat.bind(this))}
+            //   style={styles.category}
+            //   key={category}>
+            //   <View>
+            //     <Image style={styles.image} source={loadCategoryImage(category.toLowerCase())}></Image>
+            //     <Text style={styles.buttonText}>{category}</Text>
+            //   </View>
+            // </TouchableHighlight>
           )
         })}
         </ScrollView>
