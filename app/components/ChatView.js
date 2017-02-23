@@ -15,41 +15,49 @@ export default class ChatView extends Component {
     this.state = {
       message: '',
       messages: []
-    };
+    }
+    this.user = {
+      id: 3,
+      username: "triceratops3@gmail.com"
+    }
   }
 
   // automatically runs when component loads
   componentDidMount() {
     this.socket = io('http://localhost:2300');
+    // console.log('*** USER ***', this.user);
 
-    this.isInitiator = null;
-    this.room = '12345';
-
-    console.log('Client joining room...');
-    this.socket.emit('create or join', this.room);
-
-    this.socket.on('created', function(room, clientId) {
-      isInitiator = true;
+    this.socket.on('id', (socketId) => {
+      // room = socketId;
+      var context = this;
+      context.socket.emit('createRoom', socketId, context.user.id);
+      console.log('*** NEW ROOM ***', socketId);
     });
 
-    this.socket.on('message', (message) => {
-      console.log('Incoming Message:', message);
-      this.setState({
-        messages: this.state.messages.concat([message])
-      });
-    });
+///////////////////////////////////////////////
 
-    this.socket.on('full', function(room) {
-      console.log('Room is full.');
-    });
+    // this.socket.on('created', function(room, clientId) {
+    //   //
+    // });
 
-    this.socket.on('ipaddr', function(ipaddr) {
-      console.log('Server IP address is', ipaddr);
-    });
+    // this.socket.on('message', (message) => {
+    //   console.log('Incoming Message:', message);
+    //   this.setState({
+    //     messages: this.state.messages.concat([message])
+    //   });
+    // });
 
-    this.socket.on('joined', function(room, clientId) {
-      isInitiator = false;
-    });
+    // this.socket.on('full', function(room) {
+    //   console.log('Room is full.');
+    // });
+
+    // this.socket.on('ipaddr', function(ipaddr) {
+    //   console.log('Server IP address is', ipaddr);
+    // });
+
+    // this.socket.on('joined', function(room, clientId) {
+    //   //
+    // });
   }
 
   sendMessage() {
