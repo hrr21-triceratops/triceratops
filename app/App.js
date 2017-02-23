@@ -14,7 +14,7 @@ import SignupView from './components/SignupView';
 import ShopperView from './components/ShopperView';
 import ExpertView from './components/ExpertView';
 import ChatView from './components/ChatView';
-import EChatView from './components/ChatView';
+import EChatView from './components/EChatView';
 
 //setup the app component to register with App registry, everything happens inside of this wrapper
 class app extends Component {
@@ -46,7 +46,7 @@ class app extends Component {
       // modified initial route for testing to be shopper page
       <Navigator
         style={{flex: 1}}
-        initialRoute={{name: 'Chat'}}
+        initialRoute={{name: 'Expert'}}
         renderScene={this.renderScene}
       />
     );
