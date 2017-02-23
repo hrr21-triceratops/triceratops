@@ -42,6 +42,7 @@ const io = require('socket.io')(server);
 // QUEUE OF USERS REQUESTING ASSISTANCE
 let queue = [];
 
+// DETERMINE IF USER CURRENTLY IN QUEUE
 app.get('/api/userQueue', function(req, res) {
   if (queue.length) {
     res.send(true);
@@ -50,6 +51,7 @@ app.get('/api/userQueue', function(req, res) {
   }
 });
 
+// REMOVE USER FROM USER QUEUE AND SEND TO EXPERT
 app.get('/api/userQueue/getUser', function(req, res) {
   if (queue.length) {
     var user = queue.shift();
@@ -60,10 +62,12 @@ app.get('/api/userQueue/getUser', function(req, res) {
   }
 });
 
+// RUNS WHEN USER STARTS A SOCKET CONNECTION
 io.on('connection', function(socket) {
   console.log('Client Connected:', socket.id);
   socket.emit('id', socket.id);
 
+  // RUNS WHEN USER CREATES CHATROOM
   socket.on('createRoom', function(room, userId) {
     console.log('Joining Room:', room, 'User:', userId);
     socket.join(room);
@@ -75,11 +79,13 @@ io.on('connection', function(socket) {
     console.log('Current Queue:', queue);
   });
 
+  // RUNS WHEN EXPERT JOINS CHATROOM
   socket.on('joinRoom', function(room) {
     console.log('Joining Room:', room);
     socket.join(room);
   });
 
+  // RUNS WHEN MESSAGE IS SENT BY USER OR EXPERT
   socket.on('message', function(message, room) {
     console.log('New Message:', message, 'in Room:', room);
     io.in(room).emit('message', message);
