@@ -53,6 +53,7 @@ app.get('/api/userQueue', function(req, res) {
 app.get('/api/userQueue/getUser', function(req, res) {
   if (queue.length) {
     var user = queue.shift();
+    console.log('New Queue:', queue);
     res.send(user);
   } else {
     res.send('User taken.');
@@ -74,57 +75,20 @@ io.on('connection', function(socket) {
     console.log('Current Queue:', queue);
   });
 
+  socket.on('joinRoom', function(room) {
+    console.log('Joining Room:', room);
+    socket.join(room);
+  });
 
+  socket.on('message', function(message, room) {
+    console.log('New Message:', message, 'in Room:', room);
+    io.in(room).emit('message', message);
+  });
 
-///////////////////////////////////////////
-
-  // socket.on('message', function(message) {
-  //   console.log('New Message:', message);
-  //   // for a real app, would be room-only (not broadcast)
-  //   io.emit('message', message);
-  //   // socket.emit('message', message);
-  //   // socket.broadcast.emit('message', message);
-  // });
-
-  // socket.on('create or join', function(room) {
-  //   console.log('Joining Room:', room);
-  //   socket.join(room);
-  //   console.log('Client ID ' + socket.id + ' created room ' + room);
-  //   socket.emit('created', room, socket.id);
-
-    // var numClients = io.sockets.sockets.length;
-    // console.log(room + ' has ' + numClients + ' users.');
-
-    // if (numClients === 1) {
-    //   socket.join(room);
-    //   console.log('Client ID ' + socket.id + ' created room ' + room);
-    //   socket.emit('created', room, socket.id);
-
-    // } else if (numClients === 2) {
-    //   log('Client ID ' + socket.id + ' joined room ' + room);
-    //   io.in(room).emit('join', room);
-    //   socket.join(room);
-    //   socket.emit('joined', room, socket.id);
-    //   io.in(room).emit('ready');
-
-    // } else { // max two clients
-    //   socket.emit('full', room);
-    // }
-  // });
-
-  // socket.on('ipaddr', function() {
-  //   var ifaces = os.networkInterfaces();
-  //   for (var dev in ifaces) {
-  //     ifaces[dev].forEach(function(details) {
-  //       if (details.family === 'IPv4' && details.address !== '127.0.0.1') {
-  //         socket.emit('ipaddr', details.address);
-  //       }
-  //     });
-  //   }
-  // });
+  // on closed connection
 });
 
-const PORT = 2300;
+const PORT = process.env.PORT || 2300;
 server.listen(PORT, function(req, res) {
   console.log('listening on port: ' + PORT);
 });
