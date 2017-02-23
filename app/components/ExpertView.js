@@ -6,9 +6,9 @@ import {
   Image,
 } from 'react-native';
 import Swiper from 'react-native-swiper';
-import CategoryView from './shoppers/CategoryView';
-import ChatHistoryView from './shoppers/ChatHistoryView';
-import AccountView from './shoppers/AccountView';
+import ECategoryView from './experts/ECategoryView';
+import EChatHistoryView from './experts/EChatHistoryView';
+import EAccountView from './experts/EAccountView';
 
 export default class ExpertView extends Component {
 
@@ -24,13 +24,13 @@ export default class ExpertView extends Component {
     return (
       <Swiper style={styles.wrapper} loop={false} showsButtons={true}>
         <View style={styles.slide1}>
-          <CategoryView />
+          <ECategoryView navigator={this.props.navigator} user={this.user}/>
         </View>
         <View style={styles.slide2}>
-          <ChatHistoryView />
+          <EChatHistoryView navigator={this.props.navigator} user={this.user} />
         </View>
         <View style={styles.slide3}>
-          <AccountView />
+          <EAccountView navigator={this.props.navigator} user={this.user}/>
         </View>
       </Swiper>
     )

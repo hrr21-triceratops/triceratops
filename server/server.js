@@ -39,7 +39,25 @@ const os = require('os');
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
+// QUEUE OF USERS REQUESTING ASSISTANCE
 let queue = [];
+
+app.get('/api/userQueue', function(req, res) {
+  if (queue.length) {
+    res.send(true);
+  } else {
+    res.send(false);
+  }
+});
+
+app.get('/api/userQueue/getUser', function(req, res) {
+  if (queue.length) {
+    var user = queue.shift();
+    res.send(user);
+  } else {
+    res.send('User taken.');
+  }
+});
 
 io.on('connection', function(socket) {
   console.log('Client Connected:', socket.id);
