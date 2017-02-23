@@ -77,12 +77,14 @@ io.on('connection', function(socket) {
     };
     queue.push(user);
     console.log('Current Queue:', queue);
+    io.in(room).emit('message', '*** Finding your expert... ***');
   });
 
   // RUNS WHEN EXPERT JOINS CHATROOM
   socket.on('joinRoom', function(room) {
     console.log('Joining Room:', room);
     socket.join(room);
+    io.in(room).emit('message', '*** Expert Connected! ***');
   });
 
   // RUNS WHEN MESSAGE IS SENT BY USER OR EXPERT
