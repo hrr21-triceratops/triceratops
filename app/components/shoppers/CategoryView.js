@@ -48,11 +48,16 @@ export default class CategoryView extends Component {
   render() {
     return (
       <View>
-        <Text style={styles.header}>SAVVY SHOPPER</Text>
-        <Text style={styles.headerCopy}>Choose a category and ask a question</Text>
-        <ScrollView style={styles.wrapper}>
-        {categories.map(function(category) {
-          return (
+        <Text>Categories</Text>
+      </View>
+    )
+    //return (
+      //<View>
+        // <Text style={styles.header}>SAVVY SHOPPER</Text>
+        // <Text style={styles.headerCopy}>Choose a category and ask a question</Text>
+        // <ScrollView style={styles.wrapper}>
+        // {categories.map(function(category) {
+        //   return (
             //Need to replace AlertIOS with function to call API and connect to chat with expert in category
             //Need to set current category on the state
             // <TouchableHighlight
@@ -64,11 +69,11 @@ export default class CategoryView extends Component {
             //     <Text style={styles.buttonText}>{category}</Text>
             //   </View>
             // </TouchableHighlight>
-          )
-        })}
-        </ScrollView>
-      </View>
-    )
+        //   )
+        // })}
+        // </ScrollView>
+      //</View>
+    //)
   }
 }
 
