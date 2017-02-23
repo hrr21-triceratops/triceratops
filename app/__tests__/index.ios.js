@@ -24,38 +24,38 @@ it('renders correctly', () => {
 });
 
 // Test the shopper view
-describe('Shopper View', () => {
-  const tree = renderer.create(
-      <ShopperView />
-    ).toJSON();
-  // should render 3 views
-  it('should render 3 views', () => {
-    // category, chat, prefs
-    expect(tree.children.length).toEqual(3);
-  });
-  it('should have a type of view', () => {
-    expect(tree.type).toBe('View');
-  });
-});
+// describe('Shopper View', () => {
+//   const tree = renderer.create(
+//       <ShopperView />
+//     ).toJSON();
+//   // should render 3 views
+//   it('should render 3 views', () => {
+//     // category, chat, prefs
+//     expect(tree.children.length).toEqual(3);
+//   });
+//   it('should have a type of view', () => {
+//     expect(tree.type).toBe('View');
+//   });
+// });
 
-describe('Category View', () => {
-  const tree = renderer.create(
-      <CategoryView />
-    ).toJSON();
+// describe('Category View', () => {
+//   const tree = renderer.create(
+//       <CategoryView />
+//     ).toJSON();
 
-  it('should have a type of view', () => {
-    expect(tree.type).toBe('View');
-  });
+//   it('should have a type of view', () => {
+//     expect(tree.type).toBe('View');
+//   });
 
-  it('should have three children', () => {
-    expect(tree.children.length).toBe(3);
-  });
+//   it('should have three children', () => {
+//     expect(tree.children.length).toBe(3);
+//   });
 
-  it('should load static assets', () => {
-    let mock = jest.mock();
-    expect(mock.mock.calls.length).toBeGreaterThan(0);
-  });
-});
+//   it('should load static assets', () => {
+//     let mock = jest.mock();
+//     expect(mock.mock.calls.length).toBeGreaterThan(0);
+//   });
+// });
 
 
 
