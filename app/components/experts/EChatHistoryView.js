@@ -25,21 +25,43 @@ export default class EChatHistoryView extends Component {
 
   render() {
     return (
-      <View>
-        <Text style={styles.text}>Chat History</Text>
+      <View style={styles.container}>
         <TouchableHighlight
-            onPress={() => this.navigate('EChat')}>
-            <Text>HALP</Text>
-          </TouchableHighlight>
+          style={styles.button}
+          onPress={() => this.navigate('EChat')}>
+          <Text style={styles.buttonText}>HALP</Text>
+        </TouchableHighlight>
       </View>
     )
   }
 }
 
 var styles = StyleSheet.create({
+  container: {
+    padding: 30,
+    alignItems: "stretch"
+  },
+  title: {
+    fontSize: 18,
+    marginBottom: 10
+  },
   text: {
-    color: '#fff',
-    fontSize: 30,
-    fontWeight: 'bold',
-  }
+    alignSelf: 'center'
+  },
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    alignSelf: 'center'
+  },
+  button: {
+    height: 50,
+    width: 250,
+    backgroundColor: '#48BBEC',
+    borderColor: '#48BBEC',
+    borderWidth: 1,
+    marginTop: 5,
+    marginBottom: 10,
+    alignSelf: 'stretch',
+    justifyContent: 'center'
+  },
 });

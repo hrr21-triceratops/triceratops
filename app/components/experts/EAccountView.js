@@ -17,7 +17,7 @@ export default class EAccountView extends Component {
   render() {
     return (
       <View>
-        <Text style={styles.title}>PREFERENCES</Text>
+        <Text style={styles.title}>EXPERTISE</Text>
         <Text style={styles.text}>Home</Text>
         <Text style={styles.text}>Food</Text>
         <Text style={styles.text}>Tech</Text>
@@ -25,9 +25,9 @@ export default class EAccountView extends Component {
         <Text style={styles.text}>Men\'s Fashion</Text>
         <Text style={styles.text}>Entertainment</Text>
         <TouchableHighlight
-          onPress={() => AlertIOS.alert('Setting up expert account...')}
+          onPress={() => AlertIOS.alert('Toggling Online Status...')}
           style={styles.button}>
-          <Text style={styles.buttonText}>Become an Expert</Text>
+          <Text style={styles.buttonText}>Go Offline</Text>
         </TouchableHighlight>
         <TouchableHighlight
           onPress={() => AlertIOS.alert('Logging Out...')}

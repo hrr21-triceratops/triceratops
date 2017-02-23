@@ -10,6 +10,7 @@ import {
 import io from 'socket.io-client';
 
 let room = null;
+let socket = null;
 
 export default class EChatView extends Component {
 
@@ -41,11 +42,11 @@ export default class EChatView extends Component {
           'Incorrect Username or Password.'
         )
       } else {
-        this.socket = io('https://murmuring-sierra-59020.herokuapp.com');
+        socket = io('https://murmuring-sierra-59020.herokuapp.com');
         console.log('*** JOINING ROOM ***', user.room);
-        this.socket.emit('joinRoom', user.room);
+        socket.emit('joinRoom', user.room);
         room = user.room;
-        this.socket.on('message', (message) => {
+        socket.on('message', (message) => {
           console.log('Incoming Message:', message);
           this.setState({
             messages: this.state.messages.concat([message])
@@ -55,12 +56,11 @@ export default class EChatView extends Component {
     })
     .done();
 
-
   }
 
   sendMessage() {
     console.log('Sending Message.');
-    this.socket.emit('message', this.state.message, room);
+    socket.emit('message', this.state.message, room);
     this.setState({message: ''});
     return false;
   }
