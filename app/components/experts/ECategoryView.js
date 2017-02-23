@@ -7,15 +7,13 @@ import {
   TouchableHighlight,
   AlertIOS,
   Image,
-  Navigator,
 } from 'react-native';
 import Swiper from 'react-native-swiper';
-import ChatView from '../ChatView';
 
 //eventually, replace with a call to API for categories?
 var categories = ['HOME', 'FOOD', 'TECH', 'WOMEN\'S FASHION', 'MEN\'S FASHION', 'ENTERTAINMENT'];
 
-//current work around for dynamically loading assets
+//current work around for dynamically loadign assets
 let loadCategoryImage = function(category){
   switch(category){
     case 'home':
@@ -33,7 +31,7 @@ let loadCategoryImage = function(category){
   }
 }
 
-export default class CategoryView extends Component {
+export default class ECategoryView extends Component {
 
   constructor(props) {
     super(props);

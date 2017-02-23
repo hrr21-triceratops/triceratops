@@ -39,21 +39,58 @@ const os = require('os');
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
-io.on('connection', function(socket) {
-  console.log('Client connected...');
+// QUEUE OF USERS REQUESTING ASSISTANCE
+let queue = [];
 
-  socket.on('message', function(message) {
-    console.log('New Message:', message);
-    // for a real app, would be room-only (not broadcast)
-    io.sockets.emit('message', message);
-    // socket.broadcast.emit('message', message);
+app.get('/api/userQueue', function(req, res) {
+  if (queue.length) {
+    res.send(true);
+  } else {
+    res.send(false);
+  }
+});
+
+app.get('/api/userQueue/getUser', function(req, res) {
+  if (queue.length) {
+    var user = queue.shift();
+    res.send(user);
+  } else {
+    res.send('User taken.');
+  }
+});
+
+io.on('connection', function(socket) {
+  console.log('Client Connected:', socket.id);
+  socket.emit('id', socket.id);
+
+  socket.on('createRoom', function(room, userId) {
+    console.log('Joining Room:', room, 'User:', userId);
+    socket.join(room);
+    var user = {
+      id: userId,
+      room: room
+    };
+    queue.push(user);
+    console.log('Current Queue:', queue);
   });
 
-  socket.on('create or join', function(room) {
-    console.log('Joining Room:', room);
-    socket.join(room);
-    console.log('Client ID ' + socket.id + ' created room ' + room);
-    socket.emit('created', room, socket.id);
+
+
+///////////////////////////////////////////
+
+  // socket.on('message', function(message) {
+  //   console.log('New Message:', message);
+  //   // for a real app, would be room-only (not broadcast)
+  //   io.emit('message', message);
+  //   // socket.emit('message', message);
+  //   // socket.broadcast.emit('message', message);
+  // });
+
+  // socket.on('create or join', function(room) {
+  //   console.log('Joining Room:', room);
+  //   socket.join(room);
+  //   console.log('Client ID ' + socket.id + ' created room ' + room);
+  //   socket.emit('created', room, socket.id);
 
     // var numClients = io.sockets.sockets.length;
     // console.log(room + ' has ' + numClients + ' users.');
@@ -73,18 +110,21 @@ io.on('connection', function(socket) {
     // } else { // max two clients
     //   socket.emit('full', room);
     // }
-  });
+  // });
 
-  socket.on('ipaddr', function() {
-    var ifaces = os.networkInterfaces();
-    for (var dev in ifaces) {
-      ifaces[dev].forEach(function(details) {
-        if (details.family === 'IPv4' && details.address !== '127.0.0.1') {
-          socket.emit('ipaddr', details.address);
-        }
-      });
-    }
-  });
+  // socket.on('ipaddr', function() {
+  //   var ifaces = os.networkInterfaces();
+  //   for (var dev in ifaces) {
+  //     ifaces[dev].forEach(function(details) {
+  //       if (details.family === 'IPv4' && details.address !== '127.0.0.1') {
+  //         socket.emit('ipaddr', details.address);
+  //       }
+  //     });
+  //   }
+  // });
 });
 
-server.listen(2300);
+const PORT = 2300;
+server.listen(PORT, function(req, res) {
+  console.log('listening on port: ' + PORT);
+});

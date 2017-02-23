@@ -5,12 +5,13 @@ import {
   StyleSheet,
   TextInput,
   TouchableHighlight,
+  AlertIOS,
 } from 'react-native';
 import io from 'socket.io-client';
 
 let room = null;
 
-export default class ChatView extends Component {
+export default class EChatView extends Component {
 
   constructor(props) {
     super(props);
@@ -19,21 +20,34 @@ export default class ChatView extends Component {
       messages: []
     }
     this.user = {
-      id: 3,
-      username: "triceratops3@gmail.com"
+      id: 1,
+      username: "triceratops1@gmail.com"
     }
   }
 
   // automatically runs when component loads
   componentDidMount() {
-    this.socket = io('https://murmuring-sierra-59020.herokuapp.com');
-
-    this.socket.on('id', (socketId) => {
-      var context = this;
-      context.socket.emit('createRoom', socketId, context.user.id);
-      room = socketId;
-      console.log('*** NEW ROOM ***', socketId);
-    });
+    fetch('https://murmuring-sierra-59020.herokuapp.com/api/userQueue/getUser', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    .then((response) => response.json())
+    .then((user) => {
+      if (!user) {
+        AlertIOS.alert(
+          'Incorrect Username or Password.'
+        )
+      } else {
+        this.socket = io('https://murmuring-sierra-59020.herokuapp.com');
+        console.log('*** JOINING ROOM ***', user.room);
+        this.socket.emit('joinRoom', user.room);
+        room = user.room;
+      }
+    })
+    .done();
 
     this.socket.on('message', (message) => {
       console.log('Incoming Message:', message);
