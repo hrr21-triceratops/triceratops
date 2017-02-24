@@ -46,6 +46,16 @@ export default class ChatView extends Component {
 
   disconnect() {
     // post all messages in this.state.messages to DB
+
+    // Send array of messages in this format:
+    // {
+    //   "chatSessionID": "abcdefgh",
+    //   "senderID": 1,
+    //   "receiverID": 3,
+    //   "message": "Get dem beatz",
+    //   "date": "2017-02-23T23:31:05.177Z"
+    // }
+
     // reroute to ShopperView
   }
 
