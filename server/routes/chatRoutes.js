@@ -17,7 +17,7 @@ router.get('/chat/messages', function(req, res) {
 
 // SAVE MESSAGES TO DATABASE (Expects Array of Chat Objects)
 router.post('/chat/messages', function(req, res) {
-  var messages = req.body; // Array of Chat Objects
+  var messages = req.body.messages; // Array of Chat Objects
 
   messages.forEach(function(message) {
     chatModel.create(message, function(err, savedMessage) {
