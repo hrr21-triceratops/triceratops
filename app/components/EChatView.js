@@ -28,7 +28,7 @@ export default class EChatView extends Component {
 
   // automatically runs when component loads
   componentDidMount() {
-    fetch('https://murmuring-sierra-59020.herokuapp.com/api/userQueue/getUser', {
+    fetch('https://savvyshopper.herokuapp.com/api/userQueue/getUser', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -42,7 +42,7 @@ export default class EChatView extends Component {
           'Incorrect Username or Password.'
         )
       } else {
-        socket = io('https://murmuring-sierra-59020.herokuapp.com');
+        socket = io('https://savvyshopper.herokuapp.com/');
         console.log('*** JOINING ROOM ***', user.room);
         socket.emit('joinRoom', user.room);
         room = user.room;

@@ -26,7 +26,7 @@ export default class ChatView extends Component {
 
   // automatically runs when component loads
   componentDidMount() {
-    this.socket = io('https://murmuring-sierra-59020.herokuapp.com');
+    this.socket = io('https://savvyshopper.herokuapp.com/');
 
     this.socket.on('id', (socketId) => {
       var context = this;
