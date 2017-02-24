@@ -11,6 +11,10 @@ import io from 'socket.io-client';
 
 let room = null;
 let socket = null;
+let chatSession = {
+  expertId: 1,
+  userId: null
+};
 
 export default class EChatView extends Component {
 
@@ -19,10 +23,6 @@ export default class EChatView extends Component {
     this.state = {
       message: '',
       messages: []
-    }
-    this.user = {
-      id: 1,
-      username: "triceratops1@gmail.com"
     }
   }
 
@@ -43,8 +43,10 @@ export default class EChatView extends Component {
         )
       } else {
         socket = io('https://savvyshopper.herokuapp.com/');
+        console.log('UserId Recieved:', user.id);
+        chatSession.userId = user.id;
         console.log('*** JOINING ROOM ***', user.room);
-        socket.emit('joinRoom', user.room);
+        socket.emit('joinRoom', user.room, chatSession.expertId);
         room = user.room;
         socket.on('message', (message) => {
           console.log('Incoming Message:', message);

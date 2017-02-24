@@ -9,6 +9,11 @@ import {
 import io from 'socket.io-client';
 
 let room = null;
+let socket = null;
+let chatSession = {
+  userId: 3,
+  expertId: null
+};
 
 export default class ChatView extends Component {
 
@@ -18,24 +23,24 @@ export default class ChatView extends Component {
       message: '',
       messages: []
     }
-    this.user = {
-      id: 3,
-      username: "triceratops3@gmail.com"
-    }
   }
 
   // automatically runs when component loads
   componentDidMount() {
-    this.socket = io('https://savvyshopper.herokuapp.com/');
+    socket = io('https://savvyshopper.herokuapp.com/');
 
-    this.socket.on('id', (socketId) => {
-      var context = this;
-      context.socket.emit('createRoom', socketId, context.user.id);
+    socket.on('id', (socketId) => {
+      socket.emit('createRoom', socketId, chatSession.userId);
       room = socketId;
       console.log('*** NEW ROOM ***', socketId);
     });
 
-    this.socket.on('message', (message) => {
+    socket.on('expert', (expertId) => {
+      chatSession.expertId = expertId;
+      console.log('ExpertId Recieved:', expertId);
+    });
+
+    socket.on('message', (message) => {
       console.log('Incoming Message:', message);
       this.setState({
         messages: this.state.messages.concat([message])
@@ -61,7 +66,7 @@ export default class ChatView extends Component {
 
   sendMessage() {
     console.log('Sending Message.');
-    this.socket.emit('message', this.state.message, room);
+    socket.emit('message', this.state.message, room);
     this.setState({message: ''});
     return false;
   }
