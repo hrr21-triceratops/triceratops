@@ -28,10 +28,11 @@ export default class LoginView extends Component {
     }
   }
 
-  navigate(scene, username, averageRating, shopperExpert, active, closedChatSessions, userPreferences) {
+  navigate(scene, id, username, averageRating, shopperExpert, active, closedChatSessions, userPreferences) {
     this.props.navigator.push({
       name: scene,
       passProps: {
+        id: id,
         username: username,
         averageRating: averageRating,
         shopperExpert: shopperExpert,
@@ -61,7 +62,7 @@ export default class LoginView extends Component {
           password: password
         })
       })
-      // .then((response) => response.json())
+      .then((response) => response.json())
       .then((responseData) => {
         if (!responseData) {
           AlertIOS.alert(
@@ -69,7 +70,7 @@ export default class LoginView extends Component {
           )
         } else {
           //this.onValueChange(STORAGE_KEY, responseData.id_token);
-          this.navigate('Shopper', responseData.username, responseData.averageRating, responseData.shopperExpert, responseData.active, responseData.closedChatSessions, responseData.userPreferences);
+          this.navigate('Shopper', responseData.id, responseData.username, responseData.averageRating, responseData.shopperExpert, responseData.active, responseData.closedChatSessions, responseData.userPreferences);
         }
       })
       .done();

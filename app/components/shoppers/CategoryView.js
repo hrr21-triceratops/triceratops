@@ -36,12 +36,16 @@ let loadCategoryImage = function(category){
 export default class CategoryView extends Component {
 
   constructor(props) {
+    console.log("CATEGORY PROPS", props);
     super(props);
   }
 
   openChat() {
     this.props.navigator.push({
-      name: 'Chat'
+      name: 'Chat',
+      passProps: {
+        user: this.props.user
+      }
     })
   }
 

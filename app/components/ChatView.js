@@ -11,13 +11,14 @@ import io from 'socket.io-client';
 let room = null;
 let socket = null;
 let chatSession = {
-  userId: 3,
+  user: null,
   expertId: null
 };
 
 export default class ChatView extends Component {
 
   constructor(props) {
+    console.log("CHAT VIEW PROPS", props);
     super(props);
     this.state = {
       message: '',
@@ -29,8 +30,11 @@ export default class ChatView extends Component {
   componentDidMount() {
     socket = io('https://savvyshopper.herokuapp.com/');
 
+    //store information on chatSession
+    chatSession.user = this.props.user;
+
     socket.on('id', (socketId) => {
-      socket.emit('createRoom', socketId, chatSession.userId);
+      socket.emit('createRoom', socketId, chatSession.user.id);
       room = socketId;
       console.log('*** NEW ROOM ***', socketId);
     });
@@ -89,7 +93,7 @@ export default class ChatView extends Component {
     console.log('Sending Message.');
     let message = {
       chatSessionID: room,
-      senderID: chatSession.userId,
+      senderID: chatSession.user.id,
       receiverID: chatSession.expertId,
       message: this.state.message,
       date: new Date()
