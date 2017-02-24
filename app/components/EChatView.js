@@ -57,12 +57,18 @@ export default class EChatView extends Component {
       }
     })
     .done();
-
   }
 
   sendMessage() {
     console.log('Sending Message.');
-    socket.emit('message', this.state.message, room);
+    let message = {
+      chatSessionID: room,
+      senderID: chatSession.expertId,
+      receiverID: chatSession.userId,
+      message: this.state.message,
+      date: new Date()
+    };
+    socket.emit('message', message, room);
     this.setState({message: ''});
     return false;
   }

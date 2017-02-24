@@ -61,12 +61,38 @@ export default class ChatView extends Component {
     //   "date": "2017-02-23T23:31:05.177Z"
     // }
 
+    // REMOVE FIRST TWO ITEMS IN ARRAY (Connection Verification)
+    this.state.messages.shift();
+    this.state.messages.shift();
+
+    fetch('https://savvyshopper.herokuapp.com/api/chat/messages', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: this.state.messages
+    })
+    .then((response) => response.json())
+    .then((responseData) => {
+      console.log(responseData);
+    })
+    .done();
+
+
     // reroute to ShopperView
   }
 
   sendMessage() {
     console.log('Sending Message.');
-    socket.emit('message', this.state.message, room);
+    let message = {
+      chatSessionID: room,
+      senderID: chatSession.userId,
+      receiverID: chatSession.expertId,
+      message: this.state.message,
+      date: new Date()
+    };
+    socket.emit('message', message, room);
     this.setState({message: ''});
     return false;
   }
