@@ -44,6 +44,11 @@ export default class ChatView extends Component {
 
   }
 
+  disconnect() {
+    // post all messages in this.state.messages to DB
+    // reroute to ShopperView
+  }
+
   sendMessage() {
     console.log('Sending Message.');
     this.socket.emit('message', this.state.message, room);
@@ -74,6 +79,11 @@ export default class ChatView extends Component {
             onPress={(this.sendMessage.bind(this))}
             style={styles.button}>
             <Text style={styles.buttonText}>Send Message</Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            onPress={(this.disconnect.bind(this))}
+            style={styles.button}>
+            <Text style={styles.buttonText}>Question Answered</Text>
           </TouchableHighlight>
         </View>
       </View>
