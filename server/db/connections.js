@@ -1,7 +1,13 @@
 //Mongo Connection
 
 const mongoose = require('mongoose');
-var mongooseConnectionURL = process.env.MONGODB_URI;
+var mongooseConnectionURL;
+
+if (process.env.MONGODB_URI) {
+  mongooseConnectionURL = process.env.MONGODB_URI;
+} else {
+  mongooseConnectionURL = 'mongodb://localhost/';
+}
 
 //Postgres Connection Using Sequelize
 

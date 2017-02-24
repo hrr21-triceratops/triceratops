@@ -77,14 +77,15 @@ io.on('connection', function(socket) {
     };
     queue.push(user);
     console.log('Current Queue:', queue);
-    io.in(room).emit('message', '*** Finding your expert... ***');
+    io.in(room).emit('message', {message: '*** Finding Expert ***'});
   });
 
   // RUNS WHEN EXPERT JOINS CHATROOM
-  socket.on('joinRoom', function(room) {
+  socket.on('joinRoom', function(room, expertId) {
     console.log('Joining Room:', room);
     socket.join(room);
-    io.in(room).emit('message', '*** Expert Connected! ***');
+    io.in(room).emit('expert', expertId);
+    io.in(room).emit('message', {message: '*** Expert Connected ***'});
   });
 
   // RUNS WHEN MESSAGE IS SENT BY USER OR EXPERT
@@ -93,9 +94,6 @@ io.on('connection', function(socket) {
     io.in(room).emit('message', message);
   });
 
-  // on closed connection
-    // send messages to mongo database (initiated client-side)
-    // navigate to rating view (client-side)
 });
 
 const PORT = process.env.PORT || 2300;

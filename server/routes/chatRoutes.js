@@ -15,27 +15,17 @@ router.get('/chat/messages', function(req, res) {
   });
 });
 
-// router.post('/chat/:message', function(req, res) {
-//   chatModel.create({
-//     "to": "expert1@abc.com",
-//     "from": "john@cnet.com",
-//     "message": "I definitely think that McDonalds is an amazing choice!"
-//   }, function(err, newMessageAdded) {
-//     res.send(newMessageAdded);
-//   });
-// });
+// SAVE MESSAGES TO DATABASE (Expects Array of Chat Objects)
+router.post('/chat/messages', function(req, res) {
+  var messages = req.body; // Array of Chat Objects
 
-router.post('/chat/test', function(req, res) {
-  console.log('Inside Chat Test!');
-  chatModel.create({
-    chatSessionID: 'abcdefgh',
-    senderID: 3,
-    receiverID: 1,
-    message: 'Work!'
-  }, function(err, newMessageAdded) {
+  messages.forEach(function(message) {
+    chatModel.create(message, function(err, savedMessage) {
       if (err) throw err;
-      res.send(newMessageAdded);
     });
+  });
+
+  res.send('Messages Saved.');
 });
 
 module.exports = router;
