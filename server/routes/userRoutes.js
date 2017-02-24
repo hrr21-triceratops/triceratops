@@ -154,7 +154,9 @@ router.post('/users', function(req, res) {
       userModel.create({
         username: username,
         password: hash,
-        userRating: 0,
+        shopperExpert: false,
+        active: false,
+        closedChatSessions: [],
         userPreferences: {}
       }).then(function(user) {
         res.status(201).send({
