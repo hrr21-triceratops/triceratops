@@ -8,7 +8,7 @@ var userModel = sequelize.define('user', {
   averageRating: { type: Sequelize.DECIMAL(10, 2), defaultValue: 0},
   shopperExpert: Sequelize.BOOLEAN,
   active: Sequelize.BOOLEAN,
-  closedChatSessions: Sequelize.ARRAY(Sequelize.INTEGER),
+  closedChatSessions: Sequelize.ARRAY(Sequelize.STRING),
   userPreferences: Sequelize.JSONB
 });
 
