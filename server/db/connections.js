@@ -1,7 +1,7 @@
 //Mongo Connection
 
 const mongoose = require('mongoose');
-var mongooseConnectionURL = 'mongodb://heroku_zn1611mb:od1ajaucf2vv1slo4oe6vimpl@ds161039.mlab.com:61039/heroku_zn1611mb';
+var mongooseConnectionURL = process.env.MONGODB_URI;
 
 //Postgres Connection Using Sequelize
 
