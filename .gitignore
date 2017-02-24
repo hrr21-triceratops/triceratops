@@ -1,5 +1,6 @@
 ### node etc ###
 
+app/
 node_modules
 faq.html
 node_modules/
