@@ -13,6 +13,7 @@ import AccountView from './shoppers/AccountView';
 export default class ShopperView extends Component {
 
   constructor(props) {
+    console.log("PROPS", props);
     super(props);
   }
 
@@ -20,13 +21,13 @@ export default class ShopperView extends Component {
     return (
       <Swiper style={styles.wrapper} loop={false} showsButtons={true}>
         <View style={styles.slide1}>
-          <CategoryView />
+          <CategoryView navigator={this.props.navigator} user={this.props} />
         </View>
         <View style={styles.slide2}>
-          <ChatHistoryView />
+          <ChatHistoryView navigator={this.props.navigator} user={this.props} />
         </View>
         <View style={styles.slide3}>
-          <AccountView />
+          <AccountView navigator={this.props.navigator} user={this.props} />
         </View>
       </Swiper>
     )

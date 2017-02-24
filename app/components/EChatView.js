@@ -5,20 +5,20 @@ import {
   StyleSheet,
   TextInput,
   TouchableHighlight,
+  AlertIOS,
 } from 'react-native';
 import io from 'socket.io-client';
 
 let room = null;
 let socket = null;
 let chatSession = {
-  user: null,
-  expertId: null
+  expertId: 1,
+  userId: null
 };
 
-export default class ChatView extends Component {
+export default class EChatView extends Component {
 
   constructor(props) {
-    console.log("CHAT VIEW PROPS", props);
     super(props);
     this.state = {
       message: '',
@@ -28,73 +28,43 @@ export default class ChatView extends Component {
 
   // automatically runs when component loads
   componentDidMount() {
-    socket = io('https://savvyshopper.herokuapp.com/');
-
-    //store information on chatSession
-    chatSession.user = this.props.user;
-
-    socket.on('id', (socketId) => {
-      socket.emit('createRoom', socketId, chatSession.user.id);
-      room = socketId;
-      console.log('*** NEW ROOM ***', socketId);
-    });
-
-    socket.on('expert', (expertId) => {
-      chatSession.expertId = expertId;
-      console.log('ExpertId Recieved:', expertId);
-    });
-
-    socket.on('message', (message) => {
-      console.log('Incoming Message:', message);
-      this.setState({
-        messages: this.state.messages.concat([message])
-      });
-    });
-
-  }
-
-  disconnect() {
-    // post all messages in this.state.messages to DB
-
-    // Send array of messages in this format:
-    // {
-    //   "chatSessionID": "abcdefgh",
-    //   "senderID": 1,
-    //   "receiverID": 3,
-    //   "message": "Get dem beatz",
-    //   "date": "2017-02-23T23:31:05.177Z"
-    // }
-
-    // REMOVE FIRST TWO ITEMS IN ARRAY (Connection Verification)
-    this.state.messages.shift();
-    this.state.messages.shift();
-
-    fetch('https://savvyshopper.herokuapp.com/api/chat/messages', {
-      method: 'POST',
+    fetch('https://savvyshopper.herokuapp.com/api/userQueue/getUser', {
+      method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        messages: this.state.messages
-      })
+      }
     })
     .then((response) => response.json())
-    .then((responseData) => {
-      console.log(responseData);
+    .then((user) => {
+      if (!user) {
+        AlertIOS.alert(
+          'Incorrect Username or Password.'
+        )
+      } else {
+        socket = io('https://savvyshopper.herokuapp.com/');
+        console.log('UserId Recieved:', user.id);
+        chatSession.userId = user.id;
+        console.log('*** JOINING ROOM ***', user.room);
+        socket.emit('joinRoom', user.room, chatSession.expertId);
+        room = user.room;
+        socket.on('message', (message) => {
+          console.log('Incoming Message:', message);
+          this.setState({
+            messages: this.state.messages.concat([message])
+          });
+        });
+      }
     })
     .done();
-
-
-    // reroute to ShopperView
   }
 
   sendMessage() {
     console.log('Sending Message.');
     let message = {
       chatSessionID: room,
-      senderID: chatSession.user.id,
-      receiverID: chatSession.expertId,
+      senderID: chatSession.expertId,
+      receiverID: chatSession.userId,
       message: this.state.message,
       date: new Date()
     };
@@ -126,11 +96,6 @@ export default class ChatView extends Component {
             onPress={(this.sendMessage.bind(this))}
             style={styles.button}>
             <Text style={styles.buttonText}>Send Message</Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            onPress={(this.disconnect.bind(this))}
-            style={styles.button}>
-            <Text style={styles.buttonText}>Question Answered</Text>
           </TouchableHighlight>
         </View>
       </View>

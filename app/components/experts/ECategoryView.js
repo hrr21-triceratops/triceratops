@@ -10,7 +10,6 @@ import {
   Navigator,
 } from 'react-native';
 import Swiper from 'react-native-swiper';
-import ChatView from '../ChatView';
 
 //eventually, replace with a call to API for categories?
 var categories = ['HOME', 'FOOD', 'TECH', 'WOMEN\'S FASHION', 'MEN\'S FASHION', 'ENTERTAINMENT'];
@@ -33,20 +32,16 @@ let loadCategoryImage = function(category){
   }
 }
 
-export default class CategoryView extends Component {
+export default class ECategoryView extends Component {
 
   constructor(props) {
-    console.log("CATEGORY PROPS", props);
     super(props);
   }
 
   openChat() {
     this.props.navigator.push({
-      name: 'Chat',
-      passProps: {
-        user: this.props.user
-      }
-    })
+      name: 'Chat'
+    });
   }
 
   render() {

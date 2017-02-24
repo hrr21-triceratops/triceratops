@@ -20,7 +20,7 @@ export default class LoginView extends Component {
     };
   }
 
-  async _onValueChange(item, selectedValue) {
+  async onValueChange(item, selectedValue) {
     try {
       await AsyncStorage.setItem(item, selectedValue);
     } catch (error) {
@@ -28,13 +28,22 @@ export default class LoginView extends Component {
     }
   }
 
-  _navigate(scene) {
+  navigate(scene, id, username, averageRating, shopperExpert, active, closedChatSessions, userPreferences) {
     this.props.navigator.push({
-      name: scene
+      name: scene,
+      passProps: {
+        id: id,
+        username: username,
+        averageRating: averageRating,
+        shopperExpert: shopperExpert,
+        active: active,
+        closedChatSessions: closedChatSessions,
+        userPreferences: userPreferences
+      }
     })
   }
 
-  _userLogin() {
+  userLogin() {
     var username = this.state.username;
     var password = this.state.password;
     if (!this.state.username || !this.state.password) {
@@ -42,7 +51,7 @@ export default class LoginView extends Component {
         'Missing Username or Password.'
       )
     } else {
-      fetch("http://localhost:2300/api/users/login", {
+      fetch("https://savvyshopper.herokuapp.com/api/users/login", {
         method: "POST",
         headers: {
           'Accept': 'application/json',
@@ -60,8 +69,8 @@ export default class LoginView extends Component {
             'Incorrect Username or Password.'
           )
         } else {
-          this._onValueChange(STORAGE_KEY, responseData.id_token)
-          this._navigate('Shopper')
+          //this.onValueChange(STORAGE_KEY, responseData.id_token);
+          this.navigate('Shopper', responseData.id, responseData.username, responseData.averageRating, responseData.shopperExpert, responseData.active, responseData.closedChatSessions, responseData.userPreferences);
         }
       })
       .done();
@@ -87,14 +96,14 @@ export default class LoginView extends Component {
             style={styles.formInput}
           />
           <TouchableHighlight
-            onPress={(this._userLogin.bind(this))}
+            onPress={(this.userLogin.bind(this))}
             style={styles.button}>
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableHighlight>
         </View>
         <View>
           <Text
-            onPress={() => this._navigate('Signup')}
+            onPress={() => this.navigate('Signup')}
             style={styles.text}>Sign Up to be a Savvy Shopper</Text>
         </View>
       </View>

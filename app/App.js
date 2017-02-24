@@ -14,6 +14,7 @@ import SignupView from './components/SignupView';
 import ShopperView from './components/ShopperView';
 import ExpertView from './components/ExpertView';
 import ChatView from './components/ChatView';
+import EChatView from './components/EChatView';
 
 //setup the app component to register with App registry, everything happens inside of this wrapper
 class app extends Component {
@@ -26,13 +27,16 @@ class app extends Component {
       return <SignupView navigator={navigator} />
     }
     if (route.name === 'Shopper') {
-      return <ShopperView navigator={navigator} />
+      return <ShopperView navigator={navigator} {...route.passProps} />
     }
     if (route.name === 'Expert') {
-      return <ExpertView navigator={navigator} />
+      return <ExpertView navigator={navigator} {...route.passProps} />
     }
     if (route.name === 'Chat') {
-      return <ChatView navigator={navigator} />
+      return <ChatView navigator={navigator} {...route.passProps} />
+    }
+    if (route.name === 'EChat') {
+      return <EChatView navigator={navigator} {...route.passProps} />
     }
   }
 
@@ -41,9 +45,9 @@ class app extends Component {
       //React native navigator component, sets a default route for when the app is launched
       // modified initial route for testing to be shopper page
       <Navigator
-        style={{ flex: 1 }}
-        initialRoute={{ name: 'Chat' }}
-        renderScene={ this.renderScene }
+        style={{flex: 1}}
+        initialRoute={{name: 'Login'}}
+        renderScene={this.renderScene}
       />
     );
   }

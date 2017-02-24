@@ -9,19 +9,23 @@ const chatModel = require('../db/schemas/chatSchema.js');
 // })
 
 router.get('/chat/messages', function(req, res) {
+  console.log('Finding messages...');
   chatModel.find({}, function(err, messages) {
     res.send(messages);
   });
 });
 
-router.post('/chat/:message', function(req, res) {
-  chatModel.create({
-    "to": "expert1@abc.com",
-    "from": "john@cnet.com",
-    "message": "I definitely think that McDonalds is an amazing choice!"
-  }, function(err, newMessageAdded) {
-    res.send(newMessageAdded);
+// SAVE MESSAGES TO DATABASE (Expects Array of Chat Objects)
+router.post('/chat/messages', function(req, res) {
+  var messages = req.body.messages; // Array of Chat Objects
+
+  messages.forEach(function(message) {
+    chatModel.create(message, function(err, savedMessage) {
+      if (err) throw err;
+    });
   });
+
+  res.send('Messages Saved.');
 });
 
 module.exports = router;
