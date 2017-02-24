@@ -6,31 +6,28 @@ import {
   Image,
 } from 'react-native';
 import Swiper from 'react-native-swiper';
-import ECategoryView from './experts/ECategoryView';
+import CategoryView from './shoppers/CategoryView';
 import EChatHistoryView from './experts/EChatHistoryView';
 import EAccountView from './experts/EAccountView';
 
 export default class ExpertView extends Component {
 
   constructor(props) {
+    console.log("PROPS", props);
     super(props);
-    this.user = {
-      id: 1,
-      username: "triceratops1@gmail.com"
-    }
   }
 
   render() {
     return (
       <Swiper style={styles.wrapper} loop={false} showsButtons={true}>
         <View style={styles.slide1}>
-          <ECategoryView navigator={this.props.navigator} user={this.user}/>
+          <CategoryView navigator={this.props.navigator} user={this.props} />
         </View>
         <View style={styles.slide2}>
-          <EChatHistoryView navigator={this.props.navigator} user={this.user} />
+          <EChatHistoryView navigator={this.props.navigator} expert={this.props} />
         </View>
         <View style={styles.slide3}>
-          <EAccountView navigator={this.props.navigator} user={this.user}/>
+          <EAccountView navigator={this.props.navigator} expert={this.props} />
         </View>
       </Swiper>
     )
