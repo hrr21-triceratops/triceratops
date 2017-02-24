@@ -129,9 +129,10 @@ router.post('/users/login', function(req, res) {
         return res.status(401).send("Incorrect password.");
       }
 
-      res.status(201).send({
-        id_token: createToken(user)
-      });
+      res.status(201).send(
+        //{id_token: createToken(user)}
+        user
+      );
     });
   });
 });
@@ -159,9 +160,10 @@ router.post('/users', function(req, res) {
         closedChatSessions: [],
         userPreferences: {}
       }).then(function(user) {
-        res.status(201).send({
-          id_token: createToken(user)
-        });
+        res.status(201).send(
+        //{id_token: createToken(user)}
+        user
+        );
       });
     });
   });

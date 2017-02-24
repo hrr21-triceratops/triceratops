@@ -28,9 +28,17 @@ export default class LoginView extends Component {
     }
   }
 
-  navigate(scene) {
+  navigate(scene, username, averageRating, shopperExpert, active, closedChatSessions, userPreferences) {
     this.props.navigator.push({
-      name: scene
+      name: scene,
+      passProps: {
+        username: username,
+        averageRating: averageRating,
+        shopperExpert: shopperExpert,
+        active: active,
+        closedChatSessions: closedChatSessions,
+        userPreferences: userPreferences
+      }
     })
   }
 
@@ -53,15 +61,15 @@ export default class LoginView extends Component {
           password: password
         })
       })
-      .then((response) => response.json())
+      // .then((response) => response.json())
       .then((responseData) => {
         if (!responseData) {
           AlertIOS.alert(
             'Incorrect Username or Password.'
           )
         } else {
-          this.onValueChange(STORAGE_KEY, responseData.id_token)
-          this.navigate('Shopper')
+          //this.onValueChange(STORAGE_KEY, responseData.id_token);
+          this.navigate('Shopper', responseData.username, responseData.averageRating, responseData.shopperExpert, responseData.active, responseData.closedChatSessions, responseData.userPreferences);
         }
       })
       .done();
