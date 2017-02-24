@@ -13,6 +13,7 @@ import AccountView from './shoppers/AccountView';
 export default class ShopperView extends Component {
 
   constructor(props) {
+    console.log("PROPS", props);
     super(props);
     this.user = {
       id: 3,

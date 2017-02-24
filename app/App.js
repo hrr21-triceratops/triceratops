@@ -27,16 +27,16 @@ class app extends Component {
       return <SignupView navigator={navigator} />
     }
     if (route.name === 'Shopper') {
-      return <ShopperView navigator={navigator} />
+      return <ShopperView navigator={navigator} {...route.passProps} />
     }
     if (route.name === 'Expert') {
-      return <ExpertView navigator={navigator} />
+      return <ExpertView navigator={navigator} {...route.passProps} />
     }
     if (route.name === 'Chat') {
-      return <ChatView navigator={navigator} />
+      return <ChatView navigator={navigator} {...route.passProps} />
     }
     if (route.name === 'EChat') {
-      return <EChatView navigator={navigator} />
+      return <EChatView navigator={navigator} {...route.passProps} />
     }
   }
 
@@ -46,7 +46,7 @@ class app extends Component {
       // modified initial route for testing to be shopper page
       <Navigator
         style={{flex: 1}}
-        initialRoute={{name: 'Expert'}}
+        initialRoute={{name: 'LoginView'}}
         renderScene={this.renderScene}
       />
     );
