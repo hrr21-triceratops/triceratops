@@ -42,7 +42,7 @@ export default class LoginView extends Component {
         'Missing Username or Password.'
       )
     } else {
-      fetch("http://localhost:2300/api/users/login", {
+      fetch("https://savvyshopper.herokuapp.com/api/users/login", {
         method: "POST",
         headers: {
           'Accept': 'application/json',

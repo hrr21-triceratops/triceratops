@@ -1,7 +1,7 @@
 //Mongo Connection
 
 const mongoose = require('mongoose');
-const mongooseConnectionURL = "mongodb://localhost/chat/messages";
+var mongooseConnectionURL = process.env.MONGODB_URI;
 
 //Postgres Connection Using Sequelize
 
@@ -35,3 +35,9 @@ module.exports = {
   'sequelize': sequelize,
   'mongoose': mongoose.connect(mongooseConnectionURL)
 };
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('MONGODB Database Connected.');
+});

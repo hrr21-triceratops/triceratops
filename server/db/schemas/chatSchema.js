@@ -1,7 +1,7 @@
 var mongoose = require('../connections.js').mongoose;
 
 var chatSchema = mongoose.Schema({
-  chatSessionID: { type: Number, required: true },
+  chatSessionID: { type: String, required: true },
   senderID: { type: Number, required: true },
   receiverID: { type: Number, required: true },
   message: { type: String, required: true },
