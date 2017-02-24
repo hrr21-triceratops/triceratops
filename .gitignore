@@ -1,7 +1,5 @@
 ### node etc ###
 
-app/
-tests/
 node_modules
 faq.html
 node_modules/
