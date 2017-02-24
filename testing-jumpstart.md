@@ -50,3 +50,8 @@ check that all the servers/databases are running
 run npm test from the app directory
 
 
+
+run 'npm test' from the main directory in terminal
+
+OTHER NOTES:
+Need to export the path to './App.js' from index file for tests to be able to pass
