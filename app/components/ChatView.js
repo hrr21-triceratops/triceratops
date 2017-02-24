@@ -66,8 +66,9 @@ export default class ChatView extends Component {
     // }
 
     // REMOVE FIRST TWO ITEMS IN ARRAY (Connection Verification)
-    this.state.messages.shift();
-    this.state.messages.shift();
+    let messages = this.state.messages;
+    messages.shift();
+    messages.shift();
 
     fetch('https://savvyshopper.herokuapp.com/api/chat/messages', {
       method: 'POST',
@@ -76,10 +77,9 @@ export default class ChatView extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        messages: this.state.messages
+        messages: messages
       })
     })
-    .then((response) => response.json())
     .then((responseData) => {
       console.log(responseData);
     })
