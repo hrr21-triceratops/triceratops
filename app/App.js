@@ -46,7 +46,7 @@ class app extends Component {
       // modified initial route for testing to be shopper page
       <Navigator
         style={{flex: 1}}
-        initialRoute={{name: 'LoginView'}}
+        initialRoute={{name: 'Login'}}
         renderScene={this.renderScene}
       />
     );
