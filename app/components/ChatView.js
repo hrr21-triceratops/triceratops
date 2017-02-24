@@ -71,7 +71,9 @@ export default class ChatView extends Component {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: this.state.messages
+      body: JSON.stringify({
+        messages: this.state.messages
+      })
     })
     .then((response) => response.json())
     .then((responseData) => {
@@ -104,8 +106,8 @@ export default class ChatView extends Component {
         <View>
           {this.state.messages.map(function(msg) {
             return (
-              <View key={msg}>
-                <Text style={styles.text}>{msg}</Text>
+              <View key={msg.message}>
+                <Text style={styles.text}>{msg.message}</Text>
               </View>
             )
           })}

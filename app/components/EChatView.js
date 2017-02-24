@@ -80,8 +80,8 @@ export default class EChatView extends Component {
         <View>
           {this.state.messages.map(function(msg) {
             return (
-              <View key={msg}>
-                <Text style={styles.text}>{msg}</Text>
+              <View key={msg.message}>
+                <Text style={styles.text}>{msg.message}</Text>
               </View>
             )
           })}
