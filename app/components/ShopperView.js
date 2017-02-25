@@ -33,7 +33,7 @@ export default class ShopperView extends Component {
       return (
         <Swiper style={styles.wrapper} loop={false} showsButtons={true}>
           <View style={styles.slide2}>
-            <ChatHistoryView navigator={this.props.navigator} user={this.props} />
+            <ChatHistoryView navigator={this.props.navigator} user={this.props} getActive={this.getActive.bind(this)} />
           </View>
           <View style={styles.slide3}>
             <AccountView navigator={this.props.navigator} user={this.props} activeSwitcher={this.activeSwitcher.bind(this)} getActive={this.getActive.bind(this)} />
@@ -47,7 +47,7 @@ export default class ShopperView extends Component {
             <CategoryView navigator={this.props.navigator} user={this.props} />
           </View>
           <View style={styles.slide2}>
-            <ChatHistoryView navigator={this.props.navigator} user={this.props} />
+            <ChatHistoryView navigator={this.props.navigator} user={this.props} getActive={this.getActive.bind(this)} />
           </View>
           <View style={styles.slide3}>
             <AccountView navigator={this.props.navigator} user={this.props} activeSwitcher={this.activeSwitcher.bind(this)} getActive={this.getActive.bind(this)} />

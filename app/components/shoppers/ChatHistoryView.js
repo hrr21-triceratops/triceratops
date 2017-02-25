@@ -30,7 +30,7 @@ export default class ChatHistoryView extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.text}>Chat History</Text>
-        {this.props.user.shopperExpert && <TouchableHighlight
+        {this.props.getActive() && <TouchableHighlight
           style={styles.button}
           onPress={() => this.navigate('Chat')}>
           <Text style={styles.buttonText}>HALP</Text>
