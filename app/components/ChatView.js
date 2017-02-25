@@ -68,6 +68,7 @@ export default class ChatView extends Component {
           )
         } else {
           console.log('UserId Recieved:', user.id);
+          chatSession.user = {id: user.id};
           chatSession.expertId = this.props.user.id;
           console.log('*** JOINING ROOM ***', user.room);
           socket.emit('joinRoom', user.room, chatSession.expertId);
@@ -83,6 +84,12 @@ export default class ChatView extends Component {
       .done();
     }
 
+  }
+
+  navigate() {
+    this.props.navigator.push({
+      name: 'Shopper'
+    });
   }
 
   //Disconnect only applies to client
@@ -115,6 +122,7 @@ export default class ChatView extends Component {
     })
     .then((responseData) => {
       console.log(responseData);
+      this.navigate();
     })
     .done();
 
@@ -132,9 +140,9 @@ export default class ChatView extends Component {
     };
     if(this.props.user.shopperExpert){
       message.senderID = chatSession.expertId;
-      message.receiverID = chatSession.userId;
+      message.receiverID = chatSession.user.id;
     } else {
-      message.senderID = chatSession.userId;
+      message.senderID = chatSession.user.id;
       message.receiverID = chatSession.expertId;
     };
     socket.emit('message', message, room);
