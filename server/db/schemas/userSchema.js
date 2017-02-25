@@ -6,10 +6,10 @@ var userModel = sequelize.define('user', {
   username: Sequelize.STRING,
   password: Sequelize.STRING,
   averageRating: { type: Sequelize.DECIMAL(10, 2), defaultValue: 0},
-  shopperExpert: Sequelize.BOOLEAN,
-  active: Sequelize.BOOLEAN,
-  closedChatSessions: Sequelize.ARRAY(Sequelize.STRING),
-  userPreferences: Sequelize.JSONB
+  shopperExpert: { type: Sequelize.BOOLEAN, defaultValue: false },
+  active: { type: Sequelize.BOOLEAN, defaultValue: false },
+  closedChatSessions: { type: Sequelize.ARRAY(Sequelize.STRING), defaultValue: [] },
+  userPreferences: { type: Sequelize.JSONB, defaultValue: {} }
 });
 
 userModel.sync({force: false}).then(function () {
