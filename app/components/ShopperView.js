@@ -15,6 +15,17 @@ export default class ShopperView extends Component {
   constructor(props) {
     console.log("PROPS", props);
     super(props);
+    this.state = {
+      isActive: false
+    };
+  }
+
+  activeSwitcher() {
+    this.setState({isActive: !this.state.isActive});
+  }
+
+  getActive() {
+    return this.state.isActive;
   }
 
   render() {
@@ -25,7 +36,7 @@ export default class ShopperView extends Component {
             <ChatHistoryView navigator={this.props.navigator} user={this.props} />
           </View>
           <View style={styles.slide3}>
-            <AccountView navigator={this.props.navigator} user={this.props} />
+            <AccountView navigator={this.props.navigator} user={this.props} activeSwitcher={this.activeSwitcher.bind(this)} getActive={this.getActive.bind(this)} />
           </View>
         </Swiper>
       )

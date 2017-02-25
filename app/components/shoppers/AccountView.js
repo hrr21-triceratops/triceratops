@@ -12,9 +12,26 @@ export default class AccountView extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+
+    };
   }
 
   render() {
+    let button = null;
+    if(this.props.getActive()){
+      button = <TouchableHighlight
+            onPress={() => this.props.activeSwitcher()}
+            style={styles.button}>
+            <Text style={styles.buttonText}>Go Offline</Text>
+          </TouchableHighlight>
+    } else {
+      button = <TouchableHighlight
+            onPress={() => this.props.activeSwitcher()}
+            style={styles.button}>
+            <Text style={styles.buttonText}>Go Online</Text>
+          </TouchableHighlight>
+    }
     return (
       <View>
         <Text style={styles.title}>PREFERENCES</Text>
@@ -24,11 +41,16 @@ export default class AccountView extends Component {
         <Text style={styles.text}>Women\'s Fashion</Text>
         <Text style={styles.text}>Men\'s Fashion</Text>
         <Text style={styles.text}>Entertainment</Text>
-        <TouchableHighlight
-          onPress={() => AlertIOS.alert('Setting up expert account...')}
-          style={styles.button}>
-          <Text style={styles.buttonText}>Become an Expert</Text>
-        </TouchableHighlight>
+        {!this.props.user.shopperExpert &&
+          <TouchableHighlight
+            onPress={() => AlertIOS.alert('Setting up expert account...')}
+            style={styles.button}>
+            <Text style={styles.buttonText}>Become an Expert</Text>
+          </TouchableHighlight>
+        }
+        {this.props.user.shopperExpert &&
+          button
+        }
         <TouchableHighlight
           onPress={() => AlertIOS.alert('Logging Out...')}
           style={styles.button}>
