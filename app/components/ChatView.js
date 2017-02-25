@@ -29,30 +29,62 @@ export default class ChatView extends Component {
   // automatically runs when component loads
   componentDidMount() {
     socket = io('https://savvyshopper.herokuapp.com/');
+    if(!this.props.user.shopperExpert){
 
-    //store information on chatSession
-    chatSession.user = this.props.user;
+      //store information on chatSession
+      chatSession.user = this.props.user;
 
-    socket.on('id', (socketId) => {
-      socket.emit('createRoom', socketId, chatSession.user.id);
-      room = socketId;
-      console.log('*** NEW ROOM ***', socketId);
-    });
-
-    socket.on('expert', (expertId) => {
-      chatSession.expertId = expertId;
-      console.log('ExpertId Recieved:', expertId);
-    });
-
-    socket.on('message', (message) => {
-      console.log('Incoming Message:', message);
-      this.setState({
-        messages: this.state.messages.concat([message])
+      socket.on('id', (socketId) => {
+        socket.emit('createRoom', socketId, chatSession.user.id);
+        room = socketId;
+        console.log('*** NEW ROOM ***', socketId);
       });
-    });
+
+      socket.on('expert', (expertId) => {
+        chatSession.expertId = expertId;
+        console.log('ExpertId Recieved:', expertId);
+      });
+
+      socket.on('message', (message) => {
+        console.log('Incoming Message:', message);
+        this.setState({
+          messages: this.state.messages.concat([message])
+        });
+      });
+    } else {
+      fetch('https://savvyshopper.herokuapp.com/api/userQueue/getUser', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((response) => response.json())
+      .then((user) => {
+        if (!user) {
+          AlertIOS.alert(
+            'Incorrect Username or Password.'
+          )
+        } else {
+          console.log('UserId Recieved:', user.id);
+          chatSession.expertId = this.props.user.id;
+          console.log('*** JOINING ROOM ***', user.room);
+          socket.emit('joinRoom', user.room, chatSession.expertId);
+          room = user.room;
+          socket.on('message', (message) => {
+            console.log('Incoming Message:', message);
+            this.setState({
+              messages: this.state.messages.concat([message])
+            });
+          });
+        }
+      })
+      .done();
+    }
 
   }
 
+  //Disconnect only applies to client
   disconnect() {
     // post all messages in this.state.messages to DB
 
@@ -90,13 +122,19 @@ export default class ChatView extends Component {
   }
 
   sendMessage() {
+    //Need to flip sender/reciever based on user/expert
     console.log('Sending Message.');
     let message = {
       chatSessionID: room,
-      senderID: chatSession.user.id,
-      receiverID: chatSession.expertId,
       message: this.state.message,
       date: new Date()
+    };
+    if(this.props.user.shopperExpert){
+      message.senderID = chatSession.expertId;
+      message.receiverID = chatSession.userId;
+    } else {
+      message.senderID = chatSession.userId;
+      message.receiverID = chatSession.expertId;
     };
     socket.emit('message', message, room);
     this.setState({message: ''});
@@ -127,11 +165,13 @@ export default class ChatView extends Component {
             style={styles.button}>
             <Text style={styles.buttonText}>Send Message</Text>
           </TouchableHighlight>
-          <TouchableHighlight
-            onPress={(this.disconnect.bind(this))}
-            style={styles.button}>
-            <Text style={styles.buttonText}>Question Answered</Text>
-          </TouchableHighlight>
+          {!this.props.user.shopperExpert &&
+            <TouchableHighlight
+              onPress={(this.disconnect.bind(this))}
+              style={styles.button}>
+              <Text style={styles.buttonText}>Question Answered</Text>
+            </TouchableHighlight>
+          }
         </View>
       </View>
     )

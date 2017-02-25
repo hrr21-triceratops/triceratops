@@ -11,7 +11,6 @@ import {
 //load views from external files
 import LoginView from './components/LoginView';
 import ShopperView from './components/ShopperView';
-import ExpertView from './components/ExpertView';
 import ChatView from './components/ChatView';
 import EChatView from './components/EChatView';
 
@@ -24,9 +23,6 @@ class app extends Component {
     }
     if (route.name === 'Shopper') {
       return <ShopperView navigator={navigator} {...route.passProps} />
-    }
-    if (route.name === 'Expert') {
-      return <ExpertView navigator={navigator} {...route.passProps} />
     }
     if (route.name === 'Chat') {
       return <ChatView navigator={navigator} {...route.passProps} />
