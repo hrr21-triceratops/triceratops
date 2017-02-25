@@ -11,10 +11,8 @@ import Swiper from 'react-native-swiper';
 export default class AccountView extends Component {
 
   constructor(props) {
+    console.log("ACCOUNT PROPS", props);
     super(props);
-    this.state = {
-
-    };
   }
 
   render() {

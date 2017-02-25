@@ -29,7 +29,7 @@ export default class ShopperView extends Component {
   }
 
   render() {
-    if (this.props.shopperExpert) {
+    if (this.props.shopperExpert && this.getActive()) {
       return (
         <Swiper style={styles.wrapper} loop={false} showsButtons={true}>
           <View style={styles.slide2}>
@@ -50,7 +50,7 @@ export default class ShopperView extends Component {
             <ChatHistoryView navigator={this.props.navigator} user={this.props} />
           </View>
           <View style={styles.slide3}>
-            <AccountView navigator={this.props.navigator} user={this.props} />
+            <AccountView navigator={this.props.navigator} user={this.props} activeSwitcher={this.activeSwitcher.bind(this)} getActive={this.getActive.bind(this)} />
           </View>
         </Swiper>
       )
