@@ -11,10 +11,31 @@ import Swiper from 'react-native-swiper';
 export default class AccountView extends Component {
 
   constructor(props) {
+    console.log("ACCOUNT PROPS", props);
     super(props);
   }
 
+  navigate() {
+    this.props.navigator.push({
+      name: 'Login'
+    });
+  }
+
   render() {
+    let button = null;
+    if(this.props.getActive()){
+      button = <TouchableHighlight
+            onPress={() => this.props.activeSwitcher()}
+            style={styles.button}>
+            <Text style={styles.buttonText}>Go Offline</Text>
+          </TouchableHighlight>
+    } else {
+      button = <TouchableHighlight
+            onPress={() => this.props.activeSwitcher()}
+            style={styles.button}>
+            <Text style={styles.buttonText}>Go Online</Text>
+          </TouchableHighlight>
+    }
     return (
       <View>
         <Text style={styles.title}>PREFERENCES</Text>
@@ -24,13 +45,18 @@ export default class AccountView extends Component {
         <Text style={styles.text}>Women\'s Fashion</Text>
         <Text style={styles.text}>Men\'s Fashion</Text>
         <Text style={styles.text}>Entertainment</Text>
+        {!this.props.user.shopperExpert &&
+          <TouchableHighlight
+            onPress={() => AlertIOS.alert('Setting up expert account...')}
+            style={styles.button}>
+            <Text style={styles.buttonText}>Become an Expert</Text>
+          </TouchableHighlight>
+        }
+        {this.props.user.shopperExpert &&
+          button
+        }
         <TouchableHighlight
-          onPress={() => AlertIOS.alert('Setting up expert account...')}
-          style={styles.button}>
-          <Text style={styles.buttonText}>Become an Expert</Text>
-        </TouchableHighlight>
-        <TouchableHighlight
-          onPress={() => AlertIOS.alert('Logging Out...')}
+          onPress={() => this.navigate()}
           style={styles.button}>
           <Text style={styles.buttonText}>Log Out</Text>
         </TouchableHighlight>
