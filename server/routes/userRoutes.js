@@ -141,6 +141,7 @@ router.post('/users/login', function(req, res) {
 router.post('/users', function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
+  var shopperExpert = req.body.shopperExpert;
 
   if (!username || !password) {
     return res.status(400).send("Missing username or password.");
@@ -155,10 +156,7 @@ router.post('/users', function(req, res) {
       userModel.create({
         username: username,
         password: hash,
-        shopperExpert: false,
-        active: false,
-        closedChatSessions: [],
-        userPreferences: {}
+        shopperExpert: shopperExpert
       }).then(function(user) {
         res.status(201).send(
         //{id_token: createToken(user)}

@@ -18,19 +18,32 @@ export default class ShopperView extends Component {
   }
 
   render() {
-    return (
-      <Swiper style={styles.wrapper} loop={false} showsButtons={true}>
-        <View style={styles.slide1}>
-          <CategoryView navigator={this.props.navigator} user={this.props} />
-        </View>
-        <View style={styles.slide2}>
-          <ChatHistoryView navigator={this.props.navigator} user={this.props} />
-        </View>
-        <View style={styles.slide3}>
-          <AccountView navigator={this.props.navigator} user={this.props} />
-        </View>
-      </Swiper>
-    )
+    if (this.props.shopperExpert) {
+      return (
+        <Swiper style={styles.wrapper} loop={false} showsButtons={true}>
+          <View style={styles.slide2}>
+            <ChatHistoryView navigator={this.props.navigator} user={this.props} />
+          </View>
+          <View style={styles.slide3}>
+            <AccountView navigator={this.props.navigator} user={this.props} />
+          </View>
+        </Swiper>
+      )
+    } else {
+      return (
+        <Swiper style={styles.wrapper} loop={false} showsButtons={true}>
+          <View style={styles.slide1}>
+            <CategoryView navigator={this.props.navigator} user={this.props} />
+          </View>
+          <View style={styles.slide2}>
+            <ChatHistoryView navigator={this.props.navigator} user={this.props} />
+          </View>
+          <View style={styles.slide3}>
+            <AccountView navigator={this.props.navigator} user={this.props} />
+          </View>
+        </Swiper>
+      )
+    }
   }
 }
 
