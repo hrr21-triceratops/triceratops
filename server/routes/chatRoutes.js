@@ -20,6 +20,10 @@ router.post('/chat/messages', function(req, res) {
   var messages = req.body.messages; // Array of Chat Objects
 
   messages.forEach(function(message) {
+    // if posting from user account only with no expert connection
+    if (!message.receiverID) {
+      message.receiverID = 00;
+    }
     chatModel.create(message, function(err, savedMessage) {
       if (err) throw err;
     });
