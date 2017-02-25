@@ -15,6 +15,7 @@ export default class LoginView extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      hasAccount: true,
       username: '',
       password: ''
     };
@@ -77,37 +78,104 @@ export default class LoginView extends Component {
     }
   }
 
+  userSignup() {
+    var username = this.state.username;
+    var password = this.state.password;
+    if (!this.state.username || !this.state.password) {
+      AlertIOS.alert(
+        'Missing Username or Password.'
+      )
+    } else {
+      fetch("https://savvyshopper.herokuapp.com/api/users", {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password
+        })
+      })
+      .then((response) => response.json())
+      .then((responseData) => {
+        if (!responseData) {
+          AlertIOS.alert(
+            'User already exists!'
+          )
+        } else {
+          // this.onValueChange(STORAGE_KEY, responseData.id_token)
+          this.navigate('Shopper', responseData.id, responseData.username, responseData.averageRating, responseData.shopperExpert, responseData.active, responseData.closedChatSessions, responseData.userPreferences);
+        }
+      })
+      .done();
+    }
+  }
+
   render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.title}>
-          Sign In
-        </Text>
-        <View>
-          <TextInput
-            placeholder="username"
-            onChangeText={(text) => this.setState({username: text})}
-            style={styles.formInput}
-          />
-          <TextInput
-            placeholder="password"
-            secureTextEntry={true}
-            onChangeText={(text) => this.setState({password: text})}
-            style={styles.formInput}
-          />
-          <TouchableHighlight
-            onPress={(this.userLogin.bind(this))}
-            style={styles.button}>
-            <Text style={styles.buttonText}>Submit</Text>
-          </TouchableHighlight>
+    if (this.state.hasAccount) {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.title}>
+            Sign In
+          </Text>
+          <View>
+            <TextInput
+              placeholder="username"
+              onChangeText={(text) => this.setState({username: text})}
+              style={styles.formInput}
+            />
+            <TextInput
+              placeholder="password"
+              secureTextEntry={true}
+              onChangeText={(text) => this.setState({password: text})}
+              style={styles.formInput}
+            />
+            <TouchableHighlight
+              onPress={(this.userLogin.bind(this))}
+              style={styles.button}>
+              <Text style={styles.buttonText}>Submit</Text>
+            </TouchableHighlight>
+          </View>
+          <View>
+            <Text
+              onPress={() => this.setState({hasAccount: false})}
+              style={styles.text}>Sign Up to be a Savvy Shopper</Text>
+          </View>
         </View>
-        <View>
-          <Text
-            onPress={() => this.navigate('Signup')}
-            style={styles.text}>Sign Up to be a Savvy Shopper</Text>
+      );
+    } else {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.title}>
+            Be a Savvy Shopper!
+          </Text>
+          <View>
+            <TextInput
+              placeholder="username"
+              onChangeText={(text) => this.setState({username: text})}
+              style={styles.formInput}
+            />
+            <TextInput
+              placeholder="password"
+              secureTextEntry={true}
+              onChangeText={(text) => this.setState({password: text})}
+              style={styles.formInput}
+            />
+            <TouchableHighlight
+              onPress={(this.userSignup.bind(this))}
+              style={styles.button}>
+              <Text style={styles.buttonText}>Sign Up</Text>
+            </TouchableHighlight>
+          </View>
+          <View>
+            <Text
+              onPress={() => this.setState({hasAccount: true})}
+              style={styles.text}>Login to Account</Text>
+          </View>
         </View>
-      </View>
-    )
+      );
+    }
   }
 }
 
