@@ -15,22 +15,46 @@ export default class ShopperView extends Component {
   constructor(props) {
     console.log("PROPS", props);
     super(props);
+    this.state = {
+      isActive: false
+    };
+  }
+
+  activeSwitcher() {
+    this.setState({isActive: !this.state.isActive});
+  }
+
+  getActive() {
+    return this.state.isActive;
   }
 
   render() {
-    return (
-      <Swiper style={styles.wrapper} loop={false} showsButtons={true}>
-        <View style={styles.slide1}>
-          <CategoryView navigator={this.props.navigator} user={this.props} />
-        </View>
-        <View style={styles.slide2}>
-          <ChatHistoryView navigator={this.props.navigator} user={this.props} />
-        </View>
-        <View style={styles.slide3}>
-          <AccountView navigator={this.props.navigator} user={this.props} />
-        </View>
-      </Swiper>
-    )
+    if (this.props.shopperExpert && this.getActive()) {
+      return (
+        <Swiper style={styles.wrapper} loop={false} showsButtons={true}>
+          <View style={styles.slide2}>
+            <ChatHistoryView navigator={this.props.navigator} user={this.props} getActive={this.getActive.bind(this)} />
+          </View>
+          <View style={styles.slide3}>
+            <AccountView navigator={this.props.navigator} user={this.props} activeSwitcher={this.activeSwitcher.bind(this)} getActive={this.getActive.bind(this)} />
+          </View>
+        </Swiper>
+      )
+    } else {
+      return (
+        <Swiper style={styles.wrapper} loop={false} showsButtons={true}>
+          <View style={styles.slide1}>
+            <CategoryView navigator={this.props.navigator} user={this.props} />
+          </View>
+          <View style={styles.slide2}>
+            <ChatHistoryView navigator={this.props.navigator} user={this.props} getActive={this.getActive.bind(this)} />
+          </View>
+          <View style={styles.slide3}>
+            <AccountView navigator={this.props.navigator} user={this.props} activeSwitcher={this.activeSwitcher.bind(this)} getActive={this.getActive.bind(this)} />
+          </View>
+        </Swiper>
+      )
+    }
   }
 }
 

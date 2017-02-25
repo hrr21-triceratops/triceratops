@@ -10,11 +10,8 @@ import {
 
 //load views from external files
 import LoginView from './components/LoginView';
-import SignupView from './components/SignupView';
 import ShopperView from './components/ShopperView';
-import ExpertView from './components/ExpertView';
 import ChatView from './components/ChatView';
-import EChatView from './components/EChatView';
 
 //setup the app component to register with App registry, everything happens inside of this wrapper
 class app extends Component {
@@ -23,20 +20,11 @@ class app extends Component {
     if (route.name === 'Login') {
       return <LoginView navigator={navigator} />
     }
-    if (route.name === 'Signup') {
-      return <SignupView navigator={navigator} />
-    }
     if (route.name === 'Shopper') {
       return <ShopperView navigator={navigator} {...route.passProps} />
     }
-    if (route.name === 'Expert') {
-      return <ExpertView navigator={navigator} {...route.passProps} />
-    }
     if (route.name === 'Chat') {
       return <ChatView navigator={navigator} {...route.passProps} />
-    }
-    if (route.name === 'EChat') {
-      return <EChatView navigator={navigator} {...route.passProps} />
     }
   }
 
