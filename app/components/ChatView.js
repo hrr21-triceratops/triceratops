@@ -51,7 +51,8 @@ export default class ChatView extends Component {
           messages: this.state.messages.concat([message])
         });
       });
-    } else {
+    }
+    if(this.props.user.shopperExpert){
       fetch('https://savvyshopper.herokuapp.com/api/userQueue/getUser', {
         method: 'GET',
         headers: {

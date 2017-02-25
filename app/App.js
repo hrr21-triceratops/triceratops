@@ -12,7 +12,6 @@ import {
 import LoginView from './components/LoginView';
 import ShopperView from './components/ShopperView';
 import ChatView from './components/ChatView';
-import EChatView from './components/EChatView';
 
 //setup the app component to register with App registry, everything happens inside of this wrapper
 class app extends Component {
@@ -26,9 +25,6 @@ class app extends Component {
     }
     if (route.name === 'Chat') {
       return <ChatView navigator={navigator} {...route.passProps} />
-    }
-    if (route.name === 'EChat') {
-      return <EChatView navigator={navigator} {...route.passProps} />
     }
   }
 
