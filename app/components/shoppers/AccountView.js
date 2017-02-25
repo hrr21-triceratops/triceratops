@@ -64,7 +64,6 @@ export default class AccountView extends Component {
     )
   }
 }
-
 var styles = StyleSheet.create({
   title: {
     fontSize: 28,
