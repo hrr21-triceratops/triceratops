@@ -15,6 +15,12 @@ export default class AccountView extends Component {
     super(props);
   }
 
+  navigate() {
+    this.props.navigator.push({
+      name: 'Login'
+    });
+  }
+
   render() {
     let button = null;
     if(this.props.getActive()){
@@ -50,7 +56,7 @@ export default class AccountView extends Component {
           button
         }
         <TouchableHighlight
-          onPress={() => AlertIOS.alert('Logging Out...')}
+          onPress={() => this.navigate()}
           style={styles.button}>
           <Text style={styles.buttonText}>Log Out</Text>
         </TouchableHighlight>
