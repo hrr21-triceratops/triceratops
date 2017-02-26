@@ -30,8 +30,7 @@ export default class AccountView extends Component {
     })
     .then((response) => {
       if (response.status === 201) {
-        this.props.user.shopperExpert = true;
-        this.navigate('Shopper', this.props.user);
+        this.navigate('Shopper', this.props.user.id, this.props.user.username, this.props.user.averageRating, true, this.props.user.active, this.props.user.closedChatSessions, this.props.user.userPreferences);
       } else {
         AlertIOS.alert(
           'Account could not be updated.'
@@ -41,13 +40,25 @@ export default class AccountView extends Component {
     .done();
   }
 
-  navigate(scene, user) {
-    this.props.navigator.push({
-      name: scene,
-      passProps: {
-        user: user
-      }
-    });
+  navigate(scene, id, username, averageRating, shopperExpert, active, closedChatSessions, userPreferences) {
+    if (id) {
+      this.props.navigator.push({
+        name: scene,
+        passProps: {
+          id: id,
+          username: username,
+          averageRating: averageRating,
+          shopperExpert: shopperExpert,
+          active: active,
+          closedChatSessions: closedChatSessions,
+          userPreferences: userPreferences
+        }
+      });
+    } else {
+      this.props.navigator.push({
+        name: scene
+      });
+    }
   }
 
   render() {
