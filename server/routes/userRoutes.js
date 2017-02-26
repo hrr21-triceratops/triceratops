@@ -182,6 +182,7 @@ router.put('/users/:id', function(req, res) {
         res.status(201).send('User Updated.');
       });
     }
+  });
 });
 
 module.exports = router;
