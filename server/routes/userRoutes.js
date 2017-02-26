@@ -179,7 +179,7 @@ router.put('/users/:id', function(req, res) {
       user.update(attributes)
       .then(function(user) {
         console.log('Updated User:', user);
-        res.status(201).send('User Updated.');
+        res.status(201).send();
       });
     }
   });
