@@ -167,4 +167,21 @@ router.post('/users', function(req, res) {
   });
 });
 
+// UPDATE USER ACCOUNT
+router.put('/users/:id', function(req, res) {
+  // Object with property to update and new value
+  var attributes = req.body.attributes;
+  userModel.findOne({ where: {id: req.params.id}})
+  .then(function(user) {
+    if (!user) {
+      return res.status(401).send("User does not exist.");
+    } else {
+      user.update(attributes)
+      .then(function(user) {
+        console.log('Updated User:', user);
+        res.status(201).send('User Updated.');
+      });
+    }
+});
+
 module.exports = router;
