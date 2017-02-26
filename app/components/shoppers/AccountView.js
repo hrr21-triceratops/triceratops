@@ -28,9 +28,8 @@ export default class AccountView extends Component {
         }
       })
     })
-    .then((response) => response.json())
-    .then((responseData) => {
-      if (responseData.status === 201) {
+    .then((response) => {
+      if (response.status === 201) {
         this.props.user.shopperExpert = true;
         this.navigate('Shopper', this.props.user);
       } else {
