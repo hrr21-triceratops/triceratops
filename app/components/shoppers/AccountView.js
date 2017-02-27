@@ -15,10 +15,50 @@ export default class AccountView extends Component {
     super(props);
   }
 
-  navigate() {
-    this.props.navigator.push({
-      name: 'Login'
-    });
+  makeExpert() {
+    fetch('https://savvyshopper.herokuapp.com/api/users/' + this.props.user.id, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        attributes: {
+          shopperExpert: true
+        }
+      })
+    })
+    .then((response) => {
+      if (response.status === 201) {
+        this.navigate('Shopper', this.props.user.id, this.props.user.username, this.props.user.averageRating, true, this.props.user.active, this.props.user.closedChatSessions, this.props.user.userPreferences);
+      } else {
+        AlertIOS.alert(
+          'Account could not be updated.'
+        )
+      }
+    })
+    .done();
+  }
+
+  navigate(scene, id, username, averageRating, shopperExpert, active, closedChatSessions, userPreferences) {
+    if (id) {
+      this.props.navigator.push({
+        name: scene,
+        passProps: {
+          id: id,
+          username: username,
+          averageRating: averageRating,
+          shopperExpert: shopperExpert,
+          active: active,
+          closedChatSessions: closedChatSessions,
+          userPreferences: userPreferences
+        }
+      });
+    } else {
+      this.props.navigator.push({
+        name: scene
+      });
+    }
   }
 
   render() {
@@ -47,7 +87,7 @@ export default class AccountView extends Component {
         <Text style={styles.text}>Entertainment</Text>
         {!this.props.user.shopperExpert &&
           <TouchableHighlight
-            onPress={() => AlertIOS.alert('Setting up expert account...')}
+            onPress={() => this.makeExpert()}
             style={styles.button}>
             <Text style={styles.buttonText}>Become an Expert</Text>
           </TouchableHighlight>
@@ -56,7 +96,7 @@ export default class AccountView extends Component {
           button
         }
         <TouchableHighlight
-          onPress={() => this.navigate()}
+          onPress={() => this.navigate('Login')}
           style={styles.button}>
           <Text style={styles.buttonText}>Log Out</Text>
         </TouchableHighlight>
