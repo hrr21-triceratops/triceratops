@@ -40,13 +40,14 @@ export default class CategoryView extends Component {
     super(props);
   }
 
-  openChat() {
+  openChat(category) {
     this.props.navigator.push({
       name: 'Chat',
       passProps: {
-        user: this.props.user
+        user: this.props.user,
+        category: category
       }
-    })
+    });
   }
 
   render() {
@@ -60,7 +61,7 @@ export default class CategoryView extends Component {
             // Need to replace AlertIOS with function to call API and connect to chat with expert in category
             // Need to set current category on the state
             <TouchableHighlight
-              onPress={(this.openChat.bind(this))}
+              onPress={(this.openChat(category).bind(this))}
               style={styles.category}
               key={category}>
               <View>
