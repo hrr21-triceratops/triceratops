@@ -14,7 +14,7 @@ import ShopperView from './components/ShopperView';
 import ChatView from './components/ChatView';
 
 //setup the app component to register with App registry, everything happens inside of this wrapper
-class app extends Component {
+class SavvyShopper extends Component {
   //selects a scene to render
   renderScene(route, navigator) {
     if (route.name === 'Login') {
@@ -41,4 +41,4 @@ class app extends Component {
   }
 }
 
-AppRegistry.registerComponent('app', () => app);
+AppRegistry.registerComponent('SavvyShopper', () => SavvyShopper);

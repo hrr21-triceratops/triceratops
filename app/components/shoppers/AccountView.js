@@ -8,6 +8,10 @@ import {
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 
+
+const heroku = 'https://savvyshopper.herokuapp.com';
+const local = 'http://localhost:2300';
+
 export default class AccountView extends Component {
 
   constructor(props) {
@@ -16,7 +20,7 @@ export default class AccountView extends Component {
   }
 
   makeExpert() {
-    fetch('https://savvyshopper.herokuapp.com/api/users/' + this.props.user.id, {
+    fetch(local+'/api/users/' + this.props.user.id, {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',

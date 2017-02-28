@@ -15,6 +15,10 @@ let chatSession = {
   expertId: null
 };
 
+const heroku = 'https://savvyshopper.herokuapp.com';
+const local = 'http://localhost:2300';
+
+
 export default class ChatView extends Component {
 
   constructor(props) {

@@ -10,6 +10,9 @@ import {
 
 var STORAGE_KEY = 'id_token';
 
+const heroku = 'https://savvyshopper.herokuapp.com';
+const local = 'http://localhost:2300';
+
 export default class LoginView extends Component {
 
   constructor(props) {
@@ -52,7 +55,7 @@ export default class LoginView extends Component {
         'Missing Username or Password.'
       )
     } else {
-      fetch("https://savvyshopper.herokuapp.com/api/users/login", {
+      fetch(local+"/api/users/login", {
         method: "POST",
         headers: {
           'Accept': 'application/json',
@@ -86,7 +89,7 @@ export default class LoginView extends Component {
         'Missing Username or Password.'
       )
     } else {
-      fetch("https://savvyshopper.herokuapp.com/api/users", {
+      fetch(local+"/api/users", {
         method: "POST",
         headers: {
           'Accept': 'application/json',
