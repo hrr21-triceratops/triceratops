@@ -47,7 +47,7 @@ export default class AccountView extends Component {
   navigate(scene, id, username, averageRating, shopperExpert, active, closedChatSessions, userPreferences) {
     if (id) {
       this.props.navigator.push({
-        name: scene,
+        screen: scene,
         passProps: {
           id: id,
           username: username,
@@ -60,7 +60,7 @@ export default class AccountView extends Component {
       });
     } else {
       this.props.navigator.push({
-        name: scene
+        screen: scene
       });
     }
   }

@@ -18,7 +18,6 @@ let chatSession = {
 const heroku = 'https://savvyshopper.herokuapp.com';
 const local = 'http://localhost:2300';
 
-
 export default class ChatView extends Component {
 
   constructor(props) {
@@ -92,7 +91,7 @@ export default class ChatView extends Component {
 
   navigate() {
     this.props.navigator.push({
-      name: 'Shopper'
+      screen: 'Shopper'
     });
   }
 
