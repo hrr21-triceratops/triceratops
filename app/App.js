@@ -12,6 +12,8 @@ import {
 import LoginView from './components/LoginView';
 import ShopperView from './components/ShopperView';
 import ChatView from './components/ChatView';
+import TopExperts from './components/TopExperts';
+import AvailableExperts from './components/AvailableExperts';
 import HomeView from './components/HomeView';
 
 //setup the app component to register with App registry, everything happens inside of this wrapper
@@ -30,6 +32,10 @@ class SavvyShopper extends Component {
         return <HomeView navigator={navigator} />
       case "Shopper":
         return <ShopperView navigator={navigator} {...route.passProps} />
+      case "AvailableExperts":
+        return <AvailableExperts navigator={navigator} {...route.passProps} />
+      case "TopExperts":
+        return <TopExperts navigator={navigator} {...route.passProps} />
       case "Chat":
        return <ChatView navigator={navigator} {...route.passProps} />
       }
@@ -89,7 +95,7 @@ const styles = StyleSheet.create({
       fontSize: 20
    },
    rightButton: {
-      color: 'white',
+      color: '#ffffff',
       margin: 10,
       fontSize: 14
    },

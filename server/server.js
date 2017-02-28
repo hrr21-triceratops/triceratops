@@ -93,7 +93,6 @@ io.on('connection', function(socket) {
     console.log('New Message:', message, 'in Room:', room);
     io.in(room).emit('message', message);
   });
-
 });
 
 const PORT = process.env.PORT || 2300;

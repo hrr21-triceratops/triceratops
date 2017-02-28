@@ -104,6 +104,8 @@ LIMIT `+count+`;
   sequelize.query(expertQuery).then(function(users) {
     console.log(users[0]);
     res.json(users[0]);
+  }).catch(function (err) {
+    res.send(err);
   });
 });
 

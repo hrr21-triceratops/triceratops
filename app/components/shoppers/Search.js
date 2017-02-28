@@ -13,8 +13,7 @@ import AvailableExperts from '../AvailableExperts';
 var api = require('../../Utils/api');
 import {
   Button,
-  FormLabel,
-  FormInput
+  FormLabel, FormInput
 } from 'react-native-elements';
 
 export default class Search extends Component {
@@ -93,6 +92,7 @@ export default class Search extends Component {
           style={styles.searchInput}
           value={this.state.username}
           onChange={this.handleChange.bind(this)} />
+
 
           <Button
           style={styles.button}
