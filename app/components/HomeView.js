@@ -61,9 +61,9 @@ export default class HomeView extends Component {
             </TouchableHighlight>
 
             <TouchableHighlight
-             name="AvailableExperts"
+             name="ByCategory"
             style={styles.button}
-            onPress={this.navigateTo.bind(this, "AvailableExperts")}
+            onPress={this.navigateTo.bind(this, "ByCategory", this.props)}
             underlayColor="white">
             <Text style={styles.buttonText}>By Category</Text>
            </TouchableHighlight>
@@ -75,7 +75,6 @@ export default class HomeView extends Component {
             underlayColor="white">
             <Text style={styles.buttonText}>Top Experts</Text>
            </TouchableHighlight>
-
         </Tabs>
          <Search style={styles.searchInput} navigator={this.props.navigator} />
         </View>

@@ -13,6 +13,7 @@ import LoginView from './components/LoginView';
 import ShopperView from './components/ShopperView';
 import ChatView from './components/ChatView';
 import TopExperts from './components/TopExperts';
+import CategoryView from './components/shoppers/CategoryView';
 import AvailableExperts from './components/AvailableExperts';
 import HomeView from './components/HomeView';
 
@@ -36,6 +37,8 @@ class SavvyShopper extends Component {
         return <AvailableExperts navigator={navigator} {...route.passProps} />
       case "TopExperts":
         return <TopExperts navigator={navigator} {...route.passProps} />
+      case "ByCategory":
+        return <CategoryView navigator={navigator} {...route.passProps} />
       case "Chat":
        return <ChatView navigator={navigator} {...route.passProps} />
       }

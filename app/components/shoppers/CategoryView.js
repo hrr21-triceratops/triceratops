@@ -11,6 +11,9 @@ import {
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import ChatView from '../ChatView';
+import {
+  Tile
+} from 'react-native-elements'
 
 //eventually, replace with a call to API for categories?
 var categories = ['HOME', 'FOOD', 'TECH', 'WOMEN\'S FASHION', 'MEN\'S FASHION', 'ENTERTAINMENT'];
@@ -64,8 +67,10 @@ export default class CategoryView extends Component {
               style={styles.category}
               key={category}>
               <View>
-                <Image style={styles.image} source={loadCategoryImage(category.toLowerCase())}></Image>
-                <Text style={styles.buttonText}>{category}</Text>
+                  <Tile
+                  imageSrc={loadCategoryImage(category.toLowerCase())}
+                  title="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores dolore exercitationem"
+                  featured caption={category} />
               </View>
             </TouchableHighlight>
           )
@@ -101,8 +106,8 @@ var styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    width: 310,
-    height: 160,
+    width: 150,
+    height: 150,
   },
   category: {
     marginBottom: 14,
