@@ -28,9 +28,9 @@ class SavvyShopper extends Component {
   renderScene(route, navigator) {
     switch (route.screen) {
       case "Login":
-        return <LoginView navigator={navigator} />
+        return <LoginView navigator={navigator} {...route.passProps} />
       case "Home":
-        return <HomeView navigator={navigator} />
+        return <HomeView navigator={navigator} {...route.passProps} />
       case "Shopper":
         return <ShopperView navigator={navigator} {...route.passProps} />
       case "AvailableExperts":

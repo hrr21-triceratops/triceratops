@@ -38,13 +38,14 @@ export default class HomeView extends Component {
 
       this.props.navigator.push({
           screen: destination,
-          passProps: { data: propsToPass }
+          passProps: { user: propsToPass }
       });
     }
 
   }
 
   render() {
+            console.log('HOMEVIEW this.props', this.props)
     return (
        <View style={styles.mainContainer}>
         <Tabs selected={this.state.page}
@@ -53,7 +54,8 @@ export default class HomeView extends Component {
          onSelect={el=>this.setState({ page: el.props.name })}>
 
             <TouchableHighlight
-             name="Home"
+            name="Home"
+            user={this.props}
             style={styles.button}
             onPress={this.navigateTo.bind(this, "Home")}
             underlayColor="white">
@@ -61,7 +63,8 @@ export default class HomeView extends Component {
             </TouchableHighlight>
 
             <TouchableHighlight
-             name="ByCategory"
+            name="ByCategory"
+            user={this.props}
             style={styles.button}
             onPress={this.navigateTo.bind(this, "ByCategory", this.props)}
             underlayColor="white">
@@ -69,14 +72,15 @@ export default class HomeView extends Component {
            </TouchableHighlight>
 
             <TouchableHighlight
-             name="TopExperts"
+            name="TopExperts"
+            user={this.props}
             style={styles.button}
             onPress={this.navigateTo.bind(this, "TopExperts")}
             underlayColor="white">
             <Text style={styles.buttonText}>Top Experts</Text>
            </TouchableHighlight>
         </Tabs>
-         <Search style={styles.searchInput} navigator={this.props.navigator} />
+         <Search style={styles.searchInput} navigator={this.props.navigator} user={this.props}/>
         </View>
     );
   }
