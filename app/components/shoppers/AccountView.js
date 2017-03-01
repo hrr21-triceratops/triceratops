@@ -29,7 +29,7 @@ export default class AccountView extends Component {
   }
 
   makeExpert() {
-    fetch(local+'/api/users/' + this.props.user.id, {
+    fetch(heroku+'/api/users/' + this.props.user.id, {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',

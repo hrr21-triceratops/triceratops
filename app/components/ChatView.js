@@ -44,8 +44,8 @@ export default class ChatView extends Component {
 
   // automatically runs when component loads
   componentDidMount() {
-    socket = io('https://savvyshopper.herokuapp.com/', {jsonp: false});
-    if(!this.props.user.shopperExpert){
+    socket = io(heroku);
+    if(!this.props.user.shopperExpert, {jsonp: false}){
 
       //store information on chatSession
       chatSession.user = this.props.user;
@@ -75,7 +75,7 @@ export default class ChatView extends Component {
       });
     }
     if(this.props.user.shopperExpert){
-      fetch('https://savvyshopper.herokuapp.com/api/userQueue/getUser', {
+      fetch(heroku + '/api/userQueue/getUser', {
         method: 'GET',
         jsonp: false,
         headers: {
@@ -134,7 +134,7 @@ export default class ChatView extends Component {
     messages.shift();
     messages.shift();
 
-    fetch('https://savvyshopper.herokuapp.com/api/chat/messages', {
+    fetch(heroku + '/api/chat/messages', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
