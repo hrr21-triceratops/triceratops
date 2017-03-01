@@ -15,10 +15,10 @@ import TopExperts from './TopExperts';
 import AvailableExperts from './AvailableExperts';
 import Tabs from 'react-native-tabs';
 
-export default class HomeView extends Component {
+export default class SearchView extends Component {
   constructor(props){
     super(props);
-    this.state = { page:'Home' };
+    this.state = { page:'Search' };
   }
 
    navigateTo(destination, propsToPass) {
@@ -45,7 +45,7 @@ export default class HomeView extends Component {
   }
 
   render() {
-            console.log('HOMEVIEW this.props', this.props)
+    console.log('HOMEVIEW this.props', this.props)
     return (
        <View style={styles.mainContainer}>
         <Tabs selected={this.state.page}
@@ -54,12 +54,12 @@ export default class HomeView extends Component {
          onSelect={el=>this.setState({ page: el.props.name })}>
 
             <TouchableHighlight
-            name="Home"
+            name="Search"
             user={this.props}
             style={styles.button}
-            onPress={this.navigateTo.bind(this, "Home")}
+            onPress={this.navigateTo.bind(this, "Search")}
             underlayColor="white">
-            <Text style={styles.buttonText}>Chat Now!</Text>
+            <Text style={styles.buttonText}>Search</Text>
             </TouchableHighlight>
 
             <TouchableHighlight

@@ -58,6 +58,7 @@ export default class ChatView extends Component {
     if(this.props.user.shopperExpert){
       fetch('https://savvyshopper.herokuapp.com/api/userQueue/getUser', {
         method: 'GET',
+        jsonp: false,
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'

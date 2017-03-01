@@ -15,7 +15,9 @@ import ChatView from './components/ChatView';
 import TopExperts from './components/TopExperts';
 import CategoryView from './components/shoppers/CategoryView';
 import AvailableExperts from './components/AvailableExperts';
-import HomeView from './components/HomeView';
+import SearchView from './components/SearchView';
+import ProfileView from './components/ProfileView';
+
 
 //setup the app component to register with App registry, everything happens inside of this wrapper
 class SavvyShopper extends Component {
@@ -26,11 +28,13 @@ class SavvyShopper extends Component {
   }
 
   renderScene(route, navigator) {
+    console.log('route', route);
+    console.log('navigator', navigator);
     switch (route.screen) {
       case "Login":
         return <LoginView navigator={navigator} {...route.passProps} />
-      case "Home":
-        return <HomeView navigator={navigator} {...route.passProps} />
+      case "Search":
+        return <SearchView navigator={navigator} {...route.passProps} />
       case "Shopper":
         return <ShopperView navigator={navigator} {...route.passProps} />
       case "AvailableExperts":
@@ -41,6 +45,8 @@ class SavvyShopper extends Component {
         return <CategoryView navigator={navigator} {...route.passProps} />
       case "Chat":
        return <ChatView navigator={navigator} {...route.passProps} />
+      case "Profile":
+        return <ProfileView navigator={navigator} {...route.passProps} />
       }
   }
 
@@ -52,9 +58,9 @@ class SavvyShopper extends Component {
         renderScene={(route, nav) => {return this.renderScene(route, nav)}}
         navigationBar={
         <Navigator.NavigationBar
-       routeMapper={{
+        routeMapper={{
          LeftButton: (route, navigator, index, navState) =>
-          {  if (route.index === 0) {
+          {  if (route.index === 0 || route.screen === "Login") {
               return null;
             } else {
              return (
@@ -63,8 +69,16 @@ class SavvyShopper extends Component {
               </TouchableHighlight>
             );
          }},
-         RightButton: (route, navigator, index, navState) =>
-           { return (<Text style={styles.rightButton}>Profile</Text>); },
+        RightButton: (route, navigator, index, navState) =>
+          { if (route.screen === "Profile" || route.screen === "Login") {
+            return null;
+          } else {
+            return (
+              <TouchableHighlight onPress={() => navigator.push({"screen":"Profile"})}>
+               <Text style={styles.rightButton}>Profile</Text>
+            </TouchableHighlight>
+            );
+          }},
          Title: (route, navigator, index, navState) =>
            { return (<Text style={styles.title}>Savvy Shopper</Text>); },
        }}

@@ -74,7 +74,7 @@ export default class LoginView extends Component {
           )
         } else {
           //this.onValueChange(STORAGE_KEY, responseData.id_token);
-          this.navigate('Home', responseData.id, responseData.username, responseData.averageRating, responseData.shopperExpert, responseData.active, responseData.closedChatSessions, responseData.userPreferences);
+          this.navigate('Search', responseData.id, responseData.username, responseData.averageRating, responseData.shopperExpert, responseData.active, responseData.closedChatSessions, responseData.userPreferences);
         }
       })
       .done();
@@ -108,7 +108,7 @@ export default class LoginView extends Component {
           )
         } else {
           // this.onValueChange(STORAGE_KEY, responseData.id_token)
-          this.navigate('Home', responseData.id, responseData.username, responseData.averageRating, responseData.shopperExpert, responseData.active, responseData.closedChatSessions, responseData.userPreferences);
+          this.navigate('Search', responseData.id, responseData.username, responseData.averageRating, responseData.shopperExpert, responseData.active, responseData.closedChatSessions, responseData.userPreferences);
         }
       })
       .done();
