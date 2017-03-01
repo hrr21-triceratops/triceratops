@@ -13,7 +13,7 @@ import AvailableExperts from '../AvailableExperts';
 var api = require('../../Utils/api');
 import {
   Button,
-  FormLabel, FormInput
+  FormLabel, FormInput, SearchBar
 } from 'react-native-elements';
 
 export default class Search extends Component {
@@ -88,13 +88,15 @@ export default class Search extends Component {
     return (
       <View style={styles.mainContainer}>
         <Text style={styles.title}>Find Expert For</Text>
-        <FormInput
+        <SearchBar
+          lightTheme
           style={styles.searchInput}
           value={this.state.username}
           onChange={this.handleChange.bind(this)} />
 
 
           <Button
+          buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
           style={styles.button}
           onPress={this.handleSubmit.bind(this)}
           raised title='Chat Now!' />

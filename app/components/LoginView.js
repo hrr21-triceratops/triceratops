@@ -8,6 +8,8 @@ import {
   AlertIOS,
 } from 'react-native';
 
+import { FormLabel, FormInput, Button } from 'react-native-elements';
+
 var STORAGE_KEY = 'id_token';
 
 const heroku = 'https://savvyshopper.herokuapp.com';
@@ -115,6 +117,7 @@ export default class LoginView extends Component {
     }
   }
 
+
   render() {
     if (this.state.hasAccount) {
       return (
@@ -123,27 +126,34 @@ export default class LoginView extends Component {
             Sign In
           </Text>
           <View>
-            <TextInput
+            <FormInput
               placeholder="username"
               onChangeText={(text) => this.setState({username: text})}
               style={styles.formInput}
             />
-            <TextInput
+            <FormInput
               placeholder="password"
               secureTextEntry={true}
               onChangeText={(text) => this.setState({password: text})}
               style={styles.formInput}
             />
-            <TouchableHighlight
+            <Button
+              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10}}
+              backgroundColor='#48BBEC'
               onPress={(this.userLogin.bind(this))}
-              style={styles.button}>
-              <Text style={styles.buttonText}>Submit</Text>
-            </TouchableHighlight>
+              raised
+              title='Login'
+            />
           </View>
           <View>
-            <Text
+            <Button
+              onPress={(this.userLogin.bind(this))}
               onPress={() => this.setState({hasAccount: false})}
-              style={styles.text}>Sign Up to be a Savvy Shopper</Text>
+              raised
+              title='Join!'
+              backgroundColor='#48BBEC'
+              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10}}
+            />
           </View>
         </View>
       );
@@ -151,30 +161,37 @@ export default class LoginView extends Component {
       return (
         <View style={styles.container}>
           <Text style={styles.title}>
-            Be a Savvy Shopper!
+            Become a Savvy Shopper!
           </Text>
           <View>
-            <TextInput
+            <FormInput
               placeholder="username"
               onChangeText={(text) => this.setState({username: text})}
               style={styles.formInput}
             />
-            <TextInput
+            <FormInput
               placeholder="password"
               secureTextEntry={true}
               onChangeText={(text) => this.setState({password: text})}
               style={styles.formInput}
             />
-            <TouchableHighlight
+            <Button
               onPress={(this.userSignup.bind(this))}
-              style={styles.button}>
-              <Text style={styles.buttonText}>Sign Up</Text>
-            </TouchableHighlight>
+              style={styles.button}
+              raised
+              backgroundColor='#48BBEC'
+              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
+              title='Create Account'
+            />
           </View>
           <View>
-            <Text
+            <Button
               onPress={() => this.setState({hasAccount: true})}
-              style={styles.text}>Login to Account</Text>
+              raised
+              backgroundColor='#48BBEC'
+              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10}}
+              title='Login!'
+            />
           </View>
         </View>
       );
@@ -186,7 +203,8 @@ var styles = StyleSheet.create({
   container: {
     padding: 30,
     marginTop: 65,
-    alignItems: "stretch"
+    alignItems: "stretch",
+    marginBottom: 5
   },
   title: {
     fontSize: 18,

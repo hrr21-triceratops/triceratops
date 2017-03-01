@@ -80,7 +80,7 @@ class SavvyShopper extends Component {
             );
           }},
          Title: (route, navigator, index, navState) =>
-           { return (<Text style={styles.title}>Savvy Shopper</Text>); },
+           { return (<Text h1 style={styles.title}>Savvy Shopper</Text>); },
        }}
        style={{backgroundColor: 'gray'}}
       />

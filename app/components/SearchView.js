@@ -14,6 +14,7 @@ import Search from './shoppers/Search';
 import TopExperts from './TopExperts';
 import AvailableExperts from './AvailableExperts';
 import Tabs from 'react-native-tabs';
+import { SearchBar } from 'react-native-elements'
 
 export default class SearchView extends Component {
   constructor(props){
