@@ -19,7 +19,7 @@ export default class ChatHistoryView extends Component {
 
   navigate(scene) {
     this.props.navigator.push({
-      name: scene,
+      screen: scene,
       passProps: {
         user: this.props.user
       }

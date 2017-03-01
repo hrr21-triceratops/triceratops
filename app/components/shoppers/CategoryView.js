@@ -11,6 +11,9 @@ import {
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import ChatView from '../ChatView';
+import {
+  Tile
+} from 'react-native-elements'
 
 //eventually, replace with a call to API for categories?
 var categories = ['HOME', 'FOOD', 'TECH', 'WOMEN\'S FASHION', 'MEN\'S FASHION', 'ENTERTAINMENT'];
@@ -41,33 +44,33 @@ export default class CategoryView extends Component {
   }
 
   openChat() {
+    console.log("CATEGORY USER PROPS TONY", this.props)
     this.props.navigator.push({
-      name: 'Chat',
+      screen: 'Chat',
       passProps: {
         user: this.props.user
       }
-    })
+    });
   }
 
   render() {
     return (
-      <View>
-        <Text style={styles.header}>SAVVY SHOPPER</Text>
-        <Text style={styles.headerCopy}>Choose a category and ask a question</Text>
+      <View style={styles.mainContainer}>
         <ScrollView style={styles.wrapper}>
         {categories.map(function(category) {
           return (
             // Need to replace AlertIOS with function to call API and connect to chat with expert in category
             // Need to set current category on the state
-            <TouchableHighlight
-              onPress={(this.openChat.bind(this))}
-              style={styles.category}
-              key={category}>
-              <View>
-                <Image style={styles.image} source={loadCategoryImage(category.toLowerCase())}></Image>
-                <Text style={styles.buttonText}>{category}</Text>
+              <View style={styles.category}>
+                  <Tile
+                  user={this.props}
+                  onPress={(this.openChat.bind(this))}
+                  key={category}
+                  imageSrc={loadCategoryImage(category.toLowerCase())}
+                  title="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores dolore exercitationem"
+                  featured caption={category}
+                  />
               </View>
-            </TouchableHighlight>
           )
         }, this)}
         </ScrollView>
@@ -77,18 +80,6 @@ export default class CategoryView extends Component {
 }
 
 var styles = StyleSheet.create({
-  header: {
-    textAlign: 'center',
-    marginTop: 20,
-    fontSize: 30,
-    color: '#FFFFFF',
-  },
-  headerCopy: {
-    textAlign: 'center',
-    marginTop: 7,
-    fontSize: 16,
-    color: '#FFFFFF',
-  },
   buttonText: {
     flex: 1,
     padding: 4,
@@ -101,13 +92,38 @@ var styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    width: 310,
-    height: 160,
+    width: 150,
+    height: 150,
   },
   category: {
-    marginBottom: 14,
+    marginBottom: 1,
   },
   wrapper: {
-    marginTop: 24,
+    marginTop: 1,
   },
+    container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  navigationBar: {
+      backgroundColor: 'blue',
+   },
+   leftButton: {
+      color: 'white',
+      margin: 10,
+      fontSize: 14,
+   },
+   title: {
+      paddingVertical: 10,
+      color: '#ffffff',
+      justifyContent: 'center',
+      fontSize: 20
+   },
+   rightButton: {
+      color: '#ffffff',
+      margin: 10,
+      fontSize: 14
+   },
 });

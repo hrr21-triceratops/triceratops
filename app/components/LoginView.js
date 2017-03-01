@@ -8,7 +8,12 @@ import {
   AlertIOS,
 } from 'react-native';
 
+import { FormLabel, FormInput, Button } from 'react-native-elements';
+
 var STORAGE_KEY = 'id_token';
+
+const heroku = 'https://savvyshopper.herokuapp.com';
+const local = 'http://localhost:2300';
 
 export default class LoginView extends Component {
 
@@ -31,7 +36,7 @@ export default class LoginView extends Component {
 
   navigate(scene, id, username, averageRating, shopperExpert, active, closedChatSessions, userPreferences) {
     this.props.navigator.push({
-      name: scene,
+      screen: scene,
       passProps: {
         id: id,
         username: username,
@@ -52,7 +57,7 @@ export default class LoginView extends Component {
         'Missing Username or Password.'
       )
     } else {
-      fetch("https://savvyshopper.herokuapp.com/api/users/login", {
+      fetch(local+"/api/users/login", {
         method: "POST",
         headers: {
           'Accept': 'application/json',
@@ -71,7 +76,7 @@ export default class LoginView extends Component {
           )
         } else {
           //this.onValueChange(STORAGE_KEY, responseData.id_token);
-          this.navigate('Shopper', responseData.id, responseData.username, responseData.averageRating, responseData.shopperExpert, responseData.active, responseData.closedChatSessions, responseData.userPreferences);
+          this.navigate('Search', responseData.id, responseData.username, responseData.averageRating, responseData.shopperExpert, responseData.active, responseData.closedChatSessions, responseData.userPreferences);
         }
       })
       .done();
@@ -86,7 +91,7 @@ export default class LoginView extends Component {
         'Missing Username or Password.'
       )
     } else {
-      fetch("https://savvyshopper.herokuapp.com/api/users", {
+      fetch(local+"/api/users", {
         method: "POST",
         headers: {
           'Accept': 'application/json',
@@ -105,12 +110,13 @@ export default class LoginView extends Component {
           )
         } else {
           // this.onValueChange(STORAGE_KEY, responseData.id_token)
-          this.navigate('Shopper', responseData.id, responseData.username, responseData.averageRating, responseData.shopperExpert, responseData.active, responseData.closedChatSessions, responseData.userPreferences);
+          this.navigate('Search', responseData.id, responseData.username, responseData.averageRating, responseData.shopperExpert, responseData.active, responseData.closedChatSessions, responseData.userPreferences);
         }
       })
       .done();
     }
   }
+
 
   render() {
     if (this.state.hasAccount) {
@@ -120,27 +126,34 @@ export default class LoginView extends Component {
             Sign In
           </Text>
           <View>
-            <TextInput
+            <FormInput
               placeholder="username"
               onChangeText={(text) => this.setState({username: text})}
               style={styles.formInput}
             />
-            <TextInput
+            <FormInput
               placeholder="password"
               secureTextEntry={true}
               onChangeText={(text) => this.setState({password: text})}
               style={styles.formInput}
             />
-            <TouchableHighlight
+            <Button
+              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10}}
+              backgroundColor='#48BBEC'
               onPress={(this.userLogin.bind(this))}
-              style={styles.button}>
-              <Text style={styles.buttonText}>Submit</Text>
-            </TouchableHighlight>
+              raised
+              title='Login'
+            />
           </View>
           <View>
-            <Text
+            <Button
+              onPress={(this.userLogin.bind(this))}
               onPress={() => this.setState({hasAccount: false})}
-              style={styles.text}>Sign Up to be a Savvy Shopper</Text>
+              raised
+              title='Join!'
+              backgroundColor='#48BBEC'
+              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10}}
+            />
           </View>
         </View>
       );
@@ -148,30 +161,37 @@ export default class LoginView extends Component {
       return (
         <View style={styles.container}>
           <Text style={styles.title}>
-            Be a Savvy Shopper!
+            Become a Savvy Shopper!
           </Text>
           <View>
-            <TextInput
+            <FormInput
               placeholder="username"
               onChangeText={(text) => this.setState({username: text})}
               style={styles.formInput}
             />
-            <TextInput
+            <FormInput
               placeholder="password"
               secureTextEntry={true}
               onChangeText={(text) => this.setState({password: text})}
               style={styles.formInput}
             />
-            <TouchableHighlight
+            <Button
               onPress={(this.userSignup.bind(this))}
-              style={styles.button}>
-              <Text style={styles.buttonText}>Sign Up</Text>
-            </TouchableHighlight>
+              style={styles.button}
+              raised
+              backgroundColor='#48BBEC'
+              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
+              title='Create Account'
+            />
           </View>
           <View>
-            <Text
+            <Button
               onPress={() => this.setState({hasAccount: true})}
-              style={styles.text}>Login to Account</Text>
+              raised
+              backgroundColor='#48BBEC'
+              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10}}
+              title='Login!'
+            />
           </View>
         </View>
       );
@@ -183,7 +203,8 @@ var styles = StyleSheet.create({
   container: {
     padding: 30,
     marginTop: 65,
-    alignItems: "stretch"
+    alignItems: "stretch",
+    marginBottom: 5
   },
   title: {
     fontSize: 18,

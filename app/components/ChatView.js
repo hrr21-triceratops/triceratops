@@ -15,6 +15,9 @@ let chatSession = {
   expertId: null
 };
 
+const heroku = 'https://savvyshopper.herokuapp.com';
+const local = 'http://localhost:2300';
+
 export default class ChatView extends Component {
 
   constructor(props) {
@@ -55,6 +58,7 @@ export default class ChatView extends Component {
     if(this.props.user.shopperExpert){
       fetch('https://savvyshopper.herokuapp.com/api/userQueue/getUser', {
         method: 'GET',
+        jsonp: false,
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -88,7 +92,7 @@ export default class ChatView extends Component {
 
   navigate() {
     this.props.navigator.push({
-      name: 'Shopper'
+      screen: 'Shopper'
     });
   }
 
