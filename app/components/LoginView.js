@@ -57,7 +57,7 @@ export default class LoginView extends Component {
         'Missing Username or Password.'
       )
     } else {
-      fetch(local+"/api/users/login", {
+      fetch(heroku+"/api/users/login", {
         method: "POST",
         headers: {
           'Accept': 'application/json',
@@ -91,7 +91,7 @@ export default class LoginView extends Component {
         'Missing Username or Password.'
       )
     } else {
-      fetch(local+"/api/users", {
+      fetch(heroku+"/api/users", {
         method: "POST",
         headers: {
           'Accept': 'application/json',
