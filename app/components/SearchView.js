@@ -21,7 +21,10 @@ const usersToHelp = null;
 export default class SearchView extends Component {
   constructor(props){
     super(props);
-    this.state = { page:'Search' };
+    this.state = {
+      page:'Search',
+      waitingUsers: false
+    };
   }
 
   navigateTo(destination, propsToPass) {
@@ -51,6 +54,10 @@ export default class SearchView extends Component {
 
   showNext() {
 
+  }
+
+  renderExpert() {
+    this.setState({waitingUsers: !this.state.waitingUsers});
   }
 
   render() {
@@ -120,9 +127,9 @@ export default class SearchView extends Component {
               }
               console.log("USERS IN QUEUE", users);
               usersToHelp = users;
-              // this.renderExpert();
+              this.renderExpert();
             }).done()}
-            <View>
+            {this.state.waitingUsers && <View>
               <Text>USER</Text>
               <Text>{JSON.stringify(usersToHelp)}</Text>
               <TouchableHighlight
@@ -135,14 +142,7 @@ export default class SearchView extends Component {
               onPress={() => this.showNext()}>
                 <Text style={styles.buttonText}>p</Text>
               </TouchableHighlight>
-            </View>
-            <View>
-              <TouchableHighlight
-                style={styles.button}
-                onPress={() => this.navigateTo('Chat', this.props)}>
-                <Text style={styles.buttonText}>HALP</Text>
-              </TouchableHighlight>
-            </View>
+            </View>}
           </View>
       }
       </View>
