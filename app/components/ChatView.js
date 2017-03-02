@@ -85,12 +85,14 @@ export default class ChatView extends Component {
 
     // FOR DEMO PURPOSES
     setTimeout(function() {
+      console.log('INSIDE FIRST SET TIMEOUT');
       self.setState((previousState) => {
           return {
             typingText: 'Connected with Savvy Shopper'
           };
         });
       setTimeout(function() {
+        console.log('INSIDE SECOND SET TIMEOUT');
         self.onReceive({
           _id: '1',
           chatSessionID: self.chatSession._id,
@@ -283,7 +285,6 @@ export default class ChatView extends Component {
         messages: GiftedChat.append(previousState.messages, message)
       };
     });
-    this.setModalVisible();
   }
   //     return {
   //       messages: GiftedChat.append(previousState.messages, {
@@ -328,27 +329,27 @@ export default class ChatView extends Component {
 
   render() {
     return (
-      <View>
+      <View style={{flex: 1}}>
         <GiftedChat
-        messages={this.state.messages}
-        onSend={this.onSend}
+          messages={this.state.messages}
+          onSend={this.onSend}
 
-        user={{
-          _id: this.props.user.id, // sent messages should have same user._id
-          name: this.props.user.username, // add optional avatar
-        }}
+          user={{
+            _id: this.props.user.id, // sent messages should have same user._id
+            name: this.props.user.username, // add optional avatar
+          }}
 
-        renderBubble={this.renderBubble}
-        renderFooter={this.renderFooter}
-      />
+          renderBubble={this.renderBubble}
+          renderFooter={this.renderFooter}
+        />
         {!this.props.user.shopperExpert &&
-            <TouchableHighlight
-              onPress={(this.navigate.bind(this))}
-              style={styles.button}>
-              <Text style={styles.buttonText}>Question Answered</Text>
-            </TouchableHighlight>
-          }
-          <View><RatingView user={this.props} userId={this.state.userId} expertId={this.state.expertId} modalVisible={this.state.modalVisible} closeModal={this.closeModal.bind(this)} /></View>
+        <TouchableHighlight
+          onPress={(this.navigate.bind(this))}
+          style={styles.button}>
+          <Text style={styles.buttonText}>Question Answered</Text>
+        </TouchableHighlight>
+        }
+        <View><RatingView user={this.props} userId={this.state.userId} expertId={this.state.expertId} modalVisible={this.state.modalVisible} closeModal={this.closeModal.bind(this)} /></View>
       </View>
     );
   }
