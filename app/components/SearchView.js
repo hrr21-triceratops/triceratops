@@ -114,15 +114,17 @@ export default class SearchView extends Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
               }
-            }).then((response) => response.json()).then((users) => {
+            }).then((users) => {
               if(!users){
                 console.log("TROUBLE");
               }
+              console.log("USERS IN QUEUE", users);
               usersToHelp = users;
-              this.renderExpert();
+              // this.renderExpert();
             }).done()}
             <View>
               <Text>USER</Text>
+              <Text>{JSON.stringify(usersToHelp)}</Text>
               <TouchableHighlight
               style={styles.button}
               onPress={() => this.navigateTo('Chat', this.props)}>
