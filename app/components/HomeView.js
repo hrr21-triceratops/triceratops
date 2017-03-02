@@ -19,10 +19,21 @@ import { SearchBar } from 'react-native-elements';
 export default class HomeView extends Component {
   constructor(props){
     super(props);
-    this.state = { page:'Search' };
+    this.state = {
+      page:'Search',
+      isActive: false,
+    };
   }
 
-   navigateTo(destination, propsToPass) {
+  activeSwitcher() {
+    this.setState({isActive: !this.state.isActive});
+  }
+
+  getActive() {
+    return this.state.isActive;
+  }
+
+  navigateTo(destination, propsToPass) {
 
     if (!propsToPass) {
 
@@ -47,6 +58,20 @@ export default class HomeView extends Component {
 
   render() {
     console.log('HOMEVIEW this.props', this.props)
+    let button = null;
+    if (this.getActive()) {
+      button = <TouchableHighlight
+            onPress={() => this.activeSwitcher()}
+            style={styles.button}>
+            <Text style={styles.buttonText}>Go Offline</Text>
+          </TouchableHighlight>
+    } else {
+      button = <TouchableHighlight
+            onPress={() => this.activeSwitcher()}
+            style={styles.button}>
+            <Text style={styles.buttonText}>Go Online</Text>
+          </TouchableHighlight>
+    }
     return (
        <View style={styles.mainContainer}>
         <Tabs selected={this.state.page}
@@ -82,6 +107,12 @@ export default class HomeView extends Component {
            </TouchableHighlight>
         </Tabs>
          <SearchView style={styles.searchInput} navigator={this.props.navigator} user={this.props}/>
+           {this.props.shopperExpert && button}
+            {this.getActive() && <TouchableHighlight
+              style={styles.button}
+              onPress={() => this.navigateTo('Chat', this.props)}>
+              <Text style={styles.buttonText}>HALP</Text>
+            </TouchableHighlight>}
         </View>
     );
   }
