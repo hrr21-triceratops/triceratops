@@ -38,6 +38,12 @@ import {GiftedChat, Actions, Bubble} from 'react-native-gifted-chat';
 //   chatSessionID: 'asjdfjsgeragj',
 // }
 
+// FOR DEMO PURPOSES
+let texts = [
+      'Cool, I\'ve got the perfect pair!',
+      'The Bose QuietComfort 35 will change your life.',
+      'Your welcome, have a great afternoon!'];
+
 const heroku = 'https://savvyshopper.herokuapp.com';
 const herokuTest = 'https://murmuring-sierra-59020.herokuapp.com';
 const local = 'http://localhost:2300';
@@ -90,6 +96,7 @@ export default class ChatView extends Component {
   }
 
   componentWillMount() {
+    let self = this;
     this._isMounted = true;
     // this.setState(() => {
     //   return {
@@ -99,16 +106,16 @@ export default class ChatView extends Component {
 
     // FOR DEMO PURPOSES
     setTimeout(function() {
-      this.setState((previousState) => {
+      self.setState((previousState) => {
           return {
             typingText: 'Connected with Savvy Shopper'
           };
         });
       setTimeout(function() {
-        this.onReceive({
+        self.onReceive({
           _id: '1',
-          chatSessionID: this.chatSession._id,
-          text: 'Hey, how can I help you? :)',
+          chatSessionID: self.chatSession._id,
+          text: 'Hey, how can I help? :)',
           createdAt: new Date(),
           user: {
             _id: 0,
@@ -116,10 +123,9 @@ export default class ChatView extends Component {
           }
         });
       }, 2000);
-    }, 10000);
+    }, 5000);
 
     // MERGED FROM OLD CHAT CODE
-    let self = this;
     this.chatSession.socket = io(herokuTest, {jsonp: false});
 
     // IF USER IS NOT AN EXPERT
@@ -256,46 +262,54 @@ export default class ChatView extends Component {
     });
 
     // for demo purpose
+    console.log('Answer Demo Messages:', messages);
     this.answerDemo(messages);
-    console.log('Message Array:', this.state.messages);
+    console.log('All Messages:', this.state.messages);
   }
 
   answerDemo(messages) {
-    if (messages.length > 0) {
-      if ((messages[0].image || messages[0].location) || !this._isAlright) {
-        this.setState((previousState) => {
-          return {
-            typingText: 'Savvy Shopper is typing'
-          };
-        });
+    let message = {
+      _id: Math.round(Math.random() * 1000000).toString(),
+      chatSessionID: this.chatSession._id,
+      createdAt: new Date(),
+      user: {
+        _id: 0,
+        name: 'Savvy Shopper'
       }
+    };
+
+    if (messages.length > 0) {
+      message.text = texts.shift();
+      setTimeout(() => {
+        this.onReceive(message);
+      }, 3000);
     }
 
-    setTimeout(() => {
-      if (this._isMounted === true) {
-        if (messages.length > 0) {
-          if (!this._isAlright) {
-            this._isAlright = true;
-            this.onReceive({
-              _id: '123',
-              chatSessionID: this.chatSession._id,
-              text: 'Savvy Shopper thanks you for your patience.',
-              createdAt: new Date(),
-              user: {
-                _id: 0,
-                name: 'Savvy Shopper'
-              }
-            });
-          }
-        }
-      }
+    // setTimeout(() => {
+    //   if (this._isMounted === true) {
+    //     if (messages.length > 0) {
+    //       if (!this._isAlright) {
+    //         this._isAlright = true;
+    //         this.onReceive({
+    //           _id: '123',
+    //           chatSessionID: this.chatSession._id,
+    //           text: 'Savvy Shopper thanks you for your patience.',
+    //           createdAt: new Date(),
+    //           user: {
+    //             _id: 0,
+    //             name: 'Savvy Shopper'
+    //           }
+    //         });
+    //       }
+    //     }
+    //   }
 
-      this.setState((previousState) => {
-        return {
-          typingText: null,
-        };
-      });
-    }, 2000);
+    //   this.setState((previousState) => {
+    //     return {
+    //       typingText: null,
+    //     };
+    //   });
+    // }, 2000);
   }
 
   navigate() {

@@ -144,20 +144,20 @@ router.post('/users', function(req, res) {
   userModel.findOne({ where: {username: req.body.username}}).then(function(user) {
     if (user) {
       return res.status(400).send(null);
-    }
-
-    bcrypt.hash(password, null, null, function(err, hash) {
-      userModel.create({
-        username: username,
-        password: hash,
-        shopperExpert: shopperExpert
-      }).then(function(user) {
-        res.status(201).send(
-        //{id_token: createToken(user)}
-        user
-        );
+    } else {
+      bcrypt.hash(password, null, null, function(err, hash) {
+        userModel.create({
+          username: username,
+          password: hash,
+          shopperExpert: shopperExpert
+        }).then(function(user) {
+          res.status(201).send(
+          //{id_token: createToken(user)}
+          user
+          );
+        });
       });
-    });
+    }
   });
 });
 
