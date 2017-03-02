@@ -38,6 +38,7 @@ import {GiftedChat, Actions, Bubble} from 'react-native-gifted-chat';
 // }
 
 const heroku = 'https://savvyshopper.herokuapp.com';
+const herokuTest = 'https://murmuring-sierra-59020.herokuapp.com';
 const local = 'http://localhost:2300';
 
 export default class ChatView extends Component {
@@ -67,7 +68,7 @@ export default class ChatView extends Component {
     socket = io(heroku);
     if(!this.props.user.shopperExpert, {jsonp: false}){
       messages: [],
-      typingText: 'Connecting you with an expert...',
+      typingText: 'Connecting with an expert...',
     };
 
     this._isMounted = false;
@@ -80,7 +81,7 @@ export default class ChatView extends Component {
 
     // MERGED FROM OLD CHAT CODE
     this.chatSession = {
-      _id: null
+      _id: null,
       socket: null,
       room: null,
       expert: null
@@ -97,41 +98,39 @@ export default class ChatView extends Component {
 
     // MERGED FROM OLD CHAT CODE
     let self = this;
-    this.chatSession.socket = io(heroku, {jsonp: false});
+    this.chatSession.socket = io(herokuTest, {jsonp: false});
 
     // IF USER IS NOT AN EXPERT
     if(!this.props.user.shopperExpert){
-      socket.on('id', (socketId) => {
-        socket.emit('createRoom', socketId, self.user.id);
-        chatSession.room = socketId;
+      self.chatSession.socket.on('id', (socketId) => {
+        self.chatSession.socket.emit('createRoom', socketId, self.props.user.id);
+        self.chatSession.room = socketId;
         console.log('*** NEW ROOM ***', socketId);
       });
 
-      socket.on('expert', (expertId) => {
-        chatSession.expert = expertId;
+      self.chatSession.socket.on('expert', (expertId) => {
+        self.chatSession.expert = expertId;
         console.log('ExpertId Recieved:', expertId);
         self.setState((previousState) => {
           return {
-            typingText: 'Expert Connected!'
+            typingText: 'Connected with Expert ' + expertId
           };
         });
-        setTimeout(function() {
-          this.setState((previousState) => {
-            return {
-              typingText: null
-            };
-          });
-        }, 1000).bind(self);
       });
 
-      socket.on('message', (message) => {
+      self.chatSession.socket.on('message', (message) => {
         console.log('Incoming Message:', message);
         // CALL onRECIEVE METHOD
+        self.onReceive(message.message);
       });
     }
 
+<<<<<<< HEAD
+=======
+    // IF USER IS AN EXPERT
+>>>>>>> Set up framework for creating user chat session in gifted chat
     if(this.props.user.shopperExpert){
-      fetch(heroku + '/api/userQueue/getUser', {
+      fetch(herokuTest + '/api/userQueue/getUser', {
         method: 'GET',
         jsonp: false,
         headers: {

@@ -13,6 +13,7 @@ import { FormLabel, FormInput, Button } from 'react-native-elements';
 var STORAGE_KEY = 'id_token';
 
 const heroku = 'https://savvyshopper.herokuapp.com';
+const herokuTest = 'https://murmuring-sierra-59020.herokuapp.com';
 const local = 'http://localhost:2300';
 
 export default class LoginView extends Component {
@@ -57,7 +58,7 @@ export default class LoginView extends Component {
         'Missing Username or Password.'
       )
     } else {
-      fetch(heroku+"/api/users/login", {
+      fetch(herokuTest+"/api/users/login", {
         method: "POST",
         headers: {
           'Accept': 'application/json',
@@ -91,7 +92,7 @@ export default class LoginView extends Component {
         'Missing Username or Password.'
       )
     } else {
-      fetch(heroku+"/api/users", {
+      fetch(herokuTest+"/api/users", {
         method: "POST",
         headers: {
           'Accept': 'application/json',

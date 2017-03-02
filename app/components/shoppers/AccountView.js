@@ -10,6 +10,7 @@ import Swiper from 'react-native-swiper';
 import { Button, CheckBox } from 'react-native-elements'
 
 const heroku = 'https://savvyshopper.herokuapp.com';
+const herokuTest = 'https://murmuring-sierra-59020.herokuapp.com';
 const local = 'http://localhost:2300';
 
 export default class AccountView extends Component {
@@ -29,7 +30,7 @@ export default class AccountView extends Component {
   }
 
   makeExpert() {
-    fetch(heroku+'/api/users/' + this.props.user.id, {
+    fetch(herokuTest+'/api/users/' + this.props.user.id, {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
