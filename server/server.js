@@ -58,7 +58,7 @@ app.get('/api/userQueue/getUser', function(req, res) {
     console.log('New Queue:', queue);
     res.send(user);
   } else {
-    res.send('User taken.');
+    res.send(null);
   }
 });
 

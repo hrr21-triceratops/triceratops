@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableHighlight,
+  AlertIOS,
 } from 'react-native';
 import io from 'socket.io-client';
 import RatingView from './shoppers/RatingView';
@@ -84,7 +85,7 @@ export default class ChatView extends Component {
       _id: null,
       socket: null,
       room: null,
-      expert: null
+      chatPartner: null
     };
   }
 
@@ -104,12 +105,14 @@ export default class ChatView extends Component {
     if(!this.props.user.shopperExpert){
       self.chatSession.socket.on('id', (socketId) => {
         self.chatSession.socket.emit('createRoom', socketId, self.props.user.id);
+        self.chatSession._id = socketId;
         self.chatSession.room = socketId;
         console.log('*** NEW ROOM ***', socketId);
+        console.log('chatSession:', self.chatSession);
       });
 
       self.chatSession.socket.on('expert', (expertId) => {
-        self.chatSession.expert = expertId;
+        self.chatSession.chatPartner = expertId;
         console.log('ExpertId Recieved:', expertId);
         self.setState((previousState) => {
           return {
@@ -141,21 +144,19 @@ export default class ChatView extends Component {
       .then((response) => response.json())
       .then((user) => {
         if (!user) {
-          AlertIOS.alert(
-            'Incorrect Username or Password.'
-          )
+          AlertIOS.alert('No User Available.');
         } else {
           console.log('UserId Recieved:', user.id);
-          chatSession.user = {id: user.id};
-          chatSession.expertId = this.props.user.id;
+          self.chatSession.chatPartner = user.id;
           console.log('*** JOINING ROOM ***', user.room);
-          socket.emit('joinRoom', user.room, chatSession.expertId);
-          room = user.room;
+          self.chatSession.socket.emit('joinRoom', user.room, self.props.user.id);
+          self.chatSession._id = user.room;
+          self.chatSession.room = user.room;
+          console.log('chatSession:', self.chatSession);
+
           socket.on('message', (message) => {
             console.log('Incoming Message:', message);
-            this.setState({
-              messages: this.state.messages.concat([message])
-            });
+            // CALL onRECIEVE METHOD
           });
         }
       })
@@ -204,6 +205,31 @@ export default class ChatView extends Component {
   }
 
   onSend(messages = []) {
+    let message = messages[0];
+
+    // Add chatSessionID to message
+    message.chatSessionID = this.chatSession._id;
+    console.log('onSend:', message);
+
+    // POST MESSAGE TO DB
+    fetch(herokuTest + '/api/chat/messages', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({message})
+    })
+    .then((response) => {
+      console.log(response);
+    })
+    .done();
+
+
+
+
+
+
     this.setState((previousState) => {
       return {
         messages: GiftedChat.append(previousState.messages, messages),
@@ -214,6 +240,24 @@ export default class ChatView extends Component {
     this.answerDemo(messages);
     console.log('Message Array:', this.state.messages);
   }
+
+//     let message = {
+//       chatSessionID: room,
+//       message: this.state.message,
+//       date: new Date()
+//     };
+//     if(this.props.user.shopperExpert){
+//       message.senderID = chatSession.expertId;
+//       message.receiverID = chatSession.user.id;
+//     } else {
+//       message.senderID = chatSession.user.id;
+//       message.receiverID = chatSession.expertId;
+//     };
+//     socket.emit('message', message, room);
+//     this.setState({message: ''});
+//     return false;
+//   }
+
 
   answerDemo(messages) {
     if (messages.length > 0) {
@@ -255,7 +299,7 @@ export default class ChatView extends Component {
           text: text,
           createdAt: new Date(),
           user: {
-            _id: 2,
+            _id: 99,
             name: 'React Native',
             avatar: 'https://facebook.github.io/react/img/logo_og.png',
           },
@@ -298,11 +342,10 @@ export default class ChatView extends Component {
         messages={this.state.messages}
         onSend={this.onSend}
         loadEarlier={this.state.loadEarlier}
-        // onLoadEarlier={this.onLoadEarlier}
-        // isLoadingEarlier={this.state.isLoadingEarlier}
 
         user={{
-          _id: 1, // sent messages should have same user._id
+          _id: this.props.user.id, // sent messages should have same user._id
+          name: this.props.user.username, // add optional avatar
         }}
 
         renderBubble={this.renderBubble}
