@@ -16,6 +16,8 @@ import AvailableExperts from './AvailableExperts';
 import Tabs from 'react-native-tabs';
 import { SearchBar } from 'react-native-elements'
 
+const usersToHelp = null;
+
 export default class SearchView extends Component {
   constructor(props){
     super(props);
@@ -45,6 +47,10 @@ export default class SearchView extends Component {
 
   getActive() {
     return this.state.isActive;
+  }
+
+  showNext() {
+
   }
 
   render() {
@@ -100,11 +106,43 @@ export default class SearchView extends Component {
         </Tabs>
         <Search style={styles.searchInput} navigator={this.props.navigator} user={this.props}/>
         {this.props.shopperExpert && button}
-        {this.getActive() && <TouchableHighlight
-          style={styles.button}
-          onPress={() => this.navigateTo('Chat', this.props)}>
-          <Text style={styles.buttonText}>HALP</Text>
-        </TouchableHighlight>}
+        {this.getActive() &&
+          <View>
+            {fetch('https://savvyshopper.herokuapp.com/api/userQueue/loadUser', {
+              method: 'GET',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              }
+            }).then((response) => response.json()).then((users) => {
+              if(!users){
+                console.log("TROUBLE");
+              }
+              usersToHelp = users;
+              this.renderExpert();
+            }).done()}
+            <View>
+              <Text>USER</Text>
+              <TouchableHighlight
+              style={styles.button}
+              onPress={() => this.navigateTo('Chat', this.props)}>
+                <Text style={styles.buttonText}>b</Text>
+              </TouchableHighlight>
+              <TouchableHighlight
+              style={styles.button}
+              onPress={() => this.showNext()}>
+                <Text style={styles.buttonText}>p</Text>
+              </TouchableHighlight>
+            </View>
+            <View>
+              <TouchableHighlight
+                style={styles.button}
+                onPress={() => this.navigateTo('Chat', this.props)}>
+                <Text style={styles.buttonText}>HALP</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+      }
       </View>
     );
   }
