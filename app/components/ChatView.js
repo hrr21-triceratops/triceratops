@@ -132,10 +132,30 @@ export default class ChatView extends Component {
     if(!this.props.user.shopperExpert){
       self.chatSession.socket.on('id', (socketId) => {
         self.chatSession.socket.emit('createRoom', socketId, self.props.user.id);
-        self.chatSession._id = socketId;
+        self.chatSession._id = socketId; // Redundant - room is same as _id
         self.chatSession.room = socketId;
         console.log('*** NEW ROOM ***', socketId);
         console.log('chatSession:', self.chatSession);
+        // SEND SESSION ID TO USER'S CLOSED CHAT SESSIONS ARRAY
+        self.props.user.closedChatSessions.push(self.chatSession._id);
+        console.log('New Chat Sessions:', self.props.user.closedChatSessions);
+        // PUT REQUEST TO DATABASE WITH NEW CCS ARRAY
+        fetch(herokuTest+'/api/users/' + self.props.user.id, {
+          method: 'PUT',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            attributes: {
+              closedChatSessions: self.props.user.closedChatSessions
+            }
+          })
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .done();
       });
 
       self.chatSession.socket.on('expert', (expertId) => {
