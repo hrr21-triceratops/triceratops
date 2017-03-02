@@ -10,13 +10,13 @@ import {
   TextInput,
   ActivityIndictorIOS
 } from 'react-native';
-import Search from './shoppers/Search';
+import SearchView from './shoppers/SearchView';
 import TopExperts from './TopExperts';
 import AvailableExperts from './AvailableExperts';
 import Tabs from 'react-native-tabs';
-import { SearchBar } from 'react-native-elements'
+import { SearchBar } from 'react-native-elements';
 
-export default class SearchView extends Component {
+export default class HomeView extends Component {
   constructor(props){
     super(props);
     this.state = { page:'Search' };
@@ -55,12 +55,12 @@ export default class SearchView extends Component {
          onSelect={el=>this.setState({ page: el.props.name })}>
 
             <TouchableHighlight
-            name="Search"
+            name="Home"
             user={this.props}
             style={styles.button}
-            onPress={this.navigateTo.bind(this, "Search")}
+            onPress={this.navigateTo.bind(this, "Home")}
             underlayColor="white">
-            <Text style={styles.buttonText}>Search</Text>
+            <Text style={styles.buttonText}>Home</Text>
             </TouchableHighlight>
 
             <TouchableHighlight
@@ -81,7 +81,7 @@ export default class SearchView extends Component {
             <Text style={styles.buttonText}>Top Experts</Text>
            </TouchableHighlight>
         </Tabs>
-         <Search style={styles.searchInput} navigator={this.props.navigator} user={this.props}/>
+         <SearchView style={styles.searchInput} navigator={this.props.navigator} user={this.props}/>
         </View>
     );
   }

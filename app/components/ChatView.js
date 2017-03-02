@@ -7,6 +7,7 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import io from 'socket.io-client';
+import RatingView from './shoppers/RatingView';
 
 let room = null;
 let socket = null;
@@ -25,13 +26,25 @@ export default class ChatView extends Component {
     super(props);
     this.state = {
       message: '',
-      messages: []
-    }
+      messages: [],
+      modalVisible: false,
+      userId: 3,
+      expertId: 4
+    };
   }
+
+  setModalVisible() {
+    this.setState({modalVisible: true});
+  }
+
+  closeModal() {
+    this.setState({modalVisible: false});
+  }
+
 
   // automatically runs when component loads
   componentDidMount() {
-    socket = io('https://savvyshopper.herokuapp.com/');
+    socket = io('https://savvyshopper.herokuapp.com/', {jsonp: false});
     if(!this.props.user.shopperExpert){
 
       //store information on chatSession
@@ -40,11 +53,17 @@ export default class ChatView extends Component {
       socket.on('id', (socketId) => {
         socket.emit('createRoom', socketId, chatSession.user.id);
         room = socketId;
+         this.setState({
+          userId: 3 //this 3 is hardcoded but would become the chatSession.user.id
+        });
         console.log('*** NEW ROOM ***', socketId);
       });
 
       socket.on('expert', (expertId) => {
         chatSession.expertId = expertId;
+        this.setState({
+          expertId: 4 //this 4 is hardcoded but would become the expertId
+        });
         console.log('ExpertId Recieved:', expertId);
       });
 
@@ -92,8 +111,9 @@ export default class ChatView extends Component {
 
   navigate() {
     this.props.navigator.push({
-      screen: 'Shopper'
+      screen: 'Home'
     });
+    this.setModalVisible();
   }
 
   //Disconnect only applies to client
@@ -185,6 +205,7 @@ export default class ChatView extends Component {
               <Text style={styles.buttonText}>Question Answered</Text>
             </TouchableHighlight>
           }
+          <View><RatingView user={this.props} userId={this.state.userId} expertId={this.state.expertId} modalVisible={this.state.modalVisible} closeModal={this.closeModal.bind(this)} /></View>
         </View>
       </View>
     )

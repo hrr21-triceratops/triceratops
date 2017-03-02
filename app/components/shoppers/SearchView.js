@@ -16,7 +16,7 @@ import {
   FormLabel, FormInput, SearchBar
 } from 'react-native-elements';
 
-export default class Search extends Component {
+export default class SearchView extends Component {
   constructor(props) {
     super(props);
     this.state = {
