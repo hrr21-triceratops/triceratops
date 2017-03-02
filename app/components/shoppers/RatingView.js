@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Text, TouchableHighlight, View } from 'react-native';
+import { Modal, Text, TouchableHighlight, View, StyleSheet, Image } from 'react-native';
 import { Button } from 'react-native-elements';
 import StarRating from 'react-native-star-rating';
 
@@ -45,12 +45,8 @@ export default class RatingView extends Component {
           transparent={false}
           visible={this.props.modalVisible}
           >
-
-         <View style={{marginTop: 22}}>
-          <View>
-
-            <Text>Rate your Expert!</Text>
-
+            <Text style={styles.title}>Rate your Expert!</Text>
+            <Image source={require('../../assets/imgs/user-profile.png')} style={styles.container}></Image>
             {console.log('user props', this.props)}
 
             <StarRating
@@ -70,11 +66,23 @@ export default class RatingView extends Component {
               this.sendRating(this.state.starCount, this.props.userId, this.props.expertId)
             }}>
             </Button>
-
-          </View>
-         </View>
         </Modal>
       </View>
     );
   }
 }
+
+styles = StyleSheet.create({
+  title: {
+    fontSize: 23,
+    paddingLeft: 10,
+    paddingTop: 5,
+    margin: 20,
+    textAlign: 'center'
+  },
+  container: {
+  flex: 1,
+   height: null,
+   width: null,
+ }
+})
