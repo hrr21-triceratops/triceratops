@@ -124,14 +124,11 @@ export default class ChatView extends Component {
       self.chatSession.socket.on('message', (message) => {
         console.log('Incoming Message:', message);
         // CALL onRECIEVE METHOD
-        self.onReceive(message.message);
+        self.onReceive(message); // message = MESSAGE OBJECT
       });
     }
 
-<<<<<<< HEAD
-=======
     // IF USER IS AN EXPERT
->>>>>>> Set up framework for creating user chat session in gifted chat
     if(this.props.user.shopperExpert){
       fetch(herokuTest + '/api/userQueue/getUser', {
         method: 'GET',
@@ -157,6 +154,7 @@ export default class ChatView extends Component {
           socket.on('message', (message) => {
             console.log('Incoming Message:', message);
             // CALL onRECIEVE METHOD
+            self.onReceive(message); // message = MESSAGE OBJECT
           });
         }
       })
@@ -205,11 +203,16 @@ export default class ChatView extends Component {
   }
 
   onSend(messages = []) {
+    let self = this;
     let message = messages[0];
 
     // Add chatSessionID to message
     message.chatSessionID = this.chatSession._id;
     console.log('onSend:', message);
+
+    // EMIT MESSAGE TO CHAT PARTNER
+    this.chatSession.socket.emit('message', message, self.chatSession.room);
+
 
     // POST MESSAGE TO DB
     fetch(herokuTest + '/api/chat/messages', {
@@ -225,14 +228,9 @@ export default class ChatView extends Component {
     })
     .done();
 
-
-
-
-
-
     this.setState((previousState) => {
       return {
-        messages: GiftedChat.append(previousState.messages, messages),
+        messages: GiftedChat.append(previousState.messages, [message]),
       };
     });
 
@@ -240,24 +238,6 @@ export default class ChatView extends Component {
     this.answerDemo(messages);
     console.log('Message Array:', this.state.messages);
   }
-
-//     let message = {
-//       chatSessionID: room,
-//       message: this.state.message,
-//       date: new Date()
-//     };
-//     if(this.props.user.shopperExpert){
-//       message.senderID = chatSession.expertId;
-//       message.receiverID = chatSession.user.id;
-//     } else {
-//       message.senderID = chatSession.user.id;
-//       message.receiverID = chatSession.expertId;
-//     };
-//     socket.emit('message', message, room);
-//     this.setState({message: ''});
-//     return false;
-//   }
-
 
   answerDemo(messages) {
     if (messages.length > 0) {
@@ -291,23 +271,29 @@ export default class ChatView extends Component {
   navigate() {
     this.props.navigator.push({
       screen: 'Home'
-  onReceive(text) {
+
+  onReceive(message) {
     this.setState((previousState) => {
       return {
-        messages: GiftedChat.append(previousState.messages, {
-          _id: Math.round(Math.random() * 1000000),
-          text: text,
-          createdAt: new Date(),
-          user: {
-            _id: 99,
-            name: 'React Native',
-            avatar: 'https://facebook.github.io/react/img/logo_og.png',
-          },
-        }),
+        messages: GiftedChat.append(previousState.messages, message)
       };
     });
     this.setModalVisible();
   }
+  //     return {
+  //       messages: GiftedChat.append(previousState.messages, {
+  //         _id: Math.round(Math.random() * 1000000),
+  //         text: text,
+  //         createdAt: new Date(),
+  //         user: {
+  //           _id: 99,
+  //           name: 'React Native',
+  //           avatar: 'https://facebook.github.io/react/img/logo_og.png',
+  //         },
+  //       }),
+  //     };
+  //   });
+  // }
 
   renderBubble(props) {
     return (
@@ -341,7 +327,6 @@ export default class ChatView extends Component {
         <GiftedChat
         messages={this.state.messages}
         onSend={this.onSend}
-        loadEarlier={this.state.loadEarlier}
 
         user={{
           _id: this.props.user.id, // sent messages should have same user._id

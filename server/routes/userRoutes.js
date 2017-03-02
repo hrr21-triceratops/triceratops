@@ -117,18 +117,14 @@ router.post('/users/login', function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
 
-  if (!username || !password) {
-    return res.status(400).send("Missing username or password.");
-  }
-
   userModel.findOne({ where: {username: req.body.username}}).then(function(user) {
     if (!user) {
-      return res.status(401).send("User does not exist.");
+      return res.status(401).send(null);
     }
 
     bcrypt.compare(password, user.get('password'), function(err, match) {
       if (!match) {
-        return res.status(401).send("Incorrect password.");
+        return res.status(401).send(null);
       }
 
       res.status(201).send(
@@ -145,13 +141,9 @@ router.post('/users', function(req, res) {
   var password = req.body.password;
   var shopperExpert = req.body.shopperExpert;
 
-  if (!username || !password) {
-    return res.status(400).send("Missing username or password.");
-  }
-
   userModel.findOne({ where: {username: req.body.username}}).then(function(user) {
     if (user) {
-      return res.status(400).send("User already exists.");
+      return res.status(400).send(null);
     }
 
     bcrypt.hash(password, null, null, function(err, hash) {
@@ -176,7 +168,7 @@ router.put('/users/:id', function(req, res) {
   userModel.findOne({ where: {id: req.params.id}})
   .then(function(user) {
     if (!user) {
-      return res.status(401).send("User does not exist.");
+      return res.status(401).send(null);
     } else {
       user.update(attributes)
       .then(function(user) {

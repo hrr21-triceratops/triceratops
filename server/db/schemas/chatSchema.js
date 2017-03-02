@@ -1,14 +1,14 @@
 var mongoose = require('../connections.js').mongoose;
 
 var chatSchema = mongoose.Schema({
-  _id: { type: Number, required: true },
-  text: { type: String },
+  _id: { type: String, required: true },
+  chatSessionID: { type: String, required: true }
   createdAt: { type: Date, default: Date.now },
+  text: { type: String },
   user: {
     _id: { type: Number, required: true },
     name: { type: String, required: true }
   },
-  chatSessionID: { type: String, required: true }
 });
 
 var chatModel = mongoose.model('chatSchema', chatSchema);
