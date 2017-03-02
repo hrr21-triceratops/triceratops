@@ -15,21 +15,16 @@ router.get('/chat/messages', function(req, res) {
   });
 });
 
-// SAVE MESSAGES TO DATABASE (Expects Array of Chat Objects)
+// SAVE MESSAGE TO DATABASE
 router.post('/chat/messages', function(req, res) {
-  var messages = req.body.messages; // Array of Chat Objects
-
-  messages.forEach(function(message) {
-    // if posting from user account only with no expert connection
-    if (message.receiverID === null) {
-      message.receiverID = 00;
+  console.log('*** REQUEST BODY ***', req.body.message);
+  chatModel.create(req.body.message, function(err, savedMessage) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send('Message Saved.');
     }
-    chatModel.create(message, function(err, savedMessage) {
-      if (err) throw err;
-    });
   });
-
-  res.send('Messages Saved.');
 });
 
 module.exports = router;

@@ -58,7 +58,7 @@ app.get('/api/userQueue/getUser', function(req, res) {
     console.log('New Queue:', queue);
     res.send(user);
   } else {
-    res.send('User taken.');
+    res.send(null);
   }
 });
 
@@ -77,7 +77,16 @@ io.on('connection', function(socket) {
     };
     queue.push(user);
     console.log('Current Queue:', queue);
-    io.in(room).emit('message', {message: '*** Finding Expert ***'});
+    // io.in(room).emit('message', {
+    //   _id: '00',
+    //   chatSessionID: room,
+    //   createdAt: new Date(),
+    //   text: 'Your expert will be with you momentarily.',
+    //   user: {
+    //     _id: 0,
+    //     name: 'Savvy Shopper'
+    //   }
+    // });
   });
 
   // RUNS WHEN EXPERT JOINS CHATROOM
@@ -85,7 +94,16 @@ io.on('connection', function(socket) {
     console.log('Joining Room:', room);
     socket.join(room);
     io.in(room).emit('expert', expertId);
-    io.in(room).emit('message', {message: '*** Expert Connected ***'});
+    // io.in(room).emit('message', {
+    //   _id: '01',
+    //   chatSessionID: room,
+    //   createdAt: new Date(),
+    //   text: 'Expert ' + expertId + ' has arrived.',
+    //   user: {
+    //     _id: 0,
+    //     name: 'Savvy Shopper'
+    //   }
+    // });
   });
 
   // RUNS WHEN MESSAGE IS SENT BY USER OR EXPERT

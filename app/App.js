@@ -26,7 +26,7 @@ class SavvyShopper extends Component {
   //selects a scene to render
   constructor(props){
     super(props);
-    this.state = {"screen": "Login"};
+    this.state = {screen: 'Login'};
   }
 
   renderScene(route, navigator) {
@@ -122,5 +122,5 @@ const styles = StyleSheet.create({
    },
 });
 
-
+console.disableYellowBox = true;
 AppRegistry.registerComponent('SavvyShopper', () => SavvyShopper);

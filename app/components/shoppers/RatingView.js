@@ -3,6 +3,10 @@ import { Modal, Text, TouchableHighlight, View, StyleSheet, Image } from 'react-
 import { Button } from 'react-native-elements';
 import StarRating from 'react-native-star-rating';
 
+const heroku = 'https://savvyshopper.herokuapp.com';
+const herokuTest = 'https://murmuring-sierra-59020.herokuapp.com';
+const local = 'http://localhost:2300';
+
 export default class RatingView extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +23,7 @@ export default class RatingView extends Component {
 
   sendRating(rating, userId, expertId) {
     console.log('userId', userId, 'expertId', expertId, 'rating', rating);
-    fetch('http://localhost:2300/api/ratings/rate', {
+    fetch(herokuTest + '/api/ratings/rate', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
