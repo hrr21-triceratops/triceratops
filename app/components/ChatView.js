@@ -97,6 +97,27 @@ export default class ChatView extends Component {
     //   };
     // });
 
+    // FOR DEMO PURPOSES
+    setTimeout(function() {
+      this.setState((previousState) => {
+          return {
+            typingText: 'Connected with Savvy Shopper'
+          };
+        });
+      setTimeout(function() {
+        this.onReceive({
+          _id: '1',
+          chatSessionID: this.chatSession._id,
+          text: 'Hey, how can I help you? :)',
+          createdAt: new Date(),
+          user: {
+            _id: 0,
+            name: 'Savvy Shopper'
+          }
+        });
+      }, 2000);
+    }, 10000);
+
     // MERGED FROM OLD CHAT CODE
     let self = this;
     this.chatSession.socket = io(herokuTest, {jsonp: false});
