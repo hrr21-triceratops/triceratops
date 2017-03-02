@@ -35,6 +35,15 @@ const io = require('socket.io')(server);
 // QUEUE OF USERS REQUESTING ASSISTANCE
 let realQueue = {};
 
+// DETERMINE IF USER CURRENTLY IN QUEUE
+app.get('/api/userQueue', function(req, res) {
+  if (queue.length) {
+    res.send(true);
+  } else {
+    res.send(false);
+  }
+});
+
 // ALLOW USER TO CYCLE THROUGH USERS IN QUEUE
 app.get('/api/userQueue/loadUser', function(req, res) {
   console.log("REAL QUEUE", realQueue);
@@ -42,6 +51,15 @@ app.get('/api/userQueue/loadUser', function(req, res) {
     res.send(realQueue);
   } else {
     res.send(null);
+  }
+});
+
+// ALLOW USER TO CYCLE THROUGH USERS IN QUEUE
+app.get('/api/userQueue/loadUser', function(req, res) {
+  if (Object.keys.length(realQueue)) {
+    res.send(JSON.stringify(realQueue));
+  } else {
+    res.send('No users at this time');
   }
 });
 
