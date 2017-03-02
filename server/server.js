@@ -56,6 +56,7 @@ app.get('/api/userQueue/loadUser', function(req, res) {
 
 // ALLOW USER TO CYCLE THROUGH USERS IN QUEUE
 app.get('/api/userQueue/loadUser', function(req, res) {
+  console.log("REAL QUEUE", realQueue);
   if (Object.keys(realQueue).length) {
     res.send(JSON.stringify(realQueue));
   } else {
