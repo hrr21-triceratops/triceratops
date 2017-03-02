@@ -23,7 +23,6 @@ const local = 'http://localhost:2300';
 import {GiftedChat, Actions, Bubble} from 'react-native-gifted-chat';
 
 // GIFTED CHAT MESSAGE OBJECT FORMAT
-
 // {
 //   _id: 1,
 //   text: 'My message',
@@ -40,6 +39,7 @@ import {GiftedChat, Actions, Bubble} from 'react-native-gifted-chat';
 
 export default class ChatView extends Component {
   constructor(props) {
+    console.log('ChatView Props:', props);
     super(props);
     this.state = {
       message: '',
@@ -64,9 +64,7 @@ export default class ChatView extends Component {
     socket = io(heroku);
     if(!this.props.user.shopperExpert, {jsonp: false}){
       messages: [],
-      loadEarlier: true,
-      typingText: null,
-      isLoadingEarlier: false,
+      typingText: 'Connecting you with an expert...',
     };
 
     this._isMounted = false;
@@ -74,7 +72,6 @@ export default class ChatView extends Component {
     this.onReceive = this.onReceive.bind(this);
     this.renderBubble = this.renderBubble.bind(this);
     this.renderFooter = this.renderFooter.bind(this);
-    this.onLoadEarlier = this.onLoadEarlier.bind(this);
 
     this._isAlright = null;
   }
@@ -224,21 +221,22 @@ export default class ChatView extends Component {
 
   render() {
     return (
+<<<<<<< HEAD
       <View>
         <GiftedChat
-          messages={this.state.messages}
-          onSend={this.onSend}
-          loadEarlier={this.state.loadEarlier}
-          onLoadEarlier={this.onLoadEarlier}
-          isLoadingEarlier={this.state.isLoadingEarlier}
+        messages={this.state.messages}
+        onSend={this.onSend}
+        loadEarlier={this.state.loadEarlier}
+        // onLoadEarlier={this.onLoadEarlier}
+        // isLoadingEarlier={this.state.isLoadingEarlier}
 
-          user={{
-            _id: 1, // sent messages should have same user._id
-          }}
+        user={{
+          _id: 1, // sent messages should have same user._id
+        }}
 
-          renderBubble={this.renderBubble}
-          renderFooter={this.renderFooter}
-        />
+        renderBubble={this.renderBubble}
+        renderFooter={this.renderFooter}
+      />
         {!this.props.user.shopperExpert &&
             <TouchableHighlight
               onPress={(this.disconnect.bind(this))}
@@ -270,6 +268,18 @@ const styles = StyleSheet.create({
 ////////// FUNCTIONING CHAT WITH SOCKETS ///////////
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
+
+// import io from 'socket.io-client';
+
+// let room = null;
+// let socket = null;
+// let chatSession = {
+//   user: null,
+//   expertId: null
+// };
+
+// const heroku = 'https://savvyshopper.herokuapp.com';
+// const local = 'http://localhost:2300';
 
 // export default class ChatView extends Component {
 

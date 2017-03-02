@@ -26,7 +26,7 @@ class SavvyShopper extends Component {
   //selects a scene to render
   constructor(props){
     super(props);
-    this.state = {"screen": "Chat"};
+    this.state = {screen: 'Chat'};
   }
 
   renderScene(route, navigator) {
