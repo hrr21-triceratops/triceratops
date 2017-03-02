@@ -31,7 +31,7 @@ export default class ChatView extends Component {
 
   // automatically runs when component loads
   componentDidMount() {
-    socket = io('https://savvyshopper.herokuapp.com/');
+    socket = io('https://savvyshopper.herokuapp.com/', {jsonp: false});
     if(!this.props.user.shopperExpert){
 
       //store information on chatSession
@@ -92,7 +92,7 @@ export default class ChatView extends Component {
 
   navigate() {
     this.props.navigator.push({
-      screen: 'Shopper'
+      screen: 'Rating'
     });
   }
 

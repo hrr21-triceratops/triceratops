@@ -15,8 +15,10 @@ import ChatView from './components/ChatView';
 import TopExperts from './components/TopExperts';
 import CategoryView from './components/shoppers/CategoryView';
 import AvailableExperts from './components/AvailableExperts';
-import SearchView from './components/SearchView';
+import HomeView from './components/HomeView';
 import ProfileView from './components/ProfileView';
+import RatingView from './components/shoppers/RatingView';
+
 
 
 //setup the app component to register with App registry, everything happens inside of this wrapper
@@ -33,8 +35,10 @@ class SavvyShopper extends Component {
     switch (route.screen) {
       case "Login":
         return <LoginView navigator={navigator} {...route.passProps} />
-      case "Search":
-        return <SearchView navigator={navigator} {...route.passProps} />
+      case "Home":
+        return <HomeView navigator={navigator} {...route.passProps} />
+      case "Rating":
+        return <RatingView navigator={navigator} {...route.passProps} />
       case "Shopper":
         return <ShopperView navigator={navigator} {...route.passProps} />
       case "AvailableExperts":
