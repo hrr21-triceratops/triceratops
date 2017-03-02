@@ -7,7 +7,7 @@ import {
   AlertIOS,
 } from 'react-native';
 import Swiper from 'react-native-swiper';
-
+import { Button, CheckBox } from 'react-native-elements'
 
 const heroku = 'https://savvyshopper.herokuapp.com';
 const local = 'http://localhost:2300';
@@ -17,6 +17,15 @@ export default class AccountView extends Component {
   constructor(props) {
     console.log("ACCOUNT PROPS", props);
     super(props);
+
+    this.state = {
+      homeChecked: false,
+      techChecked: false,
+      foodChecked: false,
+      womensChecked: false,
+      mensChecked: false,
+      entertainmentChecked: false
+    };
   }
 
   makeExpert() {
@@ -83,56 +92,81 @@ export default class AccountView extends Component {
     return (
       <View>
         <Text style={styles.title}>PREFERENCES</Text>
-        <Text style={styles.text}>Home</Text>
-        <Text style={styles.text}>Food</Text>
-        <Text style={styles.text}>Tech</Text>
-        <Text style={styles.text}>Women\'s Fashion</Text>
-        <Text style={styles.text}>Men\'s Fashion</Text>
-        <Text style={styles.text}>Entertainment</Text>
-        {!this.props.user.shopperExpert &&
-          <TouchableHighlight
-            onPress={() => this.makeExpert()}
-            style={styles.button}>
-            <Text style={styles.buttonText}>Become an Expert</Text>
-          </TouchableHighlight>
+
+        <CheckBox
+          center
+          title='Home'
+          checked={this.state.homeChecked}
+        />
+
+        <CheckBox
+          center
+          title='Food'
+          checked={this.state.foodChecked}
+        />
+
+        <CheckBox
+          center
+          title='Tech'
+          checked={this.state.techChecked}
+        />
+
+        <CheckBox
+          center
+          title="Womens Fashion"
+          checked={this.state.womensChecked}
+        />
+
+        <CheckBox
+          center
+          title="Mens Fashion"
+          checked={this.state.mensChecked}
+        />
+
+        <CheckBox
+          center
+          title="Entertainment"
+          checked={this.state.entertainmentChecked}
+        />
+
+        {
+        !this.props.user.shopperExpert &&
+          <Button
+          raised
+          icon={{name: 'cached'}}
+          title='Become an Expert'
+          buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 1}}
+          onPress={() => this.makeExpert()}
+           />
         }
         {this.props.user.shopperExpert &&
           button
         }
-        <TouchableHighlight
-          onPress={() => this.navigate('Login')}
-          style={styles.button}>
-          <Text style={styles.buttonText}>Log Out</Text>
-        </TouchableHighlight>
+        {
+         //  <Button
+         //  raised
+         //  icon={{name: 'cached'}}
+         //  title='Log Out'
+         //  buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 1}}
+         //  onPress={() => this.navigate('Login')}
+         // />
+       }
       </View>
     )
   }
 }
 var styles = StyleSheet.create({
   title: {
-    fontSize: 28,
-    marginBottom: 15,
+    fontWeight: 'bold',
+    fontSize: 16,
     alignSelf: 'center',
-    color: 'white'
+    color: 'grey',
+    top: 10,
+    marginBottom: 10
   },
   text: {
-    fontSize: 18,
+    fontSize: 14,
     marginBottom: 10,
     alignSelf: 'center'
-  },
-  buttonText: {
-    fontSize: 22,
-    color: 'white',
-    alignSelf: 'center'
-  },
-  button: {
-    height: 50,
-    width: 310,
-    backgroundColor: '#48BBEC',
-    borderColor: '#48BBEC',
-    borderWidth: 1,
-    marginTop: 20,
-    alignSelf: 'stretch',
-    justifyContent: 'center'
-  },
+  }
 });
