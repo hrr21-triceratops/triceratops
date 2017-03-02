@@ -10,17 +10,6 @@ import {
 } from 'react-native';
 import io from 'socket.io-client';
 import RatingView from './shoppers/RatingView';
-
-let room = null;
-let socket = null;
-let chatSession = {
-  user: null,
-  expertId: null
-};
-
-const heroku = 'https://savvyshopper.herokuapp.com';
-const local = 'http://localhost:2300';
-
 import {GiftedChat, Actions, Bubble} from 'react-native-gifted-chat';
 
 // GIFTED CHAT MESSAGE OBJECT FORMAT
@@ -53,28 +42,10 @@ export default class ChatView extends Component {
     console.log('ChatView Props:', props);
     super(props);
     this.state = {
-      message: '',
       messages: [],
       modalVisible: false,
       userId: 3,
-      expertId: 4
-    };
-  }
-
-  setModalVisible() {
-    this.setState({modalVisible: true});
-  }
-
-  closeModal() {
-    this.setState({modalVisible: false});
-  }
-
-
-  // automatically runs when component loads
-  componentDidMount() {
-    socket = io(heroku);
-    if(!this.props.user.shopperExpert, {jsonp: false}){
-      messages: [],
+      expertId: 4,
       typingText: 'Connecting with an expert...',
     };
 
@@ -93,6 +64,14 @@ export default class ChatView extends Component {
       room: null,
       chatPartner: null
     };
+  }
+
+  setModalVisible() {
+    this.setState({modalVisible: true});
+  }
+
+  closeModal() {
+    this.setState({modalVisible: false});
   }
 
   componentWillMount() {
@@ -209,46 +188,6 @@ export default class ChatView extends Component {
     }
   }
 
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
-      socket.on('id', (socketId) => {
-        socket.emit('createRoom', socketId, chatSession.user.id);
-        room = socketId;
-         this.setState({
-          userId: 3 //this 3 is hardcoded but would become the chatSession.user.id
-        });
-        console.log('*** NEW ROOM ***', socketId);
-      });
-
-      socket.on('expert', (expertId) => {
-        chatSession.expertId = expertId;
-        this.setState({
-          expertId: 4 //this 4 is hardcoded but would become the expertId
-        });
-        console.log('ExpertId Recieved:', expertId);
-      });
-  onLoadEarlier() {
-    this.setState((previousState) => {
-      return {
-        isLoadingEarlier: true,
-      };
-    });
-
-    setTimeout(() => {
-      if (this._isMounted === true) {
-        this.setState((previousState) => {
-          return {
-            messages: GiftedChat.prepend(previousState.messages, require('./data/old_messages.js')),
-            loadEarlier: false,
-            isLoadingEarlier: false,
-          };
-        });
-      }
-    }, 1000); // simulating network
-    console.log('Messages Array:', this.state.messages);
-  }
-
   onSend(messages = []) {
     let self = this;
     let message = messages[0];
@@ -259,7 +198,6 @@ export default class ChatView extends Component {
 
     // EMIT MESSAGE TO CHAT PARTNER
     this.chatSession.socket.emit('message', message, self.chatSession.room);
-
 
     // POST MESSAGE TO DB
     fetch(herokuTest + '/api/chat/messages', {
@@ -335,6 +273,9 @@ export default class ChatView extends Component {
   navigate() {
     this.props.navigator.push({
       screen: 'Home'
+    });
+    this.setModalVisible();
+  }
 
   onReceive(message) {
     this.setState((previousState) => {
@@ -402,7 +343,7 @@ export default class ChatView extends Component {
       />
         {!this.props.user.shopperExpert &&
             <TouchableHighlight
-              onPress={(this.disconnect.bind(this))}
+              onPress={(this.navigate.bind(this))}
               style={styles.button}>
               <Text style={styles.buttonText}>Question Answered</Text>
             </TouchableHighlight>
