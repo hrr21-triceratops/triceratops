@@ -7,6 +7,7 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import io from 'socket.io-client';
+import RatingView from './shoppers/RatingView';
 
 let room = null;
 let socket = null;
@@ -25,9 +26,19 @@ export default class ChatView extends Component {
     super(props);
     this.state = {
       message: '',
-      messages: []
-    }
+      messages: [],
+      modalVisible: false
+    };
   }
+
+  setModalVisible() {
+    this.setState({modalVisible: true});
+  }
+
+  closeModal() {
+    this.setState({modalVisible: false});
+  }
+
 
   // automatically runs when component loads
   componentDidMount() {
@@ -92,8 +103,9 @@ export default class ChatView extends Component {
 
   navigate() {
     this.props.navigator.push({
-      screen: 'Rating'
+      screen: 'Home'
     });
+    this.setModalVisible();
   }
 
   //Disconnect only applies to client
@@ -185,6 +197,7 @@ export default class ChatView extends Component {
               <Text style={styles.buttonText}>Question Answered</Text>
             </TouchableHighlight>
           }
+          <View><RatingView modalVisible={this.state.modalVisible} closeModal={this.closeModal.bind(this)} /></View>
         </View>
       </View>
     )

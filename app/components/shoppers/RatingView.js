@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 import { Modal, Text, TouchableHighlight, View } from 'react-native';
 
-class ModalExample extends Component {
+export default class RatingView extends Component {
 
-  state = {
-    modalVisible: false,
-  }
-
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
+  constructor(props) {
+    super(props);
   }
 
   render() {
@@ -17,29 +13,24 @@ class ModalExample extends Component {
         <Modal
           animationType={"slide"}
           transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {alert("Modal has been closed.")}}
+          visible={this.props.modalVisible}
           >
+
          <View style={{marginTop: 22}}>
           <View>
-            <Text>Hello World!</Text>
+
+            <Text>Rate your Expert!</Text>
 
             <TouchableHighlight onPress={() => {
-              this.setModalVisible(!this.state.modalVisible)
+              this.props.closeModal()
             }}>
-              <Text>Hide Modal</Text>
+
+            <Text>Hide Modal</Text>
             </TouchableHighlight>
 
           </View>
          </View>
         </Modal>
-
-        <TouchableHighlight onPress={() => {
-          this.setModalVisible(true)
-        }}>
-          <Text>Show Modal</Text>
-        </TouchableHighlight>
-
       </View>
     );
   }
