@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import io from 'socket.io-client';
 import RatingView from './shoppers/RatingView';
+import { Button } from 'react-native-elements';
 import {GiftedChat, Actions, Bubble} from 'react-native-gifted-chat';
 
 // GIFTED CHAT MESSAGE OBJECT FORMAT
@@ -343,12 +344,13 @@ export default class ChatView extends Component {
           renderFooter={this.renderFooter}
         />
         {!this.props.user.shopperExpert &&
-        <TouchableHighlight
-          onPress={(this.navigate.bind(this))}
-          style={styles.button}>
-          <Text style={styles.buttonText}>Question Answered</Text>
-        </TouchableHighlight>
+        <Button
+          buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
+          style={styles.button}
+          onPress={this.navigate.bind(this)}
+          raised title='Rate Expert' />
         }
+
         <View><RatingView user={this.props} userId={this.state.userId} expertId={this.state.expertId} modalVisible={this.state.modalVisible} closeModal={this.closeModal.bind(this)} /></View>
       </View>
     );
@@ -366,6 +368,18 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#aaa',
   },
+  button: {
+      height: 45,
+      flexDirection: 'row',
+      backgroundColor: 'white',
+      borderColor: 'white',
+      borderWidth: 1,
+      borderRadius: 8,
+      marginBottom: 10,
+      marginTop: 10,
+      alignSelf: 'stretch',
+      justifyContent: 'center'
+  }
 });
 
 ////////////////////////////////////////////////////
