@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { Modal, Text, TouchableHighlight, View } from 'react-native';
 import { Button } from 'react-native-elements';
+import StarView from './StarView.js';
 
 export default class RatingView extends Component {
-
   constructor(props) {
     super(props);
   }
 
   sendRating(userId, expertId) {
-    console.log(userId, expertId)
+    console.log(userId, expertId);
+    //optional - still thinking about sending it here on in StarView
   }
 
   render() {
@@ -25,7 +26,10 @@ export default class RatingView extends Component {
           <View>
 
             <Text>Rate your Expert!</Text>
+
             {console.log('user props', this.props)}
+
+            <StarView user={this.props} userId={this.state.userId} expertId={this.state.expertId}/>
 
             <Button
             raised
