@@ -22,8 +22,7 @@ export default class SearchView extends Component {
   constructor(props){
     super(props);
     this.state = {
-      page:'Search',
-      waitingUsers: false
+      page:'Search'
     };
   }
 
@@ -50,14 +49,6 @@ export default class SearchView extends Component {
 
   getActive() {
     return this.state.isActive;
-  }
-
-  showNext() {
-
-  }
-
-  renderExpert() {
-    this.setState({waitingUsers: !this.state.waitingUsers});
   }
 
   render() {
@@ -121,15 +112,18 @@ export default class SearchView extends Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
               }
+            }).then((response) => {
+              response.json();
+              console.log("REPSONE", response);
             }).then((users) => {
               if(!users){
                 console.log("TROUBLE");
               }
               console.log("USERS IN QUEUE", users);
               usersToHelp = users;
-              this.renderExpert();
+              // this.renderExpert();
             }).done()}
-            {this.state.waitingUsers && <View>
+            <View>
               <Text>USER</Text>
               <Text>{JSON.stringify(usersToHelp)}</Text>
               <TouchableHighlight
@@ -142,7 +136,7 @@ export default class SearchView extends Component {
               onPress={() => this.showNext()}>
                 <Text style={styles.buttonText}>p</Text>
               </TouchableHighlight>
-            </View>}
+            </View>
           </View>
       }
       </View>

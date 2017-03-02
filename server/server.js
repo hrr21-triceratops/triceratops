@@ -58,7 +58,7 @@ app.get('/api/userQueue/loadUser', function(req, res) {
 app.get('/api/userQueue/loadUser', function(req, res) {
   console.log("REAL QUEUE", realQueue);
   if (Object.keys(realQueue).length) {
-    res.send(JSON.stringify(realQueue));
+    res.send(realQueue);
   } else {
     res.send('No users at this time');
   }
