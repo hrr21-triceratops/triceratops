@@ -258,6 +258,7 @@ export default class ChatView extends Component {
             this.onReceive({
               _id: '123',
               chatSessionID: this.chatSession._id,
+              text: 'Savvy Shopper thanks you for your patience.',
               createdAt: new Date(),
               user: {
                 _id: 0,

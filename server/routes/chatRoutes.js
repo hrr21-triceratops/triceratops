@@ -17,8 +17,8 @@ router.get('/chat/messages', function(req, res) {
 
 // SAVE MESSAGE TO DATABASE
 router.post('/chat/messages', function(req, res) {
-  console.log('*** REQUEST BODY ***', req.body);
-  chatModel.create(req.body, function(err, savedMessage) {
+  console.log('*** REQUEST BODY ***', req.body.message);
+  chatModel.create(req.body.message, function(err, savedMessage) {
     if (err) {
       console.log(err);
     } else {
