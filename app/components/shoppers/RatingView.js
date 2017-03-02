@@ -1,16 +1,40 @@
 import React, { Component } from 'react';
 import { Modal, Text, TouchableHighlight, View } from 'react-native';
 import { Button } from 'react-native-elements';
-import StarView from './StarView.js';
+import StarRating from 'react-native-star-rating';
 
 export default class RatingView extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      starCount: 0
+    };
   }
 
-  sendRating(userId, expertId) {
-    console.log(userId, expertId);
-    //optional - still thinking about sending it here on in StarView
+  onStarRatingPress(rating) {
+    this.setState({
+      starCount: rating
+    });
+  }
+
+  sendRating(rating, userId, expertId) {
+    console.log('userId', userId, 'expertId', expertId, 'rating', rating);
+    fetch('http://localhost:2300/api/ratings/rate', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        userRating: rating,
+        senderId: userId,
+        receiverId: expertId
+      })
+    })
+    .then((response) => {
+      console.log(response);
+    })
+    .done();
   }
 
   render() {
@@ -29,7 +53,12 @@ export default class RatingView extends Component {
 
             {console.log('user props', this.props)}
 
-            <StarView user={this.props} userId={this.state.userId} expertId={this.state.expertId}/>
+            <StarRating
+              disabled={false}
+              maxStars={5}
+              rating={this.state.starCount}
+              selectedStar={(rating) => this.onStarRatingPress(rating)}
+            />
 
             <Button
             raised
@@ -38,7 +67,7 @@ export default class RatingView extends Component {
             title="Submit Rating"
             onPress={() => {
               this.props.closeModal()
-              this.sendRating(this.props.userId, this.props.expertId)
+              this.sendRating(this.state.starCount, this.props.userId, this.props.expertId)
             }}>
             </Button>
 

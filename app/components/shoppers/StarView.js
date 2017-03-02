@@ -6,15 +6,32 @@ export default class StarView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      starCount: 3.5
+      starCount: 0
     };
   }
 
   onStarRatingPress(userId, expertId, rating) {
-    console.log('rating', rating);
+    console.log('userId', userId, 'expertId', expertId, 'rating', rating);
     this.setState({
       starCount: rating
     });
+
+    fetch('http://localhost:2300/api/', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        messages: messages
+      })
+    })
+    .then((responseData) => {
+      console.log(responseData);
+      this.navigate();
+    })
+    .done();
+
   }
 
   render() {
