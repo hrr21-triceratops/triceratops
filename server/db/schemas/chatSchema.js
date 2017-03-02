@@ -2,8 +2,8 @@ var mongoose = require('../connections.js').mongoose;
 
 var chatSchema = mongoose.Schema({
   _id: { type: String, required: true },
-  chatSessionID: { type: String, required: true }
-  createdAt: { type: Date, default: Date.now },
+  chatSessionID: { type: String, required: true },
+  createdAt: { type: Date, required: true },
   text: { type: String },
   user: {
     _id: { type: Number, required: true },
