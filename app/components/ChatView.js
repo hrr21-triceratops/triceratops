@@ -244,7 +244,7 @@ export default class ChatView extends Component {
       if ((messages[0].image || messages[0].location) || !this._isAlright) {
         this.setState((previousState) => {
           return {
-            typingText: 'React Native is typing'
+            typingText: 'Savvy Shopper is typing'
           };
         });
       }
@@ -255,7 +255,15 @@ export default class ChatView extends Component {
         if (messages.length > 0) {
           if (!this._isAlright) {
             this._isAlright = true;
-            this.onReceive('You better shut your mouth!!');
+            this.onReceive({
+              _id: '123',
+              chatSessionID: this.chatSession._id,
+              createdAt: new Date(),
+              user: {
+                _id: 0,
+                name: 'Savvy Shopper'
+              }
+            });
           }
         }
       }
