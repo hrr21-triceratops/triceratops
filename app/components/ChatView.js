@@ -34,8 +34,11 @@ import {GiftedChat, Actions, Bubble} from 'react-native-gifted-chat';
 //   },
 //   image: 'https://facebook.github.io/react/img/logo_og.png',
 //   // additional custom parameters
-//   chatSession: 'asjdfjsgeragj',
+//   chatSessionID: 'asjdfjsgeragj',
 // }
+
+const heroku = 'https://savvyshopper.herokuapp.com';
+const local = 'http://localhost:2300';
 
 export default class ChatView extends Component {
   constructor(props) {
@@ -74,15 +77,91 @@ export default class ChatView extends Component {
     this.renderFooter = this.renderFooter.bind(this);
 
     this._isAlright = null;
+
+    // MERGED FROM OLD CHAT CODE
+    this.chatSession = {
+      _id: null
+      socket: null,
+      room: null,
+      expert: null
+    };
   }
 
   componentWillMount() {
     this._isMounted = true;
-    this.setState(() => {
-      return {
-        messages: require('./data/messages.js'),
-      };
-    });
+    // this.setState(() => {
+    //   return {
+    //     messages: require('./data/messages.js'),
+    //   };
+    // });
+
+    // MERGED FROM OLD CHAT CODE
+    let self = this;
+    this.chatSession.socket = io(heroku, {jsonp: false});
+
+    // IF USER IS NOT AN EXPERT
+    if(!this.props.user.shopperExpert){
+      socket.on('id', (socketId) => {
+        socket.emit('createRoom', socketId, self.user.id);
+        chatSession.room = socketId;
+        console.log('*** NEW ROOM ***', socketId);
+      });
+
+      socket.on('expert', (expertId) => {
+        chatSession.expert = expertId;
+        console.log('ExpertId Recieved:', expertId);
+        self.setState((previousState) => {
+          return {
+            typingText: 'Expert Connected!'
+          };
+        });
+        setTimeout(function() {
+          this.setState((previousState) => {
+            return {
+              typingText: null
+            };
+          });
+        }, 1000).bind(self);
+      });
+
+      socket.on('message', (message) => {
+        console.log('Incoming Message:', message);
+        // CALL onRECIEVE METHOD
+      });
+    }
+
+    if(this.props.user.shopperExpert){
+      fetch(heroku + '/api/userQueue/getUser', {
+        method: 'GET',
+        jsonp: false,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((response) => response.json())
+      .then((user) => {
+        if (!user) {
+          AlertIOS.alert(
+            'Incorrect Username or Password.'
+          )
+        } else {
+          console.log('UserId Recieved:', user.id);
+          chatSession.user = {id: user.id};
+          chatSession.expertId = this.props.user.id;
+          console.log('*** JOINING ROOM ***', user.room);
+          socket.emit('joinRoom', user.room, chatSession.expertId);
+          room = user.room;
+          socket.on('message', (message) => {
+            console.log('Incoming Message:', message);
+            this.setState({
+              messages: this.state.messages.concat([message])
+            });
+          });
+        }
+      })
+      .done();
+    }
   }
 
   componentWillUnmount() {
@@ -151,15 +230,9 @@ export default class ChatView extends Component {
     setTimeout(() => {
       if (this._isMounted === true) {
         if (messages.length > 0) {
-          if (messages[0].image) {
-            this.onReceive('Nice picture!');
-          } else if (messages[0].location) {
-            this.onReceive('My favorite place');
-          } else {
-            if (!this._isAlright) {
-              this._isAlright = true;
-              this.onReceive('You better shut your mouth!!');
-            }
+          if (!this._isAlright) {
+            this._isAlright = true;
+            this.onReceive('You better shut your mouth!!');
           }
         }
       }
@@ -221,7 +294,6 @@ export default class ChatView extends Component {
 
   render() {
     return (
-<<<<<<< HEAD
       <View>
         <GiftedChat
         messages={this.state.messages}
@@ -294,7 +366,7 @@ const styles = StyleSheet.create({
 
 //   // automatically runs when component loads
 //   componentDidMount() {
-//     socket = io(heroku);
+//     socket = io(heroku, {jsonp: false});
 //     if(!this.props.user.shopperExpert){
 
 //       //store information on chatSession
