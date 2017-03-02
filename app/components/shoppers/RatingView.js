@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import { Modal, Text, TouchableHighlight, View } from 'react-native';
+import { Button } from 'react-native-elements';
 
 export default class RatingView extends Component {
 
   constructor(props) {
     super(props);
+  }
+
+  sendRating(userId, expertId) {
+    console.log(userId, expertId)
   }
 
   render() {
@@ -20,13 +25,18 @@ export default class RatingView extends Component {
           <View>
 
             <Text>Rate your Expert!</Text>
+            {console.log('user props', this.props)}
 
-            <TouchableHighlight onPress={() => {
+            <Button
+            raised
+            backgroundColor='#48BBEC'
+            buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10}}
+            title="Submit Rating"
+            onPress={() => {
               this.props.closeModal()
+              this.sendRating(this.props.userId, this.props.expertId)
             }}>
-
-            <Text>Hide Modal</Text>
-            </TouchableHighlight>
+            </Button>
 
           </View>
          </View>
