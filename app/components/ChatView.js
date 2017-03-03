@@ -82,10 +82,10 @@ export default class ChatView extends Component {
     // IF USER IS NOT AN EXPERT
     if(!this.props.user.shopperExpert){
       self.setState((previousState) => {
-          return {
-            typingText: 'Finding your expert...'
-          };
-        });
+        return {
+          typingText: 'Finding your expert...'
+        };
+      });
 
       self.chatSession.category = this.props.category;
       self.chatSession.username = this.props.user.username;
