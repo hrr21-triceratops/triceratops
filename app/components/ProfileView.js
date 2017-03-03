@@ -5,6 +5,7 @@ View,
 Image,
 Text,
 } from 'react-native';
+import { Button, CheckBox } from 'react-native-elements'
 import AccountView from './shoppers/AccountView';
 const userImage = require('../assets/imgs/user-profile.png');
 const ratingIcon = require('../assets/imgs/plain-heart.png');
@@ -22,10 +23,61 @@ constructor(props) {
     averageRating: '4.5',
     favorites: '5',
     chatHistory: '10',
-    isActive: false
+    isActive: false,
+    homeChecked: false,
+    techChecked: false,
+    foodChecked: false,
+    womensChecked: false,
+    mensChecked: false,
+    entertainmentChecked: false
   };
-
 }
+
+ makeExpert() {
+    fetch(connection+'/api/users/' + 7, { // this.props.user.id
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        attributes: {
+          shopperExpert: true
+        }
+      })
+    })
+    .then((response) => {
+      if (response.status === 201) {
+        this.navigate('Shopper', this.props.user.id, this.props.user.username, this.props.user.averageRating, true, this.props.user.active, this.props.user.closedChatSessions, this.props.user.userPreferences);
+      } else {
+        AlertIOS.alert(
+          'Account could not be updated.'
+        )
+      }
+    })
+    .done();
+  }
+
+  navigate(scene, id, username, averageRating, shopperExpert, active, closedChatSessions, userPreferences) {
+    if (id) {
+      this.props.navigator.push({
+        screen: scene,
+        passProps: {
+          id: id,
+          username: username,
+          averageRating: averageRating,
+          shopperExpert: shopperExpert,
+          active: active,
+          closedChatSessions: closedChatSessions,
+          userPreferences: userPreferences
+        }
+      });
+    } else {
+      this.props.navigator.push({
+        screen: scene
+      });
+    }
+  }
 
  renderStat(options) {
     return (
@@ -53,8 +105,43 @@ render() {
 return (
 
     <View style={styles.container}>
+        <Text style={styles.title}>PREFERENCES</Text>
 
-     <AccountView navigator={this.props.navigator} user={this.props} activeSwitcher={this.activeSwitcher.bind(this)} getActive={this.getActive.bind(this)} />
+        <CheckBox
+          center
+          title='Home'
+          checked={this.state.homeChecked}
+        />
+
+        <CheckBox
+          center
+          title='Food'
+          checked={this.state.foodChecked}
+        />
+
+        <CheckBox
+          center
+          title='Tech'
+          checked={this.state.techChecked}
+        />
+
+        <CheckBox
+          center
+          title="Womens Fashion"
+          checked={this.state.womensChecked}
+        />
+
+        <CheckBox
+          center
+          title="Mens Fashion"
+          checked={this.state.mensChecked}
+        />
+
+        <CheckBox
+          center
+          title="Entertainment"
+          checked={this.state.entertainmentChecked}
+        />
 
       <View style={styles.personal}>
         <Text style={styles.name}>
@@ -87,6 +174,14 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     top: null
  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    alignSelf: 'center',
+    color: 'grey',
+    top: 10,
+    marginBottom: 10
+  },
 personal: {
  padding: 30,
  backgroundColor: 'rgba(0,0,0,0.5)',
