@@ -29,8 +29,7 @@ export default class SearchView extends Component {
     };
   }
 
-  navigateTo(destination, propsToPass) {
-
+  navigateTo(destination, propsToPass, chatPartner) {
     if (!propsToPass) {
       console.log('destination', destination);
       this.props.navigator.push({
@@ -41,7 +40,10 @@ export default class SearchView extends Component {
       console.log('props', propsToPass);
       this.props.navigator.push({
           screen: destination,
-          passProps: { user: propsToPass }
+          passProps: {
+            user: propsToPass,
+            chatPartner: chatPartner
+          }
       });
     }
   }
@@ -143,7 +145,7 @@ export default class SearchView extends Component {
             <Text>{JSON.stringify(this.state.currentUser)}</Text>
             <TouchableHighlight
             style={styles.button}
-            onPress={() => this.navigateTo('Chat', this.props)}>
+            onPress={() => this.navigateTo('Chat', this.props, this.state.currentUser)}>
               <Text style={styles.buttonText}>b</Text>
             </TouchableHighlight>
             <TouchableHighlight
