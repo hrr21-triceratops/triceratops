@@ -64,7 +64,9 @@ class SavvyShopper extends Component {
         <Navigator.NavigationBar
         routeMapper={{
          LeftButton: (route, navigator, index, navState) =>
-          {  if (route.index === 0 || route.screen === "Login") {
+          {  if (route.screen === "Login" || route.screen === "Home") {
+                route.index = 0;
+                console.log('set or reset route index')
               return null;
             } else {
              return (
@@ -78,7 +80,7 @@ class SavvyShopper extends Component {
             return null;
           } else {
             return (
-              <TouchableHighlight onPress={() => navigator.push({"screen":"Profile"})}>
+              <TouchableHighlight onPress={() => navigator.push({"screen":"Profile", passProps: this.props})}>
                <Text style={styles.rightButton}>Profile</Text>
             </TouchableHighlight>
             );

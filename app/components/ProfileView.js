@@ -11,6 +11,7 @@ import AccountView from './shoppers/AccountView';
 const userImage = require('../assets/imgs/user-profile.png');
 const ratingIcon = require('../assets/imgs/plain-heart.png');
 const chatHistoryIcon = require('../assets/imgs/chat.png');
+let connection = require('../Utils/connection');
 
 export default class ProfileView extends Component {
 constructor(props) {
@@ -36,7 +37,7 @@ constructor(props) {
 
  makeExpert() {
     console.log('MAKE EXPERT')
-    fetch(connection+'/api/users/' + 7, { // this.props.user.id
+    fetch(connection+'/api/users/' + this.props.user.id, { // this.props.user.id
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
@@ -50,7 +51,7 @@ constructor(props) {
     })
     .then((response) => {
       if (response.status === 201) {
-        this.navigate('Shopper', this.props.user.id, this.props.user.username, this.props.user.averageRating, true, this.props.user.active, this.props.user.closedChatSessions, this.props.user.userPreferences);
+        this.navigate('Home', this.props.user.id, this.props.user.username, this.props.user.averageRating, true, this.props.user.active, this.props.user.closedChatSessions, this.props.user.userPreferences);
       } else {
         AlertIOS.alert(
           'Account could not be updated.'
@@ -82,14 +83,9 @@ constructor(props) {
   }
 
  renderOption(options) {
-    console.log('options method', options);
-    if (!options.method) {
-      var optionMethod = options.method;
-    }
-
     return (
       <View style={styles.stat}>
-      <TouchableHighlight onPress={optionMethod}>
+      <TouchableHighlight onPress={options.method}>
         <Image
           source={options.icon}
           style={[styles.icon, options.selected ?
@@ -115,7 +111,7 @@ return (
 
     <View style={styles.container}>
         <Text style={styles.title}>PREFERENCES</Text>
-
+        {console.log('user this.props', this.props)}
       <View style={styles.preferences}>
         <CheckBox
           center
