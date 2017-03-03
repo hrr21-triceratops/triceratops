@@ -46,7 +46,7 @@ constructor(props) {
       },
       body: JSON.stringify({
         attributes: {
-          shopperExpert: true
+          shopperExpert: !userOptions.user.shopperExpert
         }
       })
     })
@@ -159,7 +159,6 @@ return (
             {this.state.shopperExpert ? "Expert" : "User"}
         </Text>
       </View>
-
         <View style={styles.stats}>
             {this.renderOption({ icon: ratingIcon, value: this.props.user.averageRating })}
             {this.renderOption({ icon: chatHistoryIcon, value: this.props.user.closedChatSessions.length })}
