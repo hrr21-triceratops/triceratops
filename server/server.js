@@ -50,16 +50,6 @@ app.get('/api/userQueue/loadUser', function(req, res) {
   if (Object.keys(realQueue).length) {
     res.send(realQueue);
   } else {
-    res.send(null);
-  }
-});
-
-// ALLOW USER TO CYCLE THROUGH USERS IN QUEUE
-app.get('/api/userQueue/loadUser', function(req, res) {
-  console.log("REAL QUEUE", realQueue);
-  if (Object.keys(realQueue).length) {
-    res.send(realQueue);
-  } else {
     res.send('No users at this time');
   }
 });
@@ -70,26 +60,25 @@ io.on('connection', function(socket) {
   socket.emit('id', socket.id);
 
   // RUNS WHEN USER CREATES CHATROOM
-  socket.on('createRoom', function(room, userId, category, expertName) {
-    console.log('Joining Room:', room, 'User:', userId, 'Category:', category, 'Expert:', expertName);
+  socket.on('createRoom', function(room, userId, category, username) {
+    console.log('Joining Room:', room, 'User:', userId, 'Category:', category, 'username:', username);
     socket.join(room);
     var user = {
       id: userId,
       room: room,
       category: category,
-      expertName: expertName
+      username: username
     };
-    queue.push(user);
     realQueue[user.id] = user;
     console.log('Current Queue:', queue);
     console.log('Current Real Queue:', realQueue);
   });
 
   // RUNS WHEN EXPERT JOINS CHATROOM
-  socket.on('joinRoom', function(room, expertId) {
+  socket.on('joinRoom', function(room, expertId, expertUsername) {
     console.log('Joining Room:', room);
     socket.join(room);
-    io.in(room).emit('expert', expertId);
+    io.in(room).emit('expert', expertId, expertUsername);
   });
 
   // RUNS WHEN MESSAGE IS SENT BY USER OR EXPERT

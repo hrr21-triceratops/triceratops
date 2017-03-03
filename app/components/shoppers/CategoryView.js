@@ -49,7 +49,7 @@ export default class CategoryView extends Component {
       screen: 'Chat',
       passProps: {
         user: this.props.user,
-        category: category
+        category: category,
       }
     });
   }
