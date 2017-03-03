@@ -37,7 +37,7 @@ let realQueue = {};
 
 // DETERMINE IF USER CURRENTLY IN QUEUE
 app.get('/api/userQueue', function(req, res) {
-  if (queue.length) {
+  if (Object.keys(realQueue).length) {
     res.send(true);
   } else {
     res.send(false);
@@ -70,7 +70,6 @@ io.on('connection', function(socket) {
       username: username
     };
     realQueue[user.id] = user;
-    console.log('Current Queue:', queue);
     console.log('Current Real Queue:', realQueue);
   });
 
