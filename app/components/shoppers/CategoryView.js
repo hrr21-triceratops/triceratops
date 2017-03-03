@@ -43,12 +43,13 @@ export default class CategoryView extends Component {
     super(props);
   }
 
-  openChat() {
+  openChat(category) {
     console.log("CATEGORY USER PROPS TONY", this.props)
     this.props.navigator.push({
       screen: 'Chat',
       passProps: {
-        user: this.props.user
+        user: this.props.user,
+        category: category
       }
     });
   }
@@ -64,7 +65,7 @@ export default class CategoryView extends Component {
               <View style={styles.category}>
                   <Tile
                   user={this.props}
-                  onPress={(this.openChat.bind(this))}
+                  onPress={() => this.openChat(category)}
                   key={category}
                   imageSrc={loadCategoryImage(category.toLowerCase())}
                   title="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores dolore exercitationem"

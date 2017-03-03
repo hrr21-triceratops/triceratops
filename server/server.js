@@ -24,13 +24,6 @@ app.use('/api', preferenceRoutes);
 app.use('/api', ratingRoutes);
 app.use('/api', categoryRoutes);
 
-
-// MOVED UNDER SOCKET.IO SETUP
-// const PORT = 2300;
-// app.listen(PORT, function(req, res) {
-//   console.log('listening on port: ' + PORT);
-// });
-
 /////////////////////////////////////
 ////////// SOCKET.IO SETUP //////////
 /////////////////////////////////////
@@ -40,23 +33,13 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
 // QUEUE OF USERS REQUESTING ASSISTANCE
-let queue = [];
+let realQueue = {};
 
-// DETERMINE IF USER CURRENTLY IN QUEUE
-app.get('/api/userQueue', function(req, res) {
-  if (queue.length) {
-    res.send(true);
-  } else {
-    res.send(false);
-  }
-});
-
-// REMOVE USER FROM USER QUEUE AND SEND TO EXPERT
-app.get('/api/userQueue/getUser', function(req, res) {
-  if (queue.length) {
-    var user = queue.shift();
-    console.log('New Queue:', queue);
-    res.send(user);
+// ALLOW USER TO CYCLE THROUGH USERS IN QUEUE
+app.get('/api/userQueue/loadUser', function(req, res) {
+  console.log("REAL QUEUE", realQueue);
+  if (Object.keys(realQueue).length) {
+    res.send(realQueue);
   } else {
     res.send(null);
   }
@@ -68,25 +51,18 @@ io.on('connection', function(socket) {
   socket.emit('id', socket.id);
 
   // RUNS WHEN USER CREATES CHATROOM
-  socket.on('createRoom', function(room, userId) {
-    console.log('Joining Room:', room, 'User:', userId);
+  socket.on('createRoom', function(room, userId, category) {
+    console.log('Joining Room:', room, 'User:', userId, 'Category:', category);
     socket.join(room);
     var user = {
       id: userId,
-      room: room
+      room: room,
+      category: category
     };
     queue.push(user);
+    realQueue[user.id] = user;
     console.log('Current Queue:', queue);
-    // io.in(room).emit('message', {
-    //   _id: '00',
-    //   chatSessionID: room,
-    //   createdAt: new Date(),
-    //   text: 'Your expert will be with you momentarily.',
-    //   user: {
-    //     _id: 0,
-    //     name: 'Savvy Shopper'
-    //   }
-    // });
+    console.log('Current Real Queue:', realQueue);
   });
 
   // RUNS WHEN EXPERT JOINS CHATROOM
@@ -94,16 +70,6 @@ io.on('connection', function(socket) {
     console.log('Joining Room:', room);
     socket.join(room);
     io.in(room).emit('expert', expertId);
-    // io.in(room).emit('message', {
-    //   _id: '01',
-    //   chatSessionID: room,
-    //   createdAt: new Date(),
-    //   text: 'Expert ' + expertId + ' has arrived.',
-    //   user: {
-    //     _id: 0,
-    //     name: 'Savvy Shopper'
-    //   }
-    // });
   });
 
   // RUNS WHEN MESSAGE IS SENT BY USER OR EXPERT

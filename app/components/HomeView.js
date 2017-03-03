@@ -16,44 +16,77 @@ import AvailableExperts from './AvailableExperts';
 import Tabs from 'react-native-tabs';
 import { SearchBar } from 'react-native-elements';
 
+let connection = require('../Utils/connection');
+
+const usersToHelp = null;
+const usersToCheck = null;
+
 export default class HomeView extends Component {
   constructor(props){
     super(props);
     this.state = {
       page:'Search',
       isActive: false,
+      currentUser: null,
+      index: 0
     };
   }
 
   activeSwitcher() {
     this.setState({isActive: !this.state.isActive});
+    this.renderExpert();
   }
 
   getActive() {
     return this.state.isActive;
   }
 
-  navigateTo(destination, propsToPass) {
-
+  navigateTo(destination, propsToPass, chatPartner) {
     if (!propsToPass) {
-
       console.log('destination', destination);
-
       this.props.navigator.push({
           screen: destination
       });
-
     } else {
-
       console.log('destination', destination);
       console.log('props', propsToPass);
-
       this.props.navigator.push({
           screen: destination,
-          passProps: { user: propsToPass }
+          passProps: {
+            user: propsToPass,
+            chatPartner: chatPartner
+          }
       });
     }
+  }
 
+  showNext() {
+    if(usersToCheck.length - 1 > this.state.index) {
+      this.setState({currentUser: usersToHelp[usersToCheck[this.state.index+1]], index: this.state.index+1});
+    } else {
+      this.setState({currentUser: usersToHelp[usersToCheck[0]], index: 0});
+    }
+  }
+
+  renderExpert() {
+    fetch(connection + '/api/userQueue/loadUser', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      return response.json();
+      console.log("RESPONSE", response);
+    }).then((users) => {
+      if(!users){
+        console.log("TROUBLE");
+      }
+      console.log("USERS IN QUEUE", users);
+      usersToHelp = users;
+      usersToCheck = Object.keys(usersToHelp);
+      this.setState({currentUser: usersToHelp[usersToCheck[0]]});
+    }).done()
   }
 
   render() {
@@ -107,13 +140,24 @@ export default class HomeView extends Component {
            </TouchableHighlight>
         </Tabs>
          <SearchView style={styles.searchInput} navigator={this.props.navigator} user={this.props}/>
-           {this.props.shopperExpert && button}
-            {this.getActive() && <TouchableHighlight
-              style={styles.button}
-              onPress={() => this.navigateTo('Chat', this.props)}>
-              <Text style={styles.buttonText}>HALP</Text>
-            </TouchableHighlight>}
-        </View>
+          {this.props.shopperExpert && button}
+          {this.getActive() &&
+          <View>
+            <Text>USER</Text>
+            <Text>{JSON.stringify(this.state.currentUser)}</Text>
+            <TouchableHighlight
+            style={styles.button}
+            onPress={() => this.navigateTo('Chat', this.props, this.state.currentUser)}>
+              <Text style={styles.buttonText}>b</Text>
+            </TouchableHighlight>
+            <TouchableHighlight
+            style={styles.button}
+            onPress={() => this.showNext()}>
+              <Text style={styles.buttonText}>p</Text>
+            </TouchableHighlight>
+          </View>
+        }
+      </View>
     );
   }
 }
