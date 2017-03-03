@@ -143,7 +143,7 @@ export default class ChatView extends Component {
       self.chatSession.username = this.props.user.username;
       self.chatSession.category = this.props.category;
       console.log('*** JOINING ROOM ***', this.props.chatPartner.room);
-      self.chatSession.socket.emit('joinRoom', this.props.chatPartner.room, self.props.user.id);
+      self.chatSession.socket.emit('joinRoom', this.props.chatPartner.room, self.props.user.id, this.props.user.username);
       self.chatSession._id = this.props.chatPartner.room;
       self.chatSession.room = this.props.chatPartner.room;
       console.log('chatSession:', self.chatSession);
