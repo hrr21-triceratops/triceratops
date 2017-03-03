@@ -4,6 +4,7 @@ StyleSheet,
 View,
 Image,
 Text,
+AlertIOS,
 TouchableHighlight
 } from 'react-native';
 import { Button, CheckBox } from 'react-native-elements'
@@ -15,9 +16,9 @@ let connection = require('../Utils/connection');
 
 export default class ProfileView extends Component {
 constructor(props) {
-  console.log('ProfileView Props:', props);
-
   super(props);
+
+  console.log('ProfileView Props:', props);
 
   this.state = {
     username: 'triceratops2@gmail.com',
@@ -35,9 +36,9 @@ constructor(props) {
   };
 }
 
- makeExpert() {
-    console.log('MAKE EXPERT')
-    fetch(connection+'/api/users/' + this.props.user.id, { // this.props.user.id
+ makeExpert(userOptions) {
+    console.log('MAKE EXPERT', userOptions);
+    fetch(connection+'/api/users/' + 5, { // this.props.user.id
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
@@ -160,9 +161,9 @@ return (
       </View>
 
         <View style={styles.stats}>
-            {this.renderOption({ icon: ratingIcon, value: this.state.averageRating })}
-            {this.renderOption({ icon: chatHistoryIcon, value: this.state.chatHistory })}
-            {this.renderOption({ icon: chatHistoryIcon, value: 'Become Expert', method: this.makeExpert })}
+            {this.renderOption({ icon: ratingIcon, value: this.props.user.averageRating })}
+            {this.renderOption({ icon: chatHistoryIcon, value: this.props.user.closedChatSessions.length })}
+            {!this.props.user.shopperExpert ? this.renderOption({ icon: chatHistoryIcon, value: 'Become Expert', method: this.makeExpert.bind(this, this.props) }) : this.renderOption({ icon: chatHistoryIcon, value: 'Cancel Expert', method: this.makeExpert.bind(this, this.props) })}
         </View>
       </View>
     );
