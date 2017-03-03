@@ -4,6 +4,7 @@ StyleSheet,
 View,
 Image,
 Text,
+TouchableHighlight
 } from 'react-native';
 import { Button, CheckBox } from 'react-native-elements'
 import AccountView from './shoppers/AccountView';
@@ -34,6 +35,7 @@ constructor(props) {
 }
 
  makeExpert() {
+    console.log('MAKE EXPERT')
     fetch(connection+'/api/users/' + 7, { // this.props.user.id
       method: 'PUT',
       headers: {
@@ -79,15 +81,22 @@ constructor(props) {
     }
   }
 
- renderStat(options) {
+ renderOption(options) {
+    console.log('options method', options);
+    if (!options.method) {
+      var optionMethod = options.method;
+    }
+
     return (
-    <View style={styles.stat}>
-     <Image
-       source={options.icon}
-       style={[styles.icon, options.selected ?
-       styles.selected : null]}
-     />
-        <Text style={styles.counter}>{options.value}</Text>
+      <View style={styles.stat}>
+      <TouchableHighlight onPress={optionMethod}>
+        <Image
+          source={options.icon}
+          style={[styles.icon, options.selected ?
+          styles.selected : null]}
+        />
+      </TouchableHighlight>
+      <Text style={styles.counter}>{options.value}</Text>
       </View>
      );
   }
@@ -107,6 +116,7 @@ return (
     <View style={styles.container}>
         <Text style={styles.title}>PREFERENCES</Text>
 
+      <View style={styles.preferences}>
         <CheckBox
           center
           title='Home'
@@ -142,6 +152,7 @@ return (
           title="Entertainment"
           checked={this.state.entertainmentChecked}
         />
+      </View>
 
       <View style={styles.personal}>
         <Text style={styles.name}>
@@ -153,13 +164,10 @@ return (
       </View>
 
         <View style={styles.stats}>
-            {this.renderStat({ icon: ratingIcon, value: this.state.averageRating })}
-            {this.renderStat({ icon: chatHistoryIcon, value: this.state.chatHistory })}
-            {this.renderStat({ icon: chatHistoryIcon, value: this.state.chatHistory })}
-            {this.renderStat({ icon: chatHistoryIcon, value: this.state.chatHistory })}
-            {this.renderStat({ icon: chatHistoryIcon, value: this.state.chatHistory })}
-          </View>
-
+            {this.renderOption({ icon: ratingIcon, value: this.state.averageRating })}
+            {this.renderOption({ icon: chatHistoryIcon, value: this.state.chatHistory })}
+            {this.renderOption({ icon: chatHistoryIcon, value: 'Become Expert', method: this.makeExpert })}
+        </View>
       </View>
     );
   }
@@ -179,9 +187,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     alignSelf: 'center',
     color: 'grey',
-    top: 10,
+    top: 20,
     marginBottom: 10
   },
+preferences: {
+  marginTop:15,
+  marginBottom: 15
+},
 personal: {
  padding: 30,
  backgroundColor: 'rgba(0,0,0,0.5)',
