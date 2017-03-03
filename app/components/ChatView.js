@@ -59,7 +59,7 @@ export default class ChatView extends Component {
       room: null,
       chatPartner: null,
       category: null,
-      expertName: null
+      username: null
     };
   }
 
@@ -88,8 +88,9 @@ export default class ChatView extends Component {
         });
 
       self.chatSession.category = this.props.category;
+      self.chatSession.username = this.props.user.username;
       self.chatSession.socket.on('id', (socketId) => {
-        self.chatSession.socket.emit('createRoom', socketId, self.props.user.id, this.props.category);
+        self.chatSession.socket.emit('createRoom', socketId, self.props.user.id, this.props.category, this.props.user.username);
         self.chatSession._id = socketId; // Redundant - room is same as _id
         self.chatSession.room = socketId;
         console.log('*** NEW ROOM ***', socketId);
@@ -118,12 +119,12 @@ export default class ChatView extends Component {
         .done();
       });
 
-      self.chatSession.socket.on('expert', (expertId) => {
+      self.chatSession.socket.on('expert', (expertId, expertUsername) => {
         self.chatSession.chatPartner = expertId;
-        console.log('ExpertId Recieved:', expertId);
+        console.log('ExpertId Recieved:', expertId, expertUsername);
         self.setState((previousState) => {
           return {
-            typingText: 'Connected with Expert ' + expertId
+            typingText: 'Connected with Expert ' + expertUsername
           };
         });
       });
@@ -139,8 +140,10 @@ export default class ChatView extends Component {
     if(this.props.user.shopperExpert){
       console.log('UserId Recieved:', this.props.chatPartner.id);
       self.chatSession.chatPartner = this.props.chatPartner.id;
+      self.chatSession.username = this.props.user.username;
+      self.chatSession.category = this.props.category;
       console.log('*** JOINING ROOM ***', this.props.chatPartner.room);
-      self.chatSession.socket.emit('joinRoom', this.props.chatPartner.room, self.props.chatPartner.id);
+      self.chatSession.socket.emit('joinRoom', this.props.chatPartner.room, self.props.user.id);
       self.chatSession._id = this.props.chatPartner.room;
       self.chatSession.room = this.props.chatPartner.room;
       console.log('chatSession:', self.chatSession);
