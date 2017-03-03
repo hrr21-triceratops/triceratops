@@ -13,30 +13,26 @@ import RatingView from './shoppers/RatingView';
 import { Button } from 'react-native-elements';
 import {GiftedChat, Actions, Bubble} from 'react-native-gifted-chat';
 
+let connection = require('../Utils/connection');
+
 // GIFTED CHAT MESSAGE OBJECT FORMAT
 // {
 //   _id: 1,
 //   text: 'My message',
-//   createdAt: new Date(Date.UTC(2016, 5, 11, 17, 20, 0)),
+//   createdAt: new Date(),
 //   user: {
 //     _id: 2,
 //     name: 'React Native',
 //     avatar: 'https://facebook.github.io/react/img/logo_og.png',
 //   },
-//   image: 'https://facebook.github.io/react/img/logo_og.png',
-//   // additional custom parameters
 //   chatSessionID: 'asjdfjsgeragj',
 // }
 
 // FOR DEMO PURPOSES
-let texts = [
-      'Cool, I\'ve got the perfect pair!',
-      'The Bose QuietComfort 35 will change your life.',
-      'Your welcome, have a great afternoon!'];
-
-const heroku = 'https://savvyshopper.herokuapp.com';
-const herokuTest = 'https://murmuring-sierra-59020.herokuapp.com';
-const local = 'http://localhost:2300';
+// let texts = [
+//       'Cool, I\'ve got the perfect pair!',
+//       'The Bose QuietComfort 35 will change your life.',
+//       'Your welcome, have a great afternoon!'];
 
 export default class ChatView extends Component {
   constructor(props) {
@@ -47,7 +43,7 @@ export default class ChatView extends Component {
       modalVisible: false,
       userId: 3,
       expertId: 4,
-      typingText: 'Connecting with an expert...',
+      typingText: null,
     };
 
     this._isMounted = false;
@@ -56,14 +52,13 @@ export default class ChatView extends Component {
     this.renderBubble = this.renderBubble.bind(this);
     this.renderFooter = this.renderFooter.bind(this);
 
-    this._isAlright = null;
-
     // MERGED FROM OLD CHAT CODE
     this.chatSession = {
       _id: null,
       socket: null,
       room: null,
-      chatPartner: null
+      chatPartner: null,
+      category: null
     };
   }
 
@@ -78,51 +73,55 @@ export default class ChatView extends Component {
   componentWillMount() {
     let self = this;
     this._isMounted = true;
-    // this.setState(() => {
-    //   return {
-    //     messages: require('./data/messages.js'),
-    //   };
-    // });
 
     // FOR DEMO PURPOSES
-    setTimeout(function() {
-      console.log('INSIDE FIRST SET TIMEOUT');
-      self.setState((previousState) => {
-          return {
-            typingText: 'Connected with Savvy Shopper'
-          };
-        });
-      setTimeout(function() {
-        console.log('INSIDE SECOND SET TIMEOUT');
-        self.onReceive({
-          _id: '1',
-          chatSessionID: self.chatSession._id,
-          text: 'Hey, how can I help? :)',
-          createdAt: new Date(),
-          user: {
-            _id: 0,
-            name: 'Savvy Shopper'
-          }
-        });
-      }, 2000);
-    }, 5000);
+    // setTimeout(function() {
+    //   console.log('INSIDE FIRST SET TIMEOUT');
+    //   self.setState((previousState) => {
+    //       return {
+    //         typingText: 'Connected with Savvy Shopper'
+    //       };
+    //     });
+    //   setTimeout(function() {
+    //     console.log('INSIDE SECOND SET TIMEOUT');
+    //     self.onReceive({
+    //       _id: '1',
+    //       chatSessionID: self.chatSession._id,
+    //       text: 'Hey, how can I help? :)',
+    //       createdAt: new Date(),
+    //       user: {
+    //         _id: 0,
+    //         name: 'Savvy Shopper'
+    //       }
+    //     });
+    //   }, 2000);
+    // }, 5000);
 
     // MERGED FROM OLD CHAT CODE
-    this.chatSession.socket = io(herokuTest, {jsonp: false});
+    this.chatSession.socket = io(connection, {jsonp: false});
 
     // IF USER IS NOT AN EXPERT
     if(!this.props.user.shopperExpert){
+      self.setState((previousState) => {
+          return {
+            typingText: 'Finding your expert...'
+          };
+        });
+
+      self.chatSession.category = this.props.category;
       self.chatSession.socket.on('id', (socketId) => {
-        self.chatSession.socket.emit('createRoom', socketId, self.props.user.id);
+        self.chatSession.socket.emit('createRoom', socketId, self.props.user.id, this.props.category);
         self.chatSession._id = socketId; // Redundant - room is same as _id
         self.chatSession.room = socketId;
         console.log('*** NEW ROOM ***', socketId);
         console.log('chatSession:', self.chatSession);
+
         // SEND SESSION ID TO USER'S CLOSED CHAT SESSIONS ARRAY
         self.props.user.closedChatSessions.push(self.chatSession._id);
         console.log('New Chat Sessions:', self.props.user.closedChatSessions);
-        // PUT REQUEST TO DATABASE WITH NEW CCS ARRAY
-        fetch(herokuTest+'/api/users/' + self.props.user.id, {
+
+        // PUT REQUEST TO DATABASE WITH NEW closedChatSessions ARRAY
+        fetch(connection+'/api/users/' + self.props.user.id, {
           method: 'PUT',
           headers: {
             'Accept': 'application/json',
@@ -159,35 +158,19 @@ export default class ChatView extends Component {
 
     // IF USER IS AN EXPERT
     if(this.props.user.shopperExpert){
-      fetch(herokuTest + '/api/userQueue/getUser', {
-        method: 'GET',
-        jsonp: false,
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
-      .then((response) => response.json())
-      .then((user) => {
-        if (!user) {
-          AlertIOS.alert('No User Available.');
-        } else {
-          console.log('UserId Recieved:', user.id);
-          self.chatSession.chatPartner = user.id;
-          console.log('*** JOINING ROOM ***', user.room);
-          self.chatSession.socket.emit('joinRoom', user.room, self.props.user.id);
-          self.chatSession._id = user.room;
-          self.chatSession.room = user.room;
-          console.log('chatSession:', self.chatSession);
+      console.log('UserId Recieved:', this.props.chatPartner.id);
+      self.chatSession.chatPartner = this.props.chatPartner.id;
+      console.log('*** JOINING ROOM ***', this.props.chatPartner.room);
+      self.chatSession.socket.emit('joinRoom', this.props.chatPartner.room, self.props.chatPartner.id);
+      self.chatSession._id = this.props.chatPartner.room;
+      self.chatSession.room = this.props.chatPartner.room;
+      console.log('chatSession:', self.chatSession);
 
-          socket.on('message', (message) => {
-            console.log('Incoming Message:', message);
-            // CALL onRECIEVE METHOD
-            self.onReceive(message); // message = MESSAGE OBJECT
-          });
-        }
-      })
-      .done();
+      self.chatSession.socket.on('message', (message) => {
+        console.log('Incoming Message:', message);
+        // CALL onRECIEVE METHOD
+        self.onReceive(message); // message = MESSAGE OBJECT
+      });
     }
   }
 
@@ -203,7 +186,7 @@ export default class ChatView extends Component {
     this.chatSession.socket.emit('message', message, self.chatSession.room);
 
     // POST MESSAGE TO DB
-    fetch(herokuTest + '/api/chat/messages', {
+    fetch(connection + '/api/chat/messages', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -222,56 +205,57 @@ export default class ChatView extends Component {
       };
     });
 
-    // for demo purpose
-    console.log('Answer Demo Messages:', messages);
-    this.answerDemo(messages);
+    // FOR DEMO PURPOSES
+    // this.answerDemo(messages);
+
     console.log('All Messages:', this.state.messages);
   }
 
-  answerDemo(messages) {
-    let message = {
-      _id: Math.round(Math.random() * 1000000).toString(),
-      chatSessionID: this.chatSession._id,
-      createdAt: new Date(),
-      user: {
-        _id: 0,
-        name: 'Savvy Shopper'
-      }
-    };
+  // FOR DEMO PURPOSES
+  // answerDemo(messages) {
+  //   let message = {
+  //     _id: Math.round(Math.random() * 1000000).toString(),
+  //     chatSessionID: this.chatSession._id,
+  //     createdAt: new Date(),
+  //     user: {
+  //       _id: 0,
+  //       name: 'Savvy Shopper'
+  //     }
+  //   };
 
-    if (messages.length > 0) {
-      message.text = texts.shift();
-      setTimeout(() => {
-        this.onReceive(message);
-      }, 3000);
-    }
+  //   if (messages.length > 0) {
+  //     message.text = texts.shift();
+  //     setTimeout(() => {
+  //       this.onReceive(message);
+  //     }, 3000);
+  //   }
 
-    // setTimeout(() => {
-    //   if (this._isMounted === true) {
-    //     if (messages.length > 0) {
-    //       if (!this._isAlright) {
-    //         this._isAlright = true;
-    //         this.onReceive({
-    //           _id: '123',
-    //           chatSessionID: this.chatSession._id,
-    //           text: 'Savvy Shopper thanks you for your patience.',
-    //           createdAt: new Date(),
-    //           user: {
-    //             _id: 0,
-    //             name: 'Savvy Shopper'
-    //           }
-    //         });
-    //       }
-    //     }
-    //   }
+  //   // setTimeout(() => {
+  //   //   if (this._isMounted === true) {
+  //   //     if (messages.length > 0) {
+  //   //       if (!this._isAlright) {
+  //   //         this._isAlright = true;
+  //   //         this.onReceive({
+  //   //           _id: '123',
+  //   //           chatSessionID: this.chatSession._id,
+  //   //           text: 'Savvy Shopper thanks you for your patience.',
+  //   //           createdAt: new Date(),
+  //   //           user: {
+  //   //             _id: 0,
+  //   //             name: 'Savvy Shopper'
+  //   //           }
+  //   //         });
+  //   //       }
+  //   //     }
+  //   //   }
 
-    //   this.setState((previousState) => {
-    //     return {
-    //       typingText: null,
-    //     };
-    //   });
-    // }, 2000);
-  }
+  //   //   this.setState((previousState) => {
+  //   //     return {
+  //   //       typingText: null,
+  //   //     };
+  //   //   });
+  //   // }, 2000);
+  // }
 
   navigate() {
     this.props.navigator.push({
@@ -287,20 +271,6 @@ export default class ChatView extends Component {
       };
     });
   }
-  //     return {
-  //       messages: GiftedChat.append(previousState.messages, {
-  //         _id: Math.round(Math.random() * 1000000),
-  //         text: text,
-  //         createdAt: new Date(),
-  //         user: {
-  //           _id: 99,
-  //           name: 'React Native',
-  //           avatar: 'https://facebook.github.io/react/img/logo_og.png',
-  //         },
-  //       }),
-  //     };
-  //   });
-  // }
 
   renderBubble(props) {
     return (
@@ -381,237 +351,3 @@ const styles = StyleSheet.create({
       justifyContent: 'center'
   }
 });
-
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-////////// FUNCTIONING CHAT WITH SOCKETS ///////////
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-
-// import io from 'socket.io-client';
-
-// let room = null;
-// let socket = null;
-// let chatSession = {
-//   user: null,
-//   expertId: null
-// };
-
-// const heroku = 'https://savvyshopper.herokuapp.com';
-// const local = 'http://localhost:2300';
-
-// export default class ChatView extends Component {
-
-//   constructor(props) {
-//     console.log("CHAT VIEW PROPS", props);
-//     super(props);
-//     this.state = {
-//       message: '',
-//       messages: []
-//     }
-//   }
-
-//   // automatically runs when component loads
-//   componentDidMount() {
-//     socket = io(heroku, {jsonp: false});
-//     if(!this.props.user.shopperExpert){
-
-//       //store information on chatSession
-//       chatSession.user = this.props.user;
-
-//       socket.on('id', (socketId) => {
-//         socket.emit('createRoom', socketId, chatSession.user.id);
-//         room = socketId;
-//         console.log('*** NEW ROOM ***', socketId);
-//       });
-
-//       socket.on('expert', (expertId) => {
-//         chatSession.expertId = expertId;
-//         console.log('ExpertId Recieved:', expertId);
-//       });
-
-//       socket.on('message', (message) => {
-//         console.log('Incoming Message:', message);
-//         this.setState({
-//           messages: this.state.messages.concat([message])
-//         });
-//       });
-//     }
-//     if(this.props.user.shopperExpert){
-//       fetch(heroku + '/api/userQueue/getUser', {
-//         method: 'GET',
-//         jsonp: false,
-//         headers: {
-//           'Accept': 'application/json',
-//           'Content-Type': 'application/json'
-//         }
-//       })
-//       .then((response) => response.json())
-//       .then((user) => {
-//         if (!user) {
-//           AlertIOS.alert(
-//             'Incorrect Username or Password.'
-//           )
-//         } else {
-//           console.log('UserId Recieved:', user.id);
-//           chatSession.user = {id: user.id};
-//           chatSession.expertId = this.props.user.id;
-//           console.log('*** JOINING ROOM ***', user.room);
-//           socket.emit('joinRoom', user.room, chatSession.expertId);
-//           room = user.room;
-//           socket.on('message', (message) => {
-//             console.log('Incoming Message:', message);
-//             this.setState({
-//               messages: this.state.messages.concat([message])
-//             });
-//           });
-//         }
-//       })
-//       .done();
-//     }
-
-//   }
-
-//   navigate() {
-//     this.props.navigator.push({
-//       screen: 'Shopper'
-//     });
-//   }
-
-//   //Disconnect only applies to client
-//   disconnect() {
-//     // post all messages in this.state.messages to DB
-
-//     // Send array of messages in this format:
-//     // {
-//     //   "chatSessionID": "abcdefgh",
-//     //   "senderID": 1,
-//     //   "receiverID": 3,
-//     //   "message": "Get dem beatz",
-//     //   "date": "2017-02-23T23:31:05.177Z"
-//     // }
-
-//     // REMOVE FIRST TWO ITEMS IN ARRAY (Connection Verification)
-//     let messages = this.state.messages;
-//     messages.shift();
-//     messages.shift();
-
-//     fetch(heroku + '/api/chat/messages', {
-//       method: 'POST',
-//       headers: {
-//         'Accept': 'application/json',
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify({
-//         messages: messages
-//       })
-//     })
-//     .then((responseData) => {
-//       console.log(responseData);
-//       this.navigate();
-//     })
-//     .done();
-
-
-//     // reroute to ShopperView
-//   }
-
-//   sendMessage() {
-//     //Need to flip sender/reciever based on user/expert
-//     console.log('Sending Message.');
-//     let message = {
-//       chatSessionID: room,
-//       message: this.state.message,
-//       date: new Date()
-//     };
-//     if(this.props.user.shopperExpert){
-//       message.senderID = chatSession.expertId;
-//       message.receiverID = chatSession.user.id;
-//     } else {
-//       message.senderID = chatSession.user.id;
-//       message.receiverID = chatSession.expertId;
-//     };
-//     socket.emit('message', message, room);
-//     this.setState({message: ''});
-//     return false;
-//   }
-
-//   render() {
-//     return (
-//       <View style={styles.container}>
-//         <Text style={styles.title}>Chat Session</Text>
-//         <View>
-//           {this.state.messages.map(function(msg) {
-//             return (
-//               <View key={msg.message}>
-//                 <Text style={styles.text}>{msg.message}</Text>
-//               </View>
-//             )
-//           })}
-//         </View>
-//         <View>
-//           <TextInput
-//             placeholder="type message here"
-//             onChangeText={(text) => this.setState({message: text})}
-//             style={styles.formInput}
-//           />
-//           <TouchableHighlight
-//             onPress={(this.sendMessage.bind(this))}
-//             style={styles.button}>
-//             <Text style={styles.buttonText}>Send Message</Text>
-//           </TouchableHighlight>
-//           {!this.props.user.shopperExpert &&
-//             <TouchableHighlight
-//               onPress={(this.disconnect.bind(this))}
-//               style={styles.button}>
-//               <Text style={styles.buttonText}>Question Answered</Text>
-//             </TouchableHighlight>
-//           }
-//         </View>
-//       </View>
-//     )
-//   }
-// }
-
-// var styles = StyleSheet.create({
-//     container: {
-//     padding: 30,
-//     marginTop: 65,
-//     alignItems: "stretch"
-//   },
-//   title: {
-//     fontSize: 18,
-//     marginBottom: 10
-//   },
-//   text: {
-//     alignSelf: 'center'
-//   },
-//   formInput: {
-//     height: 36,
-//     padding: 10,
-//     marginRight: 5,
-//     marginBottom: 5,
-//     marginTop: 5,
-//     fontSize: 18,
-//     borderWidth: 1,
-//     borderColor: "#555555",
-//     borderRadius: 8,
-//     color: "#555555"
-//   },
-//   buttonText: {
-//     fontSize: 18,
-//     color: 'white',
-//     alignSelf: 'center'
-//   },
-//   button: {
-//     height: 36,
-//     backgroundColor: '#48BBEC',
-//     borderColor: '#48BBEC',
-//     borderWidth: 1,
-//     borderRadius: 8,
-//     marginTop: 5,
-//     marginBottom: 10,
-//     alignSelf: 'stretch',
-//     justifyContent: 'center'
-//   },
-// });

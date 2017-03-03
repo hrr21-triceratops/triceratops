@@ -12,6 +12,7 @@ const chatHistoryIcon = require('../assets/imgs/chat.png');
 
 export default class ProfileView extends Component {
 constructor(props) {
+  console.log('ProfileView Props:', props);
 
   super(props);
 

@@ -7,14 +7,10 @@ import {
   View,
   AlertIOS,
 } from 'react-native';
-
 import { FormLabel, FormInput, Button } from 'react-native-elements';
 
+let connection = require('../Utils/connection');
 var STORAGE_KEY = 'id_token';
-
-const heroku = 'https://savvyshopper.herokuapp.com';
-const herokuTest = 'https://murmuring-sierra-59020.herokuapp.com';
-const local = 'http://localhost:2300';
 
 export default class LoginView extends Component {
 
@@ -58,7 +54,7 @@ export default class LoginView extends Component {
         'Missing Username or Password.'
       )
     } else {
-      fetch(herokuTest+"/api/users/login", {
+      fetch(connection+"/api/users/login", {
         method: "POST",
         headers: {
           'Accept': 'application/json',
@@ -88,11 +84,9 @@ export default class LoginView extends Component {
     var username = this.state.username;
     var password = this.state.password;
     if (!this.state.username || !this.state.password) {
-      AlertIOS.alert(
-        'Missing Username or Password.'
-      )
+      AlertIOS.alert('Missing Username or Password.');
     } else {
-      fetch(herokuTest+"/api/users", {
+      fetch(connection+"/api/users", {
         method: "POST",
         headers: {
           'Accept': 'application/json',
@@ -117,7 +111,6 @@ export default class LoginView extends Component {
       .done();
     }
   }
-
 
   render() {
     if (this.state.hasAccount) {
