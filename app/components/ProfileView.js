@@ -106,6 +106,36 @@ constructor(props) {
     return this.state.isActive;
   }
 
+ updatePreferences(id, preference) {
+    console.log('UPDATE PREFERENCES', id, preference);
+    fetch(connection+'/api/users/' + 5, { // this.props.user.id
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        attributes: {
+          shopperExpert: !userOptions.user.shopperExpert
+        }
+      })
+    })
+    .then((response) => {
+      if (response.status === 201) {
+        this.navigate('Home', this.props.user.id, this.props.user.username, this.props.user.averageRating, true, this.props.user.active, this.props.user.closedChatSessions, this.props.user.userPreferences);
+      } else {
+        AlertIOS.alert(
+          'Account could not be updated.'
+        )
+      }
+    })
+    .done();
+  }
+
+  updatePreference() {
+
+  }
+
 render() {
 
 return (
@@ -118,36 +148,42 @@ return (
           center
           title='Home'
           checked={this.state.homeChecked}
+          onPress={this.updatePreference.bind(this, "Home")}
         />
 
         <CheckBox
           center
           title='Food'
           checked={this.state.foodChecked}
+          onPress={this.updatePreference.bind(this, "Food")}
         />
 
         <CheckBox
           center
           title='Tech'
           checked={this.state.techChecked}
+          onPress={this.updatePreference.bind(this, "Tech")}
         />
 
         <CheckBox
           center
           title="Womens Fashion"
           checked={this.state.womensChecked}
+          onPress={this.updatePreference.bind(this, "Womens")}
         />
 
         <CheckBox
           center
           title="Mens Fashion"
           checked={this.state.mensChecked}
+          onPress={this.updatePreference.bind(this, "Mens")}
         />
 
         <CheckBox
           center
           title="Entertainment"
           checked={this.state.entertainmentChecked}
+          onPress={this.updatePreference.bind(this, "Entertainment")}
         />
       </View>
 
