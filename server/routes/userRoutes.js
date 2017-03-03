@@ -109,6 +109,18 @@ LIMIT `+count+`;
   });
 });
 
+//Retrieve user preferences
+
+router.get('/users/p/preferences/:id', function(req, res) {
+  userModel.findAll({
+    where: {
+      id: req.params.id
+    }
+  }).then(function(users) {
+    res.json(users);
+  });
+});
+
 //http://localhost:2300/api/users/topActiveExperts/food
 //http://localhost:2300/api/users/topActiveExperts/sports
 
