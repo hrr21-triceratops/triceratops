@@ -70,13 +70,14 @@ io.on('connection', function(socket) {
   socket.emit('id', socket.id);
 
   // RUNS WHEN USER CREATES CHATROOM
-  socket.on('createRoom', function(room, userId, category) {
-    console.log('Joining Room:', room, 'User:', userId, 'Category:', category);
+  socket.on('createRoom', function(room, userId, category, expertName) {
+    console.log('Joining Room:', room, 'User:', userId, 'Category:', category, 'Expert:', expertName);
     socket.join(room);
     var user = {
       id: userId,
       room: room,
-      category: category
+      category: category,
+      expertName: expertName
     };
     queue.push(user);
     realQueue[user.id] = user;
