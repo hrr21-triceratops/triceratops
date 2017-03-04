@@ -2,6 +2,7 @@ import React from 'react';
 import {
   AppRegistry,
   StyleSheet,
+  ScrollView,
   Text,
   View,
   Image,
@@ -15,23 +16,99 @@ import { List, ListItem } from 'react-native-elements';
 const list = [
   {
     name: 'Amy Farha',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-    subtitle: 'Vice President'
+    avatar_url: 'http://www.themeon.net/nifty/v2.5/img/profile-photos/7.png',
+    subtitle: 'Home / Tech',
+    rating: 5.0
   },
   {
     name: 'Chris Jackson',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-    subtitle: 'Vice Chairman'
+    avatar_url: 'http://www.themeon.net/nifty/v2.5/img/profile-photos/2.png',
+    subtitle: 'Food / Entertainment',
+    rating: 4.8
   },
   {
-    name: 'Amy Farha',
+    name: 'Cortney Larson',
+    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+    subtitle: 'Home / Tech',
+    rating: 4.8
+  },
+  {
+    name: 'Ben Thompson',
     avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-    subtitle: 'Vice President'
+    subtitle: 'Men\'s Fashion / Food',
+    rating: 4.7
   },
   {
-    name: 'Chris Jackson',
+    name: 'Sally Lexington',
     avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-    subtitle: 'Vice Chairman'
+    subtitle: 'Tech / Women\'s Fashion',
+    rating: 4.7
+  },
+  {
+    name: 'Jeff Sanders',
+    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+    subtitle: 'Entertainment',
+    rating: 4.6
+  },
+  {
+    name: 'Skylar Duncan',
+    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+    subtitle: 'Home / Entertainment',
+    rating: 4.2
+  },
+  {
+    name: 'Joe Robinson',
+    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+    subtitle: 'Food / Home',
+    rating: 4.1
+  },
+  {
+    name: 'Greg Anthony',
+    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+    subtitle: 'Men\'s Fashion',
+    rating: 3.9
+  },
+  {
+    name: 'Molly Morgans',
+    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+    subtitle: 'Entertainment / Women\'s Fashion',
+    rating: 3.8
+  },
+  {
+    name: 'Susan Thomas',
+    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+    subtitle: 'Food / Home',
+    rating: 3.6
+  },
+  {
+    name: 'Frank Corgins',
+    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+    subtitle: 'Men\'s Fashion / Tech',
+    rating: 3.6
+  },
+  {
+    name: 'Rusty Winfield',
+    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+    subtitle: 'Food / Entertainment',
+    rating: 3.5
+  },
+  {
+    name: 'Erica Bonnie',
+    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+    subtitle: 'Home / Women\'s Fashion',
+    rating: 3.4
+  },
+  {
+    name: 'Nancy Rogan',
+    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+    subtitle: 'Tech / Food',
+    rating: 3.4
+  },
+  {
+    name: 'Peter Parsons',
+    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+    subtitle: 'Entertainment / Home',
+    rating: 3.4
   },
 ];
 
@@ -46,19 +123,25 @@ export default class TopExperts extends React.Component {
 
   render () {
     return (
-      <List containerStyle={{marginTop: 85}}>
-        {list.map(function(expert, index) {
-          return (
-            <ListItem
-              roundAvatar
-              key={index}
-              title={expert.name}
-              subtitle={expert.subtitle}
-              avatar={{uri:expert.avatar_url}}
-            />
-          );
-        }, this)}
-      </List>
+      <View>
+        <Text style={styles.title}>Top Experts</Text>
+        <ScrollView style={{marginBottom: 100}}>
+          <List containerStyle={{marginTop: 15}}>
+            {list.map(function(expert, index) {
+              return (
+                <ListItem
+                  roundAvatar
+                  key={index}
+                  title={expert.name}
+                  subtitle={expert.subtitle}
+                  avatar={{uri:expert.avatar_url}}
+                  badge={{value: expert.rating.toFixed(1), badgeTextStyle: {color: 'white'}, badgeContainerStyle: {marginLeft: -50}}}
+                />
+              );
+            }, this)}
+          </List>
+        </ScrollView>
+      </View>
     );
   }
 
@@ -87,10 +170,13 @@ var styles = StyleSheet.create({
     backgroundColor: '#48BBEC'
   },
   title: {
-    marginBottom: 20,
-    fontSize: 25,
+    marginTop: 75,
+    fontSize: 18,
     textAlign: 'center',
-    color: '#fff'
+    color: 'black'
+  },
+  wrapper: {
+    marginTop: 1,
   },
   searchInput: {
     height: 50,
