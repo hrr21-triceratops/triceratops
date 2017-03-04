@@ -54,6 +54,16 @@ app.get('/api/userQueue/loadUser', function(req, res) {
   }
 });
 
+// REMOVE A USER FROM THE QUEUE
+app.get('/api/userQueue/loadUser/:id', function(req, res) {
+  delete realQueue[req.params.id];
+  if(!realQueue[req.params.id]){
+    res.send('Success');
+  } else {
+    res.send('ERROR');
+  }
+});
+
 // RUNS WHEN USER STARTS A SOCKET CONNECTION
 io.on('connection', function(socket) {
   console.log('Client Connected:', socket.id);

@@ -42,6 +42,11 @@ export default class HomeView extends Component {
   }
 
   navigateTo(destination, propsToPass, chatPartner) {
+    if(destination === 'Chat') {
+      fetch(connection + '/api/userQueue/loadUser/' + chatPartner.id, {
+        method: 'GET'
+      }).done();
+    }
     if (!propsToPass) {
       console.log('destination', destination);
       this.props.navigator.push({
@@ -51,11 +56,11 @@ export default class HomeView extends Component {
       console.log('destination', destination);
       console.log('props', propsToPass);
       this.props.navigator.push({
-          screen: destination,
-          passProps: {
-            user: propsToPass,
-            chatPartner: chatPartner
-          }
+        screen: destination,
+        passProps: {
+          user: propsToPass,
+          chatPartner: chatPartner
+        }
       });
     }
   }
@@ -143,8 +148,9 @@ export default class HomeView extends Component {
           {this.props.shopperExpert && button}
           {this.getActive() &&
           <View>
-            <Text>USER</Text>
-            <Text>{JSON.stringify(this.state.currentUser)}</Text>
+            {this.state.currentUser && <View><Text>{"USER: " + this.state.currentUser.username}</Text>
+              <Text>{"CATEGORY: " + this.state.currentUser.category}</Text></View>
+            }
             <TouchableHighlight
             style={styles.button}
             onPress={() => this.navigateTo('Chat', this.props, this.state.currentUser)}>
