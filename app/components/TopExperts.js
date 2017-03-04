@@ -9,9 +9,10 @@ import {
   NavigatorIOS,
   TouchableHighlight,
   TextInput,
-  ActivityIndicatorIOS
+  ActivityIndicatorIOS,
+  Modal
 } from 'react-native';
-import { List, ListItem } from 'react-native-elements';
+import { List, ListItem, Button } from 'react-native-elements';
 
 let connection = require('../Utils/connection');
 const list = [
@@ -116,13 +117,22 @@ const list = [
 export default class TopExperts extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      modalVisible: false,
+    };
+
+    this.expert = null;
   }
 
   componentWillMount() {
     this.getTopExperts();
   }
 
-  getTopExperts(event) {
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
+
+  getTopExperts() {
     // this.props.navigator.push({"screen":"TopExperts"});
     fetch(connection + '/api/experts', {
       method: "GET",
@@ -136,19 +146,16 @@ export default class TopExperts extends React.Component {
       if (!experts) {
         AlertIOS.alert('No Registered Experts.');
       } else {
-        //
+        // STORE EXPERTS SOMEWHERE LOCALLY
       }
     })
     .done();
   }
 
   showExpert(expert) {
-    console.log('Showing Expert!');
-    return (
-      <View>
-        <Text>Testing</Text>
-      </View>
-    );
+    this.expert = expert;
+    console.log('Current Expert:', this.expert);
+    this.setModalVisible(true);
   }
 
   render () {
@@ -172,6 +179,30 @@ export default class TopExperts extends React.Component {
             }, this)}
           </List>
         </ScrollView>
+        {this.expert &&
+          <Modal
+            animationType={"slide"}
+            transparent={false}
+            visible={this.state.modalVisible}
+            >
+            <View style={styles.mainContainer}>
+              <Image source={{uri: this.expert.avatar_url}}
+                style={{width: 250, height: 250, marginLeft: 30}} />
+              <Text style={styles.name}>{this.expert.name}</Text>
+              <Text style={styles.category}>{this.expert.subtitle}</Text>
+              <Text style={styles.bio}>
+                I became an expert wesjdkf asdnf ansdf asdfn aksdf asdfna asdfn asdlfk asdnfn asla sndfalsdjkfn adauhgsdn asdfn jasdf naldasd anjksd asdfn uvsan jsaf naskdf udvad nasdfnl ajnsd ndsa sjndf.
+              </Text>
+              <Button
+                buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
+                style={styles.button}
+                onPress={() => {
+                  this.setModalVisible(!this.state.modalVisible);
+                }}
+                raised title='Back' />
+            </View>
+          </Modal>
+        }
       </View>
     );
   }
@@ -206,6 +237,13 @@ var styles = StyleSheet.create({
     textAlign: 'center',
     color: 'black'
   },
+  name: {
+    marginTop: 20,
+    marginBottom: 10,
+    fontSize: 28,
+    textAlign: 'center',
+    color: 'black'
+  },
   wrapper: {
     marginTop: 1,
   },
@@ -232,7 +270,6 @@ var styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     marginBottom: 10,
-    marginTop: 10,
     alignSelf: 'stretch',
     justifyContent: 'center'
   },
@@ -241,12 +278,16 @@ var styles = StyleSheet.create({
     paddingLeft: 10,
     paddingTop: 5
   },
-  ratingImage: {
-    height: 19.21,
-    width: 100
+  category: {
+    fontSize: 18,
+    textAlign: 'center',
+    color: 'white'
   },
-  ratingText: {
-    paddingLeft: 10,
-    color: 'grey'
+  bio: {
+    fontSize: 12,
+    textAlign: 'center',
+    color: 'black',
+    marginTop: 15,
+    marginBottom: 20
   }
 });
