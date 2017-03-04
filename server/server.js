@@ -35,13 +35,32 @@ const io = require('socket.io')(server);
 // QUEUE OF USERS REQUESTING ASSISTANCE
 let realQueue = {};
 
+// DETERMINE IF USER CURRENTLY IN QUEUE
+app.get('/api/userQueue', function(req, res) {
+  if (Object.keys(realQueue).length) {
+    res.send(true);
+  } else {
+    res.send(false);
+  }
+});
+
 // ALLOW USER TO CYCLE THROUGH USERS IN QUEUE
 app.get('/api/userQueue/loadUser', function(req, res) {
   console.log("REAL QUEUE", realQueue);
   if (Object.keys(realQueue).length) {
     res.send(realQueue);
   } else {
-    res.send(null);
+    res.send('No users at this time');
+  }
+});
+
+// REMOVE A USER FROM THE QUEUE
+app.get('/api/userQueue/loadUser/:id', function(req, res) {
+  delete realQueue[req.params.id];
+  if(!realQueue[req.params.id]){
+    res.send('Success');
+  } else {
+    res.send('ERROR');
   }
 });
 
@@ -51,25 +70,24 @@ io.on('connection', function(socket) {
   socket.emit('id', socket.id);
 
   // RUNS WHEN USER CREATES CHATROOM
-  socket.on('createRoom', function(room, userId, category) {
-    console.log('Joining Room:', room, 'User:', userId, 'Category:', category);
+  socket.on('createRoom', function(room, userId, category, username) {
+    console.log('Joining Room:', room, 'User:', userId, 'Category:', category, 'username:', username);
     socket.join(room);
     var user = {
       id: userId,
       room: room,
-      category: category
+      category: category,
+      username: username
     };
-    queue.push(user);
     realQueue[user.id] = user;
-    console.log('Current Queue:', queue);
     console.log('Current Real Queue:', realQueue);
   });
 
   // RUNS WHEN EXPERT JOINS CHATROOM
-  socket.on('joinRoom', function(room, expertId) {
+  socket.on('joinRoom', function(room, expertId, expertUsername) {
     console.log('Joining Room:', room);
     socket.join(room);
-    io.in(room).emit('expert', expertId);
+    io.in(room).emit('expert', expertId, expertUsername);
   });
 
   // RUNS WHEN MESSAGE IS SENT BY USER OR EXPERT

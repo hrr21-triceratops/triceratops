@@ -58,7 +58,8 @@ export default class ChatView extends Component {
       socket: null,
       room: null,
       chatPartner: null,
-      category: null
+      category: null,
+      username: null
     };
   }
 
@@ -74,28 +75,6 @@ export default class ChatView extends Component {
     let self = this;
     this._isMounted = true;
 
-    // FOR DEMO PURPOSES
-    // setTimeout(function() {
-    //   console.log('INSIDE FIRST SET TIMEOUT');
-    //   self.setState((previousState) => {
-    //       return {
-    //         typingText: 'Connected with Savvy Shopper'
-    //       };
-    //     });
-    //   setTimeout(function() {
-    //     console.log('INSIDE SECOND SET TIMEOUT');
-    //     self.onReceive({
-    //       _id: '1',
-    //       chatSessionID: self.chatSession._id,
-    //       text: 'Hey, how can I help? :)',
-    //       createdAt: new Date(),
-    //       user: {
-    //         _id: 0,
-    //         name: 'Savvy Shopper'
-    //       }
-    //     });
-    //   }, 2000);
-    // }, 5000);
 
     // MERGED FROM OLD CHAT CODE
     this.chatSession.socket = io(connection, {jsonp: false});
@@ -109,8 +88,9 @@ export default class ChatView extends Component {
         });
 
       self.chatSession.category = this.props.category;
+      self.chatSession.username = this.props.user.username;
       self.chatSession.socket.on('id', (socketId) => {
-        self.chatSession.socket.emit('createRoom', socketId, self.props.user.id, this.props.category);
+        self.chatSession.socket.emit('createRoom', socketId, self.props.user.id, this.props.category, this.props.user.username);
         self.chatSession._id = socketId; // Redundant - room is same as _id
         self.chatSession.room = socketId;
         console.log('*** NEW ROOM ***', socketId);
@@ -139,12 +119,12 @@ export default class ChatView extends Component {
         .done();
       });
 
-      self.chatSession.socket.on('expert', (expertId) => {
+      self.chatSession.socket.on('expert', (expertId, expertUsername) => {
         self.chatSession.chatPartner = expertId;
-        console.log('ExpertId Recieved:', expertId);
+        console.log('ExpertId Recieved:', expertId, expertUsername);
         self.setState((previousState) => {
           return {
-            typingText: 'Connected with Expert ' + expertId
+            typingText: 'Connected with Expert ' + expertUsername
           };
         });
       });
@@ -160,8 +140,10 @@ export default class ChatView extends Component {
     if(this.props.user.shopperExpert){
       console.log('UserId Recieved:', this.props.chatPartner.id);
       self.chatSession.chatPartner = this.props.chatPartner.id;
+      self.chatSession.username = this.props.user.username;
+      self.chatSession.category = this.props.category;
       console.log('*** JOINING ROOM ***', this.props.chatPartner.room);
-      self.chatSession.socket.emit('joinRoom', this.props.chatPartner.room, self.props.chatPartner.id);
+      self.chatSession.socket.emit('joinRoom', this.props.chatPartner.room, self.props.user.id, this.props.user.username);
       self.chatSession._id = this.props.chatPartner.room;
       self.chatSession.room = this.props.chatPartner.room;
       console.log('chatSession:', self.chatSession);
@@ -186,7 +168,28 @@ export default class ChatView extends Component {
     this.chatSession.socket.emit('message', message, self.chatSession.room);
 
     // POST MESSAGE TO DB
-    fetch(connection + '/api/chat/messages', {
+    // fetch(connection + '/api/chat/messages', {
+  }
+
+  //Disconnect only applies to client
+  disconnect() {
+    // post all messages in this.state.messages to DB
+
+    // Send array of messages in this format:
+    // {
+    //   "chatSessionID": "abcdefgh",
+    //   "senderID": 1,
+    //   "receiverID": 3,
+    //   "message": "Get dem beatz",
+    //   "date": "2017-02-23T23:31:05.177Z"
+    // }
+
+    // REMOVE FIRST TWO ITEMS IN ARRAY (Connection Verification)
+    let messages = this.state.messages;
+    messages.shift();
+    messages.shift();
+
+    fetch(heroku + 'api/chat/messages', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -210,52 +213,6 @@ export default class ChatView extends Component {
 
     console.log('All Messages:', this.state.messages);
   }
-
-  // FOR DEMO PURPOSES
-  // answerDemo(messages) {
-  //   let message = {
-  //     _id: Math.round(Math.random() * 1000000).toString(),
-  //     chatSessionID: this.chatSession._id,
-  //     createdAt: new Date(),
-  //     user: {
-  //       _id: 0,
-  //       name: 'Savvy Shopper'
-  //     }
-  //   };
-
-  //   if (messages.length > 0) {
-  //     message.text = texts.shift();
-  //     setTimeout(() => {
-  //       this.onReceive(message);
-  //     }, 3000);
-  //   }
-
-  //   // setTimeout(() => {
-  //   //   if (this._isMounted === true) {
-  //   //     if (messages.length > 0) {
-  //   //       if (!this._isAlright) {
-  //   //         this._isAlright = true;
-  //   //         this.onReceive({
-  //   //           _id: '123',
-  //   //           chatSessionID: this.chatSession._id,
-  //   //           text: 'Savvy Shopper thanks you for your patience.',
-  //   //           createdAt: new Date(),
-  //   //           user: {
-  //   //             _id: 0,
-  //   //             name: 'Savvy Shopper'
-  //   //           }
-  //   //         });
-  //   //       }
-  //   //     }
-  //   //   }
-
-  //   //   this.setState((previousState) => {
-  //   //     return {
-  //   //       typingText: null,
-  //   //     };
-  //   //   });
-  //   // }, 2000);
-  // }
 
   navigate() {
     this.props.navigator.push({
