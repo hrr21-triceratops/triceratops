@@ -50,7 +50,7 @@ app.get('/api/userQueue/loadUser', function(req, res) {
   if (Object.keys(realQueue).length) {
     res.send(realQueue);
   } else {
-    res.send('No users at this time');
+    res.send({noUser:{username:'No users at this time'}});
   }
 });
 
