@@ -48,20 +48,32 @@ export default class HomeView extends Component {
       }).done();
     }
     if (!propsToPass) {
-      console.log('destination', destination);
+
+      console.log('destination', this.props.navigator.state.routeStack[this.props.navigator.state.routeStack.length - 1]);
+
+     if (destination !== this.props.navigator.state.routeStack[this.props.navigator.state.routeStack.length - 1].screen) {
       this.props.navigator.push({
           screen: destination
       });
+     }
+
     } else {
       console.log('destination', destination);
+      console.log('destination2', destination, this.props.navigator.state.routeStack[this.props.navigator.state.routeStack.length - 1].screen);
+
       console.log('props', propsToPass);
-      this.props.navigator.push({
-        screen: destination,
-        passProps: {
-          user: propsToPass,
-          chatPartner: chatPartner
-        }
-      });
+
+    if (destination !== this.props.navigator.state.routeStack[this.props.navigator.state.routeStack.length - 1].screen) {
+
+        this.props.navigator.push({
+          screen: destination,
+          passProps: {
+            user: propsToPass,
+            chatPartner: chatPartner
+          }
+        });
+
+      }
     }
   }
 
@@ -113,7 +125,7 @@ export default class HomeView extends Component {
     return (
        <View style={styles.mainContainer}>
         <Tabs selected={this.state.page}
-         style={{backgroundColor:'white'}}
+         style={{backgroundColor:'grey'}}
          selectedStyle={{color:'red'}}
          onSelect={el=>this.setState({ page: el.props.name })}>
 
@@ -122,7 +134,7 @@ export default class HomeView extends Component {
             user={this.props}
             style={styles.button}
             onPress={this.navigateTo.bind(this, "Home")}
-            underlayColor="white">
+            underlayColor="grey">
             <Text style={styles.buttonText}>Home</Text>
             </TouchableHighlight>
 
@@ -131,7 +143,7 @@ export default class HomeView extends Component {
             user={this.props}
             style={styles.button}
             onPress={this.navigateTo.bind(this, "ByCategory", this.props)}
-            underlayColor="white">
+            underlayColor="grey">
             <Text style={styles.buttonText}>By Category</Text>
            </TouchableHighlight>
 
@@ -140,9 +152,20 @@ export default class HomeView extends Component {
             user={this.props}
             style={styles.button}
             onPress={this.navigateTo.bind(this, "TopExperts")}
-            underlayColor="white">
+            underlayColor="grey">
             <Text style={styles.buttonText}>Top Experts</Text>
            </TouchableHighlight>
+
+
+            <TouchableHighlight
+            name="Wishlist"
+            user={this.props}
+            style={styles.button}
+            onPress={this.navigateTo.bind(this, "Wishlist")}
+            underlayColor="grey">
+            <Text style={styles.buttonText}>Wishlist</Text>
+           </TouchableHighlight>
+
         </Tabs>
          <SearchView style={styles.searchInput} navigator={this.props.navigator} user={this.props}/>
           {this.props.shopperExpert && button}
@@ -202,7 +225,7 @@ var styles = StyleSheet.create({
         height: 45,
         flexDirection: 'row',
         backgroundColor: 'white',
-        borderColor: 'white',
+        borderColor: 'grey',
         borderWidth: 1,
         borderRadius: 8,
         marginBottom: 10,

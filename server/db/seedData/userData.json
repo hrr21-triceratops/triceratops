@@ -5,7 +5,16 @@
   "averageRating": 4.5,
   "shopperExpert": true,
   "active": true,
-  "closedChatSessions": []
+  "closedChatSessions": [],
+  "userPreferences": {
+    "home": false,
+    "food": true,
+    "technology": false,
+    "womensFashion": true,
+    "mensFashion": false,
+    "sports": true,
+    "entertainment": false
+  }
 },
 {
   "id": 2,
@@ -14,7 +23,16 @@
   "averageRating": 3.5,
   "shopperExpert": true,
   "active": false,
-  "closedChatSessions": []
+  "closedChatSessions": [],
+  "userPreferences": {
+    "home": false,
+    "food": true,
+    "technology": false,
+    "womensFashion": true,
+    "mensFashion": false,
+    "sports": true,
+    "entertainment": false
+  }
 },
 {
   "id": 3,
@@ -23,7 +41,16 @@
   "averageRating": 3.5,
   "shopperExpert": false,
   "active": false,
-  "closedChatSessions": []
+  "closedChatSessions": [],
+  "userPreferences": {
+    "home": false,
+    "food": true,
+    "technology": false,
+    "womensFashion": true,
+    "mensFashion": false,
+    "sports": true,
+    "entertainment": false
+  }
 },
 {
   "id": 4,
@@ -32,5 +59,31 @@
   "averageRating": 4.75,
   "shopperExpert": true,
   "active": true,
-  "closedChatSessions": []
+  "closedChatSessions": [],
+  "userPreferences": {
+  "home": false,
+  "food": true,
+  "technology": false,
+  "womensFashion": true,
+  "mensFashion": false,
+  "sports": true,
+  "entertainment": false
+  }
+},{
+  "id": 5,
+  "username": "triceratops4@gmail.com",
+  "password": "123",
+  "averageRating": 4.75,
+  "shopperExpert": true,
+  "active": true,
+  "closedChatSessions": [],
+  "userPreferences": {
+    "home": false,
+    "food": true,
+    "technology": false,
+    "womensFashion": true,
+    "mensFashion": false,
+    "sports": true,
+    "entertainment": false
+  }
 }]

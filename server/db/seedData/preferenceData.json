@@ -8,4 +8,54 @@
   "sports": true,
   "entertainment": false,
   "userId": 1
+},{
+  "id": 2,
+  "home": false,
+  "food": true,
+  "technology": false,
+  "womensFashion": true,
+  "mensFashion": false,
+  "sports": true,
+  "entertainment": false,
+  "userId": 2
+},{
+  "id": 3,
+  "home": false,
+  "food": true,
+  "technology": false,
+  "womensFashion": true,
+  "mensFashion": false,
+  "sports": true,
+  "entertainment": false,
+  "userId": 3
+},{
+  "id": 4,
+  "home": false,
+  "food": true,
+  "technology": false,
+  "womensFashion": true,
+  "mensFashion": false,
+  "sports": true,
+  "entertainment": false,
+  "userId": 4
+},{
+  "id": 5,
+  "home": false,
+  "food": true,
+  "technology": false,
+  "womensFashion": true,
+  "mensFashion": false,
+  "sports": true,
+  "entertainment": false,
+  "userId": 5
+},{
+  "id": 6,
+  "home": false,
+  "food": true,
+  "technology": false,
+  "womensFashion": true,
+  "mensFashion": false,
+  "sports": true,
+  "entertainment": false,
+  "userId": 6
 }]

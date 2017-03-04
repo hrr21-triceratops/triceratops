@@ -11,19 +11,19 @@ const ratingModel = require('./db/schemas/ratingSchema.js');
 
 //Seed chat model data
 
-chatModel.remove({}, function(err) {
-  console.log('chatModel removed');
-});
+// chatModel.remove({}, function(err) {
+//   console.log('chatModel removed');
+// });
 
-fs.readFile(__dirname + '/db/seedData/chatData.json', function(err, messages) {
-  if (err) throw err;
-  JSON.parse(messages).forEach(function(message) {
-    chatModel.create(message, function(err, newMessageAdded) {
-      if (err) throw err;
-      console.log('New Message Added', newMessageAdded);
-    });
-  });
-});
+// fs.readFile(__dirname + '/db/seedData/chatData.json', function(err, messages) {
+//   if (err) throw err;
+//   JSON.parse(messages).forEach(function(message) {
+//     chatModel.create(message, function(err, newMessageAdded) {
+//       if (err) throw err;
+//       console.log('New Message Added', newMessageAdded);
+//     });
+//   });
+// });
 
 //pg
 

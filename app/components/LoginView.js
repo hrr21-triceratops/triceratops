@@ -32,7 +32,7 @@ export default class LoginView extends Component {
   }
 
   navigate(scene, id, username, averageRating, shopperExpert, active, closedChatSessions, userPreferences) {
-    this.props.navigator.push({
+    this.props.navigator.resetTo({
       screen: scene,
       passProps: {
         id: id,

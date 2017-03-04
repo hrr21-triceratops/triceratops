@@ -9,7 +9,16 @@ var userModel = sequelize.define('user', {
   shopperExpert: { type: Sequelize.BOOLEAN, defaultValue: false },
   active: { type: Sequelize.BOOLEAN, defaultValue: false },
   closedChatSessions: { type: Sequelize.ARRAY(Sequelize.STRING), defaultValue: [] },
-  userPreferences: { type: Sequelize.JSONB, defaultValue: {} }
+  userPreferences: { type: Sequelize.JSONB, defaultValue: {
+      "home": false,
+      "food": false,
+      "technology": false,
+      "womensFashion": false,
+      "mensFashion": false,
+      "sports": false,
+      "entertainment": false
+    }
+  }
 });
 
 userModel.sync({force: false}).then(function () {
