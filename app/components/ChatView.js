@@ -169,7 +169,6 @@ export default class ChatView extends Component {
         console.log(response);
       })
       .done();
-    });
 
       self.chatSession.socket.on('message', (message) => {
         console.log('Incoming Message:', message);

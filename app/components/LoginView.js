@@ -10,7 +10,7 @@ import {
 import { FormLabel, FormInput, Button } from 'react-native-elements';
 
 let connection = require('../Utils/connection');
-var STORAGE_KEY = 'id_token';
+// var STORAGE_KEY = 'id_token';
 
 export default class LoginView extends Component {
 
