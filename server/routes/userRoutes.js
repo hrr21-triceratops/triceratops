@@ -7,7 +7,6 @@ const expertModel = require('../db/schemas/expertSchema.js');
 
 var _ = require('lodash');
 var config = require('./../config.json');
-var jwt = require('jsonwebtoken');
 var bcrypt = require('bcrypt-nodejs');
 
 // middleware that is specific to this router
@@ -15,11 +14,6 @@ var bcrypt = require('bcrypt-nodejs');
 //   console.log('Time: ', Date.now())
 //   next()
 // })
-
-// CREATE JSON WEB TOKEN
-function createToken(user) {
-  return jwt.sign(_.omit(user, 'password'), config.secret, { expiresIn: 60*60*5 });
-}
 
 // GET ALL USERS
 router.get('/users', function(req, res) {
@@ -153,21 +147,18 @@ router.post('/users/login', function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
 
-  userModel.findOne({ where: {username: req.body.username}}).then(function(user) {
+  userModel.findOne({ where: {username: username}}).then(function(user) {
     if (!user) {
-      return res.status(401).send(null);
+      res.status(401).send(null);
+    } else {
+      bcrypt.compare(password, user.get('password'), function(err, match) {
+        if (!match) {
+          res.status(401).send(null);
+        } else {
+          res.status(201).send(user);
+        }
+      });
     }
-
-    bcrypt.compare(password, user.get('password'), function(err, match) {
-      if (!match) {
-        return res.status(401).send(null);
-      }
-
-      res.status(201).send(
-        //{id_token: createToken(user)}
-        user
-      );
-    });
   });
 });
 
@@ -177,9 +168,9 @@ router.post('/users', function(req, res) {
   var password = req.body.password;
   var shopperExpert = req.body.shopperExpert;
 
-  userModel.findOne({ where: {username: req.body.username}}).then(function(user) {
+  userModel.findOne({ where: {username: username}}).then(function(user) {
     if (user) {
-      return res.status(400).send(null);
+      res.status(400).send(null);
     } else {
       bcrypt.hash(password, null, null, function(err, hash) {
         userModel.create({
@@ -187,10 +178,7 @@ router.post('/users', function(req, res) {
           password: hash,
           shopperExpert: shopperExpert
         }).then(function(user) {
-          res.status(201).send(
-          //{id_token: createToken(user)}
-          user
-          );
+          res.status(201).send(user);
         });
       });
     }
@@ -204,12 +192,12 @@ router.put('/users/:id', function(req, res) {
   userModel.findOne({ where: {id: req.params.id}})
   .then(function(user) {
     if (!user) {
-      return res.status(401).send(null);
+      res.status(401).send(null);
     } else {
       user.update(attributes)
       .then(function(user) {
         console.log('Updated User:', user);
-        res.status(201).send(JSON.stringify('User Updated.'));
+        res.status(201).send(user);
       });
     }
   });
