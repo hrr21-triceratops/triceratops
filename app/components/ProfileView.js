@@ -124,6 +124,13 @@ constructor(props) {
     .done();
   }
 
+  logOut() {
+    this.props.navigator.resetTo({
+      screen: "Login"
+    })
+    //we should also destroy the session here. The above removes all routes from the stack
+  }
+
 render() {
 
 return (
@@ -191,8 +198,13 @@ return (
       </View>
         <View style={styles.stats}>
             {this.renderOption({ icon: ratingIcon, value: this.props.user.averageRating })}
+
             {this.renderOption({ icon: chatHistoryIcon, value: this.props.user.closedChatSessions.length })}
+
             {!this.props.user.shopperExpert ? this.renderOption({ icon: chatHistoryIcon, value: 'Become Expert', method: this.makeExpert.bind(this, this.props) }) : this.renderOption({ icon: chatHistoryIcon, value: 'Cancel Expert', method: this.makeExpert.bind(this, this.props) })}
+
+            {this.renderOption({ icon: chatHistoryIcon, value: "Log Out", method: this.logOut.bind(this, this.props) })}
+
         </View>
       </View>
     );
