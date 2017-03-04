@@ -121,6 +121,30 @@ router.get('/users/p/preferences/:id', function(req, res) {
   });
 });
 
+//update user preferences
+
+router.put('/users/preferences/update/:id', function(req, res) {
+  var attributes = req.body;
+  console.log('attributes', attributes);
+  userModel.findOne({
+    where: {
+      id: req.params.id
+    }
+  })
+  .then(function(user) {
+    if (!user) {
+      return res.status(401).send(null);
+    } else {
+        user.set('userPreferences.' + attributes.category, attributes.bool);
+        user.save();
+        // console.log('updated user preferences:', user);
+        res.status(201).send(JSON.stringify('user preferences updated.'));
+    }
+  });
+});
+
+// res.status(201).send('attributes: ' + attributes);
+
 //http://localhost:2300/api/users/topActiveExperts/food
 //http://localhost:2300/api/users/topActiveExperts/sports
 

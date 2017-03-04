@@ -26,7 +26,13 @@ constructor(props) {
     averageRating: '4.5',
     favorites: '5',
     chatHistory: '10',
-    isActive: false
+    isActive: false,
+    food: props.user.userPreferences.food,
+    home: props.user.userPreferences.home,
+    mensFashion: props.user.userPreferences.mensFashion,
+    sports: props.user.userPreferences.sports,
+    technology: props.user.userPreferences.technology,
+    womensFashion: props.user.userPreferences.womensFashion
   };
 }
 
@@ -101,19 +107,23 @@ constructor(props) {
   }
 
   updatePreference(userPreferences, category, bool) {
-    console.log('preference update!', userPreferences.category)
+    console.log('preference update!', userPreferences)
     console.log('category', category, bool )
-    fetch(connection+'/api/users/preferences/update/' + 5, { // this.props.user.id
+    fetch(connection+'/api/users/preferences/update/' + 8, { // this.props.user.id
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-       body: JSON.stringify(userPreferences)
+       body: JSON.stringify({
+        'preferences': userPreferences,
+        'category': category,
+        'bool': bool
+      })
     })
     .then((response) => {
       if (response.status === 201) {
-          console.log('COMPLETE!')
+          console.log('COMPLETE!', response, [`${category}`])
       } else {
         AlertIOS.alert(
           'Account could not be updated.'
@@ -121,7 +131,7 @@ constructor(props) {
       }
     })
     .done();
-  }
+    }
 
   logOut() {
     this.props.navigator.resetTo({
@@ -136,6 +146,7 @@ return (
 
     <View style={styles.container}>
         {console.log('user this.props', this.props)}
+        {console.log('user this.state', this.state)}
       <View style={styles.preferences}>
         <CheckBox
           center
