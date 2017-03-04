@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 
+let connection = require('../Utils/connection');
 const list = [
   {
     name: 'Amy Farha',
@@ -117,8 +118,37 @@ export default class TopExperts extends React.Component {
     super(props);
   }
 
+  componentWillMount() {
+    this.getTopExperts();
+  }
+
   getTopExperts(event) {
-    this.props.navigator.push({"screen":"TopExperts"});
+    // this.props.navigator.push({"screen":"TopExperts"});
+    fetch(connection + '/api/experts', {
+      method: "GET",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+    .then((response) => response.json())
+    .then((experts) => {
+      if (!experts) {
+        AlertIOS.alert('No Registered Experts.');
+      } else {
+        //
+      }
+    })
+    .done();
+  }
+
+  showExpert(expert) {
+    console.log('Showing Expert!');
+    return (
+      <View>
+        <Text>Testing</Text>
+      </View>
+    );
   }
 
   render () {
@@ -136,6 +166,7 @@ export default class TopExperts extends React.Component {
                   subtitle={expert.subtitle}
                   avatar={{uri:expert.avatar_url}}
                   badge={{value: expert.rating.toFixed(1), badgeTextStyle: {color: 'white'}, badgeContainerStyle: {marginLeft: -80}}}
+                  onPress={() => {this.showExpert(expert)}}
                 />
               );
             }, this)}
