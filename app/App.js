@@ -66,6 +66,8 @@ class SavvyShopper extends Component {
          LeftButton: (route, navigator, index, navState) =>
           {  if (route.screen === "Login" || route.screen === "Home") {
                 route.index = 0;
+                var currentRoutes = navigator.getCurrentRoutes(0)
+                console.log('current routes', navigator.getCurrentRoutes(0))
                 console.log('ROUTE', route);
                 console.log('NAVIGATOR', navigator);
                 console.log('APP.JS PROPS', route.passProps)
@@ -82,7 +84,6 @@ class SavvyShopper extends Component {
           { if (route.screen === "Profile" || route.screen === "Login") {
             return null;
           } else {
-
             return (
               <TouchableHighlight onPress={() => navigator.push({
                   screen: "Profile",
@@ -95,7 +96,13 @@ class SavvyShopper extends Component {
             );
           }},
          Title: (route, navigator, index, navState) =>
-           { return (<Text h1 style={styles.title}>Savvy Shopper</Text>); },
+           {
+           if (route.screen === "Profile") {
+             return (<Text h1 style={styles.title}>Profile & Preferences</Text>);
+           } else {
+             return (<Text h1 style={styles.title}>Savvy Shopper</Text>);
+           }
+          },
        }}
        style={{backgroundColor: 'gray'}}
       />

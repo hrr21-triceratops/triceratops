@@ -129,49 +129,55 @@ render() {
 return (
 
     <View style={styles.container}>
-        <Text style={styles.title}>PREFERENCES</Text>
         {console.log('user this.props', this.props)}
       <View style={styles.preferences}>
         <CheckBox
           center
           title='Home'
           checked={this.props.user.userPreferences.home}
-          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, this.props.user.userPreferences.home, !this.props.user.userPreferences.home)}
+          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "home", !this.props.user.userPreferences.home)}
         />
 
         <CheckBox
           center
           title='Food'
           checked={this.props.user.userPreferences.food}
-          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, this.props.user.userPreferences.food, !this.props.user.userPreferences.food)}
+          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "food", !this.props.user.userPreferences.food)}
         />
 
         <CheckBox
           center
           title='Tech'
           checked={this.props.user.userPreferences.technology}
-          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, this.props.user.userPreferences.technology, !this.props.user.userPreferences.technology)}
+          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "technology", !this.props.user.userPreferences.technology)}
         />
 
         <CheckBox
           center
           title="Womens Fashion"
           checked={this.props.user.userPreferences.womensFashion}
-          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, this.props.user.userPreferences.womensFashion, !this.props.user.userPreferences.womensFashion)}
+          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "womensFashion", !this.props.user.userPreferences.womensFashion)}
         />
 
         <CheckBox
           center
           title="Mens Fashion"
           checked={this.props.user.userPreferences.mensFashion}
-          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, this.props.user.userPreferences.mensFashion, !this.props.user.userPreferences.mensFashion)}
+          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "mensFashion", !this.props.user.userPreferences.mensFashion)}
         />
 
         <CheckBox
           center
           title="Entertainment"
           checked={this.props.user.userPreferences.entertainment}
-          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, this.props.user.userPreferences.entertainment, !this.props.user.userPreferences.entertainment)}
+          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "entertainment", !this.props.user.userPreferences.entertainment)}
+        />
+
+        <CheckBox
+          center
+          title="sports"
+          checked={this.props.user.userPreferences.entertainment}
+          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "sports", !this.props.user.userPreferences.sports)}
         />
       </View>
 
@@ -204,15 +210,15 @@ const styles = StyleSheet.create({
  },
   title: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 14,
     alignSelf: 'center',
     color: 'grey',
     top: 20,
-    marginBottom: 10
+    marginBottom: 2
   },
 preferences: {
-  marginTop:15,
-  marginBottom: 15
+  marginTop:2,
+  marginBottom: 2
 },
 personal: {
  padding: 30,
