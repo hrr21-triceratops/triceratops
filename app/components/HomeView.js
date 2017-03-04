@@ -26,7 +26,7 @@ export default class HomeView extends Component {
     console.log('Home Props:', props);
     super(props);
     this.state = {
-      page:'Search',
+      page: 'Home',
       isActive: false,
       currentUser: null,
       index: 0
@@ -65,17 +65,6 @@ export default class HomeView extends Component {
       console.log('props', propsToPass);
 
     if (destination !== this.props.navigator.state.routeStack[this.props.navigator.state.routeStack.length - 1].screen) {
-
-        this.props.navigator.push({
-          screen: destination,
-          passProps: {
-            user: propsToPass,
-            chatPartner: chatPartner
-          }
-        });
-
-      }
-    }
   }
 
   showNext() {
@@ -142,13 +131,8 @@ export default class HomeView extends Component {
             name="ByCategory"
             user={this.props.user}
             style={styles.button}
-<<<<<<< HEAD
             onPress={this.navigateTo.bind(this, "ByCategory", this.props)}
             underlayColor="grey">
-=======
-            onPress={this.navigateTo.bind(this, "ByCategory", this.props.user)}
-            underlayColor="white">
->>>>>>> Refactor home view props to contain user object
             <Text style={styles.buttonText}>By Category</Text>
            </TouchableHighlight>
 
