@@ -149,11 +149,11 @@ router.post('/users/login', function(req, res) {
 
   userModel.findOne({ where: {username: username}}).then(function(user) {
     if (!user) {
-      res.status(401).send(null);
+      res.status(401).send(JSON.stringify(null));
     } else {
       bcrypt.compare(password, user.get('password'), function(err, match) {
         if (!match) {
-          res.status(401).send(null);
+          res.status(401).send(JSON.stringify(null));
         } else {
           res.status(201).send(user);
         }
@@ -170,7 +170,7 @@ router.post('/users', function(req, res) {
 
   userModel.findOne({ where: {username: username}}).then(function(user) {
     if (user) {
-      res.status(400).send(null);
+      res.status(400).send(JSON.stringify(null));
     } else {
       bcrypt.hash(password, null, null, function(err, hash) {
         userModel.create({
@@ -192,7 +192,7 @@ router.put('/users/:id', function(req, res) {
   userModel.findOne({ where: {id: req.params.id}})
   .then(function(user) {
     if (!user) {
-      res.status(401).send(null);
+      res.status(401).send(JSON.stringify(null));
     } else {
       user.update(attributes)
       .then(function(user) {
