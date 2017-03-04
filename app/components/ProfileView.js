@@ -32,12 +32,13 @@ constructor(props) {
     mensFashion: props.user.userPreferences.mensFashion,
     sports: props.user.userPreferences.sports,
     technology: props.user.userPreferences.technology,
+    entertainment: props.user.userPreferences.entertainment,
     womensFashion: props.user.userPreferences.womensFashion
   };
 }
 
  makeExpert(userOptions) {
-    console.log('MAKE EXPERT', userOptions);
+    // console.log('MAKE EXPERT', userOptions);
     fetch(connection+'/api/users/' + 5, { // this.props.user.id
       method: 'PUT',
       headers: {
@@ -107,8 +108,8 @@ constructor(props) {
   }
 
   updatePreference(userPreferences, category, bool) {
-    console.log('preference update!', userPreferences)
-    console.log('category', category, bool )
+    // console.log('preference update!', userPreferences)
+    // console.log('category', category, bool )
     fetch(connection+'/api/users/preferences/update/' + 8, { // this.props.user.id
       method: 'PUT',
       headers: {
@@ -123,7 +124,13 @@ constructor(props) {
     })
     .then((response) => {
       if (response.status === 201) {
-          console.log('COMPLETE!', response, [`${category}`])
+          // console.log('COMPLETE!', response, [`${category}`])
+          var key = category
+          var val = bool
+          var obj  = {}
+          obj[key] = val
+          this.setState(obj)
+          console.log('update preferences this.state', this.state);
       } else {
         AlertIOS.alert(
           'Account could not be updated.'
@@ -140,61 +147,65 @@ constructor(props) {
     //we should also destroy the session here. The above removes all routes from the stack
   }
 
+  toggleFood() {
+    this.setState({food: !this.state.food});
+  }
+
 render() {
 
 return (
 
     <View style={styles.container}>
-        {console.log('user this.props', this.props)}
-        {console.log('user this.state', this.state)}
+        {/*console.log('user this.props', this.props)*/}
+        {/*console.log('user this.state', this.state)*/}
       <View style={styles.preferences}>
         <CheckBox
           center
           title='Home'
-          checked={this.props.user.userPreferences.home}
-          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "home", !this.props.user.userPreferences.home)}
+          checked={this.state.home}
+          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "home", !this.state.home)}
         />
 
         <CheckBox
           center
           title='Food'
-          checked={this.props.user.userPreferences.food}
-          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "food", !this.props.user.userPreferences.food)}
+          checked={this.state.food}
+          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "food", !this.state.food)}
         />
 
         <CheckBox
           center
           title='Tech'
-          checked={this.props.user.userPreferences.technology}
-          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "technology", !this.props.user.userPreferences.technology)}
+          checked={this.state.technology}
+          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "technology", !this.state.technology)}
         />
 
         <CheckBox
           center
           title="Womens Fashion"
-          checked={this.props.user.userPreferences.womensFashion}
-          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "womensFashion", !this.props.user.userPreferences.womensFashion)}
+          checked={this.state.womensFashion}
+          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "womensFashion", !this.state.womensFashion)}
         />
 
         <CheckBox
           center
           title="Mens Fashion"
-          checked={this.props.user.userPreferences.mensFashion}
-          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "mensFashion", !this.props.user.userPreferences.mensFashion)}
+          checked={this.state.mensFashion}
+          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "mensFashion", !this.state.mensFashion)}
         />
 
         <CheckBox
           center
           title="Entertainment"
-          checked={this.props.user.userPreferences.entertainment}
-          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "entertainment", !this.props.user.userPreferences.entertainment)}
+          checked={this.state.entertainment}
+          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "entertainment", !this.state.entertainment)}
         />
 
         <CheckBox
           center
           title="sports"
-          checked={this.props.user.userPreferences.entertainment}
-          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "sports", !this.props.user.userPreferences.sports)}
+          checked={this.state.sports}
+          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "sports", !this.state.sports)}
         />
       </View>
 

@@ -125,7 +125,7 @@ router.get('/users/p/preferences/:id', function(req, res) {
 
 router.put('/users/preferences/update/:id', function(req, res) {
   var attributes = req.body;
-  console.log('attributes', attributes);
+  // console.log('attributes', attributes);
   userModel.findOne({
     where: {
       id: req.params.id
