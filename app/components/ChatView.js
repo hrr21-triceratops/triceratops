@@ -101,7 +101,7 @@ export default class ChatView extends Component {
         console.log('New Chat Sessions:', self.props.user.closedChatSessions);
 
         // PUT REQUEST TO DATABASE WITH NEW closedChatSessions ARRAY
-        fetch(connection+'/api/users/' + self.props.user.id, {
+        fetch(connection + '/api/users/' + self.props.user.id, {
           method: 'PUT',
           headers: {
             'Accept': 'application/json',
@@ -147,6 +147,29 @@ export default class ChatView extends Component {
       self.chatSession._id = this.props.chatPartner.room;
       self.chatSession.room = this.props.chatPartner.room;
       console.log('chatSession:', self.chatSession);
+
+      // SEND SESSION ID TO USER'S CLOSED CHAT SESSIONS ARRAY
+      self.props.user.closedChatSessions.push(self.chatSession._id);
+      console.log('New Chat Sessions:', self.props.user.closedChatSessions);
+
+      // PUT REQUEST TO DATABASE WITH NEW closedChatSessions ARRAY
+      fetch(connection + '/api/users/' + self.props.user.id, {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          attributes: {
+            closedChatSessions: self.props.user.closedChatSessions
+          }
+        })
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .done();
+    });
 
       self.chatSession.socket.on('message', (message) => {
         console.log('Incoming Message:', message);
