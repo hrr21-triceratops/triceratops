@@ -16,97 +16,97 @@ import { List, ListItem } from 'react-native-elements';
 const list = [
   {
     name: 'Amy Farha',
-    avatar_url: 'http://www.themeon.net/nifty/v2.5/img/profile-photos/7.png',
+    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/images/f.jpg',
     subtitle: 'Home / Tech',
     rating: 5.0
   },
   {
     name: 'Chris Jackson',
-    avatar_url: 'http://www.themeon.net/nifty/v2.5/img/profile-photos/2.png',
+    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/images/m.jpg',
     subtitle: 'Food / Entertainment',
     rating: 4.8
   },
   {
     name: 'Cortney Larson',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/images/f.jpg',
     subtitle: 'Home / Tech',
     rating: 4.8
   },
   {
     name: 'Ben Thompson',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/images/m.jpg',
     subtitle: 'Men\'s Fashion / Food',
     rating: 4.7
   },
   {
     name: 'Sally Lexington',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/images/f.jpg',
     subtitle: 'Tech / Women\'s Fashion',
     rating: 4.7
   },
   {
     name: 'Jeff Sanders',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/images/m.jpg',
     subtitle: 'Entertainment',
     rating: 4.6
   },
   {
     name: 'Skylar Duncan',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/images/m.jpg',
     subtitle: 'Home / Entertainment',
     rating: 4.2
   },
   {
     name: 'Joe Robinson',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/images/m.jpg',
     subtitle: 'Food / Home',
     rating: 4.1
   },
   {
     name: 'Greg Anthony',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/images/m.jpg',
     subtitle: 'Men\'s Fashion',
     rating: 3.9
   },
   {
     name: 'Molly Morgans',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/images/f.jpg',
     subtitle: 'Entertainment / Women\'s Fashion',
     rating: 3.8
   },
   {
     name: 'Susan Thomas',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/images/f.jpg',
     subtitle: 'Food / Home',
     rating: 3.6
   },
   {
     name: 'Frank Corgins',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/images/m.jpg',
     subtitle: 'Men\'s Fashion / Tech',
     rating: 3.6
   },
   {
     name: 'Rusty Winfield',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/images/m.jpg',
     subtitle: 'Food / Entertainment',
     rating: 3.5
   },
   {
     name: 'Erica Bonnie',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/images/f.jpg',
     subtitle: 'Home / Women\'s Fashion',
     rating: 3.4
   },
   {
     name: 'Nancy Rogan',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/images/f.jpg',
     subtitle: 'Tech / Food',
     rating: 3.4
   },
   {
     name: 'Peter Parsons',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/images/m.jpg',
     subtitle: 'Entertainment / Home',
     rating: 3.4
   },
@@ -135,7 +135,7 @@ export default class TopExperts extends React.Component {
                   title={expert.name}
                   subtitle={expert.subtitle}
                   avatar={{uri:expert.avatar_url}}
-                  badge={{value: expert.rating.toFixed(1), badgeTextStyle: {color: 'white'}, badgeContainerStyle: {marginLeft: -50}}}
+                  badge={{value: expert.rating.toFixed(1), badgeTextStyle: {color: 'white'}, badgeContainerStyle: {marginLeft: -80}}}
                 />
               );
             }, this)}
