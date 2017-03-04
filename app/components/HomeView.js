@@ -23,6 +23,7 @@ const usersToCheck = null;
 
 export default class HomeView extends Component {
   constructor(props){
+    console.log('Home Props:', props);
     super(props);
     this.state = {
       page:'Search',
@@ -107,7 +108,6 @@ export default class HomeView extends Component {
   }
 
   render() {
-    console.log('HOMEVIEW this.props', this.props)
     let button = null;
     if (this.getActive()) {
       button = <TouchableHighlight
@@ -131,7 +131,7 @@ export default class HomeView extends Component {
 
             <TouchableHighlight
             name="Home"
-            user={this.props}
+            user={this.props.user}
             style={styles.button}
             onPress={this.navigateTo.bind(this, "Home")}
             underlayColor="grey">
@@ -140,16 +140,21 @@ export default class HomeView extends Component {
 
             <TouchableHighlight
             name="ByCategory"
-            user={this.props}
+            user={this.props.user}
             style={styles.button}
+<<<<<<< HEAD
             onPress={this.navigateTo.bind(this, "ByCategory", this.props)}
             underlayColor="grey">
+=======
+            onPress={this.navigateTo.bind(this, "ByCategory", this.props.user)}
+            underlayColor="white">
+>>>>>>> Refactor home view props to contain user object
             <Text style={styles.buttonText}>By Category</Text>
            </TouchableHighlight>
 
             <TouchableHighlight
             name="TopExperts"
-            user={this.props}
+            user={this.props.user}
             style={styles.button}
             onPress={this.navigateTo.bind(this, "TopExperts")}
             underlayColor="grey">
@@ -167,8 +172,8 @@ export default class HomeView extends Component {
            </TouchableHighlight>
 
         </Tabs>
-         <SearchView style={styles.searchInput} navigator={this.props.navigator} user={this.props}/>
-          {this.props.shopperExpert && button}
+         <SearchView style={styles.searchInput} navigator={this.props.user.navigator} user={this.props.user}/>
+          {this.props.user.shopperExpert && button}
           {this.getActive() &&
           <View>
             {this.state.currentUser && <View><Text>{"USER: " + this.state.currentUser.username}</Text>
@@ -176,7 +181,7 @@ export default class HomeView extends Component {
             }
             <TouchableHighlight
             style={styles.button}
-            onPress={() => this.navigateTo('Chat', this.props, this.state.currentUser)}>
+            onPress={() => this.navigateTo('Chat', this.props.user, this.state.currentUser)}>
               <Text style={styles.buttonText}>b</Text>
             </TouchableHighlight>
             <TouchableHighlight
