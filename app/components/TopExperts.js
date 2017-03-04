@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements';
 
+const ratingIcon = require('../assets/imgs/plain-heart.png');
 let connection = require('../Utils/connection');
 const list = [
   {
@@ -190,6 +191,11 @@ export default class TopExperts extends React.Component {
                 style={{width: 250, height: 250, marginLeft: 30}} />
               <Text style={styles.name}>{this.expert.name}</Text>
               <Text style={styles.category}>{this.expert.subtitle}</Text>
+              <Image
+                 source={ratingIcon}
+                 style={styles.icon}
+               />
+              <Text style={styles.counter}>{this.expert.rating.toFixed(1)}</Text>
               <Text style={styles.bio}>
                 I became an expert wesjdkf asdnf ansdf asdfn aksdf asdfna asdfn asdlfk asdnfn asla sndfalsdjkfn adauhgsdn asdfn jasdf naldasd anjksd asdfn uvsan jsaf naskdf udvad nasdfnl ajnsd ndsa sjndf.
               </Text>
@@ -277,6 +283,19 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     paddingLeft: 10,
     paddingTop: 5
+  },
+  icon: {
+    tintColor: '#504f9f',
+    height: 30,
+    width: 30,
+    marginTop: 15,
+    marginLeft: 140
+  },
+  counter: {
+    color: '#fff',
+    fontSize: 15,
+    marginTop: 5,
+    marginLeft: 145
   },
   category: {
     fontSize: 18,
