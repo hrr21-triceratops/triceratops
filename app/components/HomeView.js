@@ -150,6 +150,17 @@ export default class HomeView extends Component {
             underlayColor="grey">
             <Text style={styles.buttonText}>Top Experts</Text>
            </TouchableHighlight>
+
+
+            <TouchableHighlight
+            name="Wishlist"
+            user={this.props}
+            style={styles.button}
+            onPress={this.navigateTo.bind(this, "Wishlist")}
+            underlayColor="grey">
+            <Text style={styles.buttonText}>Wishlist</Text>
+           </TouchableHighlight>
+
         </Tabs>
          <SearchView style={styles.searchInput} navigator={this.props.navigator} user={this.props}/>
           {this.props.shopperExpert && button}

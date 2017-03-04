@@ -101,16 +101,15 @@ constructor(props) {
   }
 
   updatePreference(userPreferences, category, bool) {
-
-    console.log('preference update!', userPreferences)
+    console.log('preference update!', userPreferences.category)
     console.log('category', category, bool )
-    fetch(connection+'/api/users/' + 5, { // this.props.user.id
+    fetch(connection+'/api/users/preferences/update/' + 5, { // this.props.user.id
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({userPreferences})
+       body: JSON.stringify(userPreferences)
     })
     .then((response) => {
       if (response.status === 201) {
