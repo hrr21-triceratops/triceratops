@@ -22,6 +22,17 @@ router.get('/users', function(req, res) {
   });
 });
 
+// GET ALL EXPERTS
+router.get('/users/experts', function(req, res) {
+  userModel.findAll({
+    where: {
+      shopperExpert: true
+    }
+  }).then(function(users) {
+    res.json(users);
+  });
+});
+
 //Get a particular user
 
 router.get('/users/:id', function(req, res) {
