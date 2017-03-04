@@ -34,8 +34,13 @@ export default class SearchView extends Component {
 
   goToAvailableExperts(experts) {
     this.props.navigator.push({
-        screen: "AvailableExperts",
-        passProps: { experts: experts }
+        // screen: "AvailableExperts",
+        // passProps: { experts: experts }
+        screen: "Chat",
+        passProps: {
+          user: this.props.user,
+          category: this.state.searchTerm
+        }
     });
   }
 
