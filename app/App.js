@@ -18,8 +18,7 @@ import AvailableExperts from './components/AvailableExperts';
 import HomeView from './components/HomeView';
 import ProfileView from './components/ProfileView';
 import RatingView from './components/shoppers/RatingView';
-
-
+import Wishlist from './components/Wishlist';
 
 //setup the app component to register with App registry, everything happens inside of this wrapper
 class SavvyShopper extends Component {
@@ -51,6 +50,8 @@ class SavvyShopper extends Component {
        return <ChatView navigator={navigator} {...route.passProps} />
       case "Profile":
         return <ProfileView navigator={navigator} {...route.passProps} />
+      case "Wishlist":
+        return <Wishlist navigator={navigator} {...route.passProps} />
       }
   }
 

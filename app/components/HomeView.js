@@ -114,31 +114,56 @@ export default class HomeView extends Component {
     return (
        <View style={styles.mainContainer}>
         <Tabs selected={this.state.page}
+<<<<<<< HEAD
          style={{backgroundColor:'grey'}}
          selectedStyle={{color:'red'}}
+=======
+         style={{backgroundColor:'white'}}
+         selectedStyle={{color:'blue'}}
+>>>>>>> Setup framework for Wishlist view and update expert api call
          onSelect={el=>this.setState({ page: el.props.name })}>
 
-            <TouchableHighlight
+          <Text
             name="Home"
             user={this.props.user}
+<<<<<<< HEAD
             style={styles.button}
             onPress={this.navigateTo.bind(this, "Home")}
             underlayColor="grey">
             <Text style={styles.buttonText}>Home</Text>
             </TouchableHighlight>
+=======
+            onPress={this.navigateTo.bind(this, "Home")}>
+              Home
+          </Text>
+>>>>>>> Setup framework for Wishlist view and update expert api call
 
-            <TouchableHighlight
+          <Text
             name="ByCategory"
             user={this.props.user}
+<<<<<<< HEAD
             style={styles.button}
             onPress={this.navigateTo.bind(this, "ByCategory", this.props)}
             underlayColor="grey">
             <Text style={styles.buttonText}>By Category</Text>
            </TouchableHighlight>
+=======
+            onPress={this.navigateTo.bind(this, "ByCategory", this.props.user)}>
+              By Category
+          </Text>
+>>>>>>> Setup framework for Wishlist view and update expert api call
 
-            <TouchableHighlight
+         <Text
+            name="Wishlist"
+            user={this.props.user}
+            onPress={this.navigateTo.bind(this, "Wishlist")}>
+              Wishlist
+          </Text>
+
+          <Text
             name="TopExperts"
             user={this.props.user}
+<<<<<<< HEAD
             style={styles.button}
             onPress={this.navigateTo.bind(this, "TopExperts")}
             underlayColor="grey">
@@ -154,6 +179,11 @@ export default class HomeView extends Component {
             underlayColor="grey">
             <Text style={styles.buttonText}>Wishlist</Text>
            </TouchableHighlight>
+=======
+            onPress={this.navigateTo.bind(this, "TopExperts")}>
+              Top Experts
+          </Text>
+>>>>>>> Setup framework for Wishlist view and update expert api call
 
         </Tabs>
          <SearchView style={styles.searchInput} navigator={this.props.user.navigator} user={this.props.user}/>

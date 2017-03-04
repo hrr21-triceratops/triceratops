@@ -13,6 +13,7 @@ import {
   Modal
 } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements';
+import Tabs from 'react-native-tabs';
 
 const ratingIcon = require('../assets/imgs/plain-heart.png');
 let connection = require('../Utils/connection');
@@ -119,7 +120,7 @@ export default class TopExperts extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalVisible: false,
+      modalVisible: false
     };
 
     this.expert = null;
@@ -135,7 +136,7 @@ export default class TopExperts extends React.Component {
 
   getTopExperts() {
     // this.props.navigator.push({"screen":"TopExperts"});
-    fetch(connection + '/api/experts', {
+    fetch(connection + '/api/users/experts/true', {
       method: "GET",
       headers: {
         'Accept': 'application/json',
@@ -145,9 +146,10 @@ export default class TopExperts extends React.Component {
     .then((response) => response.json())
     .then((experts) => {
       if (!experts) {
-        AlertIOS.alert('No Registered Experts.');
+        console.log('No Registered Experts.');
       } else {
         // STORE EXPERTS SOMEWHERE LOCALLY
+        console.log('Top Experts:', experts);
       }
     })
     .done();
@@ -212,20 +214,6 @@ export default class TopExperts extends React.Component {
       </View>
     );
   }
-
-  // render() {
-  //   return (
-  //     <View style={styles.container}>
-  //       <Text style={styles.title}>Top Experts</Text>
-  //       <TouchableHighlight
-  //           style={styles.button}
-  //           onPress={this.getTopExperts.bind(this)}
-  //           underlayColor="white">
-  //           <Text style={styles.buttonText}>Discover</Text>
-  //         </TouchableHighlight>
-  //     </View>
-  //   )
-  // }
 }
 
 var styles = StyleSheet.create({
