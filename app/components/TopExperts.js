@@ -123,6 +123,7 @@ export default class TopExperts extends React.Component {
       modalVisible: false
     };
 
+    this.experts = null;
     this.expert = null;
   }
 
@@ -135,13 +136,13 @@ export default class TopExperts extends React.Component {
   }
 
   getTopExperts() {
-    // this.props.navigator.push({"screen":"TopExperts"});
-    fetch(connection + '/api/users/experts/true', {
+    var self = this;
+    fetch(connection + '/api/users/experts', {
       method: "GET",
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
-      },
+      }
     })
     .then((response) => response.json())
     .then((experts) => {
@@ -149,7 +150,8 @@ export default class TopExperts extends React.Component {
         console.log('No Registered Experts.');
       } else {
         // STORE EXPERTS SOMEWHERE LOCALLY
-        console.log('Top Experts:', experts);
+        self.experts = experts;
+        console.log('Top Experts:', self.experts);
       }
     })
     .done();
