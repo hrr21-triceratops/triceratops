@@ -25,7 +25,7 @@ class SavvyShopper extends Component {
   //selects a scene to render
   constructor(props){
     super(props);
-    this.state = {screen: 'Login'};
+    this.state = {screen: 'TopExperts'};
   }
 
   renderScene(route, navigator) {
@@ -59,7 +59,7 @@ class SavvyShopper extends Component {
     var self = this;
     return (
        <Navigator
-        initialRoute={{screen: 'Login'}}
+        initialRoute={{screen: 'TopExperts'}}
         renderScene={(route, nav) => {return this.renderScene(route, nav)}}
         navigationBar={
         <Navigator.NavigationBar
@@ -100,6 +100,8 @@ class SavvyShopper extends Component {
            {
            if (route.screen === "Profile") {
              return (<Text h1 style={styles.title}>Profile & Preferences</Text>);
+           } else if (route.screen === 'TopExperts') {
+             return (<Text h1 style={styles.title}>Top Experts</Text>);
            } else {
              return (<Text h1 style={styles.title}>Savvy Shopper</Text>);
            }

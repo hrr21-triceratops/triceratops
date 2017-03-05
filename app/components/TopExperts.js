@@ -166,8 +166,7 @@ export default class TopExperts extends React.Component {
   render () {
     return (
       <View>
-        <Text style={styles.title}>Top Experts</Text>
-        <ScrollView style={{marginBottom: 100}}>
+        <ScrollView style={{marginTop: 50}}>
           <List containerStyle={{marginTop: 15}}>
             {list.map(function(expert, index) {
               return (
@@ -192,7 +191,7 @@ export default class TopExperts extends React.Component {
             >
             <View style={styles.mainContainer}>
               <Image source={{uri: this.expert.avatar_url}}
-                style={{width: 250, height: 250, marginLeft: 30}} />
+                style={{width: 250, height: 250, marginLeft: 30, marginTop: 10}} />
               <Text style={styles.name}>{this.expert.name}</Text>
               <Text style={styles.category}>{this.expert.subtitle}</Text>
               <Image
@@ -222,7 +221,6 @@ var styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     padding: 30,
-    marginTop: 65,
     flexDirection: 'column',
     justifyContent: 'center',
     backgroundColor: '#48BBEC'
