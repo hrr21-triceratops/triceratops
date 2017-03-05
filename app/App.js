@@ -25,7 +25,7 @@ class SavvyShopper extends Component {
   //selects a scene to render
   constructor(props){
     super(props);
-    this.state = {screen: 'TopExperts'};
+    this.state = {screen: 'Login'};
   }
 
   renderScene(route, navigator) {
@@ -59,7 +59,7 @@ class SavvyShopper extends Component {
     var self = this;
     return (
        <Navigator
-        initialRoute={{screen: 'TopExperts'}}
+        initialRoute={{screen: 'Login'}}
         renderScene={(route, nav) => {return this.renderScene(route, nav)}}
         navigationBar={
         <Navigator.NavigationBar
@@ -96,16 +96,22 @@ class SavvyShopper extends Component {
             </TouchableHighlight>
             );
           }},
-         Title: (route, navigator, index, navState) =>
-           {
-           if (route.screen === "Profile") {
-             return (<Text h1 style={styles.title}>Profile & Preferences</Text>);
-           } else if (route.screen === 'TopExperts') {
-             return (<Text h1 style={styles.title}>Top Experts</Text>);
-           } else {
-             return (<Text h1 style={styles.title}>Savvy Shopper</Text>);
-           }
-          },
+        Title: (route, navigator, index, navState) => {
+          if (route.screen === 'Profile') {
+            return (<Text h1 style={styles.title}>Profile & Preferences</Text>);
+          }
+          if (route.screen === 'TopExperts') {
+            return (<Text h1 style={styles.title}>Top Experts</Text>);
+          }
+          if (route.screen === 'ByCategory') {
+            return (<Text h1 style={styles.title}>Categories</Text>);
+          }
+          if (route.screen === 'Wishlist') {
+            return (<Text h1 style={styles.title}>Wishlist</Text>);
+          } else {
+           return (<Text h1 style={styles.title}>Savvy Shopper</Text>);
+          }
+        },
        }}
        style={{backgroundColor: 'gray'}}
       />

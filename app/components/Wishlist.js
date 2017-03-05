@@ -16,7 +16,7 @@ import { List, ListItem, Button } from 'react-native-elements';
 
 const ratingIcon = require('../assets/imgs/plain-heart.png');
 let connection = require('../Utils/connection');
-const list = [
+const wishlist = [
   {
     name: 'Amy Farha',
     avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/female.jpg',
