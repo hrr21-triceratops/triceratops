@@ -95,6 +95,11 @@ io.on('connection', function(socket) {
     console.log('New Message:', message, 'in Room:', room);
     io.in(room).emit('message', message);
   });
+
+  // RUNS WHEN CLIENT DISCONNECTS
+  socket.on('disconnect', function(room) {
+    io.in(room).emit('rate');
+  });
 });
 
 const PORT = process.env.PORT || 2300;

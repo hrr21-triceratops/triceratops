@@ -175,6 +175,13 @@ export default class ChatView extends Component {
         // CALL onRECIEVE METHOD
         self.onReceive(message); // message = MESSAGE OBJECT
       });
+
+      self.chatSession.socket.on('rate', () => {
+        this.props.navigator.push({
+          screen: 'Home'
+        });
+        this.setModalVisible();
+      });
     }
   }
 
@@ -190,6 +197,30 @@ export default class ChatView extends Component {
     this.chatSession.socket.emit('message', message, self.chatSession.room);
 
     // POST MESSAGE TO DB
+    // fetch(connection + '/api/chat/messages', {
+  }
+
+  //Disconnect only applies to client
+  disconnect() {
+    // post all messages in this.state.messages to DB
+
+    // Send array of messages in this format:
+    // {
+    //   "chatSessionID": "abcdefgh",
+    //   "senderID": 1,
+    //   "receiverID": 3,
+    //   "message": "Get dem beatz",
+    //   "date": "2017-02-23T23:31:05.177Z"
+    // }
+
+    // EMIT A DISCONNECT EVENT TO TRIGGER A RATING VIEW ON EXPERT
+    this.chatSession.socket.emit('disconnect', this.chatSession.room);
+
+    // REMOVE FIRST TWO ITEMS IN ARRAY (Connection Verification)
+    let messages = this.state.messages;
+    messages.shift();
+    messages.shift();
+
     fetch(heroku + 'api/chat/messages', {
       method: 'POST',
       headers: {
