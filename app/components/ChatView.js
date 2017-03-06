@@ -81,6 +81,14 @@ export default class ChatView extends Component {
     // MERGED FROM OLD CHAT CODE
     this.chatSession.socket = io(connection, {jsonp: false});
 
+    self.chatSession.socket.on('rate', () => {
+      console.log("Rate view triggered");
+      this.props.navigator.push({
+        screen: 'Home'
+      });
+      this.setModalVisible();
+    });
+
     // IF USER IS NOT AN EXPERT
     if(!this.props.user.shopperExpert){
       self.setState((previousState) => {
@@ -177,14 +185,6 @@ export default class ChatView extends Component {
         // CALL onRECIEVE METHOD
         self.onReceive(message); // message = MESSAGE OBJECT
       });
-
-      self.chatSession.socket.on('rate', () => {
-        console.log("Rate view triggered");
-        this.props.navigator.push({
-          screen: 'Home'
-        });
-        this.setModalVisible();
-      });
     }
   }
 
@@ -215,8 +215,10 @@ export default class ChatView extends Component {
     //   "date": "2017-02-23T23:31:05.177Z"
     // }
     console.log("DISCONNECT");
+    console.log("SOCKET", this.chatSession);
+
     // EMIT A DISCONNECT EVENT TO TRIGGER A RATING VIEW ON EXPERT
-    this.chatSession.socket.emit('disconnect', this.chatSession.room);
+    this.chatSession.socket.emit('showRate', this.chatSession.room);
 
     // REMOVE FIRST TWO ITEMS IN ARRAY (Connection Verification)
     let messages = this.state.messages;

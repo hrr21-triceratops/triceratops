@@ -97,8 +97,9 @@ io.on('connection', function(socket) {
   });
 
   // RUNS WHEN CLIENT DISCONNECTS
-  socket.on('disconnect', function(room) {
-    console.log("Client disconnected");
+  socket.on('showRate', function(room) {
+    console.log("Client disconnected, SHOW RATE");
+    console.log("EMITTING RATE");
     io.in(room).emit('rate');
   });
 });
