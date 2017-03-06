@@ -10,7 +10,6 @@ import {
 import { FormLabel, FormInput, Button } from 'react-native-elements';
 
 let connection = require('../Utils/connection');
-var STORAGE_KEY = 'id_token';
 
 export default class LoginView extends Component {
 
@@ -23,38 +22,30 @@ export default class LoginView extends Component {
     };
   }
 
-  async onValueChange(item, selectedValue) {
-    try {
-      await AsyncStorage.setItem(item, selectedValue);
-    } catch (error) {
-      console.log('AsyncStorage error: ' + error.message);
-    }
-  }
-
   navigate(scene, id, username, averageRating, shopperExpert, active, closedChatSessions, userPreferences) {
     this.props.navigator.resetTo({
       screen: scene,
       passProps: {
-        id: id,
-        username: username,
-        averageRating: averageRating,
-        shopperExpert: shopperExpert,
-        active: active,
-        closedChatSessions: closedChatSessions,
-        userPreferences: userPreferences
+        user: {
+          id: id,
+          username: username,
+          averageRating: averageRating,
+          shopperExpert: shopperExpert,
+          active: active,
+          closedChatSessions: closedChatSessions,
+          userPreferences: userPreferences
+        }
       }
-    })
+    });
   }
 
   userLogin() {
     var username = this.state.username;
     var password = this.state.password;
     if (!this.state.username || !this.state.password) {
-      AlertIOS.alert(
-        'Missing Username or Password.'
-      )
+      AlertIOS.alert('Missing username or password.');
     } else {
-      fetch(connection+"/api/users/login", {
+      fetch(connection + '/api/users/login', {
         method: "POST",
         headers: {
           'Accept': 'application/json',
@@ -66,14 +57,11 @@ export default class LoginView extends Component {
         })
       })
       .then((response) => response.json())
-      .then((responseData) => {
-        if (!responseData) {
-          AlertIOS.alert(
-            'Incorrect Username or Password.'
-          )
+      .then((user) => {
+        if (!user) {
+          AlertIOS.alert('Incorrect username or password.');
         } else {
-          //this.onValueChange(STORAGE_KEY, responseData.id_token);
-          this.navigate('Home', responseData.id, responseData.username, responseData.averageRating, responseData.shopperExpert, responseData.active, responseData.closedChatSessions, responseData.userPreferences);
+          this.navigate('Home', user.id, user.username, user.averageRating, user.shopperExpert, user.active, user.closedChatSessions, user.userPreferences);
         }
       })
       .done();
@@ -84,9 +72,9 @@ export default class LoginView extends Component {
     var username = this.state.username;
     var password = this.state.password;
     if (!this.state.username || !this.state.password) {
-      AlertIOS.alert('Missing Username or Password.');
+      AlertIOS.alert('Missing username or password.');
     } else {
-      fetch(connection+"/api/users", {
+      fetch(connection + '/api/users', {
         method: "POST",
         headers: {
           'Accept': 'application/json',
@@ -98,14 +86,11 @@ export default class LoginView extends Component {
         })
       })
       .then((response) => response.json())
-      .then((responseData) => {
-        if (!responseData) {
-          AlertIOS.alert(
-            'User already exists!'
-          )
+      .then((user) => {
+        if (!user) {
+          AlertIOS.alert('Username already exists.');
         } else {
-          // this.onValueChange(STORAGE_KEY, responseData.id_token)
-          this.navigate('Home', responseData.id, responseData.username, responseData.averageRating, responseData.shopperExpert, responseData.active, responseData.closedChatSessions, responseData.userPreferences);
+          this.navigate('Home', user.id, user.username, user.averageRating, user.shopperExpert, user.active, user.closedChatSessions, user.userPreferences);
         }
       })
       .done();

@@ -82,10 +82,10 @@ export default class ChatView extends Component {
     // IF USER IS NOT AN EXPERT
     if(!this.props.user.shopperExpert){
       self.setState((previousState) => {
-          return {
-            typingText: 'Finding your expert...'
-          };
-        });
+        return {
+          typingText: 'Finding your expert...'
+        };
+      });
 
       self.chatSession.category = this.props.category;
       self.chatSession.username = this.props.user.username;
@@ -101,7 +101,7 @@ export default class ChatView extends Component {
         console.log('New Chat Sessions:', self.props.user.closedChatSessions);
 
         // PUT REQUEST TO DATABASE WITH NEW closedChatSessions ARRAY
-        fetch(connection+'/api/users/' + self.props.user.id, {
+        fetch(connection + '/api/users/' + self.props.user.id, {
           method: 'PUT',
           headers: {
             'Accept': 'application/json',
@@ -148,6 +148,28 @@ export default class ChatView extends Component {
       self.chatSession.room = this.props.chatPartner.room;
       console.log('chatSession:', self.chatSession);
 
+      // SEND SESSION ID TO USER'S CLOSED CHAT SESSIONS ARRAY
+      self.props.user.closedChatSessions.push(self.chatSession._id);
+      console.log('New Chat Sessions:', self.props.user.closedChatSessions);
+
+      // PUT REQUEST TO DATABASE WITH NEW closedChatSessions ARRAY
+      fetch(connection + '/api/users/' + self.props.user.id, {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          attributes: {
+            closedChatSessions: self.props.user.closedChatSessions
+          }
+        })
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .done();
+
       self.chatSession.socket.on('message', (message) => {
         console.log('Incoming Message:', message);
         // CALL onRECIEVE METHOD
@@ -168,27 +190,6 @@ export default class ChatView extends Component {
     this.chatSession.socket.emit('message', message, self.chatSession.room);
 
     // POST MESSAGE TO DB
-    // fetch(connection + '/api/chat/messages', {
-  }
-
-  //Disconnect only applies to client
-  disconnect() {
-    // post all messages in this.state.messages to DB
-
-    // Send array of messages in this format:
-    // {
-    //   "chatSessionID": "abcdefgh",
-    //   "senderID": 1,
-    //   "receiverID": 3,
-    //   "message": "Get dem beatz",
-    //   "date": "2017-02-23T23:31:05.177Z"
-    // }
-
-    // REMOVE FIRST TWO ITEMS IN ARRAY (Connection Verification)
-    let messages = this.state.messages;
-    messages.shift();
-    messages.shift();
-
     fetch(heroku + 'api/chat/messages', {
       method: 'POST',
       headers: {
@@ -210,7 +211,6 @@ export default class ChatView extends Component {
 
     // FOR DEMO PURPOSES
     // this.answerDemo(messages);
-
     console.log('All Messages:', this.state.messages);
   }
 

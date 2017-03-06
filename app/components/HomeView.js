@@ -23,9 +23,10 @@ const usersToCheck = null;
 
 export default class HomeView extends Component {
   constructor(props){
+    console.log('Home Props:', props);
     super(props);
     this.state = {
-      page:'Search',
+      page: 'Home',
       isActive: false,
       currentUser: null,
       index: 0
@@ -65,14 +66,13 @@ export default class HomeView extends Component {
 
     if (destination !== this.props.navigator.state.routeStack[this.props.navigator.state.routeStack.length - 1].screen) {
 
-        this.props.navigator.push({
+      this.props.navigator.push({
           screen: destination,
           passProps: {
             user: propsToPass,
             chatPartner: chatPartner
           }
         });
-
       }
     }
   }
@@ -107,7 +107,6 @@ export default class HomeView extends Component {
   }
 
   render() {
-    console.log('HOMEVIEW this.props', this.props)
     let button = null;
     if (this.getActive()) {
       button = <TouchableHighlight
@@ -126,49 +125,40 @@ export default class HomeView extends Component {
        <View style={styles.mainContainer}>
         <Tabs selected={this.state.page}
          style={{backgroundColor:'grey'}}
-         selectedStyle={{color:'red'}}
+         selectedStyle={{color:'blue'}}
          onSelect={el=>this.setState({ page: el.props.name })}>
 
-            <TouchableHighlight
+          <Text
             name="Home"
-            user={this.props}
-            style={styles.button}
-            onPress={this.navigateTo.bind(this, "Home")}
-            underlayColor="grey">
-            <Text style={styles.buttonText}>Home</Text>
-            </TouchableHighlight>
+            user={this.props.user}
+            onPress={this.navigateTo.bind(this, "Home")}>
+              Home
+          </Text>
 
-            <TouchableHighlight
+          <Text
             name="ByCategory"
-            user={this.props}
-            style={styles.button}
-            onPress={this.navigateTo.bind(this, "ByCategory", this.props)}
-            underlayColor="grey">
-            <Text style={styles.buttonText}>By Category</Text>
-           </TouchableHighlight>
+            user={this.props.user}
+            onPress={this.navigateTo.bind(this, "ByCategory", this.props.user)}>
+              By Category
+          </Text>
 
-            <TouchableHighlight
+          <Text
             name="TopExperts"
-            user={this.props}
-            style={styles.button}
-            onPress={this.navigateTo.bind(this, "TopExperts")}
-            underlayColor="grey">
-            <Text style={styles.buttonText}>Top Experts</Text>
-           </TouchableHighlight>
+            user={this.props.user}
+            onPress={this.navigateTo.bind(this, "TopExperts")}>
+              Top Experts
+          </Text>
 
-
-            <TouchableHighlight
+          <Text
             name="Wishlist"
-            user={this.props}
-            style={styles.button}
-            onPress={this.navigateTo.bind(this, "Wishlist")}
-            underlayColor="grey">
-            <Text style={styles.buttonText}>Wishlist</Text>
-           </TouchableHighlight>
+            user={this.props.user}
+            onPress={this.navigateTo.bind(this, "Wishlist")}>
+              Wishlist
+          </Text>
 
         </Tabs>
-         <SearchView style={styles.searchInput} navigator={this.props.navigator} user={this.props}/>
-          {this.props.shopperExpert && button}
+         <SearchView style={styles.searchInput} navigator={this.props.user.navigator} user={this.props.user}/>
+          {this.props.user.shopperExpert && button}
           {this.getActive() &&
           <View>
             {this.state.currentUser && <View><Text>{"USER: " + this.state.currentUser.username}</Text>
@@ -176,7 +166,7 @@ export default class HomeView extends Component {
             }
             <TouchableHighlight
             style={styles.button}
-            onPress={() => this.navigateTo('Chat', this.props, this.state.currentUser)}>
+            onPress={() => this.navigateTo('Chat', this.props.user, this.state.currentUser)}>
               <Text style={styles.buttonText}>b</Text>
             </TouchableHighlight>
             <TouchableHighlight
