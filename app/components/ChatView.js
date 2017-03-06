@@ -51,6 +51,8 @@ export default class ChatView extends Component {
     this.onReceive = this.onReceive.bind(this);
     this.renderBubble = this.renderBubble.bind(this);
     this.renderFooter = this.renderFooter.bind(this);
+    this.disconnect = this.disconnect.bind(this);
+    this.navigate = this.navigate.bind(this);
 
     // MERGED FROM OLD CHAT CODE
     this.chatSession = {
@@ -177,6 +179,7 @@ export default class ChatView extends Component {
       });
 
       self.chatSession.socket.on('rate', () => {
+        console.log("Rate view triggered");
         this.props.navigator.push({
           screen: 'Home'
         });
@@ -203,7 +206,6 @@ export default class ChatView extends Component {
   //Disconnect only applies to client
   disconnect() {
     // post all messages in this.state.messages to DB
-
     // Send array of messages in this format:
     // {
     //   "chatSessionID": "abcdefgh",
@@ -212,7 +214,7 @@ export default class ChatView extends Component {
     //   "message": "Get dem beatz",
     //   "date": "2017-02-23T23:31:05.177Z"
     // }
-
+    console.log("DISCONNECT");
     // EMIT A DISCONNECT EVENT TO TRIGGER A RATING VIEW ON EXPERT
     this.chatSession.socket.emit('disconnect', this.chatSession.room);
 
@@ -221,28 +223,30 @@ export default class ChatView extends Component {
     messages.shift();
     messages.shift();
 
-    fetch(heroku + 'api/chat/messages', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({message})
-    })
-    .then((response) => {
-      console.log(response);
-    })
-    .done();
+    // fetch(connection + 'api/chat/messages', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({messages})
+    // })
+    // .then((response) => {
+    //   console.log(response);
+    // })
+    // .done();
 
     this.setState((previousState) => {
       return {
-        messages: GiftedChat.append(previousState.messages, [message]),
+        messages: GiftedChat.append(previousState.messages, [messages]),
       };
     });
 
     // FOR DEMO PURPOSES
     // this.answerDemo(messages);
     console.log('All Messages:', this.state.messages);
+
+    this.navigate();
   }
 
   navigate() {
@@ -305,7 +309,7 @@ export default class ChatView extends Component {
         <Button
           buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
           style={styles.button}
-          onPress={this.navigate.bind(this)}
+          onPress={() => this.disconnect()}
           raised title='Rate Expert' />
         }
 
