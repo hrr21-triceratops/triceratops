@@ -12,107 +12,35 @@ import {
   ActivityIndicatorIOS,
   Modal
 } from 'react-native';
-import { List, ListItem, Button } from 'react-native-elements';
+import { Card, Button } from 'react-native-elements';
 
-const ratingIcon = require('../assets/imgs/plain-heart.png');
 let connection = require('../Utils/connection');
-const wishlist = [
+const items = [
   {
-    name: 'Amy Farha',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/female.jpg',
-    subtitle: 'Home / Tech',
-    rating: 5.0
+    title: 'Bose Quietcomfort 35',
+    expert: 'Sally Lexington',
+    image: 'https://images-na.ssl-images-amazon.com/images/I/61QwytXOcxL._SL1500_.jpg'
   },
   {
-    name: 'Chris Jackson',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/male.jpg',
-    subtitle: 'Food / Entertainment',
-    rating: 4.8
+    title: 'Roku Streaming Stick',
+    expert: 'Cortney Larson',
+    image: 'https://images-na.ssl-images-amazon.com/images/I/61bDmdbgigL._SL1500_.jpg'
   },
   {
-    name: 'Cortney Larson',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/female.jpg',
-    subtitle: 'Home / Tech',
-    rating: 4.8
+    title: '13" Laptop Case',
+    expert: 'Frank Corgins',
+    image: 'https://images-na.ssl-images-amazon.com/images/I/71MPLadVUcL._SL1500_.jpg'
   },
   {
-    name: 'Ben Thompson',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/male.jpg',
-    subtitle: 'Men\'s Fashion / Food',
-    rating: 4.7
+    title: '40 Oz. Stainless Steel Thermos',
+    expert: 'Amy Farha',
+    image: 'https://images-na.ssl-images-amazon.com/images/I/51Qd7clEAxL._SL1000_.jpg'
   },
   {
-    name: 'Sally Lexington',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/female.jpg',
-    subtitle: 'Tech / Women\'s Fashion',
-    rating: 4.7
-  },
-  {
-    name: 'Jeff Sanders',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/male.jpg',
-    subtitle: 'Entertainment',
-    rating: 4.6
-  },
-  {
-    name: 'Skylar Duncan',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/male.jpg',
-    subtitle: 'Home / Entertainment',
-    rating: 4.2
-  },
-  {
-    name: 'Joe Robinson',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/male.jpg',
-    subtitle: 'Food / Home',
-    rating: 4.1
-  },
-  {
-    name: 'Greg Anthony',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/male.jpg',
-    subtitle: 'Men\'s Fashion',
-    rating: 3.9
-  },
-  {
-    name: 'Molly Morgans',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/female.jpg',
-    subtitle: 'Entertainment / Women\'s Fashion',
-    rating: 3.8
-  },
-  {
-    name: 'Susan Thomas',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/female.jpg',
-    subtitle: 'Food / Home',
-    rating: 3.6
-  },
-  {
-    name: 'Frank Corgins',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/male.jpg',
-    subtitle: 'Men\'s Fashion / Tech',
-    rating: 3.6
-  },
-  {
-    name: 'Rusty Winfield',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/male.jpg',
-    subtitle: 'Food / Entertainment',
-    rating: 3.5
-  },
-  {
-    name: 'Erica Bonnie',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/female.jpg',
-    subtitle: 'Home / Women\'s Fashion',
-    rating: 3.4
-  },
-  {
-    name: 'Nancy Rogan',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/female.jpg',
-    subtitle: 'Tech / Food',
-    rating: 3.4
-  },
-  {
-    name: 'Peter Parsons',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/male.jpg',
-    subtitle: 'Entertainment / Home',
-    rating: 3.4
-  },
+    title: 'Keurig K55 Coffee Maker',
+    expert: 'Joe Robinson',
+    image: 'https://images-na.ssl-images-amazon.com/images/I/61TVn2p8x%2BL._SL1109_.jpg'
+  }
 ];
 
 export default class TopExperts extends React.Component {
@@ -122,123 +50,55 @@ export default class TopExperts extends React.Component {
       modalVisible: false,
     };
 
-    this.expert = null;
+    this.item = null;
+    this.items = null;
   }
 
   componentWillMount() {
-    this.getTopExperts();
+    // Load all items in wishlist
   }
 
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
 
-  getTopExperts() {
-    // this.props.navigator.push({"screen":"TopExperts"});
-    fetch(connection + '/api/experts', {
-      method: "GET",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-    })
-    .then((response) => response.json())
-    .then((experts) => {
-      if (!experts) {
-        AlertIOS.alert('No Registered Experts.');
-      } else {
-        // STORE EXPERTS SOMEWHERE LOCALLY
-      }
-    })
-    .done();
+  getWishlist() {
+    // Get request for items in wishlist
   }
 
-  showExpert(expert) {
-    this.expert = expert;
-    console.log('Current Expert:', this.expert);
+  showItem(item) {
+    this.item = item;
+    console.log('Current Item:', this.item);
     this.setModalVisible(true);
   }
 
   render () {
     return (
-      <View>
-        <Text style={styles.title}>Top Experts</Text>
-        <ScrollView style={{marginBottom: 100}}>
-          <List containerStyle={{marginTop: 15}}>
-            {list.map(function(expert, index) {
-              return (
-                <ListItem
-                  roundAvatar
-                  key={index}
-                  title={expert.name}
-                  subtitle={expert.subtitle}
-                  avatar={{uri:expert.avatar_url}}
-                  badge={{value: expert.rating.toFixed(1), badgeTextStyle: {color: 'white'}, badgeContainerStyle: {marginLeft: -80}}}
-                  onPress={() => {this.showExpert(expert)}}
-                />
-              );
-            }, this)}
-          </List>
-        </ScrollView>
-        {this.expert &&
-          <Modal
-            animationType={"slide"}
-            transparent={false}
-            visible={this.state.modalVisible}
-            >
-            <View style={styles.mainContainer}>
-              <Image source={{uri: this.expert.avatar_url}}
-                style={{width: 250, height: 250, marginLeft: 30}} />
-              <Text style={styles.name}>{this.expert.name}</Text>
-              <Text style={styles.category}>{this.expert.subtitle}</Text>
-              <Image
-                 source={ratingIcon}
-                 style={styles.icon}
-               />
-              <Text style={styles.counter}>{this.expert.rating.toFixed(1)}</Text>
-              <Text style={styles.bio}>
-                I became an expert wesjdkf asdnf ansdf asdfn aksdf asdfna asdfn asdlfk asdnfn asla sndfalsdjkfn adauhgsdn asdfn jasdf naldasd anjksd asdfn uvsan jsaf naskdf udvad nasdfnl ajnsd ndsa sjndf.
+      <ScrollView style={{marginTop: 50}}>
+        {items.map(function(item, index) {
+          return (
+            <Card key={index}>
+              <Image source={{uri: item.image}}
+              style={{width: 100, height: 100, marginLeft: 105, marginBottom: 10}} />
+              <Text style={styles.title}>{item.title}</Text>
+              <Text style={styles.subtitle}>
+                Recommended by {item.expert}
               </Text>
               <Button
-                buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
-                style={styles.button}
-                onPress={() => {
-                  this.setModalVisible(!this.state.modalVisible);
-                }}
-                raised title='Back' />
-            </View>
-          </Modal>
-        }
-      </View>
+                icon={{name: 'code'}}
+                backgroundColor='#03A9F4'
+                buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+                title='MORE' />
+            </Card>
+          );
+        }, this)}
+      </ScrollView>
     );
   }
-
-  // render() {
-  //   return (
-  //     <View style={styles.container}>
-  //       <Text style={styles.title}>Top Experts</Text>
-  //       <TouchableHighlight
-  //           style={styles.button}
-  //           onPress={this.getTopExperts.bind(this)}
-  //           underlayColor="white">
-  //           <Text style={styles.buttonText}>Discover</Text>
-  //         </TouchableHighlight>
-  //     </View>
-  //   )
-  // }
 }
 
 var styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    padding: 30,
-    marginTop: 65,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    backgroundColor: '#48BBEC'
-  },
   title: {
-    marginTop: 75,
     fontSize: 18,
     textAlign: 'center',
     color: 'black'
@@ -249,19 +109,6 @@ var styles = StyleSheet.create({
     fontSize: 28,
     textAlign: 'center',
     color: 'black'
-  },
-  wrapper: {
-    marginTop: 1,
-  },
-  searchInput: {
-    height: 50,
-    padding: 4,
-    marginRight: 5,
-    fontSize: 23,
-    borderWidth: 1,
-    borderColor: 'white',
-    borderRadius: 8,
-    color: 'white'
   },
   buttonText: {
     fontSize: 18,
@@ -298,9 +145,10 @@ var styles = StyleSheet.create({
     marginLeft: 145
   },
   category: {
-    fontSize: 18,
+    fontSize: 12,
     textAlign: 'center',
-    color: 'white'
+    color: 'gray',
+    marginBottom: 5
   },
   bio: {
     fontSize: 12,
@@ -308,5 +156,11 @@ var styles = StyleSheet.create({
     color: 'black',
     marginTop: 15,
     marginBottom: 20
+  },
+  subtitle: {
+    fontSize: 14,
+    textAlign: 'center',
+    color: 'gray',
+    marginBottom: 5
   }
 });
