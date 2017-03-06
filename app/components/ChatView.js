@@ -12,6 +12,8 @@ import io from 'socket.io-client';
 import RatingView from './shoppers/RatingView';
 import { Button } from 'react-native-elements';
 import {GiftedChat, Actions, Bubble} from 'react-native-gifted-chat';
+import CustomActions from '../Utils/CustomActions';
+import CustomView from '../Utils/CustomView';
 
 let connection = require('../Utils/connection');
 
@@ -43,12 +45,13 @@ export default class ChatView extends Component {
       modalVisible: false,
       userId: 3,
       expertId: 4,
-      typingText: null,
+      connectionStatus: null,
     };
 
     this._isMounted = false;
     this.onSend = this.onSend.bind(this);
     this.onReceive = this.onReceive.bind(this);
+    this.renderCustomActions = this.renderCustomActions.bind(this);
     this.renderBubble = this.renderBubble.bind(this);
     this.renderFooter = this.renderFooter.bind(this);
     this.disconnect = this.disconnect.bind(this);
@@ -92,7 +95,7 @@ export default class ChatView extends Component {
     if(!this.props.user.shopperExpert){
       self.setState((previousState) => {
         return {
-          typingText: 'Finding your expert...'
+          connectionStatus: 'Finding your expert...'
         };
       });
 
@@ -134,7 +137,7 @@ export default class ChatView extends Component {
         console.log('ExpertId Recieved:', expertId, expertUsername, expertImage);
         self.setState((previousState) => {
           return {
-            typingText: 'Connected with Expert ' + expertUsername
+            connectionStatus: 'Connected with Expert ' + expertUsername
           };
         });
       });
@@ -201,6 +204,7 @@ export default class ChatView extends Component {
     this.chatSession.socket.emit('message', message, self.chatSession.room);
 
     // POST MESSAGE TO DB
+<<<<<<< HEAD
     // fetch(connection + '/api/chat/messages', {
   }
 
@@ -224,6 +228,8 @@ export default class ChatView extends Component {
     messages.shift();
     messages.shift();
 
+=======
+>>>>>>> Allow addition of images to chat messages
     fetch(connection + '/api/chat/messages', {
       method: 'POST',
       headers: {
@@ -268,6 +274,31 @@ export default class ChatView extends Component {
     });
   }
 
+  renderCustomActions(props) {
+    if (Platform.OS === 'ios') {
+      return (
+        <CustomActions
+          {...props}
+        />
+      );
+    }
+    const options = {
+      'Action 1': (props) => {
+        alert('option 1');
+      },
+      'Action 2': (props) => {
+        alert('option 2');
+      },
+      'Cancel': () => {},
+    };
+    return (
+      <Actions
+        {...props}
+        options={options}
+      />
+    );
+  }
+
   renderBubble(props) {
     return (
       <Bubble
@@ -281,12 +312,20 @@ export default class ChatView extends Component {
     );
   }
 
+  renderCustomView(props) {
+    return (
+      <CustomView
+        {...props}
+      />
+    );
+  }
+
   renderFooter(props) {
-    if (this.state.typingText) {
+    if (this.state.connectionStatus) {
       return (
         <View style={styles.footerContainer}>
           <Text style={styles.footerText}>
-            {this.state.typingText}
+            {this.state.connectionStatus}
           </Text>
         </View>
       );
@@ -306,7 +345,9 @@ export default class ChatView extends Component {
             name: this.props.user.username, // add optional avatar
           }}
 
+          renderActions={this.renderCustomActions}
           renderBubble={this.renderBubble}
+          renderCustomView={this.renderCustomView}
           renderFooter={this.renderFooter}
         />
         {!this.props.user.shopperExpert &&
