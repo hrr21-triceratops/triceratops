@@ -225,18 +225,18 @@ export default class ChatView extends Component {
     messages.shift();
     messages.shift();
 
-    // fetch(connection + 'api/chat/messages', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({messages})
-    // })
-    // .then((response) => {
-    //   console.log(response);
-    // })
-    // .done();
+    fetch(connection + '/api/chat/messages', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({messages})
+    })
+    .then((response) => {
+      console.log(response);
+    })
+    .done();
 
     this.setState((previousState) => {
       return {
