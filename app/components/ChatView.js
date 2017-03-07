@@ -47,14 +47,7 @@ export default class ChatView extends Component {
       messages: [],
       modalVisible: false,
       itemVisible: false,
-      connectionStatus: null,
-      wish: {
-        image: null,
-        title: null,
-        price: null,
-        comment: null,
-        expert: null
-      }
+      connectionStatus: null
     };
 
     this._isMounted = false;
@@ -68,7 +61,17 @@ export default class ChatView extends Component {
     this.navigate = this.navigate.bind(this);
 =======
     this.item = null; // Currently selected item in chat (recommendation)
+<<<<<<< HEAD
 >>>>>>> Make modal pop up on click to image in chat
+=======
+    this.wish = {
+      image: null,
+      title: null,
+      price: null,
+      comment: null,
+      expert: null
+    };
+>>>>>>> Allow users to update title, price and comments before adding items to wishlist
 
     // MERGED FROM OLD CHAT CODE
     this.chatSession = {
@@ -347,9 +350,12 @@ export default class ChatView extends Component {
     // OPEN ITEM MODAL // ADD TO WISHLIST // PURCHASE // CANCEL
     this.item = message;
     console.log('Current Item:', this.item);
-    this.setState({wish: {image: message.image, expert: (this.chatSession.chatPartner || 0), title: message.previousMessage.text, price: message.nextMessage.text}});
+    this.wish.image = message.image;
+    this.wish.title = message.previousMessage.text;
+    this.wish.price = message.nextMessage.text;
+    this.wish.expert = this.chatSession.chatPartner || 0; // 0 for testing
+    console.log('Current Wish:', this.wish);
     this.setState({itemVisible: true});
-    console.log('Current State:', this.state.wish);
   }
 
   addToWishlist(wish) {
@@ -406,24 +412,27 @@ export default class ChatView extends Component {
                 style={{width: 250, height: 250, marginLeft: 30, marginTop: 10}} />
               <TextInput
                 style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                onChangeText={(text) => this.setState({wish: {title: text}})}
-                value={this.state.wish.title || this.item.previousMessage.text}
+                onChangeText={(text) => {this.wish.title = text}}
+                placeholder={this.wish.title}
+                placeholderTextColor={'black'}
               />
               <TextInput
                 style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                onChangeText={(text) => this.setState({wish: {price: text}})}
-                value={this.state.wish.price || this.item.nextMessage.text}
+                onChangeText={(text) => {this.wish.price = text}}
+                placeholder={this.wish.price}
+                placeholderTextColor={'black'}
               />
               <TextInput
                 style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                onChangeText={(text) => this.setState({wish: {comment: text}})}
-                value={this.state.wish.comment || 'Add a note to yourself here.'}
+                onChangeText={(text) => {this.wish.comment = text}}
+                placeholder={this.wish.comment || 'Note to self...'}
+                placeholderTextColor={'black'}
               />
               <Button
                 backgroundColor='#03A9F4'
                 buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
                 style={styles.button}
-                onPress={() => {this.addToWishlist(this.state.wish)}}
+                onPress={() => {this.addToWishlist(this.wish)}}
                 raised title='Add to Wishlist' />
               <Button
                 backgroundColor='#03A9F4'
