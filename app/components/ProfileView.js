@@ -46,13 +46,14 @@ constructor(props) {
       },
       body: JSON.stringify({
         attributes: {
-          shopperExpert: !userOptions.user.shopperExpert
+          shopperExpert: !userOptions.user.user.shopperExpert
         }
       })
     })
     .then((response) => {
       if (response.status === 201) {
-        this.navigate('Home', this.props.user.id, this.props.user.username, this.props.user.averageRating, true, this.props.user.active, this.props.user.closedChatSessions, this.props.user.userPreferences);
+        console.log('')
+        this.navigate('Home', this.props.user.user.id, this.props.user.user.username, this.props.user.user.averageRating, true, this.props.user.user.active, this.props.user.user.closedChatSessions, this.props.user.user.userPreferences);
       } else {
         AlertIOS.alert(
           'Account could not be updated.'
@@ -67,13 +68,16 @@ constructor(props) {
       this.props.navigator.push({
         screen: scene,
         passProps: {
-          id: id,
-          username: username,
-          averageRating: averageRating,
-          shopperExpert: shopperExpert,
-          active: active,
-          closedChatSessions: closedChatSessions,
-          userPreferences: userPreferences
+          user: {
+            id: id,
+            username: username,
+            averageRating: averageRating,
+            shopperExpert: shopperExpert,
+            active: active,
+            closedChatSessions: closedChatSessions,
+            userPreferences: userPreferences,
+            navigator: navigator
+          }
         }
       });
     } else {
@@ -221,7 +225,7 @@ return (
 
             {this.renderOption({ icon: chatHistoryIcon, value: this.props.user.user.closedChatSessions.length })}
 
-            {!this.props.user.shopperExpert ? this.renderOption({ icon: chatHistoryIcon, value: 'Become Expert', method: this.makeExpert.bind(this, this.props) }) : this.renderOption({ icon: chatHistoryIcon, value: 'Cancel Expert', method: this.makeExpert.bind(this, this.props) })}
+            {!this.props.user.user.shopperExpert ? this.renderOption({ icon: chatHistoryIcon, value: 'Become Expert', method: this.makeExpert.bind(this, this.props) }) : this.renderOption({ icon: chatHistoryIcon, value: 'Cancel Expert', method: this.makeExpert.bind(this, this.props) })}
 
             {this.renderOption({ icon: chatHistoryIcon, value: "Log Out", method: this.logOut.bind(this, this.props) })}
 
