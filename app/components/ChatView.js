@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableHighlight,
   AlertIOS,
+  CameraRoll,
 } from 'react-native';
 import io from 'socket.io-client';
 import RatingView from './shoppers/RatingView';

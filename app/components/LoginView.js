@@ -51,7 +51,7 @@ export default class LoginView extends Component {
   }
 
   userLogin() {
-    var username = this.state.username;
+    var username = this.state.username.toLowerCase(); // Not case sensitive
     var password = this.state.password;
     if (!this.state.username || !this.state.password) {
       AlertIOS.alert('Missing username or password.');
@@ -80,7 +80,7 @@ export default class LoginView extends Component {
   }
 
   userSignup() {
-    var username = this.state.username;
+    var username = this.state.username.toLowerCase(); // Not case sensitive
     var password = this.state.password;
     if (!this.state.username || !this.state.password) {
       AlertIOS.alert('Missing username or password.');
