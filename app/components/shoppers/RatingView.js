@@ -47,8 +47,8 @@ export default class RatingView extends Component {
           transparent={false}
           visible={this.props.modalVisible}
           >
-            {!this.props.user.user.shopperExpert && <Text style={styles.title}>Rate your Expert!</Text>}
-            {this.props.user.user.shopperExpert && <Text style={styles.title}>Rate the User!</Text>}
+            {!this.props.user.shopperExpert && <Text style={styles.title}>Rate your Expert!</Text>}
+            {this.props.user.shopperExpert && <Text style={styles.title}>Rate the User!</Text>}
             <Image source={require('../../assets/imgs/user-profile.png')} style={styles.container}></Image>
             {console.log('user props', this.props)}
 

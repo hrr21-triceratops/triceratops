@@ -83,9 +83,7 @@ export default class ChatView extends Component {
 
     self.chatSession.socket.on('rate', () => {
       console.log("Rate view triggered");
-      this.props.navigator.push({
-        screen: 'Home'
-      });
+      this.navigate(this.props.user);
       this.setModalVisible();
     });
 
@@ -214,8 +212,6 @@ export default class ChatView extends Component {
     //   "message": "Get dem beatz",
     //   "date": "2017-02-23T23:31:05.177Z"
     // }
-    console.log("DISCONNECT");
-    console.log("SOCKET", this.chatSession);
 
     // EMIT A DISCONNECT EVENT TO TRIGGER A RATING VIEW ON EXPERT
     this.chatSession.socket.emit('showRate', this.chatSession.room);
@@ -248,12 +244,15 @@ export default class ChatView extends Component {
     // this.answerDemo(messages);
     console.log('All Messages:', this.state.messages);
 
-    this.navigate();
+    this.navigate(this.props.user);
   }
 
-  navigate() {
+  navigate(props) {
     this.props.navigator.push({
-      screen: 'Home'
+      screen: 'Home',
+      passProps: {
+        user: props
+      }
     });
     this.setModalVisible();
   }
@@ -315,7 +314,7 @@ export default class ChatView extends Component {
           raised title='Rate Expert' />
         }
 
-        <View><RatingView user={this.props} userId={this.state.userId} expertId={this.state.expertId} modalVisible={this.state.modalVisible} closeModal={this.closeModal.bind(this)} /></View>
+        <View><RatingView user={this.props.user} userId={this.state.userId} expertId={this.state.expertId} modalVisible={this.state.modalVisible} closeModal={this.closeModal.bind(this)} /></View>
       </View>
     );
   }
