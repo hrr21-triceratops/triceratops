@@ -18,7 +18,8 @@ var userModel = sequelize.define('user', {
       "sports": false,
       "entertainment": false
     }
-  }
+  },
+  tags: { type: Sequelize.ARRAY(Sequelize.STRING), defaultValue: [] }
 });
 
 userModel.sync({force: false}).then(function () {
