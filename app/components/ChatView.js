@@ -334,6 +334,10 @@ export default class ChatView extends Component {
     return null;
   }
 
+  onPressImage(message) {
+    console.log('ONPRESS', message);
+  }
+
   render() {
     return (
       <View style={{flex: 1}}>
@@ -350,6 +354,7 @@ export default class ChatView extends Component {
           renderBubble={this.renderBubble}
           renderCustomView={this.renderCustomView}
           renderFooter={this.renderFooter}
+          onPressImage={this.onPressImage.bind(this)}
         />
         {!this.props.user.shopperExpert &&
         <Button
