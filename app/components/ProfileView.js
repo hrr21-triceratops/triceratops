@@ -26,13 +26,13 @@ constructor(props) {
     favorites: '5',
     chatHistory: '10',
     isActive: false,
-    food: props.user.userPreferences.food,
-    home: props.user.userPreferences.home,
-    mensFashion: props.user.userPreferences.mensFashion,
-    sports: props.user.userPreferences.sports,
-    technology: props.user.userPreferences.technology,
-    entertainment: props.user.userPreferences.entertainment,
-    womensFashion: props.user.userPreferences.womensFashion
+    food: props.user.user.userPreferences.food,
+    home: props.user.user.userPreferences.home,
+    mensFashion: props.user.user.userPreferences.mensFashion,
+    sports: props.user.user.userPreferences.sports,
+    technology: props.user.user.userPreferences.technology,
+    entertainment: props.user.user.userPreferences.entertainment,
+    womensFashion: props.user.user.userPreferences.womensFashion
   };
 }
 
@@ -226,7 +226,7 @@ return (
         <View style={styles.stats}>
             {this.renderOption({ icon: ratingIcon, value: this.props.user.averageRating })}
 
-            {this.renderOption({ icon: chatHistoryIcon, value: this.props.user.closedChatSessions.length })}
+            {this.renderOption({ icon: chatHistoryIcon, value: this.props.user.user.closedChatSessions.length })}
 
             {!this.state.shopperExpert ? this.renderOption({ icon: chatHistoryIcon, value: 'Become Expert', method: this.makeExpert.bind(this, this.props, true) }) : this.renderOption({ icon: chatHistoryIcon, value: 'Cancel Expert', method: this.makeExpert.bind(this, this.props, false) })}
 
