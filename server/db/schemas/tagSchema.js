@@ -1,92 +1,78 @@
 var elasticClient = require('../connections.js').elasticClient;
 var indexName = "randomindex";
 
-/**
-* Delete an existing index
-*/
-function deleteIndex() {
+module.exports = {
+  deleteIndex: function() {
     return elasticClient.indices.delete({
-        index: indexName
+      index: indexName
     });
-}
-exports.deleteIndex = deleteIndex;
-
-/**
-* create the index
-*/
-function initIndex() {
+  },
+  initIndex: function() {
     return elasticClient.indices.create({
-        index: indexName
+      index: indexName
     });
-}
-exports.initIndex = initIndex;
-
-/**
-* check if the index exists
-*/
-function indexExists() {
+  },
+  indexExists: function() {
     return elasticClient.indices.exists({
-        index: indexName
+      index: indexName
     });
-}
+  },
 
-function initMapping() {
+  initMapping: function() {
     return elasticClient.indices.putMapping({
-        index: indexName,
-        type: "document",
-        body: {
-            properties: {
-                title: { type: "string" },
-                content: { type: "string" },
-                suggest: {
-                    type: "completion",
-                    analyzer: "simple",
-                    search_analyzer: "simple",
-                    payloads: true
-                }
-            }
+      index: indexName,
+      type: "document",
+      body: {
+        properties: {
+          title: { type: "string" },
+          content: { type: "string" },
+          suggest: {
+            type: "completion",
+            analyzer: "simple",
+            search_analyzer: "simple",
+            payloads: true
+          }
         }
+      }
     });
-}
-
-function addDocument(document) {
+  },
+  addDocument: function(document) {
     return elasticClient.index({
-        index: indexName,
-        type: "document",
-        body: {
-            title: document.title,
-            content: document.content,
-            suggest: {
-                input: document.title.split(" "),
-                output: document.title,
-                payload: document.metadata || {}
-            }
+      index: indexName,
+      type: "document",
+      body: {
+        title: document.title,
+        content: document.content,
+        suggest: {
+          input: document.title.split(" "),
+          output: document.title,
+          payload: document.metadata || {}
         }
+      }
     });
-}
-
-function getSuggestions(input) {
+  },
+  getSuggestions: function(input) {
     return elasticClient.suggest({
-        index: indexName,
-        type: "document",
-        body: {
-            docsuggest: {
-                text: input,
-                completion: {
-                    field: "suggest",
-                    fuzzy: true
-                }
-            }
+      index: indexName,
+      type: "document",
+      body: {
+        docsuggest: {
+          text: input,
+          completion: {
+            field: "suggest",
+            fuzzy: true
+          }
         }
+      }
     });
-}
-
-function searchSuggestions(input) {
+  },
+  searchSuggestions: function(input) {
     elasticClient.search({
       q: input
-    }).then(function (body) {
+    }).then(function(body) {
       var hits = body.hits.hits;
-    }, function (error) {
+    }, function(error) {
       console.trace(error.message);
     });
-}
+  }
+};

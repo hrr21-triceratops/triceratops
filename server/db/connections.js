@@ -2,12 +2,18 @@
 
 const mongoose = require('mongoose');
 var mongooseConnectionURL;
+var db = mongoose.connection;
 
 if (process.env.MONGODB_URI) {
   mongooseConnectionURL = process.env.MONGODB_URI;
 } else {
   mongooseConnectionURL = 'mongodb://localhost/';
 }
+
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('MONGODB Database Connected.');
+});
 
 //Postgres Connection Using Sequelize
 
@@ -37,9 +43,11 @@ if (process.env.DATABASE_URL) {
 
 }
 
+//elastic search connection
+
 var elasticsearch = require('elasticsearch');
 var client = elasticsearch.Client({
-  host: 'localhost:9200',
+  host: 'localhost:2300',
   log: "info"
 });
 
@@ -58,9 +66,3 @@ module.exports = {
   'mongoose': mongoose.connect(mongooseConnectionURL),
   'elasticClient': client
 };
-
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  console.log('MONGODB Database Connected.');
-});

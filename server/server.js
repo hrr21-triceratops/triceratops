@@ -9,6 +9,7 @@ const expertRoutes = require('./routes/expertRoutes.js');
 const preferenceRoutes = require('./routes/preferenceRoutes');
 const ratingRoutes = require('./routes/ratingRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
+const searchRoutes = require('./routes/searchRoutes');
 const morgan = require('morgan');
 
 //Global App Middleware that applies to all routes
@@ -23,6 +24,37 @@ app.use('/api', expertRoutes);
 app.use('/api', preferenceRoutes);
 app.use('/api', ratingRoutes);
 app.use('/api', categoryRoutes);
+app.use('/api', searchRoutes);
+
+
+var elastic = require('./db/schemas/tagSchema.js');
+
+elastic.indexExists().then(function (exists) {
+  if (exists) {
+    return elastic.deleteIndex();
+  }
+}).then(function () {
+  return elastic.initIndex().then(elastic.initMapping).then(function () {
+    //Add a few titles for the autocomplete
+    //elasticsearch offers a bulk functionality as well, but this is for a different time
+    var promises = [
+      'Thing Explainer',
+      'The Internet Is a Playground',
+      'The Pragmatic Programmer',
+      'The Hitchhikers Guide to the Galaxy',
+      'Trial of the Clone'
+    ].map(function (bookTitle) {
+      return elastic.addDocument({
+        title: bookTitle,
+        content: bookTitle + " content",
+        metadata: {
+          titleLength: bookTitle.length
+        }
+      });
+    });
+    return Promise.all(promises);
+  });
+});
 
 /////////////////////////////////////
 ////////// SOCKET.IO SETUP //////////
