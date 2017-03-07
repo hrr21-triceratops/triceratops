@@ -37,9 +37,26 @@ if (process.env.DATABASE_URL) {
 
 }
 
+var elasticsearch = require('elasticsearch');
+var client = elasticsearch.Client({
+  host: 'localhost:9200',
+  log: "info"
+});
+
+client.ping({
+  requestTimeout: 1000
+}, function (error) {
+  if (error) {
+    console.trace('elasticsearch cluster is down!');
+  } else {
+    console.log('All is well');
+  }
+});
+
 module.exports = {
   'sequelize': sequelize,
-  'mongoose': mongoose.connect(mongooseConnectionURL)
+  'mongoose': mongoose.connect(mongooseConnectionURL),
+  'elasticClient': client
 };
 
 var db = mongoose.connection;
