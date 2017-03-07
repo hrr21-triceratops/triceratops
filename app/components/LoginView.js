@@ -90,7 +90,16 @@ export default class LoginView extends Component {
         if (!user) {
           AlertIOS.alert('Username already exists.');
         } else {
-          this.navigate('Home', user.id, user.username, user.averageRating, user.shopperExpert, user.active, user.closedChatSessions, user.userPreferences);
+          let userToPass = {};
+          userToPass.id = user.id;
+          userToPass.user = user.username;
+          userToPass.averageRating = user.averageRating;
+          userToPass.shopperExpert = user.shopperExpert;
+          userToPass.active = user.active;
+          userToPass.closedChatSessions = user.closedChatSessions;
+          userToPass.userPreferences = user.userPreferences;
+          // this.navigate('Home', user.id, user.username, user.averageRating, user.shopperExpert, user.active, user.closedChatSessions, user.userPreferences);
+          this.navigate('Home', userToPass);
         }
       })
       .done();
