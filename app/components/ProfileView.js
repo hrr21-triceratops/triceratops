@@ -52,9 +52,9 @@ constructor(props) {
     })
     .then((response) => {
       if (response.status === 201) {
-        this.setState({
+          this.setState({
           shopperExpert: bool
-        });
+       });
         this.navigate('Home', this.props.user.user.id, this.props.user.user.username, this.props.user.user.averageRating, true, this.props.user.user.active, this.props.user.user.closedChatSessions, this.props.user.user.userPreferences);
       } else {
         AlertIOS.alert(
