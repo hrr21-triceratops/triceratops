@@ -7,7 +7,7 @@ Text,
 AlertIOS,
 TouchableHighlight
 } from 'react-native';
-import { Button, CheckBox } from 'react-native-elements'
+import { Button, CheckBox } from 'react-native-elements';
 const userImage = require('../assets/imgs/user-profile.png');
 const ratingIcon = require('../assets/imgs/plain-heart.png');
 const chatHistoryIcon = require('../assets/imgs/chat.png');
@@ -26,19 +26,19 @@ constructor(props) {
     favorites: '5',
     chatHistory: '10',
     isActive: false,
-    food: props.user.userPreferences.food,
-    home: props.user.userPreferences.home,
-    mensFashion: props.user.userPreferences.mensFashion,
-    sports: props.user.userPreferences.sports,
-    technology: props.user.userPreferences.technology,
-    entertainment: props.user.userPreferences.entertainment,
-    womensFashion: props.user.userPreferences.womensFashion
+    food: props.user.user.userPreferences.food,
+    home: props.user.user.userPreferences.home,
+    mensFashion: props.user.user.userPreferences.mensFashion,
+    sports: props.user.user.userPreferences.sports,
+    technology: props.user.user.userPreferences.technology,
+    entertainment: props.user.user.userPreferences.entertainment,
+    womensFashion: props.user.user.userPreferences.womensFashion
   };
 }
 
  makeExpert(userOptions) {
     // console.log('MAKE EXPERT', userOptions);
-    fetch(connection+'/api/users/' + 5, { // this.props.user.id
+    fetch(connection+'/api/users/' + this.props.user.user.id, { // this.props.user.id
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
@@ -109,7 +109,7 @@ constructor(props) {
   updatePreference(userPreferences, category, bool) {
     // console.log('preference update!', userPreferences)
     // console.log('category', category, bool )
-    fetch(connection+'/api/users/preferences/update/' + 8, { // this.props.user.id
+    fetch(connection+'/api/users/preferences/update/' + this.props.user.user.id, { // this.props.user.id
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
@@ -162,49 +162,49 @@ return (
           center
           title='Home'
           checked={this.state.home}
-          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "home", !this.state.home)}
+          onPress={this.updatePreference.bind(this, this.props.user.user.userPreferences, "home", !this.state.home)}
         />
 
         <CheckBox
           center
           title='Food'
           checked={this.state.food}
-          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "food", !this.state.food)}
+          onPress={this.updatePreference.bind(this, this.props.user.user.userPreferences, "food", !this.state.food)}
         />
 
         <CheckBox
           center
           title='Tech'
           checked={this.state.technology}
-          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "technology", !this.state.technology)}
+          onPress={this.updatePreference.bind(this, this.props.user.user.userPreferences, "technology", !this.state.technology)}
         />
 
         <CheckBox
           center
           title="Womens Fashion"
           checked={this.state.womensFashion}
-          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "womensFashion", !this.state.womensFashion)}
+          onPress={this.updatePreference.bind(this, this.props.user.user.userPreferences, "womensFashion", !this.state.womensFashion)}
         />
 
         <CheckBox
           center
           title="Mens Fashion"
           checked={this.state.mensFashion}
-          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "mensFashion", !this.state.mensFashion)}
+          onPress={this.updatePreference.bind(this, this.props.user.user.userPreferences, "mensFashion", !this.state.mensFashion)}
         />
 
         <CheckBox
           center
           title="Entertainment"
           checked={this.state.entertainment}
-          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "entertainment", !this.state.entertainment)}
+          onPress={this.updatePreference.bind(this, this.props.user.user.userPreferences, "entertainment", !this.state.entertainment)}
         />
 
         <CheckBox
           center
           title="sports"
           checked={this.state.sports}
-          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "sports", !this.state.sports)}
+          onPress={this.updatePreference.bind(this, this.props.user.user.userPreferences, "sports", !this.state.sports)}
         />
       </View>
 
@@ -217,9 +217,9 @@ return (
         </Text>
       </View>
         <View style={styles.stats}>
-            {this.renderOption({ icon: ratingIcon, value: this.props.user.averageRating })}
+            {this.renderOption({ icon: ratingIcon, value: this.props.user.user.averageRating })}
 
-            {this.renderOption({ icon: chatHistoryIcon, value: this.props.user.closedChatSessions.length })}
+            {this.renderOption({ icon: chatHistoryIcon, value: this.props.user.user.closedChatSessions.length })}
 
             {!this.props.user.shopperExpert ? this.renderOption({ icon: chatHistoryIcon, value: 'Become Expert', method: this.makeExpert.bind(this, this.props) }) : this.renderOption({ icon: chatHistoryIcon, value: 'Cancel Expert', method: this.makeExpert.bind(this, this.props) })}
 
