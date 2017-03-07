@@ -46,16 +46,16 @@ constructor(props) {
       },
       body: JSON.stringify({
         attributes: {
-          shopperExpert: false
+          shopperExpert: bool
         }
       })
     })
     .then((response) => {
       if (response.status === 201) {
       this.setState({
-          shopperExpert: false
+          shopperExpert: bool
        });
-        this.navigate('Home', this.props.user.id, this.props.user.username, this.props.user.averageRating, true, this.props.user.active, this.props.user.closedChatSessions, this.props.user.userPreferences);
+        this.navigate('Home', this.props.user.id, this.props.user.username, this.props.user.averageRating, bool, this.props.user.active, this.props.user.closedChatSessions, this.props.user.userPreferences);
       } else {
         AlertIOS.alert(
           'Account could not be updated.'
