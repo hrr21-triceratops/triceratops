@@ -48,6 +48,13 @@ export default class ChatView extends Component {
       modalVisible: false,
       itemVisible: false,
       connectionStatus: null,
+      wish: {
+        image: null,
+        title: null,
+        price: null,
+        comment: null,
+        expert: null
+      }
     };
 
     this._isMounted = false;
@@ -340,7 +347,15 @@ export default class ChatView extends Component {
     // OPEN ITEM MODAL // ADD TO WISHLIST // PURCHASE // CANCEL
     this.item = message;
     console.log('Current Item:', this.item);
+    this.setState({wish: {image: message.image, expert: (this.chatSession.chatPartner || 0), title: message.previousMessage.text, price: message.nextMessage.text}});
     this.setState({itemVisible: true});
+    console.log('Current State:', this.state.wish);
+  }
+
+  addToWishlist(wish) {
+    wishlist.push(wish);
+    this.setState({itemVisible: false});
+    console.log('Wishlist:', wishlist);
   }
 
   render() {
@@ -389,16 +404,26 @@ export default class ChatView extends Component {
             <View style={styles.mainContainer}>
               <Image source={{uri: this.item.image}}
                 style={{width: 250, height: 250, marginLeft: 30, marginTop: 10}} />
-              <Text style={styles.name}>{this.item.previousMessage.text}</Text>
-              <Text style={styles.price}>{this.item.nextMessage.text}</Text>
-              <Text style={styles.bio}>
-                This is where the item description goes. Assal asdfn wea sdlfnwa wena jknsdf ewalsn asdf asdfjn weafl asdo awef alkjsdf alsdf aiuehfwue askdjnv jwefb wasdf hafh uahsdf alkjwef basdf asdfj ewab bsdfjk asde asd aajsdfhl asdljfj asdfe.
-              </Text>
+              <TextInput
+                style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+                onChangeText={(text) => this.setState({wish: {title: text}})}
+                value={this.state.wish.title || this.item.previousMessage.text}
+              />
+              <TextInput
+                style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+                onChangeText={(text) => this.setState({wish: {price: text}})}
+                value={this.state.wish.price || this.item.nextMessage.text}
+              />
+              <TextInput
+                style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+                onChangeText={(text) => this.setState({wish: {comment: text}})}
+                value={this.state.wish.comment || 'Add a note to yourself here.'}
+              />
               <Button
                 backgroundColor='#03A9F4'
                 buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
                 style={styles.button}
-                onPress={() => {AlertIOS.alert('Item Added to Wishlist.');}}
+                onPress={() => {this.addToWishlist(this.state.wish)}}
                 raised title='Add to Wishlist' />
               <Button
                 backgroundColor='#03A9F4'
