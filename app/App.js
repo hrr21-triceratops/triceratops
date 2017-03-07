@@ -29,8 +29,8 @@ class SavvyShopper extends Component {
   }
 
   renderScene(route, navigator) {
-    console.log('route', route);
-    console.log('navigator', navigator);
+    // console.log('route', route);
+    // console.log('navigator', navigator);
     switch (route.screen) {
       case "Login":
         return <LoginView navigator={navigator} {...route.passProps} />
@@ -68,11 +68,11 @@ class SavvyShopper extends Component {
           {  if (route.screen === "Login" || route.screen === "Home") {
                 route.index = 0;
                 var currentRoutes = navigator.getCurrentRoutes(0)
-                console.log('current routes', navigator.getCurrentRoutes(0))
-                console.log('ROUTE', route);
-                console.log('NAVIGATOR', navigator);
-                console.log('APP.JS PROPS', route.passProps)
-                console.log('set or reset route index')
+                // console.log('current routes', navigator.getCurrentRoutes(0))
+                // console.log('ROUTE', route);
+                // console.log('NAVIGATOR', navigator);
+                // console.log('APP.JS PROPS', route.passProps)
+                // console.log('set or reset route index')
                 return null;
             } else {
              return (
@@ -88,9 +88,7 @@ class SavvyShopper extends Component {
             return (
               <TouchableHighlight onPress={() => navigator.push({
                   screen: "Profile",
-                  passProps: {
-                  user: {...route.passProps}
-                }
+                  passProps: {...route.passProps}
               })}>
                <Text style={styles.rightButton}>Profile</Text>
             </TouchableHighlight>
