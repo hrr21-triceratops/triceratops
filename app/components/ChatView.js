@@ -8,6 +8,8 @@ import {
   TouchableHighlight,
   AlertIOS,
   CameraRoll,
+  Modal,
+  Image,
 } from 'react-native';
 import io from 'socket.io-client';
 import RatingView from './shoppers/RatingView';
@@ -16,6 +18,7 @@ import {GiftedChat, Actions, Bubble} from 'react-native-gifted-chat';
 import CustomActions from '../Utils/CustomActions';
 
 let connection = require('../Utils/connection');
+const wishlist = [];
 
 // GIFTED CHAT MESSAGE OBJECT FORMAT
 // {
@@ -43,8 +46,7 @@ export default class ChatView extends Component {
     this.state = {
       messages: [],
       modalVisible: false,
-      userId: 3,
-      expertId: 4,
+      itemVisible: false,
       connectionStatus: null,
     };
 
@@ -54,8 +56,12 @@ export default class ChatView extends Component {
     this.renderCustomActions = this.renderCustomActions.bind(this);
     this.renderBubble = this.renderBubble.bind(this);
     this.renderFooter = this.renderFooter.bind(this);
+<<<<<<< HEAD
     this.disconnect = this.disconnect.bind(this);
     this.navigate = this.navigate.bind(this);
+=======
+    this.item = null; // Currently selected item in chat (recommendation)
+>>>>>>> Make modal pop up on click to image in chat
 
     // MERGED FROM OLD CHAT CODE
     this.chatSession = {
@@ -331,7 +337,10 @@ export default class ChatView extends Component {
   }
 
   onPressImage(message) {
-    console.log('ONPRESS', message);
+    // OPEN ITEM MODAL // ADD TO WISHLIST // PURCHASE // CANCEL
+    this.item = message;
+    console.log('Current Item:', this.item);
+    this.setState({itemVisible: true});
   }
 
   render() {
@@ -359,13 +368,68 @@ export default class ChatView extends Component {
           raised title='Rate Expert' />
         }
 
+<<<<<<< HEAD
         <View><RatingView user={this.props.user} userId={this.state.userId} expertId={this.state.expertId} modalVisible={this.state.modalVisible} closeModal={this.closeModal.bind(this)} partner={this.chatSession.partnerPhoto} /></View>
+=======
+        <View>
+          <RatingView
+            user={this.props.user}
+            userId={this.props.user.active ? this.chatSession.chatPartner : this.props.user.id}
+            expertId={this.props.user.active ? this.props.user.id : this.chatSession.chatPartner}
+            modalVisible={this.state.modalVisible}
+            closeModal={this.closeModal.bind(this)} />
+          </View>
+
+        {this.item &&
+          <Modal
+            animationType={"slide"}
+            transparent={false}
+            visible={this.state.itemVisible}
+            >
+            <View style={styles.mainContainer}>
+              <Image source={{uri: this.item.image}}
+                style={{width: 250, height: 250, marginLeft: 30, marginTop: 10}} />
+              <Text style={styles.name}>{this.item.previousMessage.text}</Text>
+              <Text style={styles.price}>{this.item.nextMessage.text}</Text>
+              <Text style={styles.bio}>
+                This is where the item description goes. Assal asdfn wea sdlfnwa wena jknsdf ewalsn asdf asdfjn weafl asdo awef alkjsdf alsdf aiuehfwue askdjnv jwefb wasdf hafh uahsdf alkjwef basdf asdfj ewab bsdfjk asde asd aajsdfhl asdljfj asdfe.
+              </Text>
+              <Button
+                backgroundColor='#03A9F4'
+                buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
+                style={styles.button}
+                onPress={() => {AlertIOS.alert('Item Added to Wishlist.');}}
+                raised title='Add to Wishlist' />
+              <Button
+                backgroundColor='#03A9F4'
+                buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
+                style={styles.button}
+                onPress={() => {AlertIOS.alert('Item Purchased.');}}
+                raised title='Purchase' />
+              <Button
+                backgroundColor='#03A9F4'
+                buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
+                style={styles.button}
+                onPress={() => {
+                  this.setState({itemVisible: false});
+                }}
+                raised title='Back' />
+            </View>
+          </Modal>
+        }
+>>>>>>> Make modal pop up on click to image in chat
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    padding: 30,
+    flexDirection: 'column',
+    justifyContent: 'center'
+  },
   footerContainer: {
     marginTop: 5,
     marginLeft: 10,
@@ -377,15 +441,34 @@ const styles = StyleSheet.create({
     color: '#aaa',
   },
   button: {
-      height: 45,
-      flexDirection: 'row',
-      backgroundColor: 'white',
-      borderColor: 'white',
-      borderWidth: 1,
-      borderRadius: 8,
-      marginBottom: 10,
-      marginTop: 10,
-      alignSelf: 'stretch',
-      justifyContent: 'center'
+    height: 45,
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    borderColor: 'white',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+    marginTop: 10,
+    alignSelf: 'stretch',
+    justifyContent: 'center'
+  },
+  name: {
+    marginTop: 20,
+    marginBottom: 10,
+    fontSize: 28,
+    textAlign: 'center',
+    color: 'black'
+  },
+  price: {
+    fontSize: 18,
+    textAlign: 'center',
+    color: 'gray'
+  },
+  bio: {
+    fontSize: 12,
+    textAlign: 'center',
+    color: 'black',
+    marginTop: 10,
+    marginBottom: 20
   }
 });
