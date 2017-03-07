@@ -34,7 +34,7 @@ export default class CustomActions extends React.Component {
   }
 
   onActionsPress() {
-    const options = ['Choose From Library', 'Send Location', 'Cancel'];
+    const options = ['Choose From Library', 'Cancel'];
     const cancelButtonIndex = options.length - 1;
     this.context.actionSheet().showActionSheetWithOptions({
       options,
@@ -44,20 +44,6 @@ export default class CustomActions extends React.Component {
       switch (buttonIndex) {
         case 0:
           this.setModalVisible(true);
-          break;
-        case 1:
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              this.props.onSend({
-                location: {
-                  latitude: position.coords.latitude,
-                  longitude: position.coords.longitude,
-                },
-              });
-            },
-            (error) => alert(error.message),
-            {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-          );
           break;
         default:
       }

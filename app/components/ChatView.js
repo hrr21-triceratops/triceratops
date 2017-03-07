@@ -14,7 +14,6 @@ import RatingView from './shoppers/RatingView';
 import { Button } from 'react-native-elements';
 import {GiftedChat, Actions, Bubble} from 'react-native-gifted-chat';
 import CustomActions from '../Utils/CustomActions';
-import CustomView from '../Utils/CustomView';
 
 let connection = require('../Utils/connection');
 
@@ -244,11 +243,19 @@ export default class ChatView extends Component {
     })
     .done();
 
+<<<<<<< HEAD
     this.setState((previousState) => {
       return {
         messages: GiftedChat.append(previousState.messages, [messages]),
       };
     });
+=======
+    // this.setState((previousState) => {
+    //   return {
+    //     messages: GiftedChat.append(previousState.messages, [message]),
+    //   };
+    // });
+>>>>>>> Remove ability to send current location in chat
 
     // FOR DEMO PURPOSES
     // this.answerDemo(messages);
@@ -284,11 +291,8 @@ export default class ChatView extends Component {
       );
     }
     const options = {
-      'Action 1': (props) => {
+      'Choose from Library': (props) => {
         alert('option 1');
-      },
-      'Action 2': (props) => {
-        alert('option 2');
       },
       'Cancel': () => {},
     };
@@ -309,14 +313,6 @@ export default class ChatView extends Component {
             backgroundColor: '#f0f0f0',
           }
         }}
-      />
-    );
-  }
-
-  renderCustomView(props) {
-    return (
-      <CustomView
-        {...props}
       />
     );
   }
@@ -352,7 +348,6 @@ export default class ChatView extends Component {
 
           renderActions={this.renderCustomActions}
           renderBubble={this.renderBubble}
-          renderCustomView={this.renderCustomView}
           renderFooter={this.renderFooter}
           onPressImage={this.onPressImage.bind(this)}
         />
