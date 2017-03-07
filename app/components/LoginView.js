@@ -116,23 +116,23 @@ export default class LoginView extends Component {
               onChangeText={(text) => this.setState({password: text})}
               style={styles.formInput}
             />
-            <TouchableHighlight
+            <Button
               buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10}}
               backgroundColor='#48BBEC'
               onPress={(this.userLogin.bind(this))}
               raised
               title='Login'
-            </TouchableHighlight>
+            />
           </View>
           <View>
-            <TouchableHighlight
+            <Button
               onPress={(this.userLogin.bind(this))}
               onPress={() => this.setState({hasAccount: false})}
               raised
               title='Join!'
               backgroundColor='#48BBEC'
               buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10}}
-            </TouchableHighlight>
+            />
           </View>
         </View>
       );
@@ -154,23 +154,23 @@ export default class LoginView extends Component {
               onChangeText={(text) => this.setState({password: text})}
               style={styles.formInput}
             />
-            <TouchableHighlight
+            <Button
               onPress={(this.userSignup.bind(this))}
               style={styles.button}
               raised
               backgroundColor='#48BBEC'
               buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
               title='Create Account'
-            </TouchableHighlight>
+            />
           </View>
           <View>
-            <TouchableHighlight
+            <Button
               onPress={() => this.setState({hasAccount: true})}
               raised
               backgroundColor='#48BBEC'
               buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10}}
               title='Login!'
-            </TouchableHighlight>
+           />
           </View>
         </View>
       );

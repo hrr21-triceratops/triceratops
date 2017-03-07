@@ -8,7 +8,6 @@ AlertIOS,
 TouchableHighlight
 } from 'react-native';
 import { Button, CheckBox } from 'react-native-elements'
-import AccountView from './shoppers/AccountView';
 const userImage = require('../assets/imgs/user-profile.png');
 const ratingIcon = require('../assets/imgs/plain-heart.png');
 const chatHistoryIcon = require('../assets/imgs/chat.png');

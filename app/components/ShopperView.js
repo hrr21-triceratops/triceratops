@@ -8,7 +8,7 @@ import {
 import Swiper from 'react-native-swiper';
 import CategoryView from './shoppers/CategoryView';
 import ChatHistoryView from './shoppers/ChatHistoryView';
-import AccountView from './shoppers/AccountView';
+import ProfileView from './ProfileView';
 
 export default class ShopperView extends Component {
 
@@ -36,7 +36,7 @@ export default class ShopperView extends Component {
             <ChatHistoryView navigator={this.props.navigator} user={this.props} getActive={this.getActive.bind(this)} />
           </View>
           <View style={styles.slide3}>
-            <AccountView navigator={this.props.navigator} user={this.props} activeSwitcher={this.activeSwitcher.bind(this)} getActive={this.getActive.bind(this)} />
+            <View navigator={this.props.navigator} user={this.props} activeSwitcher={this.activeSwitcher.bind(this)} getActive={this.getActive.bind(this)} />
           </View>
         </Swiper>
       )
@@ -50,7 +50,7 @@ export default class ShopperView extends Component {
             <ChatHistoryView navigator={this.props.navigator} user={this.props} getActive={this.getActive.bind(this)} />
           </View>
           <View style={styles.slide3}>
-            <AccountView navigator={this.props.navigator} user={this.props} activeSwitcher={this.activeSwitcher.bind(this)} getActive={this.getActive.bind(this)} />
+            <ProfileView navigator={this.props.navigator} user={this.props} activeSwitcher={this.activeSwitcher.bind(this)} getActive={this.getActive.bind(this)} />
           </View>
         </Swiper>
       )
