@@ -23,8 +23,10 @@ module.exports = {
         type: "expert",
         body: {
             properties: {
-                title: { type: "string" },
-                content: { type: "string" },
+                userName: { type: "string" },
+                userID: { type: "string" },
+                userType: { type: "string" },
+                tag: { type: "string" },
                 suggest: {
                     type: "completion",
                     analyzer: "simple",
