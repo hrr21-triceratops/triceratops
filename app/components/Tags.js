@@ -11,6 +11,8 @@ import {
   TextInput,
   ActivityIndicatorIOS
 } from 'react-native';
+var api = require('../Utils/api');
+
 
 // In the video there are a couple errors, fixed them so it would build.
 export default class Tags extends Component{
@@ -23,40 +25,51 @@ export default class Tags extends Component{
             error: ''
         }
     }
+
+    componentDidMount() {
+        api.getUserTags("user", 2)
+            .then((data) => {
+              // this.setState({
+              //   dataSource: this.ds.cloneWithRows(data)
+              // });
+              console.log('component mounted!', data.hits.hits);
+              var listItems = data.hits.hits;
+              var tags = [];
+              for (var i = 0; i < listItems.length; i++) {
+                console.log(listItems[i]["_source"].tag);
+                tags.push(listItems[i]["_source"].tag);
+                if (tags.length > 20) {
+                    break;
+                }
+              }
+              console.log('tags', tags);
+              this.setState({
+                dataSource: this.ds.cloneWithRows(tags)
+              });
+            }).catch((error) => {
+            console.log('Request failed', error);
+         });
+    }
+
     handleChange(e){
         this.setState({
             tag: e.nativeEvent.text
-        })
-    }
-    handleSubmit(){
-        var tag = this.state.tag;
-        this.setState({
-            tag: ''
         });
-        api.addTag(this.props.userInfo.login, tag)
-            .then((data) => {
-                api.getTags(this.props.userInfo.login)
-                    .then((data) => {
-                        this.setState({
-                            dataSource: this.ds.cloneWithRows(data)
-                        });
-                    });
-            })
-            .catch((error) => {
-                console.log('Request failed', error);
-                this.setState({error});
-            });
     }
+
+    handleSubmit(){
+    }
+
     renderRow(rowData){
         return (
             <View>
                 <View style={styles.rowContainer}>
                     <Text> {rowData} </Text>
                 </View>
-                <Separator />
             </View>
         )
     }
+
     footer(){
         return (
             <View style={styles.footerContainer}>
@@ -74,13 +87,14 @@ export default class Tags extends Component{
             </View>
         )
     }
+
     render(){
         return (
             <View style={styles.container}>
                 <ListView
                     dataSource={this.state.dataSource}
                     renderRow={this.renderRow}
-                    renderHeader={() => <Badge userInfo={this.props.userInfo}/>} />
+                 />
                 {this.footer()}
             </View>
         )

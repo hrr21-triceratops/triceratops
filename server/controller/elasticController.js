@@ -37,7 +37,7 @@ module.exports = {
       },
       function(error) {
         console.trace(error.message);
-    });
+      });
   },
   documentCount: function(indexToCount) {
     return elasticClient.count({ index: 'tags', type: 'user' }, function(err, resp, status) {
@@ -51,7 +51,8 @@ module.exports = {
       body: {
         query: {
           match: {
-            [`${field}`]: value }
+            [`${field}`]: value
+          }
         },
       }
     }).then(function(response) {
@@ -59,6 +60,6 @@ module.exports = {
       },
       function(error) {
         console.trace(error.message);
-    });
+      });
   }
 };

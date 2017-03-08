@@ -76,6 +76,8 @@ psql -d databaseName //connects to the required db
 
 DROP TABLE categories, experts, preferences, ratings, subcategories, users;
 
-//for elastic search
+//from root folder
 
-
+mongod
+postgres -D /usr/local/var/postgres
+./elasticSearch/bin/elasticsearch

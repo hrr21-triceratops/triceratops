@@ -15,6 +15,11 @@ router.get('/search/:index/:type/:field/:value', function(req, res, next) {
   });
 });
 
+//FIND USERS
+//http://localhost:2300/api/search/tags/user/userID/2
+//FIND TAGS
+//http://localhost:2300/api/search/tags/user/tag/fishing
+
 router.post('/addTag/:userId/:username/:type/:tag/:index', function(req, res, next) {
   var userId = req.params.userId.toString();
   var username = req.params.username.toString();

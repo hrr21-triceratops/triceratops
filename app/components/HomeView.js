@@ -159,7 +159,7 @@ export default class HomeView extends Component {
           <Text
             name="Tags"
             user={this.props.user}
-            onPress={this.navigateTo.bind(this, "Tags")}>
+            onPress={this.navigateTo.bind(this, "Tags", this.props.user)}>
               Tags
           </Text>
 
