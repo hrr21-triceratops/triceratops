@@ -156,6 +156,13 @@ export default class HomeView extends Component {
               Wishlist
           </Text>
 
+          <Text
+            name="Tags"
+            user={this.props.user}
+            onPress={this.navigateTo.bind(this, "Tags")}>
+              Tags
+          </Text>
+
         </Tabs>
          <SearchView style={styles.searchInput} navigator={this.props.user.navigator} user={this.props.user}/>
           {this.props.user.shopperExpert && button}
