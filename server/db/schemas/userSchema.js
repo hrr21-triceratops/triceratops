@@ -1,6 +1,6 @@
 var Sequelize = require('sequelize');
 var sequelize = require('../connections.js').sequelize;
-
+// Updated schema to include image
 var userModel = sequelize.define('user', {
   id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
   username: Sequelize.STRING,
