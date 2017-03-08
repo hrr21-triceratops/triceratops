@@ -9,12 +9,18 @@ import {
   TextInput,
   ActivityIndicator
 } from 'react-native';
+import AutoComplete from 'react-native-autocomplete-select'
 import AvailableExperts from '../AvailableExperts';
 var api = require('../../Utils/api');
 import {
   Button,
   FormLabel, FormInput, SearchBar
 } from 'react-native-elements';
+
+const onSelect = (suggestion) => {
+  console.log("SUGGESTION", suggestion);
+}
+const categories = ['HOME', 'FOOD', 'TECH', 'WOMEN\'S FASHION', 'MEN\'S FASHION', 'ENTERTAINMENT'];
 
 export default class SearchView extends Component {
   constructor(props) {
@@ -101,6 +107,7 @@ export default class SearchView extends Component {
           value={this.state.username}
           onChange={this.handleChange.bind(this)} />
 
+          <AutoComplete onSelect={onSelect} suggestions={categories} suggestionObjectTextProperty='text' value='sug'/>
 
           <Button
           buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
