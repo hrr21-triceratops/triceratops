@@ -61,7 +61,8 @@ export default class ChatView extends Component {
       room: null,
       chatPartner: null,
       category: null,
-      username: null
+      username: null,
+      partnerPhoto: null
     };
   }
 
@@ -98,7 +99,7 @@ export default class ChatView extends Component {
       self.chatSession.category = this.props.category;
       self.chatSession.username = this.props.user.username;
       self.chatSession.socket.on('id', (socketId) => {
-        self.chatSession.socket.emit('createRoom', socketId, self.props.user.id, this.props.category, this.props.user.username);
+        self.chatSession.socket.emit('createRoom', socketId, self.props.user.id, this.props.category, this.props.user.username, this.props.user.profileImage);
         self.chatSession._id = socketId; // Redundant - room is same as _id
         self.chatSession.room = socketId;
         console.log('*** NEW ROOM ***', socketId);
@@ -127,9 +128,10 @@ export default class ChatView extends Component {
         .done();
       });
 
-      self.chatSession.socket.on('expert', (expertId, expertUsername) => {
+      self.chatSession.socket.on('expert', (expertId, expertUsername, expertImage) => {
         self.chatSession.chatPartner = expertId;
-        console.log('ExpertId Recieved:', expertId, expertUsername);
+        self.chatSession.partnerPhoto = expertImage;
+        console.log('ExpertId Recieved:', expertId, expertUsername, expertImage);
         self.setState((previousState) => {
           return {
             typingText: 'Connected with Expert ' + expertUsername
@@ -146,8 +148,9 @@ export default class ChatView extends Component {
 
     // IF USER IS AN EXPERT
     if(this.props.user.shopperExpert){
-      console.log('UserId Recieved:', this.props.chatPartner.id);
+      console.log('UserId Recieved:', this.props.chatPartner);
       self.chatSession.chatPartner = this.props.chatPartner.id;
+      self.chatSession.partnerPhoto = this.props.chatPartner.profileImage;
       self.chatSession.username = this.props.user.username;
       self.chatSession.category = this.props.category;
       console.log('*** JOINING ROOM ***', this.props.chatPartner.room);
@@ -244,14 +247,15 @@ export default class ChatView extends Component {
     // this.answerDemo(messages);
     console.log('All Messages:', this.state.messages);
 
-    this.navigate(this.props.user);
+    this.navigate(this.props.user, this.chatSession.partnerPhoto);
   }
 
-  navigate(props) {
+  navigate(props, profileImage) {
     this.props.navigator.push({
       screen: 'Home',
       passProps: {
-        user: props
+        user: props,
+        partner: profileImage
       }
     });
     this.setModalVisible();

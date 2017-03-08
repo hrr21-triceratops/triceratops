@@ -49,7 +49,7 @@ export default class RatingView extends Component {
           >
             {!this.props.user.shopperExpert && <Text style={styles.title}>Rate your Expert!</Text>}
             {this.props.user.shopperExpert && <Text style={styles.title}>Rate the User!</Text>}
-            <Image source={require('../../assets/imgs/user-profile.png')} style={styles.container}></Image>
+            <Image style={{width: 50, height: 100}} source={{uri: this.props.partner}}/>
             {console.log('user props', this.props)}
 
             <StarRating
