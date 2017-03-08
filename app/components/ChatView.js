@@ -367,6 +367,7 @@ export default class ChatView extends Component {
     wishlist.push(wish);
     this.setState({itemVisible: false});
     console.log('Wishlist:', wishlist);
+    this.item = null;
   }
 
   render() {
@@ -462,6 +463,7 @@ export default class ChatView extends Component {
                 style={styles.button}
                 onPress={() => {
                   this.setState({itemVisible: false});
+                  this.item = null;
                 }}
                 raised title='Back' />
             </View>
