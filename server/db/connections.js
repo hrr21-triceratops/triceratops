@@ -51,6 +51,10 @@ var client = elasticsearch.Client({
   log: "info"
 });
 
+client.cluster.health({},function(err,resp,status) {
+  console.log("-- Client Health --",resp);
+});
+
 client.ping({
   requestTimeout: 1000
 }, function (error) {

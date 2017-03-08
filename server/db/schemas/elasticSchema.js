@@ -1,25 +1,31 @@
 var elasticClient = require('../connections.js').elasticClient;
-var indexName = "randomindex";
+var index = "tags";
 
 module.exports = {
   deleteIndex: function() {
-    return elasticClient.indices.delete({
-      index: indexName
+    return elasticClient.indices.delete({ index: index }, function(err, resp, status) {
+      console.log("delete", resp);
     });
   },
-  initIndex: function() {
-    return elasticClient.indices.create({
-      index: indexName
+  createIndex: function() {
+    return elasticClient.indices.create({ //an index is aplace to store related documeents in ES
+      index: index //we can store different types of documents in this 'index'
+    }, function(err, resp, status) { //every field is indexed by default
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("create", resp);
+      }
     });
   },
   indexExists: function() {
     return elasticClient.indices.exists({
-      index: indexName
+      index: index
     });
   },
   initMapping: function() {
     return elasticClient.indices.putMapping({
-      index: indexName,
+      index: index,
       type: "document",
       body: {
         properties: {
@@ -37,7 +43,7 @@ module.exports = {
   },
   addDocument: function(document) {
     return elasticClient.index({
-      index: indexName,
+      index: index,
       type: "document",
       body: {
         title: document.title,
@@ -52,7 +58,7 @@ module.exports = {
   },
   getSuggestions: function(input) {
     return elasticClient.suggest({
-      index: indexName,
+      index: index,
       type: "document",
       body: {
         docsuggest: {
@@ -77,3 +83,5 @@ module.exports = {
     });
   }
 };
+
+//adding data to elasticSearch index
