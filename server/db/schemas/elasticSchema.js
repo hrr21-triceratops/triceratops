@@ -18,29 +18,6 @@ module.exports = {
       }
     });
   },
-  indexExists: function(indexToCheck) {
-    return elasticClient.indices.exists({
-      index: index
-    });
-  },
-  initMapping: function(indexToInit) {
-    return elasticClient.indices.putMapping({
-      index: index,
-      type: "document",
-      body: {
-        properties: {
-          title: { type: "string" },
-          content: { type: "string" },
-          suggest: {
-            type: "completion",
-            analyzer: "simple",
-            search_analyzer: "simple",
-            payloads: true
-          }
-        }
-      }
-    });
-  },
   addDocument: function(documentToAdd) {
     return elasticClient.index({
       index: 'tags',
@@ -56,28 +33,13 @@ module.exports = {
       console.log(resp);
     });
   },
-  getSuggestions: function(input) {
-    return elasticClient.suggest({
-      index: index,
-      type: "document",
-      body: {
-        docsuggest: {
-          text: input,
-          completion: {
-            field: "suggest",
-            fuzzy: true
-          }
-        }
-      }
-    });
-  },
   documentCount: function(indexToCount) {
     return elasticClient.count({ index: 'tags', type: 'user' }, function(err, resp, status) {
       console.log("users", resp);
     });
   },
   searchSuggestions: function(index, type, field, value) {
-    elasticClient.search({
+    return elasticClient.search({
       index: index,
       type: type,
       body: {
