@@ -21,7 +21,10 @@ router.post('/addTag/:userId/:username/:type/:tag/:index', function(req, res, ne
   var type = req.params.type.toString();
   var tag = req.params.tag.toString();
   var index = req.params.index.toString();
-  elasticSearch.addDocument(userId, username, type, tag, index).then(function(result) { res.json(result); });
+  elasticSearch.addDocument(userId, username, type, tag, index).then(function(result) { res.json(result);
+  }, function(err) {
+    res.json(err);
+  });
 });
 
 elasticSearch.addDocument("customer notes");
