@@ -311,8 +311,11 @@ export default class ChatView extends Component {
       );
     }
     const options = {
-      'Choose from Library': (props) => {
+      'Embed Image': (props) => {
         alert('option 1');
+      },
+      'Choose from Library': (props) => {
+        alert('option 2');
       },
       'Cancel': () => {},
     };
@@ -363,28 +366,31 @@ export default class ChatView extends Component {
   }
 
   addToWishlist(wish) {
-    wish.userId = this.props.user.id;
-    console.log('Sending Wish:', wish);
-    // ADD WISH TO DATABASE
-    fetch(connection + '/api/wishlist', {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(wish)
-    })
-    .then((response) => response.json())
-    .then((wish) => {
-      if (!wish) {
-        AlertIOS.alert('Unable to save item.');
-      } else {
-        AlertIOS.alert('Item saved.');
-      }
-    })
-    .done();
-    this.item = null;
-    this.setState({itemVisible: false});
+    if (!wish.title || !wish.price) {
+      AlertIOS.alert('Please add item title and price.');
+      return;
+    } else {
+      wish.userId = this.props.user.id;
+      console.log('Sending Wish:', wish);
+      // ADD WISH TO DATABASE
+      fetch(connection + '/api/wishlist', {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          item: wish
+        })
+      })
+      .then((response) => response.json())
+      .then((wish) => {
+        console.log('Item saved.');
+      })
+      .done();
+      this.item = null;
+      this.setState({itemVisible: false});
+    }
   }
 
   render() {
