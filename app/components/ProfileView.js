@@ -55,7 +55,7 @@ constructor(props) {
       this.setState({
           shopperExpert: bool
        });
-        this.navigate('Home', this.props.user.id, this.props.user.username, this.props.user.averageRating, bool, this.props.user.active, this.props.user.closedChatSessions, this.props.user.userPreferences);
+        this.navigate('Home', this.props.user.id, this.props.user.username, this.props.user.averageRating, bool, this.props.user.active, this.props.user.closedChatSessions, this.props.user.userPreferences, this.props.user.profileImage);
       } else {
         AlertIOS.alert(
           'Account could not be updated.'
@@ -65,7 +65,7 @@ constructor(props) {
     .done();
   }
 
-  navigate(scene, id, username, averageRating, shopperExpert, active, closedChatSessions, userPreferences) {
+  navigate(scene, id, username, averageRating, shopperExpert, active, closedChatSessions, userPreferences, profileImage) {
     if (id) {
       this.props.navigator.push({
         screen: scene,
@@ -75,6 +75,7 @@ constructor(props) {
             username: username,
             averageRating: averageRating,
             shopperExpert: shopperExpert,
+            profileImage: profileImage,
             active: active,
             closedChatSessions: closedChatSessions,
             userPreferences: userPreferences,
@@ -222,6 +223,7 @@ return (
         <Text style={styles.occupation}>
             {this.state.shopperExpert ? "Expert" : "User"}
         </Text>
+        <Image source={{uri: 'https://upload.wikimedia.org/wikipedia/en/b/b7/Cosmo_Kramer.jpg'}}/>
       </View>
         <View style={styles.stats}>
             {this.renderOption({ icon: ratingIcon, value: this.props.user.averageRating })}
