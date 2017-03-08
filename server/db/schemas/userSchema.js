@@ -9,6 +9,7 @@ var userModel = sequelize.define('user', {
   shopperExpert: { type: Sequelize.BOOLEAN, defaultValue: false },
   active: { type: Sequelize.BOOLEAN, defaultValue: false },
   closedChatSessions: { type: Sequelize.ARRAY(Sequelize.STRING), defaultValue: [] },
+  profileImage: Sequelize.STRING,
   userPreferences: { type: Sequelize.JSONB, defaultValue: {
       "home": false,
       "food": false,
