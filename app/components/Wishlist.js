@@ -58,11 +58,12 @@ export default class TopExperts extends React.Component {
     };
 
     this.item = null;
-    this.items = null;
+    this.wishlist = null;
   }
 
   componentWillMount() {
     // Load all items in wishlist
+    // this.getWishlist();
   }
 
   setModalVisible(visible) {
@@ -71,6 +72,18 @@ export default class TopExperts extends React.Component {
 
   getWishlist() {
     // Get request for items in wishlist
+    fetch(connection + '/api/wishlist/' + this.props.user.id, {
+      method: "GET",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+    .then((response) => response.json())
+    .then((wishlist) => {
+      this.wishlist = wishlist;
+    })
+    .done();
   }
 
   showItem(item) {

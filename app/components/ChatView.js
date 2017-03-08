@@ -366,6 +366,7 @@ export default class ChatView extends Component {
   }
 
   addToWishlist(wish) {
+    wish.comment = '';
     if (!wish.title || !wish.price) {
       AlertIOS.alert('Please add item title and price.');
       return;
@@ -466,7 +467,6 @@ export default class ChatView extends Component {
                   style={styles.searchInput}
                   onChangeText={(text) => {this.wish.comment = text}}
                   placeholder={this.wish.comment || 'note to self'}
-                  placeholderTextColor={'black'}
                 />
               </View>
 
