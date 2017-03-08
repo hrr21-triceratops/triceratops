@@ -1,15 +1,14 @@
 var elasticClient = require('../db/connections.js').elasticClient;
-var index = "tags";
 
 module.exports = {
   deleteIndex: function(indexToDelete) {
-    return elasticClient.indices.delete({ index: index }, function(err, resp, status) {
+    return elasticClient.indices.delete({ index: indexToDelete }, function(err, resp, status) {
       console.log("delete", resp);
     });
   },
   createIndex: function(indexToCreate) {
     return elasticClient.indices.create({ //an index is aplace to store related documeents in ES
-      index: index //we can store different types of documents in this 'index'
+      index: indexToCreate //we can store different types of documents in this 'index'
     }, function(err, resp, status) { //every field is indexed by default
       if (err) {
         console.log(err);
@@ -20,22 +19,24 @@ module.exports = {
   },
   indexExists: function(indexToCheck) {
     return elasticClient.indices.exists({
-      index: index
+      index: indexToCheck
     });
   },
-  addDocument: function(documentToAdd) {
+  addDocument: function(userId, username, type, tag, index) {
     return elasticClient.index({
-      index: 'tags',
-      id: '1',
-      type: 'user',
+      index: index,
+      type: type,
       body: {
-        "userName": "Ipswich",
-        "userID": "E14000761",
-        "userType": "Borough",
-        "tag": "Amazing"
+        "userName": username,
+        "userID": userId,
+        "userType": type,
+        "tag": tag
       }
-    }, function(err, resp, status) {
-      console.log(resp);
+    }).then(function(response) {
+        return response;
+      },
+      function(error) {
+        console.trace(error.message);
     });
   },
   documentCount: function(indexToCount) {
