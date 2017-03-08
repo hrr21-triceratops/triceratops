@@ -13,7 +13,12 @@ import {
 } from 'react-native';
 import io from 'socket.io-client';
 import RatingView from './shoppers/RatingView';
-import { Button } from 'react-native-elements';
+import {
+  Button,
+  FormLabel,
+  FormInput,
+  SearchBar,
+} from 'react-native-elements';
 import {GiftedChat, Actions, Bubble} from 'react-native-gifted-chat';
 import CustomActions from '../Utils/CustomActions';
 
@@ -410,24 +415,38 @@ export default class ChatView extends Component {
             <View style={styles.mainContainer}>
               <Image source={{uri: this.item.image}}
                 style={{width: 250, height: 250, marginLeft: 30, marginTop: 10}} />
-              <TextInput
-                style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                onChangeText={(text) => {this.wish.title = text}}
-                placeholder={this.wish.title}
-                placeholderTextColor={'black'}
-              />
-              <TextInput
-                style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                onChangeText={(text) => {this.wish.price = text}}
-                placeholder={this.wish.price}
-                placeholderTextColor={'black'}
-              />
-              <TextInput
-                style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                onChangeText={(text) => {this.wish.comment = text}}
-                placeholder={this.wish.comment || 'Note to self...'}
-                placeholderTextColor={'black'}
-              />
+
+              <View style={{justifyContent: 'center', marginTop: 5}}>
+                <Text style={{marginBottom: -10}}>Item</Text>
+                <TextInput
+                  style={styles.searchInput}
+                  onFocus={() => {this.wish.title = ''}}
+                  onChangeText={(text) => {this.wish.title = text}}
+                  placeholder={this.wish.title}
+                  placeholderTextColor={'black'}
+                />
+              </View>
+
+              <View style={{justifyContent: 'center', marginTop: 5}}>
+                <Text style={{marginBottom: -10}}>Price</Text>
+                <TextInput
+                  style={styles.searchInput}
+                  onChangeText={(text) => {this.wish.price = text}}
+                  placeholder={this.wish.price}
+                  placeholderTextColor={'black'}
+                />
+              </View>
+
+              <View style={{justifyContent: 'center', marginTop: 5}}>
+                <Text style={{marginBottom: -10}}>Notes</Text>
+                <TextInput
+                  style={styles.searchInput}
+                  onChangeText={(text) => {this.wish.comment = text}}
+                  placeholder={this.wish.comment || 'Note to self...'}
+                  placeholderTextColor={'black'}
+                />
+              </View>
+
               <Button
                 backgroundColor='#03A9F4'
                 buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
@@ -504,5 +523,16 @@ const styles = StyleSheet.create({
     color: 'black',
     marginTop: 10,
     marginBottom: 20
-  }
+  },
+  searchInput: {
+    height: 40,
+    padding: 10,
+    fontSize: 18,
+    borderWidth: 0.5,
+    borderColor: 'black',
+    borderRadius: 5,
+    color: 'black',
+    marginBottom: 5,
+    marginTop: 10
+  },
 });
