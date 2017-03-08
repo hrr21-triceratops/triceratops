@@ -33,7 +33,7 @@ export default class Tags extends Component{
     }
 
     getUserTags() {
-         return api.getUserTags("user", 2)
+         return api.getUserTags("expert", 2)
             .then((data) => {
               console.log('component mounted!', data.hits.hits);
               var listItems = data.hits.hits;
@@ -70,7 +70,7 @@ export default class Tags extends Component{
         this.setState({
             tag: ''
         });
-        api.addTag(2, this.props.user.username, "user", tag)
+        api.addTag(2, this.props.user.username, "expert", tag)
             .then((data) => {
                 console.log('success', data);
                 this.getUserTags();
@@ -87,8 +87,8 @@ export default class Tags extends Component{
             <View>
                 <View style={styles.rowContainer}>
                     <Text> {rowData} </Text>
+                    <Separator />
                 </View>
-                <Separator />
             </View>
         )
     }
@@ -127,8 +127,7 @@ export default class Tags extends Component{
 var styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column',
-        marginTop: 25
+        flexDirection: 'column'
     },
     buttonText: {
         fontSize: 18,
@@ -149,7 +148,8 @@ var styles = StyleSheet.create({
         flex: 10
     },
     rowContainer: {
-        padding: 10
+        padding: 10,
+        top: 60
     },
     footerContainer: {
         backgroundColor: '#E3E3E3',

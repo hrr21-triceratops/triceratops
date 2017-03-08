@@ -17,6 +17,24 @@ module.exports = {
       }
     });
   },
+  indiceMapping: function() {
+    return elasticClient.indices.putMapping({
+        index: indexName,
+        type: "expert",
+        body: {
+            properties: {
+                title: { type: "string" },
+                content: { type: "string" },
+                suggest: {
+                    type: "completion",
+                    analyzer: "simple",
+                    search_analyzer: "simple",
+                    payloads: true
+                }
+            }
+        }
+    });
+  },
   indexExists: function(indexToCheck) {
     return elasticClient.indices.exists({
       index: indexToCheck
