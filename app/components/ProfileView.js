@@ -160,7 +160,6 @@ constructor(props) {
 render() {
 
 return (
-
     <View style={styles.container}>
         {/*console.log('user this.props', this.props)*/}
         {/*console.log('user this.state', this.state)*/}
@@ -223,7 +222,7 @@ return (
         <Text style={styles.occupation}>
             {this.state.shopperExpert ? "Expert" : "User"}
         </Text>
-        <Image source={{uri: 'https://upload.wikimedia.org/wikipedia/en/b/b7/Cosmo_Kramer.jpg'}}/>
+        <Image style={{width: 50, height: 100}} source={{uri: this.props.user.profileImage}}/>
       </View>
         <View style={styles.stats}>
             {this.renderOption({ icon: ratingIcon, value: this.props.user.averageRating })}
