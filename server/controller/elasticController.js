@@ -48,6 +48,8 @@ module.exports = {
     return elasticClient.search({
       index: index,
       type: type,
+      "from": 0,
+      "size": 20,
       body: {
         query: {
           match: {

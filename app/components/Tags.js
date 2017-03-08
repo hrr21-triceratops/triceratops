@@ -11,6 +11,7 @@ import {
   TextInput,
   ActivityIndicatorIOS
 } from 'react-native';
+import { List, ListItem } from 'react-native-elements'
 var api = require('../Utils/api');
 
 
@@ -27,18 +28,24 @@ export default class Tags extends Component{
     }
 
     componentDidMount() {
-        api.getUserTags("user", 2)
+        this.getUserTags();
+    }
+
+    getUserTags() {
+         return api.getUserTags("user", 2)
             .then((data) => {
-              // this.setState({
-              //   dataSource: this.ds.cloneWithRows(data)
-              // });
               console.log('component mounted!', data.hits.hits);
               var listItems = data.hits.hits;
               var tags = [];
+
+              if (tags.length == 20) {
+                tags.pop();
+              }
+
               for (var i = 0; i < listItems.length; i++) {
                 console.log(listItems[i]["_source"].tag);
                 tags.push(listItems[i]["_source"].tag);
-                if (tags.length > 20) {
+                if (tags.length >= 20) {
                     break;
                 }
               }
@@ -58,6 +65,19 @@ export default class Tags extends Component{
     }
 
     handleSubmit(){
+        var tag = this.state.tag;
+        this.setState({
+            tag: ''
+        });
+        api.addTag(2, this.props.user.username, "user", tag)
+            .then((data) => {
+                console.log('success', data);
+                this.getUserTags();
+            })
+            .catch((error) => {
+                console.log('Request failed', error);
+                this.setState({error});
+            });
     }
 
     renderRow(rowData){
@@ -70,7 +90,7 @@ export default class Tags extends Component{
         )
     }
 
-    footer(){
+    tagForm(){
         return (
             <View style={styles.footerContainer}>
                 <TextInput
@@ -95,7 +115,7 @@ export default class Tags extends Component{
                     dataSource={this.state.dataSource}
                     renderRow={this.renderRow}
                  />
-                {this.footer()}
+                {this.tagForm()}
             </View>
         )
     }
@@ -104,7 +124,8 @@ export default class Tags extends Component{
 var styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column'
+        flexDirection: 'column',
+        marginTop: 25
     },
     buttonText: {
         fontSize: 18,

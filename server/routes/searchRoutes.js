@@ -32,6 +32,7 @@ router.post('/addTag/:userId/:username/:type/:tag/:index', function(req, res, ne
   });
 });
 
+// elasticSearch.deleteIndex("tags");
 elasticSearch.addDocument("customer notes");
 elasticSearch.documentCount("customer aotes");
 elasticSearch.searchSuggestions("tags", "user", "tag", "Amazing"); //index, type, field, value

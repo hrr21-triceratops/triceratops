@@ -11,7 +11,7 @@ var api = {
     });
   },
   addTag(userId, username, type, tag) {
-    var url = connection + '/addTag/'+userId+'/'+username+'/'+type+'/'+tag+'/tags';
+    var url = connection + '/api/addTag/'+userId+'/'+username+'/'+type+'/'+tag+'/tags';
     return fetch(url, {
       method: 'POST'
     }).then((res) => res.json()).then(function(tag) {
