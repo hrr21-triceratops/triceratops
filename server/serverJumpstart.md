@@ -22,6 +22,8 @@ psql -d databaseName //connects to the required db
 
 //connect to savvyshopper-test
 
+psql -d savvyshopper-test
+
 //drop tables
 
 DROP TABLE categories, experts, preferences, ratings, subcategories, users;
@@ -73,5 +75,7 @@ psql -d databaseName //connects to the required db
 //drop tables
 
 DROP TABLE categories, experts, preferences, ratings, subcategories, users;
+
+//for elastic search
 
 

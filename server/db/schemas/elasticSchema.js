@@ -2,12 +2,12 @@ var elasticClient = require('../connections.js').elasticClient;
 var index = "tags";
 
 module.exports = {
-  deleteIndex: function() {
+  deleteIndex: function(indexToDelete) {
     return elasticClient.indices.delete({ index: index }, function(err, resp, status) {
       console.log("delete", resp);
     });
   },
-  createIndex: function() {
+  createIndex: function(indexToCreate) {
     return elasticClient.indices.create({ //an index is aplace to store related documeents in ES
       index: index //we can store different types of documents in this 'index'
     }, function(err, resp, status) { //every field is indexed by default
@@ -18,12 +18,12 @@ module.exports = {
       }
     });
   },
-  indexExists: function() {
+  indexExists: function(indexToCheck) {
     return elasticClient.indices.exists({
       index: index
     });
   },
-  initMapping: function() {
+  initMapping: function(indexToInit) {
     return elasticClient.indices.putMapping({
       index: index,
       type: "document",
@@ -41,19 +41,19 @@ module.exports = {
       }
     });
   },
-  addDocument: function(input) {
+  addDocument: function(documentToAdd) {
     return elasticClient.index({
-      index: index,
-      id: "1",
-      type: "tags",
+      index: 'tags',
+      id: '1',
+      type: 'user',
       body: {
-        tags: input,
-        suggest: {
-          input: input.split(" "),
-          output: input,
-          payload: input || {}
-        }
+        "userName": "Ipswich",
+        "userID": "E14000761",
+        "userType": "Borough",
+        "tag": "Amazing"
       }
+    }, function(err, resp, status) {
+      console.log(resp);
     });
   },
   getSuggestions: function(input) {
@@ -71,17 +71,31 @@ module.exports = {
       }
     });
   },
-  searchSuggestions: function(input) {
-    return elasticClient.search({
-      q: input
-    }).then(function(body) {
-      console.log('body', body);
-      var hits = body.hits.hits;
-      return hits;
-    }, function(error) {
-      console.trace(error.message);
+  documentCount: function(indexToCount) {
+    return elasticClient.count({ index: 'tags', type: 'user' }, function(err, resp, status) {
+      console.log("users", resp);
+    });
+  },
+  searchSuggestions: function(index, type, field, value) {
+    elasticClient.search({
+      index: index,
+      type: type,
+      body: {
+        query: {
+          match: { [`${field}`]: value }
+        },
+      }
+    }, function(error, response, status) {
+      if (error) {
+        console.log("search error: " + error);
+      } else {
+        console.log("--- Response ---");
+        console.log(response);
+        console.log("--- Hits ---");
+        response.hits.hits.forEach(function(hit) {
+          console.log(hit);
+        });
+      }
     });
   }
 };
-
-//adding data to elasticSearch index

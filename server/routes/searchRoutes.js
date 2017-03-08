@@ -12,4 +12,9 @@ router.post('/', function (req, res, next) {
   elasticSearch.addDocument(req.body).then(function (result) { res.json(result); });
 });
 
+// elasticSearch.createIndex();
+elasticSearch.addDocument("customer notes");
+elasticSearch.documentCount("customer aotes");
+elasticSearch.searchSuggestions("tags", "user", "tag", "Amazing"); //index, type, field, value
+
 module.exports = router;
