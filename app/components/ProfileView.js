@@ -152,6 +152,11 @@ constructor(props) {
     //we should also destroy the session here. The above removes all routes from the stack
   }
 
+  goToTags() {
+   this.navigate('Tags', this.props.user.id, this.props.user.username, this.props.user.averageRating, this.props.shopperExpert, this.props.user.active, this.props.user.closedChatSessions, this.props.user.userPreferences);
+    //we should also destroy the session here. The above removes all routes from the stack
+  }
+
   toggleFood() {
     this.setState({food: !this.state.food});
   }
@@ -232,6 +237,9 @@ return (
 
             {this.renderOption({ icon: chatHistoryIcon, value: "Log Out", method: this.logOut.bind(this, this.props) })}
 
+
+            {!this.state.shopperExpert ? this.renderOption({ icon: chatHistoryIcon, value: "Expert At", method: this.goToTags.bind(this, this.props) }) : null}
+
         </View>
       </View>
     );
@@ -286,6 +294,7 @@ counter: {
  color: '#fff',
  fontSize: 15,
  marginTop: 5,
+ fontSize: 13
 },
 stats: {
   flexDirection: 'row',
