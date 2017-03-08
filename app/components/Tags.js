@@ -45,7 +45,7 @@ export default class Tags extends Component{
 
               for (var i = 0; i < listItems.length; i++) {
                 console.log(listItems[i]["_source"].tag);
-                tags.push(listItems[i]["_source"].tag);
+                tags.unshift(listItems[i]["_source"].tag);
                 if (tags.length >= 20) {
                     break;
                 }

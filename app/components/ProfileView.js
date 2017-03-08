@@ -238,7 +238,7 @@ return (
             {this.renderOption({ icon: chatHistoryIcon, value: "Log Out", method: this.logOut.bind(this, this.props) })}
 
 
-            {!this.state.shopperExpert ? this.renderOption({ icon: chatHistoryIcon, value: "Expert At", method: this.goToTags.bind(this, this.props) }) : null}
+            {this.state.shopperExpert ? this.renderOption({ icon: chatHistoryIcon, value: "Expert At", method: this.goToTags.bind(this, this.props) }) : null}
 
         </View>
       </View>
