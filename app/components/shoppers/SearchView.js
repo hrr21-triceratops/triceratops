@@ -9,18 +9,13 @@ import {
   TextInput,
   ActivityIndicator
 } from 'react-native';
-import AutoComplete from 'react-native-autocomplete-select'
 import AvailableExperts from '../AvailableExperts';
+import Autocomplete from 'react-native-autocomplete-input';
 var api = require('../../Utils/api');
 import {
   Button,
   FormLabel, FormInput, SearchBar
 } from 'react-native-elements';
-
-const onSelect = (suggestion) => {
-  console.log("SUGGESTION", suggestion);
-}
-const categories = ['HOME', 'FOOD', 'TECH', 'WOMEN\'S FASHION', 'MEN\'S FASHION', 'ENTERTAINMENT'];
 
 export default class SearchView extends Component {
   constructor(props) {
@@ -28,7 +23,9 @@ export default class SearchView extends Component {
     this.state = {
       searchTerm: '',
       isLoading: false,
-      error: false
+      error: false,
+      categories: ['HOME', 'FOOD', 'TECH', 'WOMEN\'S FASHION', 'MEN\'S FASHION', 'ENTERTAINMENT'],
+      query: ''
     };
   }
 
@@ -101,13 +98,14 @@ export default class SearchView extends Component {
     return (
       <View style={styles.mainContainer}>
         <Text style={styles.title}>Find Expert For</Text>
+
+        <Autocomplete autoCorrect={false}/>
+
         <SearchBar
           lightTheme
           style={styles.searchInput}
           value={this.state.username}
           onChange={this.handleChange.bind(this)} />
-
-          <AutoComplete onSelect={onSelect} suggestions={categories} suggestionObjectTextProperty='text' value='sug'/>
 
           <Button
           buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
