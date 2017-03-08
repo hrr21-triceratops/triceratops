@@ -41,17 +41,17 @@ module.exports = {
       }
     });
   },
-  addDocument: function(document) {
+  addDocument: function(input) {
     return elasticClient.index({
       index: index,
-      type: "document",
+      id: "1",
+      type: "tags",
       body: {
-        title: document.title,
-        content: document.content,
+        tags: input,
         suggest: {
-          input: document.title.split(" "),
-          output: document.title,
-          payload: document.metadata || {}
+          input: input.split(" "),
+          output: input,
+          payload: input || {}
         }
       }
     });
