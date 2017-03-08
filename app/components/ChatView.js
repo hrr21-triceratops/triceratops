@@ -154,7 +154,7 @@ export default class ChatView extends Component {
       self.chatSession.username = this.props.user.username;
       self.chatSession.category = this.props.category;
       console.log('*** JOINING ROOM ***', this.props.chatPartner.room);
-      self.chatSession.socket.emit('joinRoom', this.props.chatPartner.room, self.props.user.id, this.props.user.username);
+      self.chatSession.socket.emit('joinRoom', this.props.chatPartner.room, self.props.user.id, this.props.user.username, this.props.user.profileImage);
       self.chatSession._id = this.props.chatPartner.room;
       self.chatSession.room = this.props.chatPartner.room;
       console.log('chatSession:', self.chatSession);
@@ -247,15 +247,14 @@ export default class ChatView extends Component {
     // this.answerDemo(messages);
     console.log('All Messages:', this.state.messages);
 
-    this.navigate(this.props.user, this.chatSession.partnerPhoto);
+    this.navigate(this.props.user);
   }
 
-  navigate(props, profileImage) {
+  navigate(props) {
     this.props.navigator.push({
       screen: 'Home',
       passProps: {
-        user: props,
-        partner: profileImage
+        user: props
       }
     });
     this.setModalVisible();
@@ -318,7 +317,7 @@ export default class ChatView extends Component {
           raised title='Rate Expert' />
         }
 
-        <View><RatingView user={this.props.user} userId={this.state.userId} expertId={this.state.expertId} modalVisible={this.state.modalVisible} closeModal={this.closeModal.bind(this)} /></View>
+        <View><RatingView user={this.props.user} userId={this.state.userId} expertId={this.state.expertId} modalVisible={this.state.modalVisible} closeModal={this.closeModal.bind(this)} partner={this.chatSession.partnerPhoto} /></View>
       </View>
     );
   }
