@@ -23,7 +23,6 @@ import {GiftedChat, Actions, Bubble} from 'react-native-gifted-chat';
 import CustomActions from '../Utils/CustomActions';
 
 let connection = require('../Utils/connection');
-const wishlist = [];
 
 // GIFTED CHAT MESSAGE OBJECT FORMAT
 // {
@@ -364,10 +363,28 @@ export default class ChatView extends Component {
   }
 
   addToWishlist(wish) {
-    wishlist.push(wish);
-    this.setState({itemVisible: false});
-    console.log('Wishlist:', wishlist);
+    wish.userId = this.props.user.id;
+    console.log('Sending Wish:', wish);
+    // ADD WISH TO DATABASE
+    fetch(connection + '/api/wishlist', {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(wish)
+    })
+    .then((response) => response.json())
+    .then((wish) => {
+      if (!wish) {
+        AlertIOS.alert('Unable to save item.');
+      } else {
+        AlertIOS.alert('Item saved.');
+      }
+    })
+    .done();
     this.item = null;
+    this.setState({itemVisible: false});
   }
 
   render() {
@@ -421,9 +438,9 @@ export default class ChatView extends Component {
                 <Text style={{marginBottom: -10}}>Item</Text>
                 <TextInput
                   style={styles.searchInput}
-                  onFocus={() => {this.wish.title = ''}}
                   onChangeText={(text) => {this.wish.title = text}}
                   placeholder={this.wish.title || 'product name'}
+                  placeholderTextColor={'black'}
                 />
               </View>
 
@@ -433,6 +450,7 @@ export default class ChatView extends Component {
                   style={styles.searchInput}
                   onChangeText={(text) => {this.wish.price = text}}
                   placeholder={this.wish.price || 'product price'}
+                  placeholderTextColor={'black'}
                 />
               </View>
 
@@ -442,6 +460,7 @@ export default class ChatView extends Component {
                   style={styles.searchInput}
                   onChangeText={(text) => {this.wish.comment = text}}
                   placeholder={this.wish.comment || 'note to self'}
+                  placeholderTextColor={'black'}
                 />
               </View>
 
