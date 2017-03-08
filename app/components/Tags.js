@@ -11,7 +11,8 @@ import {
   TextInput,
   ActivityIndicatorIOS
 } from 'react-native';
-import { List, ListItem } from 'react-native-elements'
+import Separator from './Separator';
+import { List, ListItem } from 'react-native-elements';
 var api = require('../Utils/api');
 
 
@@ -80,12 +81,14 @@ export default class Tags extends Component{
             });
     }
 
+
     renderRow(rowData){
         return (
             <View>
                 <View style={styles.rowContainer}>
                     <Text> {rowData} </Text>
                 </View>
+                <Separator />
             </View>
         )
     }
@@ -97,7 +100,7 @@ export default class Tags extends Component{
                     style={styles.searchInput}
                     value={this.state.tag}
                     onChange={this.handleChange.bind(this)}
-                    placeholder="New Tag" />
+                    placeholder="Add Expertise" />
                 <TouchableHighlight
                     style={styles.button}
                     onPress={this.handleSubmit.bind(this)}
@@ -152,6 +155,12 @@ var styles = StyleSheet.create({
         backgroundColor: '#E3E3E3',
         alignItems: 'center',
         flexDirection: 'row'
+    },
+    separator: {
+        height: 1,
+        backgroundColor: '#E4E4E4',
+        flex: 1,
+        marginLeft: 15
     }
 });
 

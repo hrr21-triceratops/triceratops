@@ -108,6 +108,9 @@ class SavvyShopper extends Component {
           if (route.screen === 'ByCategory') {
             return (<Text h1 style={styles.title}>Categories</Text>);
           }
+          if (route.screen === 'Tags') {
+            return (<Text h1 style={styles.title}>My Expertise</Text>);
+          }
           if (route.screen === 'Wishlist') {
             return (<Text h1 style={styles.title}>Wishlist</Text>);
           } else {
