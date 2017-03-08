@@ -1,13 +1,15 @@
 var express = require('express');
 var router = express.Router();
-const elasticTagModel = require('../db/schemas/tagSchema.js');
+const elasticSearch = require('../db/schemas/elasticSchema.js');
 
 /* GET suggestions */
-router.get('/suggest/:input', function (req, res, next) {
-  elasticTagModel.getSuggestions(req.params.input).then(function (result) { res.json(result) });
+router.get('/search/:tag', function (req, res, next) {
+  elasticSearch.searchSuggestions(req.params.input).then(function (tag) { res.json(tag); });
 });
 
 /* POST document to be indexed */
 router.post('/', function (req, res, next) {
-  elasticTagModel.addDocument(req.body).then(function (result) { res.json(result) });
+  elasticSearch.addDocument(req.body).then(function (result) { res.json(result); });
 });
+
+module.exports = router;

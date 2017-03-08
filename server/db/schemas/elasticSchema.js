@@ -17,7 +17,6 @@ module.exports = {
       index: indexName
     });
   },
-
   initMapping: function() {
     return elasticClient.indices.putMapping({
       index: indexName,
@@ -67,10 +66,12 @@ module.exports = {
     });
   },
   searchSuggestions: function(input) {
-    elasticClient.search({
+    return elasticClient.search({
       q: input
     }).then(function(body) {
+      console.log('body', body);
       var hits = body.hits.hits;
+      return hits;
     }, function(error) {
       console.trace(error.message);
     });
