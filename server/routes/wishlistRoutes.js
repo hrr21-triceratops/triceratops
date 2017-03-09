@@ -24,4 +24,15 @@ router.post('/wishlist', function (req, res) {
   });
 });
 
+// DELETE ITEM FROM WISHLIST
+router.delete('/wishlist/:id', function (req, res) {
+  wishlistModel.remove({_id: req.params.id}, function (err) {
+    if (err) {
+      console.error(err);
+    } else {
+      res.send(JSON.stringify('Item Deleted.'));
+    }
+  });
+});
+
 module.exports = router;

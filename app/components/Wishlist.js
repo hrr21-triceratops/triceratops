@@ -65,6 +65,8 @@ export default class TopExperts extends React.Component {
   }
 
   removeItem() {
+    var self = this;
+
     // remove from local wishlist array
     this.wishlist = this.wishlist.reduce((memo, item) => {
       if (this.item.title !== item.title) {
@@ -74,6 +76,18 @@ export default class TopExperts extends React.Component {
     }, []);
 
     // remove from database
+    fetch(connection + '/api/wishlist/' + self.item._id, {
+      method: "DELETE",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+    .then((response) => response.json())
+    .then((res) => {
+      console.log(res);
+    })
+    .done();
 
     this.setModalVisible(false);
     this.item = null;
