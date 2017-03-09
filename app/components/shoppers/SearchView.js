@@ -10,7 +10,6 @@ import {
   ActivityIndicator
 } from 'react-native';
 import AvailableExperts from '../AvailableExperts';
-import Autocomplete from 'react-native-autocomplete-input';
 var api = require('../../Utils/api');
 import {
   Button,
@@ -98,8 +97,6 @@ export default class SearchView extends Component {
     return (
       <View style={styles.mainContainer}>
         <Text style={styles.title}>Find Expert For</Text>
-
-        <Autocomplete autoCorrect={false}/>
 
         <SearchBar
           lightTheme

@@ -215,14 +215,16 @@ return (
       </View>
 
       <View style={styles.personal}>
-        <Text style={styles.name}>
-           {console.log('THIS USER STATE', this.state)}
-          {this.state.username.indexOf('@') > -1 ? this.state.username.substring(0, this.state.username.indexOf('@')) : this.state.username}
-        </Text>
-        <Text style={styles.occupation}>
-            {this.state.shopperExpert ? "Expert" : "User"}
-        </Text>
-        <Image style={{width: 50, height: 100}} source={{uri: this.props.user.profileImage}}/>
+        <View>
+          <Text style={styles.name}>
+             {console.log('THIS USER STATE', this.state)}
+            {this.state.username.indexOf('@') > -1 ? this.state.username.substring(0, this.state.username.indexOf('@')) : this.state.username}
+          </Text>
+          <Text style={styles.occupation}>
+              {this.state.shopperExpert ? "Expert" : "User"}
+          </Text>
+        </View>
+        <Image style={{width: 50, height: 60, marginLeft: 40}} source={{uri: this.props.user.profileImage}}/>
       </View>
         <View style={styles.stats}>
             {this.renderOption({ icon: ratingIcon, value: this.props.user.averageRating })}
@@ -264,6 +266,7 @@ personal: {
  padding: 30,
  backgroundColor: 'rgba(0,0,0,0.5)',
  alignSelf: 'stretch',
+ flexDirection: 'row',
 },
 name: {
  color: '#fff',
