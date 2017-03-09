@@ -218,59 +218,31 @@ export default class ChatView extends Component {
     // EMIT MESSAGE TO CHAT PARTNER
     this.chatSession.socket.emit('message', message, self.chatSession.room);
 
-    // POST MESSAGE TO DB
-    // fetch(connection + '/api/chat/messages', {
-  }
-
-  //Disconnect only applies to client
-  disconnect() {
-    // post all messages in this.state.messages to DB
-    // Send array of messages in this format:
-    // {
-    //   "chatSessionID": "abcdefgh",
-    //   "senderID": 1,
-    //   "receiverID": 3,
-    //   "message": "Get dem beatz",
-    //   "date": "2017-02-23T23:31:05.177Z"
-    // }
-
-    // EMIT A DISCONNECT EVENT TO TRIGGER A RATING VIEW ON EXPERT
-    this.chatSession.socket.emit('showRate', this.chatSession.room);
-
-    // REMOVE FIRST TWO ITEMS IN ARRAY (Connection Verification)
-    let messages = this.state.messages;
-    messages.shift();
-    messages.shift();
-
+    // POST MESSAGE TO DB ON SEND
     fetch(connection + '/api/chat/messages', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({messages})
+      body: JSON.stringify({
+        message: message
+      })
     })
     .then((response) => {
       console.log(response);
     })
     .done();
 
-    this.setState((previousState) => {
-      return {
-        messages: GiftedChat.append(previousState.messages, [messages]),
-      };
-    });
-
-    // this.setState((previousState) => {
-    //   return {
-    //     messages: GiftedChat.append(previousState.messages, [message]),
-    //   };
-    // });
-
     // FOR DEMO PURPOSES
     // this.answerDemo(messages);
     console.log('All Messages:', this.state.messages);
+  }
 
+  //Disconnect only applies to client
+  disconnect() {
+    // EMIT A DISCONNECT EVENT TO TRIGGER A RATING VIEW ON EXPERT
+    this.chatSession.socket.emit('showRate', this.chatSession.room);
     this.navigate(this.props.user);
   }
 
@@ -357,6 +329,7 @@ export default class ChatView extends Component {
 
   addToWishlist(wish) {
     wish.comment = '';
+
     if (!wish.title || !wish.price) {
       AlertIOS.alert('Please add item title and price.');
       return;
@@ -376,11 +349,11 @@ export default class ChatView extends Component {
       })
       .then((response) => response.json())
       .then((wish) => {
-        console.log('Item saved.');
+        console.log('Item Saved.');
       })
       .done();
-      this.item = null;
-      this.setState({itemVisible: false});
+
+      AlertIOS.alert('Item Saved.');
     }
   }
 

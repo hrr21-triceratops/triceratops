@@ -56,7 +56,7 @@ export default class LoginView extends Component {
         } else {
           let userToPass = {};
           userToPass.id = user.id;
-          userToPass.user = user.username;
+          userToPass.username = user.username;
           userToPass.averageRating = user.averageRating;
           userToPass.shopperExpert = user.shopperExpert;
           userToPass.active = user.active;
