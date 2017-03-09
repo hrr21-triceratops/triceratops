@@ -266,7 +266,7 @@ return (
               {this.state.shopperExpert ? "Expert" : "User"}
           </Text>
         </View>
-        <Image style={{width: 50, height: 60, marginLeft: 40}} source={{uri: this.props.user.profileImage}}/>
+        {/*<Image style={{width: 50, height: 60, marginLeft: 40}} source={{uri: this.props.user.profileImage}}/>*/}
       </View>
         <View style={styles.stats}>
             {this.renderOption({ icon: ratingIcon, value: this.props.user.averageRating })}

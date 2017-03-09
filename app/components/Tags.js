@@ -22,7 +22,7 @@ export default class Tags extends Component{
         super(props);
         this.ds = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
         this.state = {
-            dataSource: this.ds.cloneWithRows(props.user.tags),
+            dataSource: this.ds.cloneWithRows(props.user.tags || []),
             tag: '',
             error: ''
         };
