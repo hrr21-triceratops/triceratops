@@ -22,6 +22,8 @@ psql -d databaseName //connects to the required db
 
 //connect to savvyshopper-test
 
+psql -d savvyshopper-test
+
 //drop tables
 
 DROP TABLE categories, experts, preferences, ratings, subcategories, users;
@@ -74,4 +76,8 @@ psql -d databaseName //connects to the required db
 
 DROP TABLE categories, experts, preferences, ratings, subcategories, users;
 
+//from root folder
 
+mongod
+postgres -D /usr/local/var/postgres
+./elasticSearch/bin/elasticsearch

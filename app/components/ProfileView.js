@@ -12,6 +12,7 @@ const userImage = require('../assets/imgs/user-profile.png');
 const ratingIcon = require('../assets/imgs/plain-heart.png');
 const chatHistoryIcon = require('../assets/imgs/chat.png');
 let connection = require('../Utils/connection');
+var api = require('../Utils/api');
 
 export default class ProfileView extends Component {
 constructor(props) {
@@ -32,7 +33,8 @@ constructor(props) {
     sports: props.user.userPreferences.sports,
     technology: props.user.userPreferences.technology,
     entertainment: props.user.userPreferences.entertainment,
-    womensFashion: props.user.userPreferences.womensFashion
+    womensFashion: props.user.userPreferences.womensFashion,
+    tags: []
   };
 }
 
@@ -65,7 +67,8 @@ constructor(props) {
     .done();
   }
 
-  navigate(scene, id, username, averageRating, shopperExpert, active, closedChatSessions, userPreferences, profileImage) {
+
+  navigate(scene, id, username, averageRating, shopperExpert, active, closedChatSessions, userPreferences, profileImage, tags) {
     if (id) {
       this.props.navigator.push({
         screen: scene,
@@ -79,7 +82,8 @@ constructor(props) {
             active: active,
             closedChatSessions: closedChatSessions,
             userPreferences: userPreferences,
-            navigator: navigator
+            navigator: navigator,
+            tags: tags
           }
         }
       });
@@ -89,6 +93,39 @@ constructor(props) {
       });
     }
   }
+
+  componentDidMount() {
+    this.getUserTags();
+  }
+
+  getUserTags() {
+         return api.getUserTags("expert", 2)
+            .then((data) => {
+              console.log('component mounted!', data.hits.hits);
+              var listItems = data.hits.hits;
+              var tags = [];
+
+              if (tags.length == 20) {
+                tags.pop();
+              }
+
+              for (var i = 0; i < listItems.length; i++) {
+                console.log(listItems[i]["_source"].tag);
+                tags.unshift(listItems[i]["_source"].tag);
+                if (tags.length >= 20) {
+                    break;
+                }
+              }
+              console.log('tags', tags);
+              this.setState({
+                tags: tags
+              });
+              return tags;
+            }).catch((error) => {
+            console.log('Request failed', error);
+         });
+    }
+
 
  renderOption(options) {
     return (
@@ -150,6 +187,11 @@ constructor(props) {
     this.props.navigator.resetTo({
       screen: "Login"
     })
+    //we should also destroy the session here. The above removes all routes from the stack
+  }
+
+  goToTags() {
+   this.navigate('Tags', this.props.user.id, this.props.user.username, this.props.user.averageRating, this.props.shopperExpert, this.props.user.active, this.props.user.closedChatSessions, this.props.user.userPreferences, this.state.tags);
     //we should also destroy the session here. The above removes all routes from the stack
   }
 
@@ -235,6 +277,8 @@ return (
 
             {this.renderOption({ icon: chatHistoryIcon, value: "Log Out", method: this.logOut.bind(this, this.props) })}
 
+            {this.state.shopperExpert ? this.renderOption({ icon: chatHistoryIcon, value: "Expert At", method: this.goToTags.bind(this, this.props) }) : null}
+
         </View>
       </View>
     );
@@ -290,6 +334,7 @@ counter: {
  color: '#fff',
  fontSize: 15,
  marginTop: 5,
+ fontSize: 13
 },
 stats: {
   flexDirection: 'row',

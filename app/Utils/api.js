@@ -9,6 +9,22 @@ var api = {
       console.log('results', results);
       return results;
     });
+  },
+  addTag(userId, username, type, tag) {
+    var url = connection + '/api/addTag/'+userId+'/'+username+'/'+type+'/'+tag+'/tags';
+    return fetch(url, {
+      method: 'POST'
+    }).then((res) => res.json()).then(function(tag) {
+      console.log('tag added', tag);
+      return tag;
+    });
+  },
+  getUserTags(type, userId) {
+    var url = connection + '/api/search/tags/'+type+'/userID/'+userId;
+    return fetch(url).then((res) => res.json()).then(function(tags) {
+      console.log('tags', tags);
+      return tags;
+    });
   }
 };
 
