@@ -147,20 +147,6 @@ export default class HomeView extends Component {
           </Text>
 
           <Text
-            name="ByCategory"
-            user={this.props.user}
-            onPress={this.navigateTo.bind(this, "ByCategory", this.props.user)}>
-              By Category
-          </Text>
-
-          <Text
-            name="TopExperts"
-            user={this.props.user}
-            onPress={this.navigateTo.bind(this, "TopExperts", this.props.user)}>
-              Top Experts
-          </Text>
-
-          <Text
             name="Wishlist"
             user={this.props.user}
             onPress={this.navigateTo.bind(this, "Wishlist", this.props.user)}>
