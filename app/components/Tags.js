@@ -15,47 +15,77 @@ import Separator from './Separator';
 import { List, ListItem } from 'react-native-elements';
 var api = require('../Utils/api');
 
-
 // In the video there are a couple errors, fixed them so it would build.
 export default class Tags extends Component{
     constructor(props){
         super(props);
+        console.log('tags props', props.user);
+
         this.ds = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
+
         this.state = {
-            dataSource: this.ds.cloneWithRows(props.user.tags),
+            dataSource: this.ds.cloneWithRows(props.user.tags || ['Add Your Expertise to Connect with Customers!!']),
             tag: '',
-            error: ''
+            error: '',
+            expert: this.props.user.id
         };
     }
 
     componentDidMount() {
-        this.getUserTags();
-    }
-
-    getUserTags() {
+        console.log('COMPONENT DID MOUNT CALLED!');
+        var ds = this.ds;
         var self = this;
-                var ds = this.ds;
-         return api.getUserTags("expert", 2)
-            .then((data) => {
-              console.log('component mounted!', data.hits.hits);
-              var listItems = data.hits.hits;
-              var tags = [];
+        console.log('this stte expr', this.state.expert)
+        api.getUserTags("expert", this.state.expert)
+                    .then((data) => {
 
-              for (var i = 0; i < listItems.length; i++) {
-                tags.push(listItems[i]["_source"].tag);
-              }
-              console.log('JSON TAGS', JSON.stringify(tags));
-              return tags;
-            }).then(function(tags) {
-                console.log('fucking tags', tags);
-            self.setState({
-                dataSource: ds.cloneWithRows(tags)
-              });
+                        console.log('component did mount tags.js DATA', data);
 
-            }).catch((error) => {
-            console.log('Request failed', error);
-         });
+                        var listItems = data.hits.hits;
+                        var tags = [];
+
+                        for (var i = 0; i < listItems.length; i++) {
+                            tags.push(listItems[i]["_source"].tag);
+                        }
+                        console.log('JSON TAGS', JSON.stringify(tags));
+                        return tags;
+                    }).then(function(tags) {
+                        console.log('tags inside component', tags);
+                        self.setState({
+                            dataSource: ds.cloneWithRows(tags)
+                        });
+                    }).catch((error) => {
+                        console.log('Request failed', error);
+                    });
     }
+
+    // getUserTags() {
+    //      var self = this;
+    //      var ds = this.ds;
+    //      return api.getUserTags("expert", expert)
+    //         .then((data) => {
+    //           console.log('component mounted!', data.hits.hits);
+              // var listItems = data.hits.hits;
+              // var tags = [];
+
+              // for (var i = 0; i < listItems.length; i++) {
+              //   tags.push(listItems[i]["_source"].tag);
+              // }
+              // console.log('JSON TAGS', JSON.stringify(tags));
+              // return tags;
+
+    //         }).then(function(tags) {
+    //             console.log('fucking tags', tags);
+    //        if (tags) {
+    //         self.setState({
+    //             dataSource: ds.cloneWithRows(tags)
+    //             });
+    //         }
+
+    //         }).catch((error) => {
+    //         console.log('Request failed', error);
+    //      });
+    // }
 
     handleChange(e){
         this.setState({
@@ -64,21 +94,60 @@ export default class Tags extends Component{
     }
 
     handleSubmit(){
-        var tag = this.state.tag;
-        var ds = this.ds;
-        var self = this;
+       var ds = this.ds;
+       var self = this;
+       var tag = this.state.tag;
         this.setState({
             tag: ''
         });
-        api.addTag(2, this.props.user.username, "expert", tag)
+        api.addTag(this.state.expert, this.props.user.username, "expert", tag)
             .then((data) => {
-                return data
-            }).then(function(data) {
-                console.log('success tags.js', data);
-                self.getUserTags();
+                return data;
+            }).then(function() {
+                return api.getUserTags("expert", self.state.expert)
+                    .then((data) => {
+
+                        var listItems = data.hits.hits;
+                        var tags = [];
+
+                        for (var i = 0; i < listItems.length; i++) {
+                            tags.push(listItems[i]["_source"].tag);
+                        }
+                        console.log('JSON TAGS', JSON.stringify(tags));
+                        return tags;
+
+                    }).then(function(tags) {
+                        console.log('tags SUBMIT inside component', tags);
+                        self.setState({
+                            dataSource: ds.cloneWithRows(tags)
+                        });
+                        return tags;
+                    });
+            }).then(function (onemoretest) {
+                console.log('onemoretest', onemoretest);
+                return api.getUserTags("expert", self.state.expert)
+                    .then((data) => {
+
+                        var listItems = data.hits.hits;
+                        var tags = [];
+
+                        for (var i = 0; i < listItems.length; i++) {
+                            tags.push(listItems[i]["_source"].tag);
+                        }
+                        console.log('JSON TAGS', JSON.stringify(tags));
+                        return tags;
+
+                    }).then(function(tags) {
+                        console.log('tags SUBMIT inside component', tags);
+                        self.setState({
+                            dataSource: ds.cloneWithRows(tags)
+                        });
+                        return tags;
+                    });
             })
             .catch((error) => {
                 console.log('Request failed', error);
+                this.setState({error});
             });
     }
 
