@@ -117,7 +117,7 @@ class SavvyShopper extends Component {
           if (route.screen === 'Wishlist') {
             return (<Text h1 style={styles.title}>Wishlist</Text>);
           } else if (route.screen !== 'Login') {
-           return (<View style={styles.logo}><Logo size={"logoMedium"} /></View>);
+           return (<View style={styles.logo}><Logo size={"logoSmall"} /></View>);
           }
         },
        }}
