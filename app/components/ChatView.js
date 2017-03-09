@@ -37,12 +37,6 @@ let connection = require('../Utils/connection');
 //   chatSessionID: 'asjdfjsgeragj',
 // }
 
-// FOR DEMO PURPOSES
-// let texts = [
-//       'Cool, I\'ve got the perfect pair!',
-//       'The Bose QuietComfort 35 will change your life.',
-//       'Your welcome, have a great afternoon!'];
-
 export default class ChatView extends Component {
   constructor(props) {
     console.log('ChatView Props:', props);
@@ -80,7 +74,7 @@ export default class ChatView extends Component {
       chatPartner: null,
       category: null,
       username: null,
-      partnerPhoto: null
+      partnerPhoto: 'https://raw.githubusercontent.com/hrr21-triceratops/triceratops/master/app/assets/imgs/user-profile.png'
     };
   }
 
@@ -103,7 +97,7 @@ export default class ChatView extends Component {
     self.chatSession.socket.on('rate', () => {
       console.log("Rate view triggered");
       this.navigate(this.props.user);
-      this.setModalVisible();
+      // this.setModalVisible(); // handled in the navigate method
     });
 
     // IF USER IS NOT AN EXPERT
@@ -233,24 +227,20 @@ export default class ChatView extends Component {
       console.log(response);
     })
     .done();
-
-    // FOR DEMO PURPOSES
-    // this.answerDemo(messages);
-    console.log('All Messages:', this.state.messages);
   }
 
   //Disconnect only applies to client
   disconnect() {
     // EMIT A DISCONNECT EVENT TO TRIGGER A RATING VIEW ON EXPERT
     this.chatSession.socket.emit('showRate', this.chatSession.room);
-    this.navigate(this.props.user);
+    // this.navigate(this.props.user);
   }
 
   navigate(props) {
     this.props.navigator.push({
       screen: 'Home',
       passProps: {
-        user: this.props.user
+        user: props
       }
     });
     this.setModalVisible();
@@ -382,7 +372,15 @@ export default class ChatView extends Component {
           raised title='Rate Expert' />
         }
 
-        <View><RatingView user={this.props.user} userId={this.state.userId} expertId={this.state.expertId} modalVisible={this.state.modalVisible} closeModal={this.closeModal.bind(this)} partner={this.chatSession.partnerPhoto} /></View>
+        <View>
+          <RatingView
+            user={this.props.user}
+            userId={this.props.user.active ? this.chatSession.chatPartner : this.props.user.id}
+            expertId={this.props.user.active ? 0 : this.props.user.id}
+            modalVisible={this.state.modalVisible}
+            closeModal={this.closeModal.bind(this)}
+            partner={this.chatSession.partnerPhoto} />
+        </View>
 
         {this.item &&
           <Modal
