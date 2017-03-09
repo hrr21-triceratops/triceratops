@@ -17,38 +17,6 @@ import { Card, Button } from 'react-native-elements';
 
 let connection = require('../Utils/connection');
 const ratingIcon = require('../assets/imgs/plain-heart.png');
-const items = [
-  {
-    title: 'Bose Quietcomfort 35',
-    expert: 'Sally Lexington',
-    price: '$249.99',
-    image: 'https://images-na.ssl-images-amazon.com/images/I/61QwytXOcxL._SL1500_.jpg'
-  },
-  {
-    title: 'Roku Streaming Stick',
-    expert: 'Cortney Larson',
-    price: '$49.99',
-    image: 'https://images-na.ssl-images-amazon.com/images/I/61bDmdbgigL._SL1500_.jpg'
-  },
-  {
-    title: '13" Laptop Case',
-    expert: 'Frank Corgins',
-    price: '$18.99',
-    image: 'https://images-na.ssl-images-amazon.com/images/I/71MPLadVUcL._SL1500_.jpg'
-  },
-  {
-    title: '40 Oz. Stainless Steel Thermos',
-    expert: 'Amy Farha',
-    price: '$34.99',
-    image: 'https://images-na.ssl-images-amazon.com/images/I/51Qd7clEAxL._SL1000_.jpg'
-  },
-  {
-    title: 'Keurig K55 Coffee Maker',
-    expert: 'Joe Robinson',
-    price: '$89.99',
-    image: 'https://images-na.ssl-images-amazon.com/images/I/61TVn2p8x%2BL._SL1109_.jpg'
-  }
-];
 
 export default class TopExperts extends React.Component {
   constructor(props) {
@@ -96,6 +64,21 @@ export default class TopExperts extends React.Component {
     this.setModalVisible(true);
   }
 
+  removeItem() {
+    // remove from local wishlist array
+    this.wishlist = this.wishlist.reduce((memo, item) => {
+      if (this.item.title !== item.title) {
+        memo.push(item);
+      }
+      return memo;
+    }, []);
+
+    // remove from database
+
+    this.setModalVisible(false);
+    this.item = null;
+  }
+
   render () {
     if (!this.wishlist || !this.wishlist.length) {
       return (
@@ -105,9 +88,8 @@ export default class TopExperts extends React.Component {
       );
     } else {
       return (
-        <View>
-        {this.wishlist &&
-          <ScrollView style={{marginTop: 50}}>
+        <View style={styles.mainContainer}>
+          <ScrollView style={{marginTop: 65}}>
             {this.wishlist.map(function(item, index) {
               return (
                 <Card key={index}>
@@ -127,27 +109,30 @@ export default class TopExperts extends React.Component {
               );
             }, this)}
           </ScrollView>
-        }
           {this.item &&
             <Modal
               animationType={"slide"}
               transparent={false}
               visible={this.state.modalVisible}
               >
-              <View style={styles.mainContainer}>
+              <View style={styles.modalContainer}>
                 <Image source={{uri: this.item.image}}
                   style={{width: 250, height: 250, marginLeft: 30, marginTop: 10}} />
                 <Text style={styles.name}>{this.item.title}</Text>
                 <Text style={styles.price}>{this.item.price}</Text>
-                <Text style={styles.bio}>
-                  This is where the item description goes. Assal asdfn wea sdlfnwa wena jknsdf ewalsn asdf asdfjn weafl asdo awef alkjsdf alsdf aiuehfwue askdjnv jwefb wasdf hafh uahsdf alkjwef basdf asdfj ewab bsdfjk asde asd aajsdfhl asdljfj asdfe.
-                </Text>
+                <Text style={styles.bio}>{this.item.comment}</Text>
                 <Button
                   backgroundColor='#03A9F4'
                   buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
                   style={styles.button}
                   onPress={() => {AlertIOS.alert('Item Purchased.');}}
                   raised title='Purchase' />
+                <Button
+                  backgroundColor='#03A9F4'
+                  buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
+                  style={styles.button}
+                  onPress={() => {this.removeItem()}}
+                  raised title='Delete' />
                 <Button
                   backgroundColor='#03A9F4'
                   buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
@@ -167,6 +152,11 @@ export default class TopExperts extends React.Component {
 
 var styles = StyleSheet.create({
   mainContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center'
+  },
+  modalContainer: {
     flex: 1,
     padding: 30,
     flexDirection: 'column',

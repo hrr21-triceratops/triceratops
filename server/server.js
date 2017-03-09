@@ -9,11 +9,8 @@ const expertRoutes = require('./routes/expertRoutes.js');
 const preferenceRoutes = require('./routes/preferenceRoutes');
 const ratingRoutes = require('./routes/ratingRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
-<<<<<<< HEAD
 const searchRoutes = require('./routes/searchRoutes');
-=======
 const wishlistRoutes = require('./routes/wishlistRoutes');
->>>>>>> Create api endpoints for getting and posting wishlist items
 const morgan = require('morgan');
 
 //Global App Middleware that applies to all routes
@@ -28,11 +25,8 @@ app.use('/api', expertRoutes);
 app.use('/api', preferenceRoutes);
 app.use('/api', ratingRoutes);
 app.use('/api', categoryRoutes);
-<<<<<<< HEAD
 app.use('/api', searchRoutes);
-=======
 app.use('/api', wishlistRoutes);
->>>>>>> Create api endpoints for getting and posting wishlist items
 
 /////////////////////////////////////
 ////////// SOCKET.IO SETUP //////////

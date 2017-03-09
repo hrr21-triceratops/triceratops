@@ -10,6 +10,7 @@ import {
 import { FormLabel, FormInput, Button } from 'react-native-elements';
 
 let connection = require('../Utils/connection');
+let profilePic = 'https://raw.githubusercontent.com/hrr21-triceratops/triceratops/master/app/assets/imgs/user-profile.png';
 
 export default class LoginView extends Component {
 
@@ -22,32 +23,13 @@ export default class LoginView extends Component {
     };
   }
 
-  navigate(scene, id, username, averageRating, shopperExpert, active, closedChatSessions, userPreferences, profileImage) {
-    if (id.id) {
-      this.props.navigator.resetTo({
+  navigate(scene, user) {
+    this.props.navigator.resetTo({
       screen: scene,
       passProps: {
-        user: id
+        user: user
       }
     });
-    } else {
-      this.props.navigator.resetTo({
-      screen: scene,
-      passProps: {
-        user: {
-          id: id,
-          username: username,
-          averageRating: averageRating,
-          shopperExpert: shopperExpert,
-          profileImage: profileImage,
-          active: active,
-          closedChatSessions: closedChatSessions,
-          userPreferences: userPreferences
-        }
-      }
-    });
-    }
-
   }
 
   userLogin() {
@@ -72,7 +54,16 @@ export default class LoginView extends Component {
         if (!user) {
           AlertIOS.alert('Incorrect username or password.');
         } else {
-          this.navigate('Home', user.id, user.username, user.averageRating, user.shopperExpert, user.active, user.closedChatSessions, user.userPreferences, user.profileImage);
+          let userToPass = {};
+          userToPass.id = user.id;
+          userToPass.user = user.username;
+          userToPass.averageRating = user.averageRating;
+          userToPass.shopperExpert = user.shopperExpert;
+          userToPass.active = user.active;
+          userToPass.closedChatSessions = user.closedChatSessions;
+          userToPass.userPreferences = user.userPreferences;
+          userToPass.profileImage = user.profileImage || profilePic;
+          this.navigate('Home', userToPass);
         }
       })
       .done();
@@ -109,7 +100,7 @@ export default class LoginView extends Component {
           userToPass.active = user.active;
           userToPass.closedChatSessions = user.closedChatSessions;
           userToPass.userPreferences = user.userPreferences;
-          // this.navigate('Home', user.id, user.username, user.averageRating, user.shopperExpert, user.active, user.closedChatSessions, user.userPreferences);
+          userToPass.profileImage = user.profileImage || profilePic;
           this.navigate('Home', userToPass);
         }
       })

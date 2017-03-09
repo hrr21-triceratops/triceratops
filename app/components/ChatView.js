@@ -60,14 +60,10 @@ export default class ChatView extends Component {
     this.renderCustomActions = this.renderCustomActions.bind(this);
     this.renderBubble = this.renderBubble.bind(this);
     this.renderFooter = this.renderFooter.bind(this);
-<<<<<<< HEAD
     this.disconnect = this.disconnect.bind(this);
     this.navigate = this.navigate.bind(this);
-=======
     this.item = null; // Currently selected item in chat (recommendation)
-<<<<<<< HEAD
->>>>>>> Make modal pop up on click to image in chat
-=======
+
     this.wish = {
       image: null,
       title: null,
@@ -75,7 +71,6 @@ export default class ChatView extends Component {
       comment: null,
       expert: null
     };
->>>>>>> Allow users to update title, price and comments before adding items to wishlist
 
     // MERGED FROM OLD CHAT CODE
     this.chatSession = {
@@ -224,7 +219,6 @@ export default class ChatView extends Component {
     this.chatSession.socket.emit('message', message, self.chatSession.room);
 
     // POST MESSAGE TO DB
-<<<<<<< HEAD
     // fetch(connection + '/api/chat/messages', {
   }
 
@@ -248,8 +242,6 @@ export default class ChatView extends Component {
     messages.shift();
     messages.shift();
 
-=======
->>>>>>> Allow addition of images to chat messages
     fetch(connection + '/api/chat/messages', {
       method: 'POST',
       headers: {
@@ -263,19 +255,17 @@ export default class ChatView extends Component {
     })
     .done();
 
-<<<<<<< HEAD
     this.setState((previousState) => {
       return {
         messages: GiftedChat.append(previousState.messages, [messages]),
       };
     });
-=======
+
     // this.setState((previousState) => {
     //   return {
     //     messages: GiftedChat.append(previousState.messages, [message]),
     //   };
     // });
->>>>>>> Remove ability to send current location in chat
 
     // FOR DEMO PURPOSES
     // this.answerDemo(messages);
@@ -288,11 +278,7 @@ export default class ChatView extends Component {
     this.props.navigator.push({
       screen: 'Home',
       passProps: {
-<<<<<<< HEAD
-        user: props
-=======
         user: this.props.user
->>>>>>> Render wishlist dynamically from database
       }
     });
     this.setModalVisible();
@@ -423,17 +409,7 @@ export default class ChatView extends Component {
           raised title='Rate Expert' />
         }
 
-<<<<<<< HEAD
         <View><RatingView user={this.props.user} userId={this.state.userId} expertId={this.state.expertId} modalVisible={this.state.modalVisible} closeModal={this.closeModal.bind(this)} partner={this.chatSession.partnerPhoto} /></View>
-=======
-        <View>
-          <RatingView
-            user={this.props.user}
-            userId={this.props.user.active ? this.chatSession.chatPartner : this.props.user.id}
-            expertId={this.props.user.active ? this.props.user.id : this.chatSession.chatPartner}
-            modalVisible={this.state.modalVisible}
-            closeModal={this.closeModal.bind(this)} />
-          </View>
 
         {this.item &&
           <Modal
@@ -498,7 +474,6 @@ export default class ChatView extends Component {
             </View>
           </Modal>
         }
->>>>>>> Make modal pop up on click to image in chat
       </View>
     );
   }
