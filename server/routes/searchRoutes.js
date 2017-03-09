@@ -32,6 +32,15 @@ router.post('/addTag/:userId/:username/:type/:tag/:index', function(req, res, ne
   });
 });
 
+
+router.get('/suggest/:input', function(req, res, next) {
+  elasticSearch.getSuggestions(req.params.input).then(function(result) {
+    res.json(result);
+  }, function(err) {
+    res.json(err);
+  });
+});
+
 // elasticSearch.deleteIndex("tags");
 elasticSearch.addDocument("customer notes");
 elasticSearch.documentCount("customer aotes");

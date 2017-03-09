@@ -20,12 +20,12 @@ var api = require('../Utils/api');
 export default class Tags extends Component{
     constructor(props){
         super(props);
-        this.ds = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2})
+        this.ds = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
         this.state = {
-            dataSource: this.ds.cloneWithRows(['row1', 'row2']),
+            dataSource: this.ds.cloneWithRows(props.user.tags),
             tag: '',
             error: ''
-        }
+        };
     }
 
     componentDidMount() {
@@ -33,27 +33,25 @@ export default class Tags extends Component{
     }
 
     getUserTags() {
+        var self = this;
+                var ds = this.ds;
          return api.getUserTags("expert", 2)
             .then((data) => {
               console.log('component mounted!', data.hits.hits);
               var listItems = data.hits.hits;
               var tags = [];
 
-              if (tags.length == 20) {
-                tags.pop();
-              }
-
               for (var i = 0; i < listItems.length; i++) {
-                console.log(listItems[i]["_source"].tag);
-                tags.unshift(listItems[i]["_source"].tag);
-                if (tags.length >= 20) {
-                    break;
-                }
+                tags.push(listItems[i]["_source"].tag);
               }
-              console.log('tags', tags);
-              this.setState({
-                dataSource: this.ds.cloneWithRows(tags)
+              console.log('JSON TAGS', JSON.stringify(tags));
+              return tags;
+            }).then(function(tags) {
+                console.log('fucking tags', tags);
+            self.setState({
+                dataSource: ds.cloneWithRows(tags)
               });
+
             }).catch((error) => {
             console.log('Request failed', error);
          });
@@ -67,17 +65,20 @@ export default class Tags extends Component{
 
     handleSubmit(){
         var tag = this.state.tag;
+        var ds = this.ds;
+        var self = this;
         this.setState({
             tag: ''
         });
         api.addTag(2, this.props.user.username, "expert", tag)
             .then((data) => {
-                console.log('success', data);
-                this.getUserTags();
+                return data
+            }).then(function(data) {
+                console.log('success tags.js', data);
+                self.getUserTags();
             })
             .catch((error) => {
                 console.log('Request failed', error);
-                this.setState({error});
             });
     }
 
