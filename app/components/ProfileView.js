@@ -64,11 +64,11 @@ constructor(props) {
         )
       }
     })
-    .done();
+    // .done();
   }
 
 
-  navigate(scene, id, username, averageRating, shopperExpert, active, closedChatSessions, userPreferences, profileImage, tags) {
+  navigate(scene, id, username, averageRating, shopperExpert, active, closedChatSessions, userPreferences, tags, profileImage) {
     if (id) {
       this.props.navigator.push({
         screen: scene,
@@ -99,7 +99,7 @@ constructor(props) {
   }
 
   getUserTags() {
-         return api.getUserTags("expert", 2)
+         return api.getUserTags("expert", this.props.user.id)
             .then((data) => {
               console.log('component mounted!', data.hits.hits);
               var listItems = data.hits.hits;
@@ -117,9 +117,11 @@ constructor(props) {
                 }
               }
               console.log('tags', tags);
+              if (tags) {
               this.setState({
                 tags: tags
               });
+            }
               return tags;
             }).catch((error) => {
             console.log('Request failed', error);

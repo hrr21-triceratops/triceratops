@@ -17,26 +17,26 @@ module.exports = {
       }
     });
   },
-  indiceMapping: function() {
-    return elasticClient.indices.putMapping({
-      index: "tags",
-      type: "expert",
-      body: {
-        properties: {
-          userName: { type: "string" },
-          userID: { type: "string" },
-          userType: { type: "string" },
-          tag: { type: "string" },
-          suggest: {
-            type: "completion",
-            analyzer: "simple",
-            search_analyzer: "simple",
-            payloads: true
-          }
-        }
-      }
-    });
-  },
+  // indiceMapping: function() {
+  //   return elasticClient.indices.putMapping({
+  //     index: "tags",
+  //     type: "expert",
+  //     body: {
+  //       properties: {
+  //         userName: { type: "string" },
+  //         userID: { type: "string" },
+  //         userType: { type: "string" },
+  //         tag: { type: "string" },
+  //         suggest: {
+  //           type: "completion",
+  //           analyzer: "simple",
+  //           search_analyzer: "simple",
+  //           payloads: true
+  //         }
+  //       }
+  //     }
+  //   });
+  // },
   indexExists: function(indexToCheck) {
     return elasticClient.indices.exists({
       index: indexToCheck
@@ -69,7 +69,7 @@ module.exports = {
       index: index,
       type: type,
       "from": 0,
-      "size": 20,
+      "size": 50,
       body: {
         query: {
           match: {
@@ -78,27 +78,29 @@ module.exports = {
         },
       }
     }).then(function(response) {
+        console.log('response', response);
         return response;
       },
       function(error) {
         console.trace(error.message);
       });
-  },
-  getSuggestions: function(input) {
-    return elasticClient.suggest({
-      index: 'tags',
-      body: {
-        text: input,
-        tagSuggester: {
-          term: {
-            field: 'tag',
-            size: 5
-          }
-        }
-      }
-    }).then(function(response) {
-      console.log('suggest responses', response);
-      return response;
-    });
   }
+  // },
+  // getSuggestions: function(input) {
+  //   return elasticClient.suggest({
+  //     index: 'tags',
+  //     body: {
+  //       text: input,
+  //       tagSuggester: {
+  //         term: {
+  //           field: 'tag',
+  //           size: 5
+  //         }
+  //       }
+  //     }
+  //   }).then(function(response) {
+  //     console.log('suggest responses', response);
+  //     return response;
+  //   });
+  // }
 };
