@@ -97,63 +97,71 @@ export default class TopExperts extends React.Component {
   }
 
   render () {
-    return (
-      <View>
-      {this.wishlist &&
-        <ScrollView style={{marginTop: 50}}>
-          {this.wishlist.map(function(item, index) {
-            return (
-              <Card key={index}>
-                <Image source={{uri: item.image}}
-                style={{width: 100, height: 100, marginLeft: 105, marginBottom: 10}} />
-                <Text style={styles.title}>{item.title}</Text>
-                <Text style={styles.subtitle}>
-                  Recommended by {item.expert}
+    if (!this.wishlist || !this.wishlist.length) {
+      return (
+        <View style={styles.mainContainer}>
+          <Text style={styles.subtitle}>-- No Items to Display --</Text>
+        </View>
+      );
+    } else {
+      return (
+        <View>
+        {this.wishlist &&
+          <ScrollView style={{marginTop: 50}}>
+            {this.wishlist.map(function(item, index) {
+              return (
+                <Card key={index}>
+                  <Image source={{uri: item.image}}
+                  style={{width: 100, height: 100, marginLeft: 105, marginBottom: 10}} />
+                  <Text style={styles.title}>{item.title}</Text>
+                  <Text style={styles.subtitle}>
+                    Recommended by {item.expert}
+                  </Text>
+                  <Button
+                    icon={{name: 'code'}}
+                    backgroundColor='#03A9F4'
+                    buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+                    onPress={() => {this.showItem(item)}}
+                    raised title='MORE' />
+                </Card>
+              );
+            }, this)}
+          </ScrollView>
+        }
+          {this.item &&
+            <Modal
+              animationType={"slide"}
+              transparent={false}
+              visible={this.state.modalVisible}
+              >
+              <View style={styles.mainContainer}>
+                <Image source={{uri: this.item.image}}
+                  style={{width: 250, height: 250, marginLeft: 30, marginTop: 10}} />
+                <Text style={styles.name}>{this.item.title}</Text>
+                <Text style={styles.price}>{this.item.price}</Text>
+                <Text style={styles.bio}>
+                  This is where the item description goes. Assal asdfn wea sdlfnwa wena jknsdf ewalsn asdf asdfjn weafl asdo awef alkjsdf alsdf aiuehfwue askdjnv jwefb wasdf hafh uahsdf alkjwef basdf asdfj ewab bsdfjk asde asd aajsdfhl asdljfj asdfe.
                 </Text>
                 <Button
-                  icon={{name: 'code'}}
                   backgroundColor='#03A9F4'
-                  buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                  onPress={() => {this.showItem(item)}}
-                  raised title='MORE' />
-              </Card>
-            );
-          }, this)}
-        </ScrollView>
-      }
-        {this.item &&
-          <Modal
-            animationType={"slide"}
-            transparent={false}
-            visible={this.state.modalVisible}
-            >
-            <View style={styles.mainContainer}>
-              <Image source={{uri: this.item.image}}
-                style={{width: 250, height: 250, marginLeft: 30, marginTop: 10}} />
-              <Text style={styles.name}>{this.item.title}</Text>
-              <Text style={styles.price}>{this.item.price}</Text>
-              <Text style={styles.bio}>
-                This is where the item description goes. Assal asdfn wea sdlfnwa wena jknsdf ewalsn asdf asdfjn weafl asdo awef alkjsdf alsdf aiuehfwue askdjnv jwefb wasdf hafh uahsdf alkjwef basdf asdfj ewab bsdfjk asde asd aajsdfhl asdljfj asdfe.
-              </Text>
-              <Button
-                backgroundColor='#03A9F4'
-                buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
-                style={styles.button}
-                onPress={() => {AlertIOS.alert('Item Purchased.');}}
-                raised title='Purchase' />
-              <Button
-                backgroundColor='#03A9F4'
-                buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
-                style={styles.button}
-                onPress={() => {
-                  this.setModalVisible(!this.state.modalVisible);
-                }}
-                raised title='Back' />
-            </View>
-          </Modal>
-        }
-      </View>
-    );
+                  buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
+                  style={styles.button}
+                  onPress={() => {AlertIOS.alert('Item Purchased.');}}
+                  raised title='Purchase' />
+                <Button
+                  backgroundColor='#03A9F4'
+                  buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
+                  style={styles.button}
+                  onPress={() => {
+                    this.setModalVisible(!this.state.modalVisible);
+                  }}
+                  raised title='Back' />
+              </View>
+            </Modal>
+          }
+        </View>
+      );
+    }
   }
 }
 
