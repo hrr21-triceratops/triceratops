@@ -27,13 +27,13 @@ constructor(props) {
     favorites: '5',
     chatHistory: '10',
     isActive: false,
-    food: props.user.userPreferences.food,
-    home: props.user.userPreferences.home,
-    mensFashion: props.user.userPreferences.mensFashion,
-    sports: props.user.userPreferences.sports,
-    technology: props.user.userPreferences.technology,
-    entertainment: props.user.userPreferences.entertainment,
-    womensFashion: props.user.userPreferences.womensFashion,
+    food: props.user.userPreferences.food || false,
+    home: props.user.userPreferences.home || false,
+    mensFashion: props.user.userPreferences.mensFashion || false,
+    sports: props.user.userPreferences.sports || false,
+    technology: props.user.userPreferences.technology || false,
+    entertainment: props.user.userPreferences.entertainment || false,
+    womensFashion: props.user.userPreferences.womensFashion || false,
     tags: []
   };
 }
@@ -271,7 +271,7 @@ return (
         {/*<Image style={{width: 50, height: 60, marginLeft: 40}} source={{uri: this.props.user.profileImage}}/>*/}
       </View>
         <View style={styles.stats}>
-            {this.renderOption({ icon: ratingIcon, value: this.props.user.averageRating })}
+            {this.renderOption({ icon: ratingIcon, value: this.state.averageRating })}
 
             {this.renderOption({ icon: chatHistoryIcon, value: this.props.user.closedChatSessions.length })}
 

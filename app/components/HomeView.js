@@ -49,15 +49,26 @@ export default class HomeView extends Component {
       }).done();
     }
     if (!propsToPass) {
-
       console.log('destination', this.props.navigator.state.routeStack[this.props.navigator.state.routeStack.length - 1]);
 
-     if (destination !== this.props.navigator.state.routeStack[this.props.navigator.state.routeStack.length - 1].screen) {
-      this.props.navigator.push({
+      if (destination !== this.props.navigator.state.routeStack[this.props.navigator.state.routeStack.length - 1].screen) {
+        this.props.navigator.push({
           screen: destination
-      });
-     }
-
+        });
+      }
+    }
+    if (!chatPartner) {
+      console.log('destination', destination);
+      console.log('destination2', destination, this.props.navigator.state.routeStack[this.props.navigator.state.routeStack.length - 1].screen);
+      console.log('props', propsToPass);
+      if (destination !== this.props.navigator.state.routeStack[this.props.navigator.state.routeStack.length - 1].screen) {
+        this.props.navigator.push({
+          screen: destination,
+          passProps: {
+            user: propsToPass
+          }
+        });
+      }
     } else {
       console.log('destination', destination);
       console.log('destination2', destination, this.props.navigator.state.routeStack[this.props.navigator.state.routeStack.length - 1].screen);
@@ -131,7 +142,7 @@ export default class HomeView extends Component {
           <Text
             name="Home"
             user={this.props.user}
-            onPress={this.navigateTo.bind(this, "Home")}>
+            onPress={this.navigateTo.bind(this, "Home", this.props.user)}>
               Home
           </Text>
 
@@ -145,14 +156,14 @@ export default class HomeView extends Component {
           <Text
             name="TopExperts"
             user={this.props.user}
-            onPress={this.navigateTo.bind(this, "TopExperts")}>
+            onPress={this.navigateTo.bind(this, "TopExperts", this.props.user)}>
               Top Experts
           </Text>
 
           <Text
             name="Wishlist"
             user={this.props.user}
-            onPress={this.navigateTo.bind(this, "Wishlist")}>
+            onPress={this.navigateTo.bind(this, "Wishlist", this.props.user)}>
               Wishlist
           </Text>
 

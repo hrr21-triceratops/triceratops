@@ -22,7 +22,7 @@ router.post('/chat/messages', function(req, res) {
     if (err) {
       console.log(err);
     } else {
-      res.send('Message Saved.');
+      res.send(savedMessage);
     }
   });
 });
