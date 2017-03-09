@@ -52,7 +52,7 @@ app.get('/api/userQueue/loadUser', function(req, res) {
   if (Object.keys(realQueue).length) {
     res.send(realQueue);
   } else {
-    res.send('No users at this time');
+    res.send({noUser:{username:'No users at this time'}});
   }
 });
 
@@ -72,30 +72,38 @@ io.on('connection', function(socket) {
   socket.emit('id', socket.id);
 
   // RUNS WHEN USER CREATES CHATROOM
-  socket.on('createRoom', function(room, userId, category, username) {
+  socket.on('createRoom', function(room, userId, category, username, profileImage) {
     console.log('Joining Room:', room, 'User:', userId, 'Category:', category, 'username:', username);
     socket.join(room);
     var user = {
       id: userId,
       room: room,
       category: category,
-      username: username
+      username: username,
+      profileImage: profileImage
     };
     realQueue[user.id] = user;
     console.log('Current Real Queue:', realQueue);
   });
 
   // RUNS WHEN EXPERT JOINS CHATROOM
-  socket.on('joinRoom', function(room, expertId, expertUsername) {
+  socket.on('joinRoom', function(room, expertId, expertUsername, expertImage) {
     console.log('Joining Room:', room);
     socket.join(room);
-    io.in(room).emit('expert', expertId, expertUsername);
+    io.in(room).emit('expert', expertId, expertUsername, expertImage);
   });
 
   // RUNS WHEN MESSAGE IS SENT BY USER OR EXPERT
   socket.on('message', function(message, room) {
     console.log('New Message:', message, 'in Room:', room);
     io.in(room).emit('message', message);
+  });
+
+  // RUNS WHEN CLIENT DISCONNECTS
+  socket.on('showRate', function(room) {
+    console.log("Client disconnected, SHOW RATE");
+    console.log("EMITTING RATE");
+    io.in(room).emit('rate');
   });
 });
 

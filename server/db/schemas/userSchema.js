@@ -1,6 +1,6 @@
 var Sequelize = require('sequelize');
 var sequelize = require('../connections.js').sequelize;
-
+// Updated schema to include image
 var userModel = sequelize.define('user', {
   id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
   username: Sequelize.STRING,
@@ -9,6 +9,7 @@ var userModel = sequelize.define('user', {
   shopperExpert: { type: Sequelize.BOOLEAN, defaultValue: false },
   active: { type: Sequelize.BOOLEAN, defaultValue: false },
   closedChatSessions: { type: Sequelize.ARRAY(Sequelize.STRING), defaultValue: [] },
+  profileImage: Sequelize.STRING,
   userPreferences: { type: Sequelize.JSONB, defaultValue: {
       "home": false,
       "food": false,

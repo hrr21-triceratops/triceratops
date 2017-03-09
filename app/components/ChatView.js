@@ -51,6 +51,8 @@ export default class ChatView extends Component {
     this.onReceive = this.onReceive.bind(this);
     this.renderBubble = this.renderBubble.bind(this);
     this.renderFooter = this.renderFooter.bind(this);
+    this.disconnect = this.disconnect.bind(this);
+    this.navigate = this.navigate.bind(this);
 
     // MERGED FROM OLD CHAT CODE
     this.chatSession = {
@@ -59,7 +61,8 @@ export default class ChatView extends Component {
       room: null,
       chatPartner: null,
       category: null,
-      username: null
+      username: null,
+      partnerPhoto: null
     };
   }
 
@@ -79,6 +82,12 @@ export default class ChatView extends Component {
     // MERGED FROM OLD CHAT CODE
     this.chatSession.socket = io(connection, {jsonp: false});
 
+    self.chatSession.socket.on('rate', () => {
+      console.log("Rate view triggered");
+      this.navigate(this.props.user);
+      this.setModalVisible();
+    });
+
     // IF USER IS NOT AN EXPERT
     if(!this.props.user.shopperExpert){
       self.setState((previousState) => {
@@ -90,7 +99,7 @@ export default class ChatView extends Component {
       self.chatSession.category = this.props.category;
       self.chatSession.username = this.props.user.username;
       self.chatSession.socket.on('id', (socketId) => {
-        self.chatSession.socket.emit('createRoom', socketId, self.props.user.id, this.props.category, this.props.user.username);
+        self.chatSession.socket.emit('createRoom', socketId, self.props.user.id, this.props.category, this.props.user.username, this.props.user.profileImage);
         self.chatSession._id = socketId; // Redundant - room is same as _id
         self.chatSession.room = socketId;
         console.log('*** NEW ROOM ***', socketId);
@@ -119,9 +128,10 @@ export default class ChatView extends Component {
         .done();
       });
 
-      self.chatSession.socket.on('expert', (expertId, expertUsername) => {
+      self.chatSession.socket.on('expert', (expertId, expertUsername, expertImage) => {
         self.chatSession.chatPartner = expertId;
-        console.log('ExpertId Recieved:', expertId, expertUsername);
+        self.chatSession.partnerPhoto = expertImage;
+        console.log('ExpertId Recieved:', expertId, expertUsername, expertImage);
         self.setState((previousState) => {
           return {
             typingText: 'Connected with Expert ' + expertUsername
@@ -138,12 +148,13 @@ export default class ChatView extends Component {
 
     // IF USER IS AN EXPERT
     if(this.props.user.shopperExpert){
-      console.log('UserId Recieved:', this.props.chatPartner.id);
+      console.log('UserId Recieved:', this.props.chatPartner);
       self.chatSession.chatPartner = this.props.chatPartner.id;
+      self.chatSession.partnerPhoto = this.props.chatPartner.profileImage;
       self.chatSession.username = this.props.user.username;
       self.chatSession.category = this.props.category;
       console.log('*** JOINING ROOM ***', this.props.chatPartner.room);
-      self.chatSession.socket.emit('joinRoom', this.props.chatPartner.room, self.props.user.id, this.props.user.username);
+      self.chatSession.socket.emit('joinRoom', this.props.chatPartner.room, self.props.user.id, this.props.user.username, this.props.user.profileImage);
       self.chatSession._id = this.props.chatPartner.room;
       self.chatSession.room = this.props.chatPartner.room;
       console.log('chatSession:', self.chatSession);
@@ -190,13 +201,36 @@ export default class ChatView extends Component {
     this.chatSession.socket.emit('message', message, self.chatSession.room);
 
     // POST MESSAGE TO DB
-    fetch(heroku + 'api/chat/messages', {
+    // fetch(connection + '/api/chat/messages', {
+  }
+
+  //Disconnect only applies to client
+  disconnect() {
+    // post all messages in this.state.messages to DB
+    // Send array of messages in this format:
+    // {
+    //   "chatSessionID": "abcdefgh",
+    //   "senderID": 1,
+    //   "receiverID": 3,
+    //   "message": "Get dem beatz",
+    //   "date": "2017-02-23T23:31:05.177Z"
+    // }
+
+    // EMIT A DISCONNECT EVENT TO TRIGGER A RATING VIEW ON EXPERT
+    this.chatSession.socket.emit('showRate', this.chatSession.room);
+
+    // REMOVE FIRST TWO ITEMS IN ARRAY (Connection Verification)
+    let messages = this.state.messages;
+    messages.shift();
+    messages.shift();
+
+    fetch(connection + '/api/chat/messages', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({message})
+      body: JSON.stringify({messages})
     })
     .then((response) => {
       console.log(response);
@@ -205,18 +239,23 @@ export default class ChatView extends Component {
 
     this.setState((previousState) => {
       return {
-        messages: GiftedChat.append(previousState.messages, [message]),
+        messages: GiftedChat.append(previousState.messages, [messages]),
       };
     });
 
     // FOR DEMO PURPOSES
     // this.answerDemo(messages);
     console.log('All Messages:', this.state.messages);
+
+    this.navigate(this.props.user);
   }
 
-  navigate() {
+  navigate(props) {
     this.props.navigator.push({
-      screen: 'Home'
+      screen: 'Home',
+      passProps: {
+        user: props
+      }
     });
     this.setModalVisible();
   }
@@ -274,11 +313,11 @@ export default class ChatView extends Component {
         <Button
           buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
           style={styles.button}
-          onPress={this.navigate.bind(this)}
+          onPress={() => this.disconnect()}
           raised title='Rate Expert' />
         }
 
-        <View><RatingView user={this.props} userId={this.state.userId} expertId={this.state.expertId} modalVisible={this.state.modalVisible} closeModal={this.closeModal.bind(this)} /></View>
+        <View><RatingView user={this.props.user} userId={this.state.userId} expertId={this.state.expertId} modalVisible={this.state.modalVisible} closeModal={this.closeModal.bind(this)} partner={this.chatSession.partnerPhoto} /></View>
       </View>
     );
   }

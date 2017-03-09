@@ -7,6 +7,7 @@ let connection = require('../../Utils/connection');
 
 export default class RatingView extends Component {
   constructor(props) {
+    console.log("RATING PROPS", props);
     super(props);
     this.state = {
       starCount: 0
@@ -47,8 +48,9 @@ export default class RatingView extends Component {
           transparent={false}
           visible={this.props.modalVisible}
           >
-            <Text style={styles.title}>Rate your Expert!</Text>
-            <Image source={require('../../assets/imgs/user-profile.png')} style={styles.container}></Image>
+            {!this.props.user.shopperExpert && <Text style={styles.title}>Rate your Expert!</Text>}
+            {this.props.user.shopperExpert && <Text style={styles.title}>Rate the User!</Text>}
+            <Image style={styles.container} source={{uri: this.props.partner}}/>
             {console.log('user props', this.props)}
 
             <StarRating

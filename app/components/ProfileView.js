@@ -57,7 +57,7 @@ constructor(props) {
       this.setState({
           shopperExpert: bool
        });
-        this.navigate('Home', this.props.user.id, this.props.user.username, this.props.user.averageRating, bool, this.props.user.active, this.props.user.closedChatSessions, this.props.user.userPreferences);
+        this.navigate('Home', this.props.user.id, this.props.user.username, this.props.user.averageRating, bool, this.props.user.active, this.props.user.closedChatSessions, this.props.user.userPreferences, this.props.user.profileImage);
       } else {
         AlertIOS.alert(
           'Account could not be updated.'
@@ -67,7 +67,8 @@ constructor(props) {
     .done();
   }
 
-  navigate(scene, id, username, averageRating, shopperExpert, active, closedChatSessions, userPreferences, tags) {
+
+  navigate(scene, id, username, averageRating, shopperExpert, active, closedChatSessions, userPreferences, profileImage, tags) {
     if (id) {
       this.props.navigator.push({
         screen: scene,
@@ -77,6 +78,7 @@ constructor(props) {
             username: username,
             averageRating: averageRating,
             shopperExpert: shopperExpert,
+            profileImage: profileImage,
             active: active,
             closedChatSessions: closedChatSessions,
             userPreferences: userPreferences,
@@ -200,7 +202,6 @@ constructor(props) {
 render() {
 
 return (
-
     <View style={styles.container}>
         {/*console.log('user this.props', this.props)*/}
         {/*console.log('user this.state', this.state)*/}
@@ -256,13 +257,16 @@ return (
       </View>
 
       <View style={styles.personal}>
-        <Text style={styles.name}>
-           {console.log('THIS USER STATE', this.state)}
-          {this.state.username.indexOf('@') > -1 ? this.state.username.substring(0, this.state.username.indexOf('@')) : this.state.username}
-        </Text>
-        <Text style={styles.occupation}>
-            {this.state.shopperExpert ? "Expert" : "User"}
-        </Text>
+        <View>
+          <Text style={styles.name}>
+             {console.log('THIS USER STATE', this.state)}
+            {this.state.username.indexOf('@') > -1 ? this.state.username.substring(0, this.state.username.indexOf('@')) : this.state.username}
+          </Text>
+          <Text style={styles.occupation}>
+              {this.state.shopperExpert ? "Expert" : "User"}
+          </Text>
+        </View>
+        <Image style={{width: 50, height: 60, marginLeft: 40}} source={{uri: this.props.user.profileImage}}/>
       </View>
         <View style={styles.stats}>
             {this.renderOption({ icon: ratingIcon, value: this.props.user.averageRating })}
@@ -306,6 +310,7 @@ personal: {
  padding: 30,
  backgroundColor: 'rgba(0,0,0,0.5)',
  alignSelf: 'stretch',
+ flexDirection: 'row',
 },
 name: {
  color: '#fff',

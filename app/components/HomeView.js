@@ -157,7 +157,7 @@ export default class HomeView extends Component {
           </Text>
 
         </Tabs>
-         <SearchView style={styles.searchInput} navigator={this.props.user.navigator} user={this.props.user}/>
+         <SearchView style={styles.searchInput} navigator={this.props.navigator} user={this.props.user}/>
           {this.props.user.shopperExpert && button}
           {this.getActive() &&
           <View>
