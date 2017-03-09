@@ -400,7 +400,6 @@ export default class ChatView extends Component {
                   style={styles.searchInput}
                   onChangeText={(text) => {this.wish.title = text}}
                   placeholder={this.wish.title || 'product name'}
-                  placeholderTextColor={'black'}
                 />
               </View>
 
@@ -410,7 +409,6 @@ export default class ChatView extends Component {
                   style={styles.searchInput}
                   onChangeText={(text) => {this.wish.price = text}}
                   placeholder={this.wish.price || 'product price'}
-                  placeholderTextColor={'black'}
                 />
               </View>
 
