@@ -55,36 +55,40 @@ export default class SearchView extends Component {
 
     console.log('submit', this.state.searchTerm);
 
-    this.goToAvailableExperts();
+    if (this.state.categories.includes(this.state.searchTerm.toUpperCase())) {
 
-    // api.getExperts(this.state.searchTerm).then((experts) => {
+        console.log('this.state.searchTerm MATCH MADE!', this.state.searchTerm.toUpperCase());
 
-    //   console.log('experts response', experts);
+        this.goToAvailableExperts();
 
-    //   if (!experts.length) {
+    } else {
 
-    //     this.setState({
-    //       error: 'No Experts Found',
-    //       isLoading: false
-    //     });
+    api.getExpertsByTag(this.state.searchTerm).then((experts) => {
 
-    //   } else {
+      console.log('experts response', experts);
 
-    //     //index.ios.js - pushing a new route onto the stack, able to do this due to index.ios.js component created that wraps SavvyShopper component
+      if (!experts) {
 
-    //     console.log('this.props', this.props);
-    //     console.log('experts', experts);
+        this.setState({
+          error: 'No Experts Found',
+          isLoading: false
+        });
 
-    //     this.goToAvailableExperts(experts).bind(this); //navigate to available experts
+      } else {
 
-    //     this.setState({
-    //       isLoading: false,
-    //       error: false,
-    //       searchTerm: ''
-    //     });
-    //   }
+        console.log('this.props', this.props);
+        console.log('experts', experts);
 
-    // });
+
+        this.setState({
+          isLoading: false,
+          error: false,
+          searchTerm: ''
+        });
+      }
+
+      });
+    }
 
   }
 
