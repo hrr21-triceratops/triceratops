@@ -9,15 +9,12 @@ import {
   TextInput,
 } from 'react-native';
 import {Button} from 'react-native-elements';
-import CameraRollPicker from 'react-native-camera-roll-picker';
-import NavBar, { NavButton, NavButtonText, NavTitle } from 'react-native-nav';
 
 export default class CustomActions extends React.Component {
   constructor(props) {
     super(props);
     this._images = [];
     this.state = {
-      modalVisible: false,
       embedModal: false,
     };
     this.onActionsPress = this.onActionsPress.bind(this);
@@ -36,12 +33,8 @@ export default class CustomActions extends React.Component {
     this.setState({embedModal: visible});
   }
 
-  setModalVisible(visible = false) {
-    this.setState({modalVisible: visible});
-  }
-
   onActionsPress() {
-    const options = ['Embed Image', 'Choose From Library', 'Cancel'];
+    const options = ['Embed Image', 'Cancel'];
     const cancelButtonIndex = options.length - 1;
     this.context.actionSheet().showActionSheetWithOptions({
       options,
@@ -52,9 +45,6 @@ export default class CustomActions extends React.Component {
         case 0:
           this.openEmbedModal(true);
           break;
-        case 1:
-          this.setModalVisible(true);
-          break;
         default:
       }
     });
@@ -62,51 +52,6 @@ export default class CustomActions extends React.Component {
 
   selectImages(images) {
     this.setImages(images);
-  }
-
-  renderNavBar() {
-    return (
-      <NavBar style={{
-        statusBar: {
-          backgroundColor: '#FFF',
-        },
-        navBar: {
-          backgroundColor: '#FFF',
-        },
-      }}>
-        <NavButton onPress={() => {
-          this.setModalVisible(false);
-        }}>
-          <NavButtonText style={{
-            color: '#000',
-          }}>
-            {'Cancel'}
-          </NavButtonText>
-        </NavButton>
-        <NavTitle style={{
-          color: '#000',
-        }}>
-          {'Camera Roll'}
-        </NavTitle>
-        <NavButton onPress={() => {
-          this.setModalVisible(false);
-
-          const images = this.getImages().map((image) => {
-            return {
-              image: image.uri,
-            };
-          });
-          this.props.onSend(images);
-          this.setImages([]);
-        }}>
-          <NavButtonText style={{
-            color: '#000',
-          }}>
-            {'Send'}
-          </NavButtonText>
-        </NavButton>
-      </NavBar>
-    );
   }
 
   renderIcon() {
@@ -132,23 +77,6 @@ export default class CustomActions extends React.Component {
         style={[styles.container, this.props.containerStyle]}
         onPress={this.onActionsPress}
       >
-        <Modal
-          animationType={'slide'}
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            this.setModalVisible(false);
-          }}
-        >
-          {this.renderNavBar()}
-          <CameraRollPicker
-            maximum={10}
-            imagesPerRow={4}
-            callback={this.selectImages}
-            selected={[]}
-          />
-        </Modal>
-
         <Modal
             animationType={"slide"}
             transparent={false}
