@@ -7,9 +7,9 @@ module.exports = {
     });
   },
   createIndex: function(indexToCreate) {
-    return elasticClient.indices.create({ //an index is aplace to store related documeents in ES
-      index: indexToCreate //we can store different types of documents in this 'index'
-    }, function(err, resp, status) { //every field is indexed by default
+    return elasticClient.indices.create({
+      index: indexToCreate
+    }, function(err, resp, status) {
       if (err) {
         console.log(err);
       } else {
@@ -17,26 +17,6 @@ module.exports = {
       }
     });
   },
-  // indiceMapping: function() {
-  //   return elasticClient.indices.putMapping({
-  //     index: "tags",
-  //     type: "expert",
-  //     body: {
-  //       properties: {
-  //         userName: { type: "string" },
-  //         userID: { type: "string" },
-  //         userType: { type: "string" },
-  //         tag: { type: "string" },
-  //         suggest: {
-  //           type: "completion",
-  //           analyzer: "simple",
-  //           search_analyzer: "simple",
-  //           payloads: true
-  //         }
-  //       }
-  //     }
-  //   });
-  // },
   indexExists: function(indexToCheck) {
     return elasticClient.indices.exists({
       index: indexToCheck
@@ -84,44 +64,5 @@ module.exports = {
       function(error) {
         console.trace(error.message);
       });
-  },
-  searchContains: function(index, type, field, value) {
-    return elasticClient.search({
-      index: index,
-      type: type,
-      "from": 0,
-      "size": 50,
-      body: {
-        query: {
-          wildcard: {
-            [`${field}`]: "???"
-          }
-        },
-      }
-    }).then(function(response) {
-        console.log('response', response);
-        return response;
-      },
-      function(error) {
-        console.trace(error.message);
-      });
   }
-  // },
-  // getSuggestions: function(input) {
-  //   return elasticClient.suggest({
-  //     index: 'tags',
-  //     body: {
-  //       text: input,
-  //       tagSuggester: {
-  //         term: {
-  //           field: 'tag',
-  //           size: 5
-  //         }
-  //       }
-  //     }
-  //   }).then(function(response) {
-  //     console.log('suggest responses', response);
-  //     return response;
-  //   });
-  // }
 };

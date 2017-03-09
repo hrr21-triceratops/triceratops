@@ -54,8 +54,8 @@ router.get('/suggest/:input', function(req, res, next) {
 });
 
 // elasticSearch.deleteIndex("tags");
-elasticSearch.addDocument("customer notes");
-elasticSearch.documentCount("customer aotes");
-elasticSearch.searchSuggestions("tags", "expert", "tag", "Amazing"); //index, type, field, value
+// elasticSearch.addDocument("customer notes");
+// elasticSearch.documentCount("customer aotes");
+// elasticSearch.searchSuggestions("tags", "expert", "tag", "Amazing"); //index, type, field, value
 
 module.exports = router;
