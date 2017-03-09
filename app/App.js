@@ -6,6 +6,7 @@ import {
   TouchableHighlight,
   StyleSheet,
   Image,
+  View
 } from 'react-native';
 
 //load views from external files
@@ -20,6 +21,8 @@ import ProfileView from './components/ProfileView';
 import RatingView from './components/shoppers/RatingView';
 import Wishlist from './components/Wishlist';
 import Tags from './components/Tags';
+import Logo from './components/Logo.js';
+
 
 
 //setup the app component to register with App registry, everything happens inside of this wrapper
@@ -113,12 +116,12 @@ class SavvyShopper extends Component {
           }
           if (route.screen === 'Wishlist') {
             return (<Text h1 style={styles.title}>Wishlist</Text>);
-          } else {
-           return (<Text h1 style={styles.title}>Savvy Shopper</Text>);
+          } else if (route.screen !== 'Login') {
+           return (<View style={styles.logo}><Logo size={"logoMedium"} /></View>);
           }
         },
        }}
-       style={{backgroundColor: 'gray'}}
+       style={{backgroundColor: 'white'}}
       />
       }
       />
@@ -137,18 +140,17 @@ const styles = StyleSheet.create({
       backgroundColor: 'blue',
    },
    leftButton: {
-      color: 'white',
+      color: '#00008B',
       margin: 10,
       fontSize: 14,
    },
-   title: {
-      paddingVertical: 10,
-      color: '#ffffff',
-      justifyContent: 'center',
-      fontSize: 20
+   logo: {
+      top: null,
+      color: '#00008B',
+      justifyContent: 'center'
    },
    rightButton: {
-      color: '#ffffff',
+      color: '#00008B',
       margin: 10,
       fontSize: 14
    },

@@ -6,8 +6,11 @@ import {
   TouchableHighlight,
   View,
   AlertIOS,
+  Image
 } from 'react-native';
 import { FormLabel, FormInput, Button } from 'react-native-elements';
+import Logo from './Logo.js';
+
 
 let connection = require('../Utils/connection');
 let profilePic = 'https://raw.githubusercontent.com/hrr21-triceratops/triceratops/master/app/assets/imgs/user-profile.png';
@@ -112,15 +115,15 @@ export default class LoginView extends Component {
     if (this.state.hasAccount) {
       return (
         <View style={styles.container}>
-          <Text style={styles.title}>
-            Sign In
-          </Text>
+          <Logo size={"logoLarge"}/>
           <View>
+            <FormLabel>Username</FormLabel>
             <FormInput
               placeholder="username"
               onChangeText={(text) => this.setState({username: text})}
               style={styles.formInput}
             />
+            <FormLabel>Password</FormLabel>
             <FormInput
               placeholder="password"
               secureTextEntry={true}
@@ -128,10 +131,11 @@ export default class LoginView extends Component {
               style={styles.formInput}
             />
             <Button
-              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10}}
-              backgroundColor='#48BBEC'
+              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 20, width: 310, alignSelf: 'center'}}
+              backgroundColor='#00008B'
               onPress={(this.userLogin.bind(this))}
               raised
+              titleStyle={{fontWeight: 'bold'}}
               title='Login'
             />
           </View>
@@ -140,9 +144,10 @@ export default class LoginView extends Component {
               onPress={(this.userLogin.bind(this))}
               onPress={() => this.setState({hasAccount: false})}
               raised
+              backgroundColor='#00008B'
+              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10, width: 310, alignSelf: 'center'}}
+              titleStyle={{fontWeight: 'bold'}}
               title='Join!'
-              backgroundColor='#48BBEC'
-              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10}}
             />
           </View>
         </View>
@@ -150,27 +155,29 @@ export default class LoginView extends Component {
     } else {
       return (
         <View style={styles.container}>
-          <Text style={styles.title}>
-            Become a Savvy Shopper!
-          </Text>
+          <Logo size={"logoLarge"}/>
           <View>
+            <FormLabel>Username</FormLabel>
             <FormInput
               placeholder="username"
               onChangeText={(text) => this.setState({username: text})}
               style={styles.formInput}
             />
+            <FormLabel>Password</FormLabel>
             <FormInput
               placeholder="password"
               secureTextEntry={true}
               onChangeText={(text) => this.setState({password: text})}
               style={styles.formInput}
             />
+
             <Button
               onPress={(this.userSignup.bind(this))}
               style={styles.button}
               raised
-              backgroundColor='#48BBEC'
-              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
+              backgroundColor='#00008B'
+              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 20, width: 310, alignSelf: 'center' }}
+              titleStyle={{fontWeight: 'bold'}}
               title='Create Account'
             />
           </View>
@@ -178,8 +185,9 @@ export default class LoginView extends Component {
             <Button
               onPress={() => this.setState({hasAccount: true})}
               raised
-              backgroundColor='#48BBEC'
-              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10}}
+              backgroundColor='#00008B'
+              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10, width: 310, alignSelf: 'center'}}
+              titleStyle={{fontWeight: 'bold'}}
               title='Login!'
            />
           </View>
@@ -191,14 +199,20 @@ export default class LoginView extends Component {
 
 var styles = StyleSheet.create({
   container: {
-    padding: 30,
-    marginTop: 65,
+    padding: 15,
+    marginTop: 25,
     alignItems: "stretch",
     marginBottom: 5
   },
+  logo: {
+    height: 250,
+    width: 250,
+    alignSelf: 'center'
+  },
   title: {
     fontSize: 18,
-    marginBottom: 10
+    marginBottom: 10,
+    alignSelf: 'center'
   },
   text: {
     alignSelf: 'center'
@@ -213,6 +227,7 @@ var styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#555555",
     borderRadius: 8,
+    alignSelf: 'stretch',
     color: "#555555"
   },
   buttonText: {
