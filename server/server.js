@@ -25,7 +25,7 @@ app.use('/api', expertRoutes);
 app.use('/api', preferenceRoutes);
 app.use('/api', ratingRoutes);
 app.use('/api', categoryRoutes);
-app.use('/api', searchRoutes);
+// app.use('/api', searchRoutes);
 app.use('/api', wishlistRoutes);
 
 /////////////////////////////////////
