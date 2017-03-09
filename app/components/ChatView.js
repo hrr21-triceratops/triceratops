@@ -288,7 +288,11 @@ export default class ChatView extends Component {
     this.props.navigator.push({
       screen: 'Home',
       passProps: {
+<<<<<<< HEAD
         user: props
+=======
+        user: this.props.user
+>>>>>>> Render wishlist dynamically from database
       }
     });
     this.setModalVisible();

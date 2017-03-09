@@ -52,9 +52,11 @@ const items = [
 
 export default class TopExperts extends React.Component {
   constructor(props) {
+    console.log('Wishlist Props:', props);
     super(props);
     this.state = {
       modalVisible: false,
+      isLoading: true,
     };
 
     this.item = null;
@@ -62,8 +64,8 @@ export default class TopExperts extends React.Component {
   }
 
   componentWillMount() {
-    // Load all items in wishlist
-    // this.getWishlist();
+    // LOAD ALL ITEMS IN USER'S WISHLIST
+    this.getWishlist();
   }
 
   setModalVisible(visible) {
@@ -71,8 +73,8 @@ export default class TopExperts extends React.Component {
   }
 
   getWishlist() {
-    // Get request for items in wishlist
-    fetch(connection + '/api/wishlist/' + this.props.user.id, {
+    var self = this;
+    fetch(connection + '/api/wishlist/' + self.props.user.id, {
       method: "GET",
       headers: {
         'Accept': 'application/json',
@@ -81,7 +83,9 @@ export default class TopExperts extends React.Component {
     })
     .then((response) => response.json())
     .then((wishlist) => {
-      this.wishlist = wishlist;
+      self.wishlist = wishlist;
+      console.log('Wishlist:', wishlist);
+      self.setState({isLoading: false});
     })
     .done();
   }
@@ -95,8 +99,9 @@ export default class TopExperts extends React.Component {
   render () {
     return (
       <View>
+      {this.wishlist &&
         <ScrollView style={{marginTop: 50}}>
-          {items.map(function(item, index) {
+          {this.wishlist.map(function(item, index) {
             return (
               <Card key={index}>
                 <Image source={{uri: item.image}}
@@ -115,6 +120,7 @@ export default class TopExperts extends React.Component {
             );
           }, this)}
         </ScrollView>
+      }
         {this.item &&
           <Modal
             animationType={"slide"}

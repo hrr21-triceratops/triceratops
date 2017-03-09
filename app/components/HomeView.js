@@ -131,7 +131,7 @@ export default class HomeView extends Component {
           <Text
             name="Home"
             user={this.props.user}
-            onPress={this.navigateTo.bind(this, "Home")}>
+            onPress={this.navigateTo.bind(this, "Home", this.props.user)}>
               Home
           </Text>
 
@@ -145,14 +145,14 @@ export default class HomeView extends Component {
           <Text
             name="TopExperts"
             user={this.props.user}
-            onPress={this.navigateTo.bind(this, "TopExperts")}>
+            onPress={this.navigateTo.bind(this, "TopExperts", this.props.user)}>
               Top Experts
           </Text>
 
           <Text
             name="Wishlist"
             user={this.props.user}
-            onPress={this.navigateTo.bind(this, "Wishlist")}>
+            onPress={this.navigateTo.bind(this, "Wishlist", this.props.user)}>
               Wishlist
           </Text>
 
