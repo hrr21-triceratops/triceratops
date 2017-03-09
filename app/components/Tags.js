@@ -19,7 +19,7 @@ var api = require('../Utils/api');
 export default class Tags extends Component{
     constructor(props){
         super(props);
-        console.log('tags props', props.user);
+        console.log('tags props', props.user.tags.length);
 
         this.ds = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
 

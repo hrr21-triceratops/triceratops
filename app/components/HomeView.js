@@ -135,8 +135,8 @@ export default class HomeView extends Component {
     return (
        <View style={styles.mainContainer}>
         <Tabs selected={this.state.page}
-         style={{backgroundColor:'grey'}}
-         selectedStyle={{color:'blue'}}
+         style={{backgroundColor:'white'}}
+         selectedStyle={{color:'#00008B'}}
          onSelect={el=>this.setState({ page: el.props.name })}>
 
           <Text

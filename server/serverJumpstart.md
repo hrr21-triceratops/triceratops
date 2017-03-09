@@ -78,6 +78,8 @@ DROP TABLE categories, experts, preferences, ratings, subcategories, users;
 
 //from root folder
 
+npm install
+DROP DATABASE savvyshopper-test
 mongod
 postgres -D /usr/local/var/postgres
 ./elasticSearch/bin/elasticsearch

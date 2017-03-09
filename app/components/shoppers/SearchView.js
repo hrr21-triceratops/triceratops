@@ -67,7 +67,7 @@ export default class SearchView extends Component {
 
       console.log('experts response', experts);
 
-      if (!experts) {
+      if (!experts.hits.hits.length) {
 
         this.setState({
           error: 'No Experts Found',
@@ -77,8 +77,27 @@ export default class SearchView extends Component {
       } else {
 
         console.log('this.props', this.props);
-        console.log('experts', experts);
+        console.log('experts object', experts);
 
+        var listItems = experts.hits.hits;
+        var expertList = [];
+
+        for (var i = 0; i < listItems.length; i++) {
+          if (!expertList.includes(listItems[i]["_source"].userID)) {
+            expertList.push(listItems[i]["_source"].userID);
+          }
+        }
+
+        console.log('EXPERT LIST', expertList);
+
+        this.props.navigator.push({
+          screen: "TopExperts",
+          passProps: {
+            user: this.props.user,
+            category: this.state.searchTerm,
+            experts: expertList
+            }
+        });
 
         this.setState({
           isLoading: false,
