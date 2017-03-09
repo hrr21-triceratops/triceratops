@@ -23,7 +23,15 @@ export default class LoginView extends Component {
   }
 
   navigate(scene, id, username, averageRating, shopperExpert, active, closedChatSessions, userPreferences, profileImage) {
-    this.props.navigator.resetTo({
+    if (id.id) {
+      this.props.navigator.resetTo({
+      screen: scene,
+      passProps: {
+        user: id
+      }
+    });
+    } else {
+      this.props.navigator.resetTo({
       screen: scene,
       passProps: {
         user: {
@@ -38,6 +46,8 @@ export default class LoginView extends Component {
         }
       }
     });
+    }
+
   }
 
   userLogin() {
@@ -93,7 +103,7 @@ export default class LoginView extends Component {
         } else {
           let userToPass = {};
           userToPass.id = user.id;
-          userToPass.user = user.username;
+          userToPass.username = user.username;
           userToPass.averageRating = user.averageRating;
           userToPass.shopperExpert = user.shopperExpert;
           userToPass.active = user.active;

@@ -15,6 +15,18 @@ router.get('/search/:index/:type/:field/:value', function(req, res, next) {
   });
 });
 
+router.get('/search/contains/:index/:type/:field/:value', function(req, res, next) {
+  var index = req.params.index.toString();
+  var type = req.params.type.toString();
+  var field = req.params.field.toString();
+  var value = req.params.value.toString();
+  elasticSearch.searchContains(index, type, field, value).then(function(result) {
+    res.json(result);
+  }, function(err) {
+    res.json(err);
+  });
+});
+
 //FIND USERS
 //http://localhost:2300/api/search/tags/user/userID/2
 //FIND TAGS

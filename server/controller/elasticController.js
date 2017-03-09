@@ -84,6 +84,27 @@ module.exports = {
       function(error) {
         console.trace(error.message);
       });
+  },
+  searchContains: function(index, type, field, value) {
+    return elasticClient.search({
+      index: index,
+      type: type,
+      "from": 0,
+      "size": 50,
+      body: {
+        query: {
+          wildcard: {
+            [`${field}`]: "???"
+          }
+        },
+      }
+    }).then(function(response) {
+        console.log('response', response);
+        return response;
+      },
+      function(error) {
+        console.trace(error.message);
+      });
   }
   // },
   // getSuggestions: function(input) {

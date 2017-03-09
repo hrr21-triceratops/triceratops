@@ -1,10 +1,18 @@
 let connection = require('./connection');
 
 var api = {
-  getExperts: function(category) {
+  getExpertsByCategory: function(category) {
     console.log('getExperts', category);
     var cat = category.toLowerCase().trim();
     var url = connection + '/api/users/topActiveExperts/' + cat + '/5';
+    return fetch(url).then((res) => res.json()).then(function(results) {
+      console.log('results', results);
+      return results;
+    });
+  },
+  getExpertsByTag: function(tag) {
+    console.log('get experts by tag');
+    var url = connection+'/api/search/tags/expert/tag/'+tag;
     return fetch(url).then((res) => res.json()).then(function(results) {
       console.log('results', results);
       return results;

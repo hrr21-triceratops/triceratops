@@ -56,11 +56,14 @@ export default class SearchView extends Component {
     console.log('submit', this.state.searchTerm);
 
     if (this.state.categories.includes(this.state.searchTerm.toUpperCase())) {
+
         console.log('this.state.searchTerm MATCH MADE!', this.state.searchTerm.toUpperCase());
+
         this.goToAvailableExperts();
+
     } else {
 
-    api.getExperts(this.state.searchTerm).then((experts) => {
+    api.getExpertsByTag(this.state.searchTerm).then((experts) => {
 
       console.log('experts response', experts);
 
