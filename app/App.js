@@ -78,11 +78,7 @@ class SavvyShopper extends Component {
                 var currentRoutes = navigator.getCurrentRoutes(0);
                 return null;
             } else {
-             return (
-              <TouchableHighlight underlayColor={'#e6e6e6'} onPress={() => navigator.pop()}>
-               <Text style={styles.leftButton}>Back</Text>
-              </TouchableHighlight>
-            );
+             return null;
          }},
         RightButton: (route, navigator, index, navState) => {
          },
