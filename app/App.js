@@ -22,6 +22,7 @@ import RatingView from './components/shoppers/RatingView';
 import Wishlist from './components/Wishlist';
 import Tags from './components/Tags';
 import Logo from './components/Logo.js';
+import SearchViewExperts from './components/shoppers/SearchViewExperts';
 
 
 
@@ -47,6 +48,8 @@ class SavvyShopper extends Component {
         return <ShopperView navigator={navigator} {...route.passProps} />
       case "AvailableExperts":
         return <AvailableExperts navigator={navigator} {...route.passProps} />
+      case "TopExpertsSearch":
+        return <SearchViewExperts navigator={navigator} {...route.passProps} />
       case "TopExperts":
         return <TopExperts navigator={navigator} {...route.passProps} />
       case "ByCategory":
