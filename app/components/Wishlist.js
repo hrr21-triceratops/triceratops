@@ -13,6 +13,7 @@ import {
   Modal,
   AlertIOS,
 } from 'react-native';
+import Tabs from 'react-native-tabs';
 import { Card, Button } from 'react-native-elements';
 
 let connection = require('../Utils/connection');
@@ -93,6 +94,52 @@ export default class TopExperts extends React.Component {
     this.item = null;
   }
 
+  navigateTo(destination, propsToPass, chatPartner) {
+    if(destination === 'Chat') {
+      fetch(connection + '/api/userQueue/loadUser/' + chatPartner.id, {
+        method: 'GET'
+      }).done();
+    }
+    if (!propsToPass) {
+      console.log('destination', this.props.navigator.state.routeStack[this.props.navigator.state.routeStack.length - 1]);
+
+      if (destination !== this.props.navigator.state.routeStack[this.props.navigator.state.routeStack.length - 1].screen) {
+        this.props.navigator.push({
+          screen: destination
+        });
+      }
+    }
+    if (!chatPartner) {
+      console.log('destination', destination);
+      console.log('destination2', destination, this.props.navigator.state.routeStack[this.props.navigator.state.routeStack.length - 1].screen);
+      console.log('props', propsToPass);
+      if (destination !== this.props.navigator.state.routeStack[this.props.navigator.state.routeStack.length - 1].screen) {
+        this.props.navigator.push({
+          screen: destination,
+          passProps: {
+            user: propsToPass
+          }
+        });
+      }
+    } else {
+      console.log('destination', destination);
+      console.log('destination2', destination, this.props.navigator.state.routeStack[this.props.navigator.state.routeStack.length - 1].screen);
+
+      console.log('props', propsToPass);
+
+    if (destination !== this.props.navigator.state.routeStack[this.props.navigator.state.routeStack.length - 1].screen) {
+
+      this.props.navigator.push({
+          screen: destination,
+          passProps: {
+            user: propsToPass,
+            chatPartner: chatPartner
+          }
+        });
+      }
+    }
+  }
+
   render () {
     if (!this.wishlist || !this.wishlist.length) {
       return (
@@ -103,19 +150,44 @@ export default class TopExperts extends React.Component {
     } else {
       return (
         <View style={styles.mainContainer}>
-          <ScrollView style={{marginTop: 65}}>
+          <Tabs selected={'Wishlist'}
+         style={{backgroundColor:'#4F4F4F'}}
+         selectedStyle={{color:'#53A9C9'}}>
+
+          <Text
+            name="Home" style={styles.buttonText}
+            user={this.props.user}
+            onPress={this.navigateTo.bind(this, "Home", this.props.user)}>
+              Home
+          </Text>
+
+          <Text
+            name="Wishlist" style={styles.buttonText}
+            user={this.props.user}
+            onPress={this.navigateTo.bind(this, "Wishlist", this.props.user)}>
+              Wishlist
+          </Text>
+
+          <Text
+            name="Profile" style={styles.buttonText}
+            user={this.props.user}
+            onPress={this.navigateTo.bind(this, "Profile", this.props.user)}>
+              Profile
+          </Text>
+        </Tabs>
+          <ScrollView style={{marginTop: 20, marginBottom: 20}}>
             {this.wishlist.map(function(item, index) {
               return (
                 <Card key={index}>
                   <Image source={{uri: item.image}}
-                  style={{width: 100, height: 100, marginLeft: 105, marginBottom: 10}} />
+                  style={{width: 100, height: 100, marginLeft: 75, marginBottom: 10}} />
                   <Text style={styles.title}>{item.title}</Text>
                   <Text style={styles.subtitle}>
                     Recommended by {item.expert}
                   </Text>
                   <Button
                     icon={{name: 'code'}}
-                    backgroundColor='#03A9F4'
+                    backgroundColor='#00008B'
                     buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
                     onPress={() => {this.showItem(item)}}
                     raised title='MORE' />
@@ -136,19 +208,19 @@ export default class TopExperts extends React.Component {
                 <Text style={styles.price}>{this.item.price}</Text>
                 <Text style={styles.bio}>{this.item.comment}</Text>
                 <Button
-                  backgroundColor='#03A9F4'
+                  backgroundColor='#00008B'
                   buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
                   style={styles.button}
                   onPress={() => {AlertIOS.alert('Item Purchased.');}}
                   raised title='Purchase' />
                 <Button
-                  backgroundColor='#03A9F4'
+                  backgroundColor='#00008B'
                   buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
                   style={styles.button}
                   onPress={() => {this.removeItem()}}
                   raised title='Delete' />
                 <Button
-                  backgroundColor='#03A9F4'
+                  backgroundColor='#00008B'
                   buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
                   style={styles.button}
                   onPress={() => {
@@ -168,7 +240,9 @@ var styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: '#F2F2F2',
+    padding: 30
   },
   modalContainer: {
     flex: 1,
@@ -189,8 +263,8 @@ var styles = StyleSheet.create({
     color: 'black'
   },
   buttonText: {
-    fontSize: 18,
-    color: '#111',
+    fontSize: 14,
+    color: '#FFFFFF',
     alignSelf: 'center'
   },
   button: {
