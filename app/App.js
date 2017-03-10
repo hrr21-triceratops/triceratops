@@ -13,8 +13,8 @@ import {
 import LoginView from './components/LoginView';
 import ShopperView from './components/ShopperView';
 import ChatView from './components/ChatView';
-// import TopExperts from './components/TopExperts';
-// import CategoryView from './components/shoppers/CategoryView';
+import TopExperts from './components/TopExperts';
+import CategoryView from './components/shoppers/CategoryView';
 import AvailableExperts from './components/AvailableExperts';
 import HomeView from './components/HomeView';
 import ProfileView from './components/ProfileView';
@@ -88,19 +88,8 @@ class SavvyShopper extends Component {
               </TouchableHighlight>
             );
          }},
-        RightButton: (route, navigator, index, navState) =>
-          { if (route.screen === "Profile" || route.screen === "Login") {
-            return null;
-          } else {
-            return (
-              <TouchableHighlight onPress={() => navigator.push({
-                  screen: "Profile",
-                  passProps: {...route.passProps}
-              })}>
-               <Text style={styles.rightButton}>Profile</Text>
-            </TouchableHighlight>
-            );
-          }},
+        RightButton: (route, navigator, index, navState) => {
+         },
         Title: (route, navigator, index, navState) => {
           if (route.screen === 'Profile') {
             return (<Text h1 style={styles.title}>Profile & Preferences</Text>);
