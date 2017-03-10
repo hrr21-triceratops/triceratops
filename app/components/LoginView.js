@@ -115,7 +115,9 @@ export default class LoginView extends Component {
     if (this.state.hasAccount) {
       return (
         <View style={styles.container}>
-          <Logo size={"logoMediumLarge"}/>
+          <View style={{height: 160}}>
+            <Logo size={"logoMediumLarge"}/>
+          </View>
           <View>
             <FormInput
               placeholder="username"
@@ -153,7 +155,9 @@ export default class LoginView extends Component {
     } else {
       return (
         <View style={styles.container}>
-          <Logo size={"logoMediumLarge"}/>
+          <View style={{height: 160}}>
+            <Logo size={"logoMediumLarge"}/>
+          </View>
           <View>
             <FormInput
               placeholder="username"
@@ -195,7 +199,7 @@ export default class LoginView extends Component {
 
 var styles = StyleSheet.create({
   container: {
-    marginBottom: 5
+
   },
   title: {
     fontSize: 18,
