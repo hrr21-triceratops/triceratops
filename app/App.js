@@ -109,7 +109,18 @@ class SavvyShopper extends Component {
           if (route.screen === 'Wishlist') {
             return (<Text h1 style={styles.title}>Wishlist</Text>);
           } else if (route.screen !== 'Login') {
-           return (<View style={styles.logo}><Logo size={"logoSmall"} /></View>);
+           return (
+            <View
+              style={styles.logo}>
+              <Text h1 style={styles.title}>Savvy
+              <Logo
+                size={"logoSmall"}
+                logoLocation={require('./assets/imgs/savvyShopperLogoOnly.png')}
+              />
+              Shopper
+              </Text>
+            </View>
+            );
           }
         },
        }}
