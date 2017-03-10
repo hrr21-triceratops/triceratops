@@ -137,7 +137,7 @@ export default class HomeView extends Component {
     }
     return (
        <View style={styles.mainContainer}>
-        <Tabs selected={this.state.page}
+        <Tabs selected={'Home'}
          style={{backgroundColor:'#4F4F4F'}}
          selectedStyle={{color:'#53A9C9'}}
          onSelect={el=>this.setState({ page: el.props.name })}>
@@ -162,7 +162,6 @@ export default class HomeView extends Component {
             onPress={this.navigateTo.bind(this, "Profile", this.props.user)}>
               Profile
           </Text>
-
         </Tabs>
         {!this.props.user.shopperExpert &&
          <SearchView style={styles.searchInput} navigator={this.props.navigator} user={this.props.user}/>}
