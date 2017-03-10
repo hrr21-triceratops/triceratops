@@ -205,6 +205,18 @@ render() {
 
 return (
     <View style={styles.container}>
+         <View style={styles.stats}>
+            {this.renderOption({ icon: ratingIcon, value: this.state.averageRating })}
+
+            {this.renderOption({ icon: chatHistoryIcon, value: this.props.user.closedChatSessions.length })}
+
+            {!this.state.shopperExpert ? this.renderOption({ icon: chatHistoryIcon, value: 'Become Expert', method: this.makeExpert.bind(this, this.props, true) }) : this.renderOption({ icon: chatHistoryIcon, value: 'Cancel Expert', method: this.makeExpert.bind(this, this.props, false) })}
+
+            {this.renderOption({ icon: chatHistoryIcon, value: "Log Out", method: this.logOut.bind(this, this.props) })}
+
+            {this.state.shopperExpert ? this.renderOption({ icon: chatHistoryIcon, value: "Expert At", method: this.goToTags.bind(this, this.props) }) : null}
+
+        </View>
         {/*console.log('user this.props', this.props)*/}
         {/*console.log('user this.state', this.state)*/}
       <View style={styles.preferences}>
@@ -270,18 +282,6 @@ return (
         </View>
         {/*<Image style={{width: 50, height: 60, marginLeft: 40}} source={{uri: this.props.user.profileImage}}/>*/}
       </View>
-        <View style={styles.stats}>
-            {this.renderOption({ icon: ratingIcon, value: this.state.averageRating })}
-
-            {this.renderOption({ icon: chatHistoryIcon, value: this.props.user.closedChatSessions.length })}
-
-            {!this.state.shopperExpert ? this.renderOption({ icon: chatHistoryIcon, value: 'Become Expert', method: this.makeExpert.bind(this, this.props, true) }) : this.renderOption({ icon: chatHistoryIcon, value: 'Cancel Expert', method: this.makeExpert.bind(this, this.props, false) })}
-
-            {this.renderOption({ icon: chatHistoryIcon, value: "Log Out", method: this.logOut.bind(this, this.props) })}
-
-            {this.state.shopperExpert ? this.renderOption({ icon: chatHistoryIcon, value: "Expert At", method: this.goToTags.bind(this, this.props) }) : null}
-
-        </View>
       </View>
     );
   }

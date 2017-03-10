@@ -94,21 +94,7 @@ class SavvyShopper extends Component {
         RightButton: (route, navigator, index, navState) => {
          },
         Title: (route, navigator, index, navState) => {
-          if (route.screen === 'Profile') {
-            return (<Text h1 style={styles.title}>Profile & Preferences</Text>);
-          }
-          if (route.screen === 'TopExperts') {
-            return (<Text h1 style={styles.title}>Top Experts</Text>);
-          }
-          if (route.screen === 'ByCategory') {
-            return (<Text h1 style={styles.title}>Categories</Text>);
-          }
-          if (route.screen === 'Tags') {
-            return (<Text h1 style={styles.title}>My Expertise</Text>);
-          }
-          if (route.screen === 'Wishlist') {
-            return (<Text h1 style={styles.title}>Wishlist</Text>);
-          } else if (route.screen !== 'Login') {
+           if (route.screen !== 'Login') {
            return (
             <View
               style={styles.logo}>
