@@ -50,19 +50,21 @@ export default class RatingView extends Component {
           >
             {!this.props.user.shopperExpert && <Text style={styles.title}>Rate your Expert!</Text>}
             {this.props.user.shopperExpert && <Text style={styles.title}>Rate the User!</Text>}
-            <Image style={styles.container} source={{uri: this.props.partner}}/>
+            <Image style={styles.profileImage} source={{uri: this.props.partner}}/>
             {console.log('user props', this.props)}
 
             <StarRating
               disabled={false}
               maxStars={5}
               rating={this.state.starCount}
+              emptyStarColor='#00008B'
+              starColor='#53A9C9'
               selectedStar={(rating) => this.onStarRatingPress(rating)}
             />
 
             <Button
             raised
-            backgroundColor='#48BBEC'
+            backgroundColor='#00008B'
             buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10}}
             title="Submit Rating"
             onPress={() => {
@@ -83,6 +85,12 @@ styles = StyleSheet.create({
     paddingTop: 5,
     margin: 20,
     textAlign: 'center'
+  },
+  profileImage: {
+    width: 200,
+    height: 200,
+    alignSelf: 'center',
+    marginBottom: 20
   },
   container: {
   flex: 1,
