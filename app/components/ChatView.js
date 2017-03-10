@@ -152,6 +152,14 @@ export default class ChatView extends Component {
             connectionStatus: 'Connected with Expert ' + expertUsername
           };
         });
+
+        setTimeout(function() {
+          self.setState((previousState) => {
+            return {
+              connectionStatus: 'button'
+            };
+          });
+        }, 10000);
       });
 
       self.chatSession.socket.on('message', (message) => {
@@ -301,8 +309,23 @@ export default class ChatView extends Component {
           </Text>
         </View>
       );
+    } else if (this.state.connectionStatus === 'button') {
+      render (
+        <View style={styles.footerContainer}>
+          <Button
+            buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
+            style={styles.button}
+            onPress={() => {AlertIOS.alert(
+              'Are you sure?',
+              'Once you leave the chatroom you will not be able to return.',
+              [{text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'}, {text: 'Confirm', onPress: () => this.disconnect()}]
+            );}}
+            raised title='Rate Expert' />
+        </View>
+      );
+    } else {
+      return null;
     }
-    return null;
   }
 
   onPressImage(message) {
@@ -363,17 +386,6 @@ export default class ChatView extends Component {
           renderFooter={this.renderFooter}
           onPressImage={this.onPressImage.bind(this)}
         />
-        {!this.props.user.shopperExpert &&
-        <Button
-          buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
-          style={styles.button}
-          onPress={() => {AlertIOS.alert(
-            'Are you sure?',
-            'Once you leave the chatroom you will not be able to return.',
-            [{text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'}, {text: 'Confirm', onPress: () => this.disconnect()}]
-          );}}
-          raised title='Rate Expert' />
-        }
 
         <View>
           <RatingView
