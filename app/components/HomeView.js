@@ -134,13 +134,15 @@ export default class HomeView extends Component {
     }
     return (
        <View style={styles.mainContainer}>
-        <Tabs selected={this.state.page}
-         style={{backgroundColor:'white'}}
-         selectedStyle={{color:'#00008B'}}
+        <Tabs
+         selected={this.state.page}
+         style={{backgroundColor: '#333333'}}
+         selectedStyle={{color:'white', 'fontWeight': 'bold'}}
          onSelect={el=>this.setState({ page: el.props.name })}>
 
           <Text
             name="Home"
+            style={{color: '#e6e6e6'}}
             user={this.props.user}
             onPress={this.navigateTo.bind(this, "Home", this.props.user)}>
               Home
@@ -148,6 +150,7 @@ export default class HomeView extends Component {
 
           <Text
             name="Wishlist"
+            style={{color: '#e6e6e6'}}
             user={this.props.user}
             onPress={this.navigateTo.bind(this, "Wishlist", this.props.user)}>
               Wishlist
@@ -155,6 +158,7 @@ export default class HomeView extends Component {
 
           <Text
             name="Top Experts"
+            style={{color: '#e6e6e6'}}
             user={this.props.user}
             onPress={this.navigateTo.bind(this, "TopExpertsSearch", this.props.user)}>
               Top Experts
@@ -162,6 +166,7 @@ export default class HomeView extends Component {
 
           <Text
             name="Profile"
+            style={{color: '#e6e6e6'}}
             user={this.props.user}
             onPress={this.navigateTo.bind(this, "Profile", this.props.user)}>
               Profile
@@ -199,7 +204,7 @@ var styles = StyleSheet.create({
         marginTop: 65,
         flexDirection: 'column',
         justifyContent: 'center',
-        backgroundColor: '#48BBEC'
+        backgroundColor: 'white'
     },
     title: {
         marginBottom: 20,

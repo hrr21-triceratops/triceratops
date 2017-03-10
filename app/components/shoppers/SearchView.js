@@ -46,7 +46,7 @@ export default class SearchView extends Component {
     });
   }
 
-  handleSubmit(event) {
+   handleSubmit(event) {
     this.setState({
       isLoading: true
     });
@@ -92,11 +92,11 @@ export default class SearchView extends Component {
     //         }
     //     });
 
-    //     this.setState({
-    //       isLoading: false,
-    //       error: false,
-    //       searchTerm: ''
-    //     });
+        this.setState({
+          isLoading: false,
+          error: false,
+          searchTerm: ''
+        });
     //   }
 
     //   });
@@ -121,7 +121,7 @@ export default class SearchView extends Component {
           onChange={this.handleChange.bind(this)} />
 
           <Button
-          buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
+          buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10, backgroundColor: '#00008B' }}
           style={styles.button}
           onPress={this.handleSubmit.bind(this)}
           raised title='Chat Now!' />
@@ -149,9 +149,9 @@ var styles = StyleSheet.create({
     },
     title: {
         marginBottom: 20,
-        fontSize: 25,
+        fontSize: 40,
         textAlign: 'center',
-        color: '#fff'
+        color: 'black'
     },
     searchInput: {
         height: 50,

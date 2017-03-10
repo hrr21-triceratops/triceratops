@@ -112,13 +112,10 @@ class SavvyShopper extends Component {
            return (
             <View
               style={styles.logo}>
-              <Text h1 style={styles.title}>Savvy
               <Logo
                 size={"logoSmall"}
                 logoLocation={require('./assets/imgs/savvyShopperLogoOnly.png')}
               />
-              Shopper
-              </Text>
             </View>
             );
           }
