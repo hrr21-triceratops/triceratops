@@ -24,7 +24,8 @@ export default class SearchViewExperts extends Component {
       isLoading: false,
       error: false,
       query: '',
-      expertList: []
+      expertList: [],
+      expertsReturned: []
     };
   }
 
@@ -68,10 +69,34 @@ export default class SearchViewExperts extends Component {
           searchTerm: '',
           expertList: expertList
         });
+
         console.log('this.state.expertList', this.state.expertList);
+        this.getExperts(this.state.expertList);
       }
 
     });
+  }
+
+  getExperts(expertList) {
+     var listToFind = [], expertsReturned = [];
+     for (var i = 0; i < expertList.length; i++) {
+      listToFind.push(api.getUser(expertList[i]));
+     }
+
+     Promise.all(listToFind).then(values => {
+        for (var j = 0; j < values.length; j++) {
+          expertsReturned = expertsReturned.concat(values[j]);
+        }
+        console.log('EXPERTS RETURNED', expertsReturned);
+
+        this.setState({
+          expertsReturned: expertsReturned
+        });
+
+        console.log('EXPERTS RETURNED STATE', this.state.expertsReturned);
+      }, reason => {
+        console.log(reason);
+     });
   }
 
   render() {
@@ -82,64 +107,24 @@ export default class SearchViewExperts extends Component {
 
     return (
       <View style={styles.mainContainer}>
-        <SearchBar
-          value={this.state.searchTerm}
-          onChange={this.handleChange.bind(this)} />
+        <TextInput
+            style={styles.searchInput}
+            value={this.state.searchTerm}
+            onChange={this.handleChange.bind(this)}
+            placeholder="Search Experts" />
            <TouchableHighlight
-            style={styles.button}
+              style={styles.button}
               onPress={this.handleSubmit.bind(this)}
               underlayColor="#88D4F5">
               <Text style={styles.buttonText}>Submit</Text>
            </TouchableHighlight>
         <View>
-            <SearchTopExperts />
+            <SearchTopExperts expertsReturned={this.state.expertsReturned} />
        </View>
      </View>
     );
   }
-
 }
-// var styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         flexDirection: 'column'
-//     },
-//     buttonText: {
-//         fontSize: 18,
-//         color: 'white'
-//     },
-//     button: {
-//         height: 60,
-//         backgroundColor: '#48BBEC',
-//         flex: 3,
-//         alignItems: 'center',
-//         justifyContent: 'center'
-//     },
-//     searchInput: {
-//         height: 60,
-//         padding: 10,
-//         fontSize: 18,
-//         color: '#111',
-//         flex: 10
-//     },
-//     rowContainer: {
-//         padding: 10,
-//         top: 60
-//     },
-//     footerContainer: {
-//         backgroundColor: '#E3E3E3',
-//         alignItems: 'center',
-//         flexDirection: 'row'
-//     },
-//     separator: {
-//         height: 1,
-//         backgroundColor: '#E4E4E4',
-//         flex: 1,
-//         marginLeft: 15
-//     }
-// });
-
-
 
 var styles = StyleSheet.create({
     mainContainer: {
@@ -160,7 +145,7 @@ var styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'white',
         borderRadius: 8,
-        color: 'white'
+        color: '#00008B'
     },
     buttonText: {
         fontSize: 18,

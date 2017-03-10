@@ -10,6 +10,13 @@ var api = {
       return results;
     });
   },
+  getUser: function(userid) {
+    var url = connection + '/api/users/' + userid;
+    return fetch(url).then((res) => res.json()).then(function(users) {
+      console.log('users', users);
+      return users;
+    });
+  },
   getExpertsByTag: function(tag) {
     console.log('get experts by tag');
     var url = connection+'/api/search/tags/expert/tag/'+tag;

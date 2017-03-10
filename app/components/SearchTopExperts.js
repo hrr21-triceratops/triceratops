@@ -17,144 +17,30 @@ import Tabs from 'react-native-tabs';
 
 const ratingIcon = require('../assets/imgs/plain-heart.png');
 let connection = require('../Utils/connection');
+
 const list = [
   {
     name: 'Amy Farha',
     avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/female.jpg',
     subtitle: 'Home / Tech',
     rating: 5.0
-  },
-  {
-    name: 'Chris Jackson',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/male.jpg',
-    subtitle: 'Food / Entertainment',
-    rating: 4.8
-  },
-  {
-    name: 'Cortney Larson',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/female.jpg',
-    subtitle: 'Home / Tech',
-    rating: 4.8
-  },
-  {
-    name: 'Ben Thompson',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/male.jpg',
-    subtitle: 'Men\'s Fashion / Food',
-    rating: 4.7
-  },
-  {
-    name: 'Sally Lexington',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/female.jpg',
-    subtitle: 'Tech / Women\'s Fashion',
-    rating: 4.7
-  },
-  {
-    name: 'Jeff Sanders',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/male.jpg',
-    subtitle: 'Entertainment',
-    rating: 4.6
-  },
-  {
-    name: 'Skylar Duncan',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/male.jpg',
-    subtitle: 'Home / Entertainment',
-    rating: 4.2
-  },
-  {
-    name: 'Joe Robinson',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/male.jpg',
-    subtitle: 'Food / Home',
-    rating: 4.1
-  },
-  {
-    name: 'Greg Anthony',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/male.jpg',
-    subtitle: 'Men\'s Fashion',
-    rating: 3.9
-  },
-  {
-    name: 'Molly Morgans',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/female.jpg',
-    subtitle: 'Entertainment / Women\'s Fashion',
-    rating: 3.8
-  },
-  {
-    name: 'Susan Thomas',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/female.jpg',
-    subtitle: 'Food / Home',
-    rating: 3.6
-  },
-  {
-    name: 'Frank Corgins',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/male.jpg',
-    subtitle: 'Men\'s Fashion / Tech',
-    rating: 3.6
-  },
-  {
-    name: 'Rusty Winfield',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/male.jpg',
-    subtitle: 'Food / Entertainment',
-    rating: 3.5
-  },
-  {
-    name: 'Erica Bonnie',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/female.jpg',
-    subtitle: 'Home / Women\'s Fashion',
-    rating: 3.4
-  },
-  {
-    name: 'Nancy Rogan',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/female.jpg',
-    subtitle: 'Tech / Food',
-    rating: 3.4
-  },
-  {
-    name: 'Peter Parsons',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/male.jpg',
-    subtitle: 'Entertainment / Home',
-    rating: 3.4
-  },
+  }
 ];
 
 export default class SearchTopExperts extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalVisible: false
+      modalVisible: false,
+      expertsReturned: []
     };
 
     this.experts = null;
     this.expert = null;
   }
 
-  componentWillMount() {
-    this.getTopExperts();
-  }
-
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
-  }
-
-  getTopExperts() {
-    var self = this;
-    fetch(connection + '/api/users/experts', {
-      method: "GET",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
-    })
-    .then((response) => response.json())
-    .then((experts) => {
-      if (!experts) {
-        console.log('No Registered Experts.');
-      } else {
-        // STORE EXPERTS SOMEWHERE LOCALLY
-        self.experts = experts;
-        console.log('Top Experts:', self.experts);
-      }
-    })
-    .done();
   }
 
   showExpert(expert) {
@@ -166,17 +52,18 @@ export default class SearchTopExperts extends React.Component {
   render () {
     return (
       <View>
+       {console.log('search top experts this.props', this.props.expertsReturned)}
         <ScrollView style={{marginTop: 0}}>
           <List containerStyle={{marginTop: 0}}>
-            {list.map(function(expert, index) {
+            {this.props.expertsReturned.map(function(expert, index) {
               return (
                 <ListItem
                   roundAvatar
                   key={index}
-                  title={expert.name}
-                  subtitle={expert.subtitle}
-                  avatar={{uri:expert.avatar_url}}
-                  badge={{value: expert.rating.toFixed(1), badgeTextStyle: {color: 'white'}, badgeContainerStyle: {marginLeft: -80}}}
+                  title={expert.username}
+                  subtitle={expert.username}
+                  avatar={{uri:'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/female.jpg'}}
+                  badge={{value: parseInt(expert.averageRating), badgeTextStyle: {color: 'white'}, badgeContainerStyle: {marginLeft: -80}}}
                   onPress={() => {this.showExpert(expert)}}
                 />
               );
@@ -190,7 +77,7 @@ export default class SearchTopExperts extends React.Component {
             visible={this.state.modalVisible}
             >
             <View style={styles.mainContainer}>
-              <Image source={{uri: this.expert.avatar_url}}
+              <Image source={{uri: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/female.jpg' }}
                 style={{width: 250, height: 250, marginLeft: 30, marginTop: 10}} />
               <Text style={styles.name}>{this.expert.name}</Text>
               <Text style={styles.category}>{this.expert.subtitle}</Text>
