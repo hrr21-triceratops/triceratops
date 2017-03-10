@@ -45,7 +45,7 @@ export default class ChatView extends Component {
       messages: [],
       modalVisible: false,
       itemVisible: false,
-      connectionStatus: null
+      connectionStatus: 'button'
     };
 
     this._isMounted = false;
