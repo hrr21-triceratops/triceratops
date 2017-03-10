@@ -77,8 +77,12 @@ class SavvyShopper extends Component {
                 route.index = 0;
                 var currentRoutes = navigator.getCurrentRoutes(0);
                 return null;
-            } else {
-             return null;
+            } else if (route.screen === "Tags") {
+             return (
+              <TouchableHighlight onPress={() => navigator.pop()}>
+               <Text style={styles.leftButton}>Back</Text>
+              </TouchableHighlight>
+            );
          }},
         RightButton: (route, navigator, index, navState) => {
          },
@@ -120,6 +124,8 @@ const styles = StyleSheet.create({
    leftButton: {
       color: '#00008B',
       fontSize: 14,
+      textAlign: 'center',
+      marginTop: 15
    },
    logo: {
       top: null,

@@ -282,7 +282,7 @@ var styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: '#F2F2F2',
+    backgroundColor: '#F2F2F2'
   },
   modalContainer: {
     flex: 1,
