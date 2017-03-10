@@ -104,11 +104,11 @@ export default class ChatView extends Component {
 
     // IF USER IS NOT AN EXPERT
     if(!this.props.user.shopperExpert){
-      self.setState((previousState) => {
-        return {
-          connectionStatus: 'Finding your expert...'
-        };
-      });
+      // self.setState((previousState) => {
+      //   return {
+      //     connectionStatus: 'Finding your expert...'
+      //   };
+      // });
 
       self.chatSession.category = this.props.category;
       self.chatSession.username = this.props.user.username;
@@ -301,26 +301,25 @@ export default class ChatView extends Component {
   }
 
   renderFooter(props) {
-    if (this.state.connectionStatus) {
+    if (this.state.connectionStatus === 'button') {
       return (
         <View style={styles.footerContainer}>
-          <Text style={styles.footerText}>
-            {this.state.connectionStatus}
-          </Text>
-        </View>
-      );
-    } else if (this.state.connectionStatus === 'button') {
-      render (
-        <View style={styles.footerContainer}>
           <Button
-            buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
-            style={styles.button}
+            buttonStyle={{backgroundColor: '#4F4F4F', borderRadius: 0, height: 35, width: 150}}
             onPress={() => {AlertIOS.alert(
               'Are you sure?',
               'Once you leave the chatroom you will not be able to return.',
               [{text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'}, {text: 'Confirm', onPress: () => this.disconnect()}]
             );}}
             raised title='Rate Expert' />
+        </View>
+      );
+    } else if (this.state.connectionStatus) {
+      return (
+        <View style={styles.footerContainer}>
+          <Text style={styles.footerText}>
+            {this.state.connectionStatus}
+          </Text>
         </View>
       );
     } else {
