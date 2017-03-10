@@ -19,7 +19,7 @@ export default class TabsNav extends Component {
     console.log('Home Props:', props);
     super(props);
     this.state = {
-      page: '',
+      page: 'Home',
       isActive: false,
       currentUser: null,
       index: 0
@@ -81,7 +81,6 @@ export default class TabsNav extends Component {
 
   render() {
       var screen, self = this;
-      console.log('this.state.page', this.props.navigator);
 
       if (this.props.navigator.state.routeStack[this.props.navigator.state.routeStack.length - 1].screen === 'Profile') {
              screen = <Text
@@ -103,7 +102,7 @@ export default class TabsNav extends Component {
 
     return (
         <Tabs
-         selected={this.state.page}
+         selected={self.state.page}
          style={{backgroundColor: '#333333'}}
          selectedStyle={{color:'white', 'fontWeight': 'bold'}}
          onSelect={el=>this.setState({ page: el.props.name })}>
