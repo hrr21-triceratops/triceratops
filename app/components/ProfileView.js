@@ -220,54 +220,65 @@ return (
         {/*console.log('user this.props', this.props)*/}
         {/*console.log('user this.state', this.state)*/}
       <View style={styles.preferences}>
+        <View style={styles.checkBoxContainer}>
+         <View style={styles.checkBox}>
         <CheckBox
-          center
           title='Home'
+          center
+          containerStyle={{width: 150, height: 50}}
           checked={this.state.home}
           onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "home", !this.state.home)}
         />
 
         <CheckBox
-          center
           title='Food'
+          center
+          containerStyle={{width: 150, height: 50}}
           checked={this.state.food}
           onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "food", !this.state.food)}
         />
 
         <CheckBox
-          center
           title='Tech'
+          center
+          containerStyle={{width: 150, height: 50}}
           checked={this.state.technology}
           onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "technology", !this.state.technology)}
         />
 
         <CheckBox
-          center
           title="Womens Fashion"
+          center
+          containerStyle={{width: 150, height: 50}}
           checked={this.state.womensFashion}
           onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "womensFashion", !this.state.womensFashion)}
         />
 
         <CheckBox
-          center
           title="Mens Fashion"
+          center
+          containerStyle={{width: 150, height: 50}}
           checked={this.state.mensFashion}
           onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "mensFashion", !this.state.mensFashion)}
         />
 
         <CheckBox
-          center
           title="Entertainment"
+          center
+          containerStyle={{width: 150, height: 50}}
           checked={this.state.entertainment}
           onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "entertainment", !this.state.entertainment)}
         />
 
-        <CheckBox
-          center
+        {/*<CheckBox
           title="sports"
+          center
+          containerStyle={{width: 150, height: 50}}
           checked={this.state.sports}
           onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "sports", !this.state.sports)}
-        />
+        />*/}
+        </View>
+        </View>
       </View>
 
       <View style={styles.personal}>
@@ -292,9 +303,22 @@ const styles = StyleSheet.create({
    flex: 1,
    justifyContent: 'center',
    alignItems: 'center',
+   flexDirection: 'column',
    backgroundColor: '#FFFFFF',
     ...StyleSheet.absoluteFillObject,
     top: null
+ },
+ checkBoxContainer: {
+  top: 100,
+  height: 400,
+  width: 400
+ },
+ checkBox: {
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'flex-start',
+  alignSelf: 'center',
+  flexWrap: 'wrap'
  },
   title: {
     fontWeight: 'bold',
@@ -312,7 +336,7 @@ personal: {
  padding: 30,
  backgroundColor: 'rgba(0,0,0,0.5)',
  alignSelf: 'stretch',
- flexDirection: 'row',
+ flexDirection: 'row'
 },
 name: {
  color: '#fff',
@@ -325,10 +349,10 @@ occupation: {
  marginTop: 5,
 },
  selected: {
- tintColor: '#d6ec1b',
+ tintColor: '#00008B',
 },
 icon: {
- tintColor: '#504f9f',
+ tintColor: '#00008B',
  height: 30,
  width: 30,
 },
@@ -339,12 +363,12 @@ counter: {
  fontSize: 13
 },
 stats: {
-  flexDirection: 'row',
+  flexDirection: 'row'
 },
 stat: {
   alignItems: 'center',
   backgroundColor: '#48BBEC',
-  borderColor: '#6e6db1',
+  borderColor: '#00008B',
   borderLeftWidth: 1,
   flex: 1,
   padding: 10,
