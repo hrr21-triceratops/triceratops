@@ -214,10 +214,10 @@ export default class TopExperts extends React.Component {
               Profile
           </Text>
         </Tabs>
-          <ScrollView style={{marginTop: 20, marginBottom: 20}}>
+          <ScrollView style={{marginTop: 50, marginBottom: 50}}>
             {this.wishlist.map(function(item, index) {
               return (
-                <Card key={index}>
+                <Card key={index} containerStyle={{marginLeft: 30, marginRight: 30}}>
                   <Image source={{uri: item.image}}
                   style={{width: 100, height: 100, marginLeft: 75, marginBottom: 10}} />
                   <Text style={styles.title}>{item.title}</Text>
@@ -248,19 +248,19 @@ export default class TopExperts extends React.Component {
                 <Text style={styles.bio}>{this.item.comment}</Text>
                 <Button
                   backgroundColor='#00008B'
-                  buttonStyle={{borderRadius: 0, marginLeft: 10, marginRight: 10, marginBottom: 10, marginTop: 10 }}
+                  buttonStyle={{borderRadius: 0, marginLeft: 10, marginRight: 10, marginBottom: 5, marginTop: 5 }}
                   style={styles.button}
                   onPress={() => {this.purchaseItem(this.item)}}
                   raised title='Purchase' />
                 <Button
                   backgroundColor='#00008B'
-                  buttonStyle={{borderRadius: 0, marginLeft: 10, marginRight: 10, marginBottom: 10, marginTop: 10 }}
+                  buttonStyle={{borderRadius: 0, marginLeft: 10, marginRight: 10, marginBottom: 5, marginTop: 5 }}
                   style={styles.button}
                   onPress={() => {this.removeItem()}}
                   raised title='Delete' />
                 <Button
                   backgroundColor='#00008B'
-                  buttonStyle={{borderRadius: 0, marginLeft: 10, marginRight: 10, marginBottom: 10, marginTop: 10 }}
+                  buttonStyle={{borderRadius: 0, marginLeft: 10, marginRight: 10, marginBottom: 5, marginTop: 5 }}
                   style={styles.button}
                   onPress={() => {
                     this.setModalVisible(!this.state.modalVisible);
@@ -281,7 +281,6 @@ var styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     backgroundColor: '#F2F2F2',
-    padding: 30
   },
   modalContainer: {
     flex: 1,

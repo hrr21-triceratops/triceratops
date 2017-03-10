@@ -467,20 +467,20 @@ export default class ChatView extends Component {
                 </View>
 
                 <Button
-                  backgroundColor='#03A9F4'
-                  buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
+                  backgroundColor='#00008B'
+                  buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 5, marginTop: 5 }}
                   style={styles.button}
                   onPress={() => {this.addToWishlist(this.wish)}}
                   raised title='Add to Wishlist' />
                 <Button
-                  backgroundColor='#03A9F4'
-                  buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
+                  backgroundColor='#00008B'
+                  buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 5, marginTop: 5 }}
                   style={styles.button}
                   onPress={() => {this.purchaseItem(this.wish)}}
                   raised title='Purchase' />
                 <Button
-                  backgroundColor='#03A9F4'
-                  buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
+                  backgroundColor='#00008B'
+                  buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 5, marginTop: 5 }}
                   style={styles.button}
                   onPress={() => {
                     this.setState({itemVisible: false});
