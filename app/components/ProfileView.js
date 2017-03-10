@@ -218,7 +218,7 @@ return (
 
             {!this.state.shopperExpert ? this.renderOption({ icon: BecomeExpertIcon, value: 'Become Expert', method: this.makeExpert.bind(this, this.props, true) }) : this.renderOption({ icon: cancelIcon, value: 'Cancel Expert', method: this.makeExpert.bind(this, this.props, false) })}
 
-            {this.renderOption({ icon: LogoutIcon, value: "Log Out", method: this.logOut.bind(this, this.props) })}
+            {/*this.renderOption({ icon: LogoutIcon, value: "Log Out", method: this.logOut.bind(this, this.props) })*/}
 
             {this.state.shopperExpert ? this.renderOption({ icon: expertiseIcon, value: "Expertise", method: this.goToTags.bind(this, this.props) }) : null}
 
