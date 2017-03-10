@@ -114,11 +114,13 @@ export default class SearchView extends Component {
       <View style={styles.mainContainer}>
         <Text style={styles.title}>Find Expert For</Text>
 
-        <SearchBar
-          lightTheme
+        <TextInput
           style={styles.searchInput}
           value={this.state.username}
-          onChange={this.handleChange.bind(this)} />
+          placeholder={'SEARCH'}
+          placeholderTextColor={'white'}
+          onChange={this.handleChange.bind(this)}
+         />
 
           <Button
           buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10, backgroundColor: '#00008B' }}
@@ -160,7 +162,7 @@ var styles = StyleSheet.create({
         fontSize: 23,
         borderWidth: 1,
         borderColor: 'white',
-        borderRadius: 8,
+        backgroundColor: '#48BBEC',
         color: 'white'
     },
     buttonText: {
