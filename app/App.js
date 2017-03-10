@@ -86,7 +86,7 @@ class SavvyShopper extends Component {
                 return null;
             } else {
              return (
-              <TouchableHighlight onPress={() => navigator.pop()}>
+              <TouchableHighlight underlayColor={'#e6e6e6'} onPress={() => navigator.pop()}>
                <Text style={styles.leftButton}>Back</Text>
               </TouchableHighlight>
             );
