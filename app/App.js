@@ -75,12 +75,7 @@ class SavvyShopper extends Component {
          LeftButton: (route, navigator, index, navState) =>
           {  if (route.screen === "Login" || route.screen === "Home") {
                 route.index = 0;
-                var currentRoutes = navigator.getCurrentRoutes(0)
-                // console.log('current routes', navigator.getCurrentRoutes(0))
-                // console.log('ROUTE', route);
-                // console.log('NAVIGATOR', navigator);
-                // console.log('APP.JS PROPS', route.passProps)
-                // console.log('set or reset route index')
+                var currentRoutes = navigator.getCurrentRoutes(0);
                 return null;
             } else {
              return (
@@ -121,11 +116,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   navigationBar: {
-      backgroundColor: 'blue',
+      backgroundColor: 'blue'
    },
    leftButton: {
       color: '#00008B',
-      margin: 10,
       fontSize: 14,
    },
    logo: {
@@ -135,7 +129,6 @@ const styles = StyleSheet.create({
    },
    rightButton: {
       color: '#00008B',
-      margin: 10,
       fontSize: 14
    },
 });
