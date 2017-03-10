@@ -19,7 +19,7 @@ export default class TabsNav extends Component {
     console.log('Home Props:', props);
     super(props);
     this.state = {
-      page: 'Home',
+      page: '',
       isActive: false,
       currentUser: null,
       index: 0
@@ -72,7 +72,35 @@ export default class TabsNav extends Component {
     }
   }
 
+  logOut(props) {
+    props.navigator.resetTo({
+      screen: "Login"
+    });
+    //we should also destroy the session here. The above removes all routes from the stack
+  }
+
   render() {
+      var screen, self = this;
+      console.log('this.state.page', this.props.navigator);
+
+      if (this.props.navigator.state.routeStack[this.props.navigator.state.routeStack.length - 1].screen === 'Profile') {
+             screen = <Text
+              name="Logout"
+              style={{color: '#e6e6e6'}}
+              user={this.props.user}
+              onPress={this.logOut.bind(this, this.props)}>
+              Logout
+             </Text>
+        } else {
+            screen = <Text
+              name="Profile"
+              style={{color: '#e6e6e6'}}
+              user={this.props.user}
+              onPress={this.navigateTo.bind(this, "Profile", this.props.user)}>
+              Profile
+             </Text>
+        }
+
     return (
         <Tabs
          selected={this.state.page}
@@ -103,14 +131,7 @@ export default class TabsNav extends Component {
             onPress={this.navigateTo.bind(this, "TopExpertsSearch", this.props.user)}>
               Top Experts
           </Text>
-
-          <Text
-            name="Profile"
-            style={{color: '#e6e6e6'}}
-            user={this.props.user}
-            onPress={this.navigateTo.bind(this, "Profile", this.props.user)}>
-              Profile
-          </Text>
+          {screen}
         </Tabs>
     );
   }
