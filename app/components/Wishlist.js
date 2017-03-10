@@ -12,6 +12,7 @@ import {
   ActivityIndicatorIOS,
   Modal,
   AlertIOS,
+  WebView,
 } from 'react-native';
 import Tabs from 'react-native-tabs';
 import { Card, Button } from 'react-native-elements';
@@ -28,6 +29,9 @@ export default class TopExperts extends React.Component {
       isLoading: true,
       purchase: false,
     };
+
+    // add search term with spaces replaced by +
+    this.amazon = 'https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=';
 
     this.item = null;
     this.wishlist = null;
@@ -141,8 +145,35 @@ export default class TopExperts extends React.Component {
     }
   }
 
+  purchaseItem(item) {
+    var title = item.title.split('').map(function(letter) {
+      return letter === ' ' ? '+' : letter;
+    }).join('');
+    item.url = this.amazon + title;
+    console.log('WebView URL:', this.item.url);
+    this.setState({purchase: true});
+  }
+
   render () {
-    if (!this.wishlist || !this.wishlist.length) {
+    if (this.state.purchase) {
+      return (
+        <View style={{flex: 1}}>
+          <WebView
+            source={{uri: this.item.url}}
+            style={{marginTop: 20}}
+          />
+          <Button
+            backgroundColor='#00008B'
+            buttonStyle={{borderRadius: 0, marginLeft: 30, marginRight: 30, marginBottom: 10, marginTop: 10 }}
+            style={styles.button}
+            onPress={() => {
+              this.setState({purchase: false});
+              this.item = null;
+            }}
+            raised title='Back to Wishlist' />
+        </View>
+      );
+    } else if (!this.wishlist || !this.wishlist.length) {
       return (
         <View style={styles.mainContainer}>
           <Text style={styles.subtitle}>-- No Items to Display --</Text>
@@ -212,7 +243,7 @@ export default class TopExperts extends React.Component {
                   backgroundColor='#00008B'
                   buttonStyle={{borderRadius: 0, marginLeft: 10, marginRight: 10, marginBottom: 10, marginTop: 10 }}
                   style={styles.button}
-                  onPress={() => {AlertIOS.alert('Item Purchased.');}}
+                  onPress={() => {this.purchaseItem(this.item)}}
                   raised title='Purchase' />
                 <Button
                   backgroundColor='#00008B'
