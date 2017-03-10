@@ -10,6 +10,7 @@ import {
   CameraRoll,
   Modal,
   Image,
+  WebView,
 } from 'react-native';
 import io from 'socket.io-client';
 import RatingView from './shoppers/RatingView';
@@ -45,7 +46,8 @@ export default class ChatView extends Component {
       messages: [],
       modalVisible: false,
       itemVisible: false,
-      connectionStatus: null
+      connectionStatus: null,
+      purchase: false
     };
 
     this._isMounted = false;
@@ -368,97 +370,131 @@ export default class ChatView extends Component {
     }
   }
 
+  purchaseItem(wish) {
+    if (!wish.title) {
+      AlertIOS.alert('Please add item title.');
+      return;
+    } else {
+      var title = wish.title.split('').map(function(letter) {
+        return letter === ' ' ? '+' : letter;
+      }).join('');
+      wish.url = this.amazon + title;
+      console.log('WebView URL:', this.wish.url);
+      this.setState({purchase: true});
+    }
+  }
+
   render() {
-    return (
-      <View style={{flex: 1}}>
-        <GiftedChat
-          messages={this.state.messages}
-          onSend={this.onSend}
-
-          user={{
-            _id: this.props.user.id, // sent messages should have same user._id
-            name: this.props.user.username, // add optional avatar
-          }}
-
-          renderActions={this.renderCustomActions}
-          renderBubble={this.renderBubble}
-          renderFooter={this.renderFooter}
-          onPressImage={this.onPressImage.bind(this)}
-        />
-
-        <View>
-          <RatingView
-            user={this.props.user}
-            userId={this.props.user.active ? this.chatSession.chatPartner : this.props.user.id}
-            expertId={this.props.user.active ? 0 : this.props.user.id}
-            modalVisible={this.state.modalVisible}
-            closeModal={this.closeModal.bind(this)}
-            partner={this.chatSession.partnerPhoto} />
+    if (this.state.purchase) {
+      return (
+        <View style={{flex: 1}}>
+          <WebView
+            source={{uri: this.wish.url}}
+            style={{marginTop: 20}}
+          />
+          <Button
+            backgroundColor='#00008B'
+            buttonStyle={{borderRadius: 0, marginLeft: 30, marginRight: 30, marginBottom: 10, marginTop: 10 }}
+            style={styles.button}
+            onPress={() => {
+              this.setState({purchase: false});
+              this.item = null;
+            }}
+            raised title='Back to Chat' />
         </View>
+      );
+    } else {
+      return (
+        <View style={{flex: 1}}>
+          <GiftedChat
+            messages={this.state.messages}
+            onSend={this.onSend}
 
-        {this.item &&
-          <Modal
-            animationType={"slide"}
-            transparent={false}
-            visible={this.state.itemVisible}
-            >
-            <View style={styles.mainContainer}>
-              <Image source={{uri: this.item.image}}
-                style={{width: 250, height: 250, marginLeft: 30, marginTop: 10}} />
+            user={{
+              _id: this.props.user.id, // sent messages should have same user._id
+              name: this.props.user.username, // add optional avatar
+            }}
 
-              <View style={{justifyContent: 'center', marginTop: 5}}>
-                <Text style={{marginBottom: -10}}>Item</Text>
-                <TextInput
-                  style={styles.searchInput}
-                  onChangeText={(text) => {this.wish.title = text}}
-                  placeholder={this.wish.title || 'product name'}
-                />
+            renderActions={this.renderCustomActions}
+            renderBubble={this.renderBubble}
+            renderFooter={this.renderFooter}
+            onPressImage={this.onPressImage.bind(this)}
+          />
+
+          <View>
+            <RatingView
+              user={this.props.user}
+              userId={this.props.user.active ? this.chatSession.chatPartner : this.props.user.id}
+              expertId={this.props.user.active ? 0 : this.props.user.id}
+              modalVisible={this.state.modalVisible}
+              closeModal={this.closeModal.bind(this)}
+              partner={this.chatSession.partnerPhoto} />
+          </View>
+
+          {this.item &&
+            <Modal
+              animationType={"slide"}
+              transparent={false}
+              visible={this.state.itemVisible}
+              >
+              <View style={styles.mainContainer}>
+                <Image source={{uri: this.item.image}}
+                  style={{width: 250, height: 250, marginLeft: 30, marginTop: 10}} />
+
+                <View style={{justifyContent: 'center', marginTop: 5}}>
+                  <Text style={{marginBottom: -10}}>Item</Text>
+                  <TextInput
+                    style={styles.searchInput}
+                    onChangeText={(text) => {this.wish.title = text}}
+                    placeholder={this.wish.title || 'product name'}
+                  />
+                </View>
+
+                <View style={{justifyContent: 'center', marginTop: 5}}>
+                  <Text style={{marginBottom: -10}}>Price</Text>
+                  <TextInput
+                    style={styles.searchInput}
+                    onChangeText={(text) => {this.wish.price = text}}
+                    placeholder={this.wish.price || 'product price'}
+                  />
+                </View>
+
+                <View style={{justifyContent: 'center', marginTop: 5}}>
+                  <Text style={{marginBottom: -10}}>Notes</Text>
+                  <TextInput
+                    style={styles.searchInput}
+                    onChangeText={(text) => {this.wish.comment = text}}
+                    placeholder={this.wish.comment || 'note to self'}
+                  />
+                </View>
+
+                <Button
+                  backgroundColor='#03A9F4'
+                  buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
+                  style={styles.button}
+                  onPress={() => {this.addToWishlist(this.wish)}}
+                  raised title='Add to Wishlist' />
+                <Button
+                  backgroundColor='#03A9F4'
+                  buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
+                  style={styles.button}
+                  onPress={() => {this.purchaseItem(this.wish)}}
+                  raised title='Purchase' />
+                <Button
+                  backgroundColor='#03A9F4'
+                  buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
+                  style={styles.button}
+                  onPress={() => {
+                    this.setState({itemVisible: false});
+                    this.item = null;
+                  }}
+                  raised title='Back' />
               </View>
-
-              <View style={{justifyContent: 'center', marginTop: 5}}>
-                <Text style={{marginBottom: -10}}>Price</Text>
-                <TextInput
-                  style={styles.searchInput}
-                  onChangeText={(text) => {this.wish.price = text}}
-                  placeholder={this.wish.price || 'product price'}
-                />
-              </View>
-
-              <View style={{justifyContent: 'center', marginTop: 5}}>
-                <Text style={{marginBottom: -10}}>Notes</Text>
-                <TextInput
-                  style={styles.searchInput}
-                  onChangeText={(text) => {this.wish.comment = text}}
-                  placeholder={this.wish.comment || 'note to self'}
-                />
-              </View>
-
-              <Button
-                backgroundColor='#03A9F4'
-                buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
-                style={styles.button}
-                onPress={() => {this.addToWishlist(this.wish)}}
-                raised title='Add to Wishlist' />
-              <Button
-                backgroundColor='#03A9F4'
-                buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
-                style={styles.button}
-                onPress={() => {AlertIOS.alert('Item Purchased.');}}
-                raised title='Purchase' />
-              <Button
-                backgroundColor='#03A9F4'
-                buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
-                style={styles.button}
-                onPress={() => {
-                  this.setState({itemVisible: false});
-                  this.item = null;
-                }}
-                raised title='Back' />
-            </View>
-          </Modal>
-        }
-      </View>
-    );
+            </Modal>
+          }
+        </View>
+      );
+    }
   }
 }
 

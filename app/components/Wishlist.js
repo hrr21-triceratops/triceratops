@@ -26,6 +26,7 @@ export default class TopExperts extends React.Component {
     this.state = {
       modalVisible: false,
       isLoading: true,
+      purchase: false,
     };
 
     this.item = null;
