@@ -13,8 +13,8 @@ import {
 import LoginView from './components/LoginView';
 import ShopperView from './components/ShopperView';
 import ChatView from './components/ChatView';
-import TopExperts from './components/TopExperts';
-import CategoryView from './components/shoppers/CategoryView';
+// import TopExperts from './components/TopExperts';
+// import CategoryView from './components/shoppers/CategoryView';
 import AvailableExperts from './components/AvailableExperts';
 import HomeView from './components/HomeView';
 import ProfileView from './components/ProfileView';
