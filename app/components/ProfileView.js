@@ -12,6 +12,9 @@ const userImage = require('../assets/imgs/user-profile.png');
 const ratingIcon = require('../assets/imgs/plain-heart.png');
 const chatHistoryIcon = require('../assets/imgs/chat.png');
 const cancelIcon = require('../assets/imgs/cancel.png');
+const LogoutIcon = require('../assets/imgs/Logout.png');
+const BecomeExpertIcon = require('../assets/imgs/becomeExpert.png');
+const expertiseIcon = require('../assets/imgs/expertise.png');
 let connection = require('../Utils/connection');
 var api = require('../Utils/api');
 
@@ -211,11 +214,11 @@ return (
 
             {this.renderOption({ icon: chatHistoryIcon, value: this.props.user.closedChatSessions.length })}
 
-            {!this.state.shopperExpert ? this.renderOption({ icon: chatHistoryIcon, value: 'Become Expert', method: this.makeExpert.bind(this, this.props, true) }) : this.renderOption({ icon: cancelIcon, value: 'Cancel Expert', method: this.makeExpert.bind(this, this.props, false) })}
+            {!this.state.shopperExpert ? this.renderOption({ icon: BecomeExpertIcon, value: 'Become Expert', method: this.makeExpert.bind(this, this.props, true) }) : this.renderOption({ icon: cancelIcon, value: 'Cancel Expert', method: this.makeExpert.bind(this, this.props, false) })}
 
-            {this.renderOption({ icon: chatHistoryIcon, value: "Log Out", method: this.logOut.bind(this, this.props) })}
+            {this.renderOption({ icon: LogoutIcon, value: "Log Out", method: this.logOut.bind(this, this.props) })}
 
-            {this.state.shopperExpert ? this.renderOption({ icon: chatHistoryIcon, value: "Expert At", method: this.goToTags.bind(this, this.props) }) : null}
+            {this.state.shopperExpert ? this.renderOption({ icon: expertiseIcon, value: "Expertise", method: this.goToTags.bind(this, this.props) }) : null}
 
         </View>
         {/*console.log('user this.props', this.props)*/}
