@@ -11,6 +11,7 @@ import { Button, CheckBox } from 'react-native-elements';
 const userImage = require('../assets/imgs/user-profile.png');
 const ratingIcon = require('../assets/imgs/plain-heart.png');
 const chatHistoryIcon = require('../assets/imgs/chat.png');
+const cancelIcon = require('../assets/imgs/cancel.png');
 let connection = require('../Utils/connection');
 var api = require('../Utils/api');
 
@@ -210,7 +211,7 @@ return (
 
             {this.renderOption({ icon: chatHistoryIcon, value: this.props.user.closedChatSessions.length })}
 
-            {!this.state.shopperExpert ? this.renderOption({ icon: chatHistoryIcon, value: 'Become Expert', method: this.makeExpert.bind(this, this.props, true) }) : this.renderOption({ icon: chatHistoryIcon, value: 'Cancel Expert', method: this.makeExpert.bind(this, this.props, false) })}
+            {!this.state.shopperExpert ? this.renderOption({ icon: chatHistoryIcon, value: 'Become Expert', method: this.makeExpert.bind(this, this.props, true) }) : this.renderOption({ icon: cancelIcon, value: 'Cancel Expert', method: this.makeExpert.bind(this, this.props, false) })}
 
             {this.renderOption({ icon: chatHistoryIcon, value: "Log Out", method: this.logOut.bind(this, this.props) })}
 
@@ -270,13 +271,37 @@ return (
           onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "entertainment", !this.state.entertainment)}
         />
 
-        {/*<CheckBox
+        {<CheckBox
           title="sports"
           center
           containerStyle={{width: 150, height: 50}}
           checked={this.state.sports}
           onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "sports", !this.state.sports)}
-        />*/}
+        />}
+
+         {<CheckBox
+          title="Fitness"
+          center
+          containerStyle={{width: 150, height: 50}}
+          checked={this.state.sports}
+          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "sports", !this.state.sports)}
+        />}
+
+        {<CheckBox
+          title="Vacation"
+          center
+          containerStyle={{width: 150, height: 50}}
+          checked={this.state.sports}
+          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "sports", !this.state.sports)}
+        />}
+
+        {<CheckBox
+          title="Nightlife"
+          center
+          containerStyle={{width: 150, height: 50}}
+          checked={this.state.sports}
+          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "sports", !this.state.sports)}
+        />}
         </View>
         </View>
       </View>
@@ -309,7 +334,7 @@ const styles = StyleSheet.create({
     top: null
  },
  checkBoxContainer: {
-  top: 100,
+  top: 50,
   height: 400,
   width: 400
  },
