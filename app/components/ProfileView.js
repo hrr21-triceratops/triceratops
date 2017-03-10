@@ -11,8 +11,14 @@ import { Button, CheckBox } from 'react-native-elements';
 const userImage = require('../assets/imgs/user-profile.png');
 const ratingIcon = require('../assets/imgs/plain-heart.png');
 const chatHistoryIcon = require('../assets/imgs/chat.png');
+const cancelIcon = require('../assets/imgs/cancel.png');
+const LogoutIcon = require('../assets/imgs/Logout.png');
+const BecomeExpertIcon = require('../assets/imgs/becomeExpert.png');
+const expertiseIcon = require('../assets/imgs/expertise.png');
 let connection = require('../Utils/connection');
 var api = require('../Utils/api');
+import TabsNav from './TabsNav';
+
 
 export default class ProfileView extends Component {
 constructor(props) {
@@ -205,83 +211,121 @@ render() {
 
 return (
     <View style={styles.container}>
+         <View style={styles.stats}>
+            {this.renderOption({ icon: ratingIcon, value: this.state.averageRating })}
+
+            {this.renderOption({ icon: chatHistoryIcon, value: this.props.user.closedChatSessions.length })}
+
+            {!this.state.shopperExpert ? this.renderOption({ icon: BecomeExpertIcon, value: 'Become Expert', method: this.makeExpert.bind(this, this.props, true) }) : this.renderOption({ icon: cancelIcon, value: 'Cancel Expert', method: this.makeExpert.bind(this, this.props, false) })}
+
+            {/*this.renderOption({ icon: LogoutIcon, value: "Log Out", method: this.logOut.bind(this, this.props) })*/}
+
+            {this.state.shopperExpert ? this.renderOption({ icon: expertiseIcon, value: "Expertise", method: this.goToTags.bind(this, this.props) }) : null}
+
+        </View>
         {/*console.log('user this.props', this.props)*/}
         {/*console.log('user this.state', this.state)*/}
       <View style={styles.preferences}>
+        <View style={styles.checkBoxContainer}>
+         <View style={styles.checkBox}>
         <CheckBox
-          center
           title='Home'
+          center
+          containerStyle={{width: 150, height: 50}}
           checked={this.state.home}
           onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "home", !this.state.home)}
         />
 
         <CheckBox
-          center
           title='Food'
+          center
+          containerStyle={{width: 150, height: 50}}
           checked={this.state.food}
           onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "food", !this.state.food)}
         />
 
         <CheckBox
-          center
           title='Tech'
+          center
+          containerStyle={{width: 150, height: 50}}
           checked={this.state.technology}
           onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "technology", !this.state.technology)}
         />
 
         <CheckBox
-          center
           title="Womens Fashion"
+          center
+          containerStyle={{width: 150, height: 50}}
           checked={this.state.womensFashion}
           onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "womensFashion", !this.state.womensFashion)}
         />
 
         <CheckBox
-          center
           title="Mens Fashion"
+          center
+          containerStyle={{width: 150, height: 50}}
           checked={this.state.mensFashion}
           onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "mensFashion", !this.state.mensFashion)}
         />
 
         <CheckBox
-          center
           title="Entertainment"
+          center
+          containerStyle={{width: 150, height: 50}}
           checked={this.state.entertainment}
           onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "entertainment", !this.state.entertainment)}
         />
 
-        <CheckBox
-          center
+        {<CheckBox
           title="sports"
+          center
+          containerStyle={{width: 150, height: 50}}
           checked={this.state.sports}
           onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "sports", !this.state.sports)}
-        />
+        />}
+
+         {<CheckBox
+          title="Fitness"
+          center
+          containerStyle={{width: 150, height: 50}}
+          checked={this.state.sports}
+          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "sports", !this.state.sports)}
+        />}
+
+        {<CheckBox
+          title="Vacation"
+          center
+          containerStyle={{width: 150, height: 50}}
+          checked={this.state.sports}
+          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "sports", !this.state.sports)}
+        />}
+
+        {<CheckBox
+          title="Nightlife"
+          center
+          containerStyle={{width: 150, height: 50}}
+          checked={this.state.sports}
+          onPress={this.updatePreference.bind(this, this.props.user.userPreferences, "sports", !this.state.sports)}
+        />}
+        </View>
+        </View>
       </View>
 
       <View style={styles.personal}>
         <View>
           <Text style={styles.name}>
-             {console.log('THIS USER STATE', this.state)}
-            {this.state.username.indexOf('@') > -1 ? this.state.username.substring(0, this.state.username.indexOf('@')) : this.state.username}
+             {//console.log('THIS USER STATE', this.state)
+              }
+            {/*this.state.username.indexOf('@') > -1 ? this.state.username.substring(0, this.state.username.indexOf('@')) : this.state.username}
+               {this.state.shopperExpert ? " - Expert" : " - User"*/}
           </Text>
           <Text style={styles.occupation}>
-              {this.state.shopperExpert ? "Expert" : "User"}
+              {/*this.state.shopperExpert ? "Expert" : "User"*/}
           </Text>
         </View>
         {/*<Image style={{width: 50, height: 60, marginLeft: 40}} source={{uri: this.props.user.profileImage}}/>*/}
       </View>
-        <View style={styles.stats}>
-            {this.renderOption({ icon: ratingIcon, value: this.state.averageRating })}
-
-            {this.renderOption({ icon: chatHistoryIcon, value: this.props.user.closedChatSessions.length })}
-
-            {!this.state.shopperExpert ? this.renderOption({ icon: chatHistoryIcon, value: 'Become Expert', method: this.makeExpert.bind(this, this.props, true) }) : this.renderOption({ icon: chatHistoryIcon, value: 'Cancel Expert', method: this.makeExpert.bind(this, this.props, false) })}
-
-            {this.renderOption({ icon: chatHistoryIcon, value: "Log Out", method: this.logOut.bind(this, this.props) })}
-
-            {this.state.shopperExpert ? this.renderOption({ icon: chatHistoryIcon, value: "Expert At", method: this.goToTags.bind(this, this.props) }) : null}
-
-        </View>
+      <TabsNav navigator={this.props.navigator} user={this.props.user} />
       </View>
     );
   }
@@ -292,9 +336,23 @@ const styles = StyleSheet.create({
    flex: 1,
    justifyContent: 'center',
    alignItems: 'center',
+   flexDirection: 'column',
    backgroundColor: '#FFFFFF',
     ...StyleSheet.absoluteFillObject,
     top: null
+ },
+ checkBoxContainer: {
+  top: 50,
+  height: 400,
+  width: 400,
+  marginTop: 25
+ },
+ checkBox: {
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'flex-start',
+  alignSelf: 'center',
+  flexWrap: 'wrap'
  },
   title: {
     fontWeight: 'bold',
@@ -310,9 +368,9 @@ preferences: {
 },
 personal: {
  padding: 30,
- backgroundColor: 'rgba(0,0,0,0.5)',
+ backgroundColor: 'white',
  alignSelf: 'stretch',
- flexDirection: 'row',
+ flexDirection: 'row'
 },
 name: {
  color: '#fff',
@@ -320,15 +378,11 @@ name: {
  fontSize: 30,
  fontWeight: 'bold',
 },
-occupation: {
- color: '#d6ec1b',
- marginTop: 5,
-},
  selected: {
- tintColor: '#d6ec1b',
+ tintColor: '#00008B',
 },
 icon: {
- tintColor: '#504f9f',
+ tintColor: '#00008B',
  height: 30,
  width: 30,
 },
@@ -339,12 +393,12 @@ counter: {
  fontSize: 13
 },
 stats: {
-  flexDirection: 'row',
+  flexDirection: 'row'
 },
 stat: {
   alignItems: 'center',
   backgroundColor: '#48BBEC',
-  borderColor: '#6e6db1',
+  borderColor: '#00008B',
   borderLeftWidth: 1,
   flex: 1,
   padding: 10,

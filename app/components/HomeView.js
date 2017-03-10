@@ -14,10 +14,8 @@ import SearchView from './shoppers/SearchView';
 // import TopExperts from './TopExperts';
 import AvailableExperts from './AvailableExperts';
 import Tabs from 'react-native-tabs';
-import {
-  SearchBar,
-  Button
-} from 'react-native-elements';
+import { SearchBar, Button } from 'react-native-elements';
+import TabsNav from './TabsNav';
 
 let connection = require('../Utils/connection');
 
@@ -137,41 +135,9 @@ export default class HomeView extends Component {
     }
     return (
        <View style={styles.mainContainer}>
-        <Tabs selected={'Home'}
-         style={{backgroundColor:'#4F4F4F'}}
-         selectedStyle={{color:'#53A9C9'}}
-         onSelect={el=>this.setState({ page: el.props.name })}>
-
-          <Text
-            name="Home" style={styles.buttonText}
-            user={this.props.user}
-            onPress={this.navigateTo.bind(this, "Home", this.props.user)}>
-              Home
-          </Text>
-
-          <Text
-            name="Wishlist" style={styles.buttonText}
-            user={this.props.user}
-            onPress={this.navigateTo.bind(this, "Wishlist", this.props.user)}>
-              Wishlist
-          </Text>
-
-          <Text
-            name="Top Experts" style={styles.buttonText}
-            user={this.props.user}
-            onPress={this.navigateTo.bind(this, "TopExpertsSearch", this.props.user)}>
-              Top Experts
-          </Text>
-
-          <Text name="Profile" style={styles.buttonText}
-            presentationMaster
-            user={this.props.user}
-            onPress={this.navigateTo.bind(this, "Profile", this.props.user)}>
-              Profile
-          </Text>
-        </Tabs>
-        {!this.props.user.shopperExpert &&
-         <SearchView style={styles.searchInput} navigator={this.props.navigator} user={this.props.user}/>}
+          <TabsNav navigator={this.props.navigator} user={this.props.user} />
+         <SearchView style={styles.searchInput} navigator={this.props.navigator} user={this.props.user}/>
+          {this.props.user.shopperExpert && button}
           {this.getActive() &&
           <View>
             {this.state.currentUser && <View style={styles.user}><Text style={styles.userInLine}>{this.state.currentUser.username.toUpperCase()}</Text>
@@ -199,7 +165,8 @@ var styles = StyleSheet.create({
         flex: 1,
         padding: 30,
         flexDirection: 'column',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: 'white'
     },
     title: {
         marginBottom: 20,

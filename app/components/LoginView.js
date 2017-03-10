@@ -115,7 +115,8 @@ export default class LoginView extends Component {
     if (this.state.hasAccount) {
       return (
         <View style={styles.container}>
-          <Logo size={"logoLarge"}/>
+          <Logo size={"logoLarge"}
+                logoLocation={require('../assets/imgs/savvyShopper.png')}/>
           <View>
             <FormLabel>Username</FormLabel>
             <FormInput
@@ -155,7 +156,8 @@ export default class LoginView extends Component {
     } else {
       return (
         <View style={styles.container}>
-          <Logo size={"logoLarge"}/>
+          <Logo size={"logoLarge"}
+                logoLocation={require('../assets/imgs/savvyShopper.png')}/>
           <View>
             <FormLabel>Username</FormLabel>
             <FormInput
