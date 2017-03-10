@@ -115,16 +115,13 @@ export default class LoginView extends Component {
     if (this.state.hasAccount) {
       return (
         <View style={styles.container}>
-          <Logo size={"logoLarge"}
-                logoLocation={require('../assets/imgs/savvyShopper.png')}/>
+          <Logo size={"logoMediumLarge"}/>
           <View>
-            <FormLabel>Username</FormLabel>
             <FormInput
               placeholder="username"
               onChangeText={(text) => this.setState({username: text})}
               style={styles.formInput}
             />
-            <FormLabel>Password</FormLabel>
             <FormInput
               placeholder="password"
               secureTextEntry={true}
@@ -156,16 +153,13 @@ export default class LoginView extends Component {
     } else {
       return (
         <View style={styles.container}>
-          <Logo size={"logoLarge"}
-                logoLocation={require('../assets/imgs/savvyShopper.png')}/>
+          <Logo size={"logoMediumLarge"}/>
           <View>
-            <FormLabel>Username</FormLabel>
             <FormInput
               placeholder="username"
               onChangeText={(text) => this.setState({username: text})}
               style={styles.formInput}
             />
-            <FormLabel>Password</FormLabel>
             <FormInput
               placeholder="password"
               secureTextEntry={true}
@@ -201,19 +195,10 @@ export default class LoginView extends Component {
 
 var styles = StyleSheet.create({
   container: {
-    padding: 15,
-    marginTop: 25,
-    alignItems: "stretch",
     marginBottom: 5
-  },
-  logo: {
-    height: 250,
-    width: 250,
-    alignSelf: 'center'
   },
   title: {
     fontSize: 18,
-    marginBottom: 10,
     alignSelf: 'center'
   },
   text: {
