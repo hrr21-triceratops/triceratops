@@ -66,7 +66,7 @@ export default class ChatView extends Component {
       title: null,
       price: null,
       comment: null,
-      expert: null
+      expert: 'Savvy Shopper'
     };
 
     // MERGED FROM OLD CHAT CODE
@@ -92,7 +92,6 @@ export default class ChatView extends Component {
   componentWillMount() {
     let self = this;
     this._isMounted = true;
-
 
     // MERGED FROM OLD CHAT CODE
     this.chatSession.socket = io(connection, {jsonp: false});
@@ -146,6 +145,7 @@ export default class ChatView extends Component {
       self.chatSession.socket.on('expert', (expertId, expertUsername, expertImage) => {
         self.chatSession.chatPartner = expertId;
         self.chatSession.partnerPhoto = expertImage;
+        self.wish.expert = expertUsername;
         console.log('ExpertId Recieved:', expertId, expertUsername, expertImage);
         self.setState((previousState) => {
           return {
@@ -312,7 +312,6 @@ export default class ChatView extends Component {
     this.wish.image = message.image;
     this.wish.title = message.previousMessage.text;
     this.wish.price = message.nextMessage.text;
-    this.wish.expert = this.chatSession.chatPartner || 0; // 0 for testing
     console.log('Current Wish:', this.wish);
     this.setState({itemVisible: true});
   }
