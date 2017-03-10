@@ -14,7 +14,7 @@ import {
   AlertIOS,
 } from 'react-native';
 import { Card, Button } from 'react-native-elements';
-
+import TabsNav from './TabsNav';
 let connection = require('../Utils/connection');
 const ratingIcon = require('../assets/imgs/plain-heart.png');
 
@@ -98,6 +98,7 @@ export default class TopExperts extends React.Component {
       return (
         <View style={styles.mainContainer}>
           <Text style={styles.subtitle}>-- No Items to Display --</Text>
+          <TabsNav navigator={this.props.navigator} user={this.props.user} />
         </View>
       );
     } else {
@@ -158,6 +159,7 @@ export default class TopExperts extends React.Component {
               </View>
             </Modal>
           }
+          <TabsNav navigator={this.props.navigator} user={this.props.user} />
         </View>
       );
     }

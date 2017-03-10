@@ -13,6 +13,7 @@ import {
   Modal
 } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements';
+import TabsNav from './TabsNav';
 import Tabs from 'react-native-tabs';
 
 const ratingIcon = require('../assets/imgs/plain-heart.png');
@@ -104,6 +105,7 @@ export default class SearchTopExperts extends React.Component {
             </View>
           </Modal>
         }
+         <TabsNav navigator={this.props.navigator} user={this.props.user} />
       </View>
     );
   }

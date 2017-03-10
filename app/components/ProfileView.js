@@ -17,6 +17,8 @@ const BecomeExpertIcon = require('../assets/imgs/becomeExpert.png');
 const expertiseIcon = require('../assets/imgs/expertise.png');
 let connection = require('../Utils/connection');
 var api = require('../Utils/api');
+import TabsNav from './TabsNav';
+
 
 export default class ProfileView extends Component {
 constructor(props) {
@@ -312,15 +314,18 @@ return (
       <View style={styles.personal}>
         <View>
           <Text style={styles.name}>
-             {console.log('THIS USER STATE', this.state)}
-            {this.state.username.indexOf('@') > -1 ? this.state.username.substring(0, this.state.username.indexOf('@')) : this.state.username}
+             {//console.log('THIS USER STATE', this.state)
+              }
+            {/*this.state.username.indexOf('@') > -1 ? this.state.username.substring(0, this.state.username.indexOf('@')) : this.state.username}
+               {this.state.shopperExpert ? " - Expert" : " - User"*/}
           </Text>
           <Text style={styles.occupation}>
-              {this.state.shopperExpert ? "Expert" : "User"}
+              {/*this.state.shopperExpert ? "Expert" : "User"*/}
           </Text>
         </View>
         {/*<Image style={{width: 50, height: 60, marginLeft: 40}} source={{uri: this.props.user.profileImage}}/>*/}
       </View>
+      <TabsNav navigator={this.props.navigator} user={this.props.user} />
       </View>
     );
   }
@@ -339,7 +344,8 @@ const styles = StyleSheet.create({
  checkBoxContainer: {
   top: 50,
   height: 400,
-  width: 400
+  width: 400,
+  marginTop: 25
  },
  checkBox: {
   flexDirection: 'row',
@@ -362,7 +368,7 @@ preferences: {
 },
 personal: {
  padding: 30,
- backgroundColor: 'rgba(0,0,0,0.5)',
+ backgroundColor: 'white',
  alignSelf: 'stretch',
  flexDirection: 'row'
 },
@@ -371,10 +377,6 @@ name: {
  fontFamily: 'Helvetica',
  fontSize: 30,
  fontWeight: 'bold',
-},
-occupation: {
- color: '#d6ec1b',
- marginTop: 5,
 },
  selected: {
  tintColor: '#00008B',
