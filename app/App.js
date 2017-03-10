@@ -13,8 +13,8 @@ import {
 import LoginView from './components/LoginView';
 import ShopperView from './components/ShopperView';
 import ChatView from './components/ChatView';
-// import TopExperts from './components/TopExperts';
-// import CategoryView from './components/shoppers/CategoryView';
+import TopExperts from './components/TopExperts';
+import CategoryView from './components/shoppers/CategoryView';
 import AvailableExperts from './components/AvailableExperts';
 import HomeView from './components/HomeView';
 import ProfileView from './components/ProfileView';
@@ -22,6 +22,7 @@ import RatingView from './components/shoppers/RatingView';
 import Wishlist from './components/Wishlist';
 import Tags from './components/Tags';
 import Logo from './components/Logo.js';
+import SearchViewExperts from './components/shoppers/SearchViewExperts';
 
 //setup the app component to register with App registry, everything happens inside of this wrapper
 class SavvyShopper extends Component {
@@ -45,6 +46,8 @@ class SavvyShopper extends Component {
         return <ShopperView navigator={navigator} {...route.passProps} />
       case "AvailableExperts":
         return <AvailableExperts navigator={navigator} {...route.passProps} />
+      case "TopExpertsSearch":
+        return <SearchViewExperts navigator={navigator} {...route.passProps} />
       case "TopExperts":
         return <TopExperts navigator={navigator} {...route.passProps} />
       case "ByCategory":
@@ -86,12 +89,8 @@ class SavvyShopper extends Component {
               </TouchableHighlight>
             );
          }},
-        RightButton: (route, navigator, index, navState) =>
-          { if (route.screen === "Profile" || route.screen === "Login") {
-            return null;
-          } else {
-            return null;
-          }},
+        RightButton: (route, navigator, index, navState) => {
+         },
         Title: (route, navigator, index, navState) => {
           if (route.screen === 'Login') {
             return null;
