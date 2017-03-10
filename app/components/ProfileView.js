@@ -14,6 +14,7 @@ const chatHistoryIcon = require('../assets/imgs/chat.png');
 const cancelIcon = require('../assets/imgs/cancel.png');
 const LogoutIcon = require('../assets/imgs/Logout.png');
 const BecomeExpertIcon = require('../assets/imgs/becomeExpert.png');
+const userIcon = require('../assets/imgs/userIcon.png');
 const expertiseIcon = require('../assets/imgs/expertise.png');
 let connection = require('../Utils/connection');
 var api = require('../Utils/api');
@@ -209,9 +210,18 @@ constructor(props) {
 
 render() {
 
+
+  var username = this.state.username.indexOf('@') > -1 ? this.state.username.substring(0, this.state.username.indexOf('@')) : this.state.username
+
+    var expert = this.state.shopperExpert ? "Expert" : "User"
+
 return (
     <View style={styles.container}>
          <View style={styles.stats}>
+
+            {this.renderOption({ icon: userIcon,
+              value: " " + username.toUpperCase() + "\n" + expert })}
+
             {this.renderOption({ icon: ratingIcon, value: this.state.averageRating })}
 
             {this.renderOption({ icon: chatHistoryIcon, value: this.props.user.closedChatSessions.length })}
@@ -367,7 +377,7 @@ preferences: {
   marginBottom: 2
 },
 personal: {
- padding: 30,
+ padding: 20,
  backgroundColor: 'white',
  alignSelf: 'stretch',
  flexDirection: 'row'
@@ -393,14 +403,15 @@ counter: {
  fontSize: 13
 },
 stats: {
-  flexDirection: 'row'
+  flex: 1,
+  flexDirection: 'row',
+  justifyContent:'center'
 },
 stat: {
   alignItems: 'center',
   backgroundColor: '#48BBEC',
-  borderColor: '#00008B',
-  borderLeftWidth: 1,
   flex: 1,
-  padding: 10,
+  padding: 9,
+  textAlign: 'center'
 }
 });

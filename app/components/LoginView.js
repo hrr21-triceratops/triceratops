@@ -115,15 +115,14 @@ export default class LoginView extends Component {
     if (this.state.hasAccount) {
       return (
         <View style={styles.container}>
-          <View style={{height: 160}}>
-            <Logo size={"logoMediumLarge"}/>
-          </View>
-          <View>
+          <Logo size={"logoLarge"} logoLocation={require('../assets/imgs/savvyShopper.png')}/>
+            <FormLabel>Username</FormLabel>
             <FormInput
               placeholder="username"
               onChangeText={(text) => this.setState({username: text})}
               style={styles.formInput}
             />
+            <FormLabel>Password</FormLabel>
             <FormInput
               placeholder="password"
               secureTextEntry={true}
@@ -131,21 +130,22 @@ export default class LoginView extends Component {
               style={styles.formInput}
             />
             <Button
-              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 20, width: 310, alignSelf: 'center'}}
+              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10, width: 340, alignSelf: 'center'}}
+              titleStyle={{fontWeight: 'bold'}}
               backgroundColor='#00008B'
               onPress={(this.userLogin.bind(this))}
               raised
               titleStyle={{fontWeight: 'bold'}}
               title='Login'
             />
-          </View>
           <View>
             <Button
               onPress={(this.userLogin.bind(this))}
               onPress={() => this.setState({hasAccount: false})}
               raised
               backgroundColor='#00008B'
-              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10, width: 310, alignSelf: 'center'}}
+              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10, width: 340, alignSelf: 'center'}}
+              titleStyle={{fontWeight: 'bold'}}
               titleStyle={{fontWeight: 'bold'}}
               title='Join!'
             />
@@ -155,28 +155,28 @@ export default class LoginView extends Component {
     } else {
       return (
         <View style={styles.container}>
-          <View style={{height: 160}}>
-            <Logo size={"logoMediumLarge"}/>
-          </View>
+         <Logo size={"logoLarge"} logoLocation={require('../assets/imgs/savvyShopper.png')}/>
           <View>
+            <FormLabel>Username</FormLabel>
             <FormInput
               placeholder="username"
               onChangeText={(text) => this.setState({username: text})}
               style={styles.formInput}
             />
+            <FormLabel>Password</FormLabel>
             <FormInput
               placeholder="password"
               secureTextEntry={true}
               onChangeText={(text) => this.setState({password: text})}
               style={styles.formInput}
             />
-
             <Button
               onPress={(this.userSignup.bind(this))}
               style={styles.button}
               raised
               backgroundColor='#00008B'
-              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 20, width: 310, alignSelf: 'center' }}
+              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10, width: 340, alignSelf: 'center'}}
+              titleStyle={{fontWeight: 'bold'}}
               titleStyle={{fontWeight: 'bold'}}
               title='Create Account'
             />
@@ -186,7 +186,8 @@ export default class LoginView extends Component {
               onPress={() => this.setState({hasAccount: true})}
               raised
               backgroundColor='#00008B'
-              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10, width: 310, alignSelf: 'center'}}
+              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10, width: 340, alignSelf: 'center'}}
+              titleStyle={{fontWeight: 'bold'}}
               titleStyle={{fontWeight: 'bold'}}
               title='Login!'
            />

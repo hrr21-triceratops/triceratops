@@ -45,8 +45,8 @@ var styles = StyleSheet.create({
     alignSelf: 'center'
   },
   logoMedium: {
-    height: 150,
-    width: 150,
+    height: 75,
+    width: 75,
     alignSelf: 'center'
   },
   logoMediumLarge: {

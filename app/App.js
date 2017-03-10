@@ -83,16 +83,19 @@ class SavvyShopper extends Component {
         RightButton: (route, navigator, index, navState) => {
          },
         Title: (route, navigator, index, navState) => {
-           if (route.screen !== 'Login') {
-           return (
+           if (route.screen === 'Login') {
+
+          } else {
+            return (
             <View
               style={styles.logo}>
               <Logo
-                size={"logoSmall"}
+                size={"logoMedium"}
                 logoLocation={require('./assets/imgs/savvyShopperLogoOnly.png')}
               />
             </View>
             );
+
           }
         },
        }}
