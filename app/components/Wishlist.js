@@ -187,7 +187,7 @@ export default class TopExperts extends React.Component {
                   </Text>
                   <Button
                     icon={{name: 'code'}}
-                    backgroundColor='#03A9F4'
+                    backgroundColor='#00008B'
                     buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
                     onPress={() => {this.showItem(item)}}
                     raised title='MORE' />
@@ -208,19 +208,19 @@ export default class TopExperts extends React.Component {
                 <Text style={styles.price}>{this.item.price}</Text>
                 <Text style={styles.bio}>{this.item.comment}</Text>
                 <Button
-                  backgroundColor='#03A9F4'
+                  backgroundColor='#00008B'
                   buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
                   style={styles.button}
                   onPress={() => {AlertIOS.alert('Item Purchased.');}}
                   raised title='Purchase' />
                 <Button
-                  backgroundColor='#03A9F4'
+                  backgroundColor='#00008B'
                   buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
                   style={styles.button}
                   onPress={() => {this.removeItem()}}
                   raised title='Delete' />
                 <Button
-                  backgroundColor='#03A9F4'
+                  backgroundColor='#00008B'
                   buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
                   style={styles.button}
                   onPress={() => {
