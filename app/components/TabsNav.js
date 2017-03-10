@@ -104,7 +104,6 @@ export default class TabsNav extends Component {
         <Tabs
          selected={self.state.page}
          style={{backgroundColor: '#333333'}}
-         selectedStyle={{color:'white', 'fontWeight': 'bold'}}
          onSelect={el=>this.setState({ page: el.props.name })}>
 
           <Text
