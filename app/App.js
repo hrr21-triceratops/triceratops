@@ -22,6 +22,7 @@ import RatingView from './components/shoppers/RatingView';
 import Wishlist from './components/Wishlist';
 import Tags from './components/Tags';
 import Logo from './components/Logo.js';
+import SearchViewExperts from './components/shoppers/SearchViewExperts';
 
 
 
@@ -47,6 +48,8 @@ class SavvyShopper extends Component {
         return <ShopperView navigator={navigator} {...route.passProps} />
       case "AvailableExperts":
         return <AvailableExperts navigator={navigator} {...route.passProps} />
+      case "TopExpertsSearch":
+        return <SearchViewExperts navigator={navigator} {...route.passProps} />
       case "TopExperts":
         return <TopExperts navigator={navigator} {...route.passProps} />
       case "ByCategory":
@@ -88,19 +91,8 @@ class SavvyShopper extends Component {
               </TouchableHighlight>
             );
          }},
-        RightButton: (route, navigator, index, navState) =>
-          { if (route.screen === "Profile" || route.screen === "Login") {
-            return null;
-          } else {
-            return (
-              <TouchableHighlight onPress={() => navigator.push({
-                  screen: "Profile",
-                  passProps: {...route.passProps}
-              })}>
-               <Text style={styles.rightButton}>Profile</Text>
-            </TouchableHighlight>
-            );
-          }},
+        RightButton: (route, navigator, index, navState) => {
+         },
         Title: (route, navigator, index, navState) => {
           if (route.screen === 'Profile') {
             return (<Text h1 style={styles.title}>Profile & Preferences</Text>);

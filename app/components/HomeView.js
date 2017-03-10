@@ -11,7 +11,7 @@ import {
   ActivityIndictorIOS
 } from 'react-native';
 import SearchView from './shoppers/SearchView';
-import TopExperts from './TopExperts';
+// import TopExperts from './TopExperts';
 import AvailableExperts from './AvailableExperts';
 import Tabs from 'react-native-tabs';
 import { SearchBar } from 'react-native-elements';
@@ -147,24 +147,24 @@ export default class HomeView extends Component {
           </Text>
 
           <Text
-            name="ByCategory"
-            user={this.props.user}
-            onPress={this.navigateTo.bind(this, "ByCategory", this.props.user)}>
-              By Category
-          </Text>
-
-          <Text
-            name="TopExperts"
-            user={this.props.user}
-            onPress={this.navigateTo.bind(this, "TopExperts", this.props.user)}>
-              Top Experts
-          </Text>
-
-          <Text
             name="Wishlist"
             user={this.props.user}
             onPress={this.navigateTo.bind(this, "Wishlist", this.props.user)}>
               Wishlist
+          </Text>
+
+          <Text
+            name="Top Experts"
+            user={this.props.user}
+            onPress={this.navigateTo.bind(this, "TopExpertsSearch", this.props.user)}>
+              Top Experts
+          </Text>
+
+          <Text
+            name="Profile"
+            user={this.props.user}
+            onPress={this.navigateTo.bind(this, "Profile", this.props.user)}>
+              Profile
           </Text>
 
         </Tabs>
