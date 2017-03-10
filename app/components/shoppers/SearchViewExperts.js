@@ -118,8 +118,8 @@ export default class SearchViewExperts extends Component {
               underlayColor="#88D4F5">
               <Text style={styles.buttonText}>Submit</Text>
            </TouchableHighlight>
-        <View>
-            <SearchTopExperts expertsReturned={this.state.expertsReturned} />
+        <View style={styles.secondContainer}>
+            <SearchTopExperts searchTerm={this.state.searchTerm} expertsReturned={this.state.expertsReturned} />
        </View>
      </View>
     );
@@ -128,10 +128,15 @@ export default class SearchViewExperts extends Component {
 
 var styles = StyleSheet.create({
     mainContainer: {
-        flex: 1,
+        flex: 3,
         flexDirection: 'column',
         justifyContent: 'space-between',
         marginTop: 60
+    },
+    secondContainer: {
+        flex: 3,
+        flexDirection: 'column',
+        justifyContent: 'space-between'
     },
     title: {
         fontSize: 25,
@@ -149,17 +154,14 @@ var styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: 18,
-        color: '#111',
-        alignSelf: 'center'
+        color: 'white'
     },
     button: {
-        height: 45,
-        flexDirection: 'row',
-        backgroundColor: 'white',
-        borderColor: 'white',
-        borderWidth: 1,
-        borderRadius: 8,
-        alignSelf: 'stretch',
+        height: 50,
+        top: null,
+        marginTop: 0,
+        backgroundColor: '#48BBEC',
+        alignItems: 'center',
         justifyContent: 'center'
-    }
+    },
 });

@@ -18,15 +18,6 @@ import Tabs from 'react-native-tabs';
 const ratingIcon = require('../assets/imgs/plain-heart.png');
 let connection = require('../Utils/connection');
 
-const list = [
-  {
-    name: 'Amy Farha',
-    avatar_url: 'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/female.jpg',
-    subtitle: 'Home / Tech',
-    rating: 5.0
-  }
-];
-
 export default class SearchTopExperts extends React.Component {
   constructor(props) {
     super(props);
@@ -37,6 +28,10 @@ export default class SearchTopExperts extends React.Component {
 
     this.experts = null;
     this.expert = null;
+  }
+
+  getRandom(min, max) {
+    return (Math.random() * (max - min) + min).toFixed(1);
   }
 
   setModalVisible(visible) {
@@ -50,6 +45,7 @@ export default class SearchTopExperts extends React.Component {
   }
 
   render () {
+    var self = this;
     return (
       <View>
        {console.log('search top experts this.props', this.props.expertsReturned)}
@@ -61,9 +57,9 @@ export default class SearchTopExperts extends React.Component {
                   roundAvatar
                   key={index}
                   title={expert.username}
-                  subtitle={expert.username}
+                  subtitle={"Online: " + expert.active}
                   avatar={{uri:'https://raw.githubusercontent.com/aautem/triceratops/expertChat/app/assets/imgs/female.jpg'}}
-                  badge={{value: parseInt(expert.averageRating), badgeTextStyle: {color: 'white'}, badgeContainerStyle: {marginLeft: -80}}}
+                  badge={{value: this.getRandom(4.5, 5), badgeTextStyle: {color: 'white'}, badgeContainerStyle: {marginLeft: -80}}}
                   onPress={() => {this.showExpert(expert)}}
                 />
               );
@@ -85,9 +81,9 @@ export default class SearchTopExperts extends React.Component {
                  source={ratingIcon}
                  style={styles.icon}
                />
-              <Text style={styles.counter}>{this.expert.rating.toFixed(1)}</Text>
+              <Text style={styles.counter}>{this.getRandom(4.5, 5)}</Text>
               <Text style={styles.bio}>
-                I became an expert wesjdkf asdnf ansdf asdfn aksdf asdfna asdfn asdlfk asdnfn asla sndfalsdjkfn adauhgsdn asdfn jasdf naldasd anjksd asdfn uvsan jsaf naskdf udvad nasdfnl ajnsd ndsa sjndf.
+                I am a top expert in home, fashion and fitness.
               </Text>
               <Button
                 buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
@@ -95,7 +91,16 @@ export default class SearchTopExperts extends React.Component {
                 onPress={() => {
                   this.setModalVisible(!this.state.modalVisible);
                 }}
-                raised title='Back' />
+                raised
+                title='Send SMS' />
+              <Button
+                buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
+                style={styles.button}
+                onPress={() => {
+                  this.setModalVisible(!this.state.modalVisible);
+                }}
+                raised
+                title='Back' />
             </View>
           </Modal>
         }
