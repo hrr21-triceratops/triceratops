@@ -151,31 +151,30 @@ export default class TopExperts extends React.Component {
       return (
         <View style={styles.mainContainer}>
           <Tabs selected={'Wishlist'}
-           style={{backgroundColor:'white'}}
-           selectedStyle={{color:'#00008B'}}>
+         style={{backgroundColor:'#4F4F4F'}}
+         selectedStyle={{color:'#53A9C9'}}>
 
-            <Text
-              name="Home"
-              user={this.props.user}
-              onPress={this.navigateTo.bind(this, "Home", this.props.user)}>
-                Home
-            </Text>
+          <Text
+            name="Home" style={styles.buttonText}
+            user={this.props.user}
+            onPress={this.navigateTo.bind(this, "Home", this.props.user)}>
+              Home
+          </Text>
 
-            <Text
-              name="Wishlist"
-              user={this.props.user}
-              onPress={this.navigateTo.bind(this, "Wishlist", this.props.user)}>
-                Wishlist
-            </Text>
+          <Text
+            name="Wishlist" style={styles.buttonText}
+            user={this.props.user}
+            onPress={this.navigateTo.bind(this, "Wishlist", this.props.user)}>
+              Wishlist
+          </Text>
 
-            <Text
-              name="Profile"
-              user={this.props.user}
-              onPress={this.navigateTo.bind(this, "Profile", this.props.user)}>
-                Profile
-            </Text>
-
-          </Tabs>
+          <Text
+            name="Profile" style={styles.buttonText}
+            user={this.props.user}
+            onPress={this.navigateTo.bind(this, "Profile", this.props.user)}>
+              Profile
+          </Text>
+        </Tabs>
           <ScrollView style={{marginTop: 20, marginBottom: 20}}>
             {this.wishlist.map(function(item, index) {
               return (
@@ -264,8 +263,8 @@ var styles = StyleSheet.create({
     color: 'black'
   },
   buttonText: {
-    fontSize: 18,
-    color: '#111',
+    fontSize: 14,
+    color: '#FFFFFF',
     alignSelf: 'center'
   },
   button: {
