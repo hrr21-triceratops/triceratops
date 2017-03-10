@@ -154,7 +154,7 @@ export default class HomeView extends Component {
             </View>
           </View>
         }
-        {this.props.user.shopperExpert && button}
+        {/*this.props.user.shopperExpert && button*/}
       </View>
     );
   }
@@ -201,8 +201,10 @@ var styles = StyleSheet.create({
         height: 45,
         flexDirection: 'row',
         backgroundColor: '#00008B',
-        marginBottom: 10,
+        marginBottom: 30,
         marginTop: 10,
+        padding: 10,
+        borderRadius: 8,
         alignSelf: 'stretch',
         justifyContent: 'center'
     },
@@ -212,6 +214,7 @@ var styles = StyleSheet.create({
         backgroundColor: '#00008B',
         marginBottom: 10,
         marginTop: 10,
+        padding: 10,
         alignItems: 'flex-start',
         justifyContent: 'center'
     },
