@@ -157,7 +157,7 @@ export default class HomeView extends Component {
           </Text>
 
           <Text
-            name="Top Experts"
+            name="Top Experts" style={styles.buttonText}
             user={this.props.user}
             onPress={this.navigateTo.bind(this, "TopExpertsSearch", this.props.user)}>
               Top Experts

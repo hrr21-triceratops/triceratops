@@ -201,6 +201,13 @@ export default class TopExperts extends React.Component {
           </Text>
 
           <Text
+            name="Top Experts" style={styles.buttonText}
+            user={this.props.user}
+            onPress={this.navigateTo.bind(this, "TopExpertsSearch", this.props.user)}>
+              Top Experts
+          </Text>
+
+          <Text
             name="Profile" style={styles.buttonText}
             user={this.props.user}
             onPress={this.navigateTo.bind(this, "Profile", this.props.user)}>
