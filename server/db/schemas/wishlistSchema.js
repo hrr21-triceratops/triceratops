@@ -5,7 +5,7 @@ var wishlistSchema = mongoose.Schema({
   price: { type: String },
   comment: { type: String },
   image: { type: String },
-  expert: { type: Number },
+  expert: { type: String },
   userId: { type: Number }
 });
 

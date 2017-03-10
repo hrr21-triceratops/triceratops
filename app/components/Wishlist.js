@@ -12,6 +12,7 @@ import {
   ActivityIndicatorIOS,
   Modal,
   AlertIOS,
+  WebView,
 } from 'react-native';
 import Tabs from 'react-native-tabs';
 import { Card, Button } from 'react-native-elements';
@@ -26,7 +27,11 @@ export default class TopExperts extends React.Component {
     this.state = {
       modalVisible: false,
       isLoading: true,
+      purchase: false,
     };
+
+    // add search term with spaces replaced by +
+    this.amazon = 'https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=';
 
     this.item = null;
     this.wishlist = null;
@@ -140,8 +145,35 @@ export default class TopExperts extends React.Component {
     }
   }
 
+  purchaseItem(item) {
+    var title = item.title.split('').map(function(letter) {
+      return letter === ' ' ? '+' : letter;
+    }).join('');
+    item.url = this.amazon + title;
+    console.log('WebView URL:', this.item.url);
+    this.setState({purchase: true});
+  }
+
   render () {
-    if (!this.wishlist || !this.wishlist.length) {
+    if (this.state.purchase) {
+      return (
+        <View style={{flex: 1}}>
+          <WebView
+            source={{uri: this.item.url}}
+            style={{marginTop: 20}}
+          />
+          <Button
+            backgroundColor='#00008B'
+            buttonStyle={{borderRadius: 0, marginLeft: 30, marginRight: 30, marginBottom: 10, marginTop: 10 }}
+            style={styles.button}
+            onPress={() => {
+              this.setState({purchase: false});
+              this.item = null;
+            }}
+            raised title='Back to Wishlist' />
+        </View>
+      );
+    } else if (!this.wishlist || !this.wishlist.length) {
       return (
         <View style={styles.mainContainer}>
           <Text style={styles.subtitle}>-- No Items to Display --</Text>
@@ -170,16 +202,23 @@ export default class TopExperts extends React.Component {
           </Text>
 
           <Text
+            name="Top Experts" style={styles.buttonText}
+            user={this.props.user}
+            onPress={this.navigateTo.bind(this, "TopExpertsSearch", this.props.user)}>
+              Top Experts
+          </Text>
+
+          <Text
             name="Profile" style={styles.buttonText}
             user={this.props.user}
             onPress={this.navigateTo.bind(this, "Profile", this.props.user)}>
               Profile
           </Text>
         </Tabs>
-          <ScrollView style={{marginTop: 20, marginBottom: 20}}>
+          <ScrollView style={{marginTop: 50, marginBottom: 50}}>
             {this.wishlist.map(function(item, index) {
               return (
-                <Card key={index}>
+                <Card key={index} containerStyle={{marginLeft: 30, marginRight: 30}}>
                   <Image source={{uri: item.image}}
                   style={{width: 100, height: 100, marginLeft: 75, marginBottom: 10}} />
                   <Text style={styles.title}>{item.title}</Text>
@@ -189,7 +228,7 @@ export default class TopExperts extends React.Component {
                   <Button
                     icon={{name: 'code'}}
                     backgroundColor='#00008B'
-                    buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+                    buttonStyle={{borderRadius: 0, marginLeft: 10, marginRight: 10, marginBottom: 0}}
                     onPress={() => {this.showItem(item)}}
                     raised title='MORE' />
                 </Card>
@@ -210,19 +249,19 @@ export default class TopExperts extends React.Component {
                 <Text style={styles.bio}>{this.item.comment}</Text>
                 <Button
                   backgroundColor='#00008B'
-                  buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
+                  buttonStyle={{borderRadius: 0, marginLeft: 10, marginRight: 10, marginBottom: 5, marginTop: 5 }}
                   style={styles.button}
-                  onPress={() => {AlertIOS.alert('Item Purchased.');}}
+                  onPress={() => {this.purchaseItem(this.item)}}
                   raised title='Purchase' />
                 <Button
                   backgroundColor='#00008B'
-                  buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
+                  buttonStyle={{borderRadius: 0, marginLeft: 10, marginRight: 10, marginBottom: 5, marginTop: 5 }}
                   style={styles.button}
                   onPress={() => {this.removeItem()}}
                   raised title='Delete' />
                 <Button
                   backgroundColor='#00008B'
-                  buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
+                  buttonStyle={{borderRadius: 0, marginLeft: 10, marginRight: 10, marginBottom: 5, marginTop: 5 }}
                   style={styles.button}
                   onPress={() => {
                     this.setModalVisible(!this.state.modalVisible);
@@ -244,7 +283,6 @@ var styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     backgroundColor: '#F2F2F2',
-    padding: 30
   },
   modalContainer: {
     flex: 1,

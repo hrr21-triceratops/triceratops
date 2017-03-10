@@ -92,8 +92,8 @@ export default class CustomActions extends React.Component {
                 />
               </View>
               <Button
-                backgroundColor='#03A9F4'
-                buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
+                backgroundColor='#00008B'
+                buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 5, marginTop: 5 }}
                 style={styles.button}
                 onPress={() => {
                   this.props.onSend(this._images);
@@ -102,8 +102,8 @@ export default class CustomActions extends React.Component {
                 }}
                 raised title='Send Image' />
               <Button
-                backgroundColor='#03A9F4'
-                buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
+                backgroundColor='#00008B'
+                buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 5, marginTop: 5 }}
                 style={styles.button}
                 onPress={() => {
                   this.setImages([]);
