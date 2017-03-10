@@ -24,8 +24,6 @@ import Tags from './components/Tags';
 import Logo from './components/Logo.js';
 import SearchViewExperts from './components/shoppers/SearchViewExperts';
 
-
-
 //setup the app component to register with App registry, everything happens inside of this wrapper
 class SavvyShopper extends Component {
   //selects a scene to render
