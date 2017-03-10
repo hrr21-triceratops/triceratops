@@ -45,7 +45,7 @@ export default class ChatView extends Component {
       messages: [],
       modalVisible: false,
       itemVisible: false,
-      connectionStatus: 'button'
+      connectionStatus: null
     };
 
     this._isMounted = false;
@@ -104,11 +104,11 @@ export default class ChatView extends Component {
 
     // IF USER IS NOT AN EXPERT
     if(!this.props.user.shopperExpert){
-      // self.setState((previousState) => {
-      //   return {
-      //     connectionStatus: 'Finding your expert...'
-      //   };
-      // });
+      self.setState((previousState) => {
+        return {
+          connectionStatus: 'Finding your expert...'
+        };
+      });
 
       self.chatSession.category = this.props.category;
       self.chatSession.username = this.props.user.username;
