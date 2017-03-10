@@ -14,7 +14,10 @@ import SearchView from './shoppers/SearchView';
 // import TopExperts from './TopExperts';
 import AvailableExperts from './AvailableExperts';
 import Tabs from 'react-native-tabs';
-import { SearchBar } from 'react-native-elements';
+import {
+  SearchBar,
+  Button
+} from 'react-native-elements';
 
 let connection = require('../Utils/connection');
 
@@ -134,20 +137,20 @@ export default class HomeView extends Component {
     }
     return (
        <View style={styles.mainContainer}>
-        <Tabs selected={this.state.page}
-         style={{backgroundColor:'white'}}
-         selectedStyle={{color:'#00008B'}}
+        <Tabs selected={'Home'}
+         style={{backgroundColor:'#4F4F4F'}}
+         selectedStyle={{color:'#53A9C9'}}
          onSelect={el=>this.setState({ page: el.props.name })}>
 
           <Text
-            name="Home"
+            name="Home" style={styles.buttonText}
             user={this.props.user}
             onPress={this.navigateTo.bind(this, "Home", this.props.user)}>
               Home
           </Text>
 
           <Text
-            name="Wishlist"
+            name="Wishlist" style={styles.buttonText}
             user={this.props.user}
             onPress={this.navigateTo.bind(this, "Wishlist", this.props.user)}>
               Wishlist
@@ -160,33 +163,32 @@ export default class HomeView extends Component {
               Top Experts
           </Text>
 
-          <Text
-            name="Profile"
+          <Text name="Profile" style={styles.buttonText}
+            presentationMaster
             user={this.props.user}
             onPress={this.navigateTo.bind(this, "Profile", this.props.user)}>
               Profile
           </Text>
-
         </Tabs>
-         <SearchView style={styles.searchInput} navigator={this.props.navigator} user={this.props.user}/>
-          {this.props.user.shopperExpert && button}
+        {!this.props.user.shopperExpert &&
+         <SearchView style={styles.searchInput} navigator={this.props.navigator} user={this.props.user}/>}
           {this.getActive() &&
           <View>
-            {this.state.currentUser && <View><Text>{"USER: " + this.state.currentUser.username}</Text>
-              <Text>{"CATEGORY: " + this.state.currentUser.category}</Text></View>
+            {this.state.currentUser && <View style={styles.user}><Text style={styles.userInLine}>{this.state.currentUser.username.toUpperCase()}</Text>
+              <Text>{this.state.currentUser.category}</Text></View>
             }
-            <TouchableHighlight
-            style={styles.button}
-            onPress={() => this.navigateTo('Chat', this.props.user, this.state.currentUser)}>
-              <Text style={styles.buttonText}>b</Text>
-            </TouchableHighlight>
-            <TouchableHighlight
-            style={styles.button}
-            onPress={() => this.showNext()}>
-              <Text style={styles.buttonText}>p</Text>
-            </TouchableHighlight>
+            <View style={styles.rowLayout}>
+              <Button buttonStyle={styles.buttonHelp}
+              onPress={() => this.navigateTo('Chat', this.props.user, this.state.currentUser)} iconRight icon={{name:'thumb-up'}} title='HELP USER' textStyle={styles.buttonText}>
+              </Button>
+
+              <Button buttonStyle={styles.buttonSkip}
+              onPress={() => this.showNext()} icon={{name:'fast-forward'}} textStyle={styles.buttonText}>
+              </Button>
+            </View>
           </View>
         }
+        {this.props.user.shopperExpert && button}
       </View>
     );
   }
@@ -196,10 +198,8 @@ var styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
         padding: 30,
-        marginTop: 65,
         flexDirection: 'column',
-        justifyContent: 'center',
-        backgroundColor: '#48BBEC'
+        justifyContent: 'center'
     },
     title: {
         marginBottom: 20,
@@ -219,19 +219,49 @@ var styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: 14,
-        color: '#111',
+        color: '#FFFFFF',
         alignSelf: 'center'
+    },
+    rowLayout: {
+      flexDirection: 'row',
+    },
+    userInLine: {
+      fontWeight: 'bold',
+      fontSize: 20,
+      marginBottom: 12,
     },
     button: {
         height: 45,
         flexDirection: 'row',
-        backgroundColor: 'white',
-        borderColor: 'grey',
-        borderWidth: 1,
-        borderRadius: 8,
+        backgroundColor: '#00008B',
         marginBottom: 10,
         marginTop: 10,
         alignSelf: 'stretch',
         justifyContent: 'center'
     },
+    buttonHelp: {
+        height: 45,
+        width: 160,
+        backgroundColor: '#00008B',
+        marginBottom: 10,
+        marginTop: 10,
+        alignItems: 'flex-start',
+        justifyContent: 'center'
+    },
+    buttonSkip: {
+        flex: 1,
+        height: 45,
+        width: 56,
+        backgroundColor: '#53A9C9',
+        marginBottom: 10,
+        justifyContent: 'center',
+        marginTop: 10,
+    },
+    user: {
+      backgroundColor: '#F2F2F2',
+      height: 180,
+      paddingLeft: 20,
+      paddingTop: 20,
+      fontWeight: 'bold',
+    }
 });

@@ -58,6 +58,9 @@ export default class ChatView extends Component {
     this.navigate = this.navigate.bind(this);
     this.item = null; // Currently selected item in chat (recommendation)
 
+    // add search term with spaces replaced by +
+    this.amazon = 'https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=';
+
     this.wish = {
       image: null,
       title: null,
@@ -266,9 +269,6 @@ export default class ChatView extends Component {
       'Embed Image': (props) => {
         alert('option 1');
       },
-      'Choose from Library': (props) => {
-        alert('option 2');
-      },
       'Cancel': () => {},
     };
     return (
@@ -368,7 +368,11 @@ export default class ChatView extends Component {
         <Button
           buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10 }}
           style={styles.button}
-          onPress={() => this.disconnect()}
+          onPress={() => {AlertIOS.alert(
+            'Are you sure?',
+            'Once you leave the chatroom you will not be able to return.',
+            [{text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'}, {text: 'Confirm', onPress: () => this.disconnect()}]
+          );}}
           raised title='Rate Expert' />
         }
 
