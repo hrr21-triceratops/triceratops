@@ -10,19 +10,11 @@ import {
   TextInput,
   ActivityIndictorIOS
 } from 'react-native';
-import SearchView from './shoppers/SearchView';
-// import TopExperts from './TopExperts';
-import AvailableExperts from './AvailableExperts';
 import Tabs from 'react-native-tabs';
-import { SearchBar } from 'react-native-elements';
-import TabsNav from './TabsNav';
 
 let connection = require('../Utils/connection');
 
-const usersToHelp = null;
-const usersToCheck = null;
-
-export default class HomeView extends Component {
+export default class TabsNav extends Component {
   constructor(props){
     console.log('Home Props:', props);
     super(props);
@@ -32,15 +24,6 @@ export default class HomeView extends Component {
       currentUser: null,
       index: 0
     };
-  }
-
-  activeSwitcher() {
-    this.setState({isActive: !this.state.isActive});
-    this.renderExpert();
-  }
-
-  getActive() {
-    return this.state.isActive;
   }
 
   navigateTo(destination, propsToPass, chatPartner) {
@@ -89,73 +72,46 @@ export default class HomeView extends Component {
     }
   }
 
-  showNext() {
-    if(usersToCheck.length - 1 > this.state.index) {
-      this.setState({currentUser: usersToHelp[usersToCheck[this.state.index+1]], index: this.state.index+1});
-    } else {
-      this.setState({currentUser: usersToHelp[usersToCheck[0]], index: 0});
-    }
-  }
-
-  renderExpert() {
-    fetch(connection + '/api/userQueue/loadUser', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
-    }).then((response) => {
-      return response.json();
-      console.log("RESPONSE", response);
-    }).then((users) => {
-      if(!users){
-        console.log("TROUBLE");
-      }
-      console.log("USERS IN QUEUE", users);
-      usersToHelp = users;
-      usersToCheck = Object.keys(usersToHelp);
-      this.setState({currentUser: usersToHelp[usersToCheck[0]]});
-    }).done()
-  }
-
   render() {
-    let button = null;
-    if (this.getActive()) {
-      button = <TouchableHighlight
-            onPress={() => this.activeSwitcher()}
-            style={styles.button}>
-            <Text style={styles.buttonText}>Go Offline</Text>
-          </TouchableHighlight>
-    } else {
-      button = <TouchableHighlight
-            onPress={() => this.activeSwitcher()}
-            style={styles.button}>
-            <Text style={styles.buttonText}>Go Online</Text>
-          </TouchableHighlight>
-    }
     return (
-       <View style={styles.mainContainer}>
-          <TabsNav navigator={this.props.navigator} user={this.props.user} />
-         <SearchView style={styles.searchInput} navigator={this.props.navigator} user={this.props.user}/>
-          {this.props.user.shopperExpert && button}
-          {this.getActive() &&
-          <View>
-            {this.state.currentUser && <View><Text>{"USER: " + this.state.currentUser.username}</Text>
-              <Text>{"CATEGORY: " + this.state.currentUser.category}</Text></View>
-            }
-            <TouchableHighlight
-            style={styles.button}
-            onPress={() => this.navigateTo('Chat', this.props.user, this.state.currentUser)}>
-              <Text style={styles.buttonText}>b</Text>
-            </TouchableHighlight>
-            <TouchableHighlight
-            style={styles.button}
-            onPress={() => this.showNext()}>
-              <Text style={styles.buttonText}>p</Text>
-            </TouchableHighlight>
-          </View>
-        }
-      </View>
+        <Tabs
+         selected={this.state.page}
+         style={{backgroundColor: '#333333'}}
+         selectedStyle={{color:'white', 'fontWeight': 'bold'}}
+         onSelect={el=>this.setState({ page: el.props.name })}>
+
+          <Text
+            name="Home"
+            style={{color: '#e6e6e6'}}
+            user={this.props.user}
+            onPress={this.navigateTo.bind(this, "Home", this.props.user)}>
+              Home
+          </Text>
+
+          <Text
+            name="Wishlist"
+            style={{color: '#e6e6e6'}}
+            user={this.props.user}
+            onPress={this.navigateTo.bind(this, "Wishlist", this.props.user)}>
+              Wishlist
+          </Text>
+
+          <Text
+            name="Top Experts"
+            style={{color: '#e6e6e6'}}
+            user={this.props.user}
+            onPress={this.navigateTo.bind(this, "TopExpertsSearch", this.props.user)}>
+              Top Experts
+          </Text>
+
+          <Text
+            name="Profile"
+            style={{color: '#e6e6e6'}}
+            user={this.props.user}
+            onPress={this.navigateTo.bind(this, "Profile", this.props.user)}>
+              Profile
+          </Text>
+        </Tabs>
     );
   }
 }
