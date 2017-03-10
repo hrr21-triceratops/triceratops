@@ -84,7 +84,7 @@ class SavvyShopper extends Component {
                 return null;
             } else {
              return (
-              <TouchableHighlight onPress={() => navigator.pop()}>
+              <TouchableHighlight underlayColor={'#e6e6e6'} onPress={() => navigator.pop()}>
                <Text style={styles.leftButton}>Back</Text>
               </TouchableHighlight>
             );
@@ -92,10 +92,16 @@ class SavvyShopper extends Component {
         RightButton: (route, navigator, index, navState) => {
          },
         Title: (route, navigator, index, navState) => {
-          if (route.screen === 'Login') {
-            return null;
-          } else {
-           return (<View style={styles.logo}><Logo size={"logoSmall"} /></View>);
+           if (route.screen !== 'Login') {
+           return (
+            <View
+              style={styles.logo}>
+              <Logo
+                size={"logoSmall"}
+                logoLocation={require('./assets/imgs/savvyShopperLogoOnly.png')}
+              />
+            </View>
+            );
           }
         },
        }}

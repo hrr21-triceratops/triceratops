@@ -13,9 +13,11 @@ export default class Logo extends Component {
 
   render() {
     var logo = this.props.size;
+    console.log('logo TYPE', logo, this.props.logoLocation);
+    var location = this.props.logoLocation;
     return(
       <View>
-        <Image style={styles[logo]} source={require('../assets/imgs/savvyShopper.png')} />
+        <Image style={styles[logo]} source={location} />
       </View>
     )
   }
