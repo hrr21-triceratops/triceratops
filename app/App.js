@@ -11,11 +11,8 @@ import {
 
 //load views from external files
 import LoginView from './components/LoginView';
-import ShopperView from './components/ShopperView';
 import ChatView from './components/ChatView';
 import TopExperts from './components/TopExperts';
-import CategoryView from './components/shoppers/CategoryView';
-import AvailableExperts from './components/AvailableExperts';
 import HomeView from './components/HomeView';
 import ProfileView from './components/ProfileView';
 import RatingView from './components/shoppers/RatingView';
@@ -40,14 +37,8 @@ class SavvyShopper extends Component {
         return <RatingView navigator={navigator} {...route.passProps} />
       case 'Shopper':
         return <ShopperView navigator={navigator} {...route.passProps} />
-      case 'AvailableExperts':
-        return <AvailableExperts navigator={navigator} {...route.passProps} />
       case 'TopExpertsSearch':
         return <SearchViewExperts navigator={navigator} {...route.passProps} />
-      case 'TopExperts':
-        return <TopExperts navigator={navigator} {...route.passProps} />
-      case 'ByCategory':
-        return <CategoryView navigator={navigator} {...route.passProps} />
       case 'Chat':
        return <ChatView navigator={navigator} {...route.passProps} />
       case 'Profile':
@@ -70,8 +61,6 @@ class SavvyShopper extends Component {
             routeMapper={{
             LeftButton: (route, navigator, index, navState) => {
               if (route.screen === 'Login' || route.screen === 'Home') {
-                route.index = 0;
-                var currentRoutes = navigator.getCurrentRoutes(0);
                 return null;
               } else if (route.screen === 'Tags' || route.screen === 'Chat' ) {
               return (
