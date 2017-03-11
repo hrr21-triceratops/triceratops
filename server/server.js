@@ -14,6 +14,7 @@ const wishlistRoutes = require('./routes/wishlistRoutes');
 const morgan = require('morgan');
 
 //Global App Middleware that applies to all routes
+app.use(express.static('client'));
 app.use(bodyparser());
 app.use(cors());
 app.use(morgan('dev'));
