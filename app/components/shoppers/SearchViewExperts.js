@@ -100,7 +100,15 @@ export default class SearchViewExperts extends Component {
   }
 
   render() {
-    {console.log('search experts props', this.props)}
+  navigateTo(destination, propsToPass) {
+    this.props.navigator.push({
+      screen: destination,
+      passProps: {
+        user: propsToPass
+      }
+    });
+  }
+
     var displayErr = (
       this.state.error ? <Text>{this.state.error} </Text> : <View></View>
     );
