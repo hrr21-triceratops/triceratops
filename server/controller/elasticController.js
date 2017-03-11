@@ -3,7 +3,6 @@ var elasticClient = require('../db/connections.js').elasticClient;
 module.exports = {
   deleteIndex: function(indexToDelete) {
     return elasticClient.indices.delete({ index: indexToDelete }, function(err, resp, status) {
-      console.log("delete", resp);
     });
   },
   createIndex: function(indexToCreate) {
@@ -41,7 +40,6 @@ module.exports = {
   },
   documentCount: function(indexToCount) {
     return elasticClient.count({ index: 'tags', type: 'user' }, function(err, resp, status) {
-      console.log("users", resp);
     });
   },
   searchSuggestions: function(index, type, field, value) {
@@ -58,7 +56,6 @@ module.exports = {
         },
       }
     }).then(function(response) {
-        console.log('response', response);
         return response;
       },
       function(error) {
