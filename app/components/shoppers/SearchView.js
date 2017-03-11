@@ -36,84 +36,34 @@ export default class SearchView extends Component {
 
   goToAvailableExperts(experts) {
     this.props.navigator.push({
-        // screen: "AvailableExperts",
-        // passProps: { experts: experts }
-        screen: "Chat",
-        passProps: {
-          user: this.props.user,
-          category: this.state.searchTerm
-        }
+      screen: 'Chat',
+      passProps: {
+        user: this.props.user,
+        category: this.state.searchTerm
+      }
     });
   }
 
-   handleSubmit(event) {
+  handleSubmit(event) {
     this.setState({
       isLoading: true
     });
-    console.log('submit', this.state.searchTerm);
-    // if (this.state.categories.includes(this.state.searchTerm.toUpperCase())) {
-        // console.log('this.state.searchTerm MATCH MADE!', this.state.searchTerm.toUpperCase());
-        this.goToAvailableExperts();
-    // } else {
+    this.goToAvailableExperts();
 
-    // api.getExpertsByTag(this.state.searchTerm).then((experts) => {
-
-    //   console.log('experts response', experts);
-
-    //   if (!experts.hits.hits.length) {
-
-    //     this.setState({
-    //       error: 'No Experts Found',
-    //       isLoading: false
-    //     });
-
-    //   } else {
-
-    //     console.log('this.props', this.props);
-    //     console.log('experts object', experts);
-
-    //     var listItems = experts.hits.hits;
-    //     var expertList = [];
-
-    //     for (var i = 0; i < listItems.length; i++) {
-    //       if (!expertList.includes(listItems[i]["_source"].userID)) {
-    //         expertList.push(listItems[i]["_source"].userID);
-    //       }
-    //     }
-
-    //     console.log('EXPERT LIST', expertList);
-
-    //     this.props.navigator.push({
-    //       screen: "TopExperts",
-    //       passProps: {
-    //         user: this.props.user,
-    //         category: this.state.searchTerm,
-    //         experts: expertList
-    //         }
-    //     });
-
-        this.setState({
-          isLoading: false,
-          error: false,
-          searchTerm: ''
-        });
-    //   }
-
-    //   });
-    // }
-
+    this.setState({
+      isLoading: false,
+      error: false,
+      searchTerm: ''
+    });
   }
 
   render() {
-
     var displayErr = (
       this.state.error ? <Text>{this.state.error} </Text> : <View></View>
     );
-
     return (
       <View style={styles.mainContainer}>
         <Text style={styles.title}>Find Expert For</Text>
-
         <TextInput
           style={styles.searchInput}
           value={this.state.username}
@@ -121,25 +71,21 @@ export default class SearchView extends Component {
           placeholderTextColor={'white'}
           onChange={this.handleChange.bind(this)}
          />
-
           <Button
           buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10, backgroundColor: '#00008B' }}
           style={styles.button}
           onPress={this.handleSubmit.bind(this)}
           raised title='Chat Now!' />
-
           <ActivityIndicator
           animating={this.state.isLoading}
-          color="#111"
-          size="large">
+          color='#111'
+          size='large'>
           </ActivityIndicator>
           {displayErr}
       </View>
     );
   }
-
 }
-
 
 var styles = StyleSheet.create({
     mainContainer: {
