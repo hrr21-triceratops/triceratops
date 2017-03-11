@@ -21,7 +21,6 @@ export default class RatingView extends Component {
   }
 
   sendRating(rating, userId, expertId) {
-    console.log('userId', userId, 'expertId', expertId, 'rating', rating);
     fetch(connection + '/api/ratings/rate', {
       method: 'POST',
       headers: {
@@ -51,7 +50,6 @@ export default class RatingView extends Component {
             {!this.props.user.shopperExpert && <Text style={styles.title}>Rate your Expert!</Text>}
             {this.props.user.shopperExpert && <Text style={styles.title}>Rate the User!</Text>}
             <Image style={styles.profileImage} source={{uri: this.props.partner}}/>
-            {console.log('user props', this.props)}
 
             <StarRating
               disabled={false}
