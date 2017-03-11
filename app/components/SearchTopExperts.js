@@ -14,8 +14,6 @@ import {
 } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements';
 import TabsNav from './TabsNav';
-import Tabs from 'react-native-tabs';
-
 const ratingIcon = require('../assets/imgs/plain-heart.png');
 let connection = require('../Utils/connection');
 

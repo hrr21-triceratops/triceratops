@@ -100,7 +100,7 @@ export default class SearchViewExperts extends Component {
   }
 
   render() {
-
+    {console.log('search experts props', this.props)}
     var displayErr = (
       this.state.error ? <Text>{this.state.error} </Text> : <View></View>
     );
@@ -119,7 +119,7 @@ export default class SearchViewExperts extends Component {
               <Text style={styles.buttonText}>Submit</Text>
            </TouchableHighlight>
         <View style={styles.secondContainer}>
-            <SearchTopExperts searchTerm={this.state.searchTerm} expertsReturned={this.state.expertsReturned} />
+            <SearchTopExperts navigator={this.props.navigator} user={this.props.user} searchTerm={this.state.searchTerm} expertsReturned={this.state.expertsReturned} />
        </View>
      </View>
     );

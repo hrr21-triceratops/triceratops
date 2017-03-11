@@ -50,8 +50,6 @@ export default class HomeView extends Component {
       }).done();
     }
     if (!propsToPass) {
-      console.log('destination', this.props.navigator.state.routeStack[this.props.navigator.state.routeStack.length - 1]);
-
       if (destination !== this.props.navigator.state.routeStack[this.props.navigator.state.routeStack.length - 1].screen) {
         this.props.navigator.push({
           screen: destination
@@ -59,9 +57,7 @@ export default class HomeView extends Component {
       }
     }
     if (!chatPartner) {
-      console.log('destination', destination);
-      console.log('destination2', destination, this.props.navigator.state.routeStack[this.props.navigator.state.routeStack.length - 1].screen);
-      console.log('props', propsToPass);
+
       if (destination !== this.props.navigator.state.routeStack[this.props.navigator.state.routeStack.length - 1].screen) {
         this.props.navigator.push({
           screen: destination,
@@ -71,10 +67,6 @@ export default class HomeView extends Component {
         });
       }
     } else {
-      console.log('destination', destination);
-      console.log('destination2', destination, this.props.navigator.state.routeStack[this.props.navigator.state.routeStack.length - 1].screen);
-
-      console.log('props', propsToPass);
 
     if (destination !== this.props.navigator.state.routeStack[this.props.navigator.state.routeStack.length - 1].screen) {
 
@@ -120,6 +112,7 @@ export default class HomeView extends Component {
 
   render() {
     let button = null;
+    var self = this;
     if (this.getActive()) {
       button = <TouchableHighlight
             onPress={() => this.activeSwitcher()}
@@ -135,6 +128,7 @@ export default class HomeView extends Component {
     }
     return (
        <View style={styles.mainContainer}>
+        {console.log('this.props.navigator', this.props.navigator)}
           <TabsNav navigator={this.props.navigator} user={this.props.user} />
          {!this.props.user.shopperExpert && <SearchView style={styles.searchInput} navigator={this.props.navigator} user={this.props.user}/>}
           {this.props.user.shopperExpert && button}
@@ -154,7 +148,6 @@ export default class HomeView extends Component {
             </View>
           </View>
         }
-        {/*this.props.user.shopperExpert && button*/}
       </View>
     );
   }
