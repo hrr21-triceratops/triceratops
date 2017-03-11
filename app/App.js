@@ -12,7 +12,6 @@ import {
 //load views from external files
 import LoginView from './components/LoginView';
 import ChatView from './components/ChatView';
-import TopExperts from './components/TopExperts';
 import HomeView from './components/HomeView';
 import ProfileView from './components/ProfileView';
 import RatingView from './components/shoppers/RatingView';
@@ -71,6 +70,7 @@ class SavvyShopper extends Component {
               }
             },
             RightButton: (route, navigator, index, navState) => {
+              return null;
             },
             Title: (route, navigator, index, navState) => {
               if (route.screen === 'Login') {
