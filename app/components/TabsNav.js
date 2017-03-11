@@ -76,7 +76,6 @@ export default class TabsNav extends Component {
     props.navigator.resetTo({
       screen: "Login"
     });
-    //we should also destroy the session here. The above removes all routes from the stack
   }
 
   render() {

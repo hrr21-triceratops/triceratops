@@ -9,12 +9,6 @@ var _ = require('lodash');
 var config = require('./../config.json');
 var bcrypt = require('bcrypt-nodejs');
 
-// middleware that is specific to this router
-// router.use(function timeLog (req, res, next) {
-//   console.log('Time: ', Date.now())
-//   next()
-// })
-
 // GET ALL USERS
 router.get('/users', function(req, res) {
   userModel.findAll().then(function(users) {
