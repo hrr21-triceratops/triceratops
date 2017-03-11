@@ -13,6 +13,7 @@ import {
   Modal
 } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements';
+import TabsNav from './TabsNav';
 import Tabs from 'react-native-tabs';
 
 const ratingIcon = require('../assets/imgs/plain-heart.png');
@@ -47,7 +48,7 @@ export default class SearchTopExperts extends React.Component {
   render () {
     var self = this;
     return (
-      <View>
+      <View style={{flex: 1}}>
        {console.log('search top experts this.props', this.props.expertsReturned)}
         <ScrollView style={{marginTop: 0}}>
           <List containerStyle={{marginTop: 0}}>
@@ -66,6 +67,7 @@ export default class SearchTopExperts extends React.Component {
             }, this)}
           </List>
         </ScrollView>
+          <TabsNav style={styles.bottom} navigator={self.props.navigator} user={self.props.user} />
         {this.expert &&
           <Modal
             animationType={"slide"}
@@ -116,6 +118,9 @@ var styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     backgroundColor: '#48BBEC'
+  },
+  bottom: {
+    bottom: null
   },
   title: {
     marginTop: 75,

@@ -14,6 +14,8 @@ import {
 import Separator from './Separator';
 import { List, ListItem } from 'react-native-elements';
 var api = require('../Utils/api');
+import TabsNav from './TabsNav';
+
 
 // In the video there are a couple errors, fixed them so it would build.
 export default class Tags extends Component{

@@ -11,7 +11,7 @@ var api = {
     });
   },
   getUser: function(userid) {
-    var url = connection + '/api/users/' + userid;
+    var url = connection+'/api/users/' + userid;
     return fetch(url).then((res) => res.json()).then(function(users) {
       console.log('users', users);
       return users;
@@ -19,7 +19,7 @@ var api = {
   },
   getExpertsByTag: function(tag) {
     console.log('get experts by tag');
-    var url = connection+'/api/search/tags/expert/tag/'+tag;
+    var url = 'http://localhost:2300/api/search/tags/expert/tag/'+tag;
     return fetch(url).then((res) => res.json()).then(function(results) {
       console.log('results', results);
       return results;
@@ -27,7 +27,7 @@ var api = {
   },
   addTag: function(userId, username, type, tag) {
     console.log('ADD TAG', userId, username, type, tag)
-    var url = connection + '/api/addTag/'+userId+'/'+username+'/'+type+'/'+tag+'/tags';
+    var url = 'http://localhost:2300/api/addTag/'+userId+'/'+username+'/'+type+'/'+tag+'/tags';
     return fetch(url, {
       method: 'POST'
     }).then((res) => res.json()).then(function(tag) {
@@ -39,7 +39,7 @@ var api = {
   },
   getUserTags: function(type, userId) {
     console.log('error?', type, userId);
-    var url = connection + '/api/search/tags/'+type+'/userID/'+userId;
+    var url = 'http://localhost:2300/api/search/tags/'+type+'/userID/'+userId;
     return fetch(url).then((res) => res.json()).then(function(tags) {
       console.log('tags', tags);
       return tags;

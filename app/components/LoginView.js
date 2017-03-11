@@ -115,8 +115,7 @@ export default class LoginView extends Component {
     if (this.state.hasAccount) {
       return (
         <View style={styles.container}>
-          <Logo size={"logoLarge"}/>
-          <View>
+          <Logo size={"logoLarge"} logoLocation={require('../assets/imgs/savvyShopper.png')}/>
             <FormLabel>Username</FormLabel>
             <FormInput
               placeholder="username"
@@ -131,21 +130,22 @@ export default class LoginView extends Component {
               style={styles.formInput}
             />
             <Button
-              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 20, width: 310, alignSelf: 'center'}}
+              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10, width: 340, alignSelf: 'center'}}
+              titleStyle={{fontWeight: 'bold'}}
               backgroundColor='#00008B'
               onPress={(this.userLogin.bind(this))}
               raised
               titleStyle={{fontWeight: 'bold'}}
               title='Login'
             />
-          </View>
           <View>
             <Button
               onPress={(this.userLogin.bind(this))}
               onPress={() => this.setState({hasAccount: false})}
               raised
               backgroundColor='#00008B'
-              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10, width: 310, alignSelf: 'center'}}
+              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10, width: 340, alignSelf: 'center'}}
+              titleStyle={{fontWeight: 'bold'}}
               titleStyle={{fontWeight: 'bold'}}
               title='Join!'
             />
@@ -155,7 +155,7 @@ export default class LoginView extends Component {
     } else {
       return (
         <View style={styles.container}>
-          <Logo size={"logoLarge"}/>
+         <Logo size={"logoLarge"} logoLocation={require('../assets/imgs/savvyShopper.png')}/>
           <View>
             <FormLabel>Username</FormLabel>
             <FormInput
@@ -170,13 +170,13 @@ export default class LoginView extends Component {
               onChangeText={(text) => this.setState({password: text})}
               style={styles.formInput}
             />
-
             <Button
               onPress={(this.userSignup.bind(this))}
               style={styles.button}
               raised
               backgroundColor='#00008B'
-              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 20, width: 310, alignSelf: 'center' }}
+              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10, width: 340, alignSelf: 'center'}}
+              titleStyle={{fontWeight: 'bold'}}
               titleStyle={{fontWeight: 'bold'}}
               title='Create Account'
             />
@@ -186,7 +186,8 @@ export default class LoginView extends Component {
               onPress={() => this.setState({hasAccount: true})}
               raised
               backgroundColor='#00008B'
-              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10, width: 310, alignSelf: 'center'}}
+              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 10, marginTop: 10, width: 340, alignSelf: 'center'}}
+              titleStyle={{fontWeight: 'bold'}}
               titleStyle={{fontWeight: 'bold'}}
               title='Login!'
            />
@@ -199,19 +200,10 @@ export default class LoginView extends Component {
 
 var styles = StyleSheet.create({
   container: {
-    padding: 15,
-    marginTop: 25,
-    alignItems: "stretch",
-    marginBottom: 5
-  },
-  logo: {
-    height: 250,
-    width: 250,
-    alignSelf: 'center'
+
   },
   title: {
     fontSize: 18,
-    marginBottom: 10,
     alignSelf: 'center'
   },
   text: {

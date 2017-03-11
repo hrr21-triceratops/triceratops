@@ -7,7 +7,7 @@ import {
   Image,
   TouchableHighlight,
   TextInput,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
 var api = require('../../Utils/api');
 import {
@@ -15,9 +15,11 @@ import {
   FormLabel, FormInput, SearchBar
 } from 'react-native-elements';
 import SearchTopExperts from '../SearchTopExperts';
+import Tabs from 'react-native-tabs';
 
 export default class SearchViewExperts extends Component {
   constructor(props) {
+    console.log('Top Experts Props:', props);
     super(props);
     this.state = {
       searchTerm: '',
@@ -99,14 +101,56 @@ export default class SearchViewExperts extends Component {
      });
   }
 
-  render() {
+  navigateTo(destination, propsToPass) {
+    this.props.navigator.push({
+      screen: destination,
+      passProps: {
+        user: propsToPass
+      }
+    });
+  }
 
+  render() {
+    var self = this;
     var displayErr = (
       this.state.error ? <Text>{this.state.error} </Text> : <View></View>
     );
 
     return (
       <View style={styles.mainContainer}>
+        <Tabs selected={'Top Experts'}
+         style={{backgroundColor:'#4F4F4F'}}
+         selectedStyle={{color:'#53A9C9'}}
+         onSelect={el=>this.setState({ page: el.props.name })}>
+
+          <Text
+            name="Home" style={styles.buttonText}
+            user={this.props.user}
+            onPress={this.navigateTo.bind(this, "Home", this.props.user)}>
+              Home
+          </Text>
+
+          <Text
+            name="Wishlist" style={styles.buttonText}
+            user={this.props.user}
+            onPress={this.navigateTo.bind(this, "Wishlist", this.props.user)}>
+              Wishlist
+          </Text>
+
+          <Text
+            name="Top Experts" style={styles.buttonText}
+            user={this.props.user}
+            onPress={this.navigateTo.bind(this, "TopExpertsSearch", this.props.user)}>
+              Top Experts
+          </Text>
+
+          <Text name="Profile" style={styles.buttonText}
+            presentationMaster
+            user={this.props.user}
+            onPress={(this.navigateTo.bind(this, "Profile", this.props.user))}>
+              Profile
+          </Text>
+        </Tabs>
         <TextInput
             style={styles.searchInput}
             value={this.state.searchTerm}
@@ -119,7 +163,7 @@ export default class SearchViewExperts extends Component {
               <Text style={styles.buttonText}>Submit</Text>
            </TouchableHighlight>
         <View style={styles.secondContainer}>
-            <SearchTopExperts searchTerm={this.state.searchTerm} expertsReturned={this.state.expertsReturned} />
+            <SearchTopExperts navigator={self.props.navigator} user={self.props.user} searchTerm={this.state.searchTerm} expertsReturned={this.state.expertsReturned} />
        </View>
      </View>
     );
@@ -153,8 +197,9 @@ var styles = StyleSheet.create({
         color: '#00008B'
     },
     buttonText: {
-        fontSize: 18,
-        color: 'white'
+        fontSize: 14,
+        color: '#FFFFFF',
+        alignSelf: 'center'
     },
     button: {
         height: 50,
