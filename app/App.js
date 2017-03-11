@@ -24,41 +24,37 @@ import Tags from './components/Tags';
 import Logo from './components/Logo.js';
 import SearchViewExperts from './components/shoppers/SearchViewExperts';
 
-//setup the app component to register with App registry, everything happens inside of this wrapper
 class SavvyShopper extends Component {
-  //selects a scene to render
   constructor(props){
     super(props);
     this.state = {screen: 'Login'};
   }
 
   renderScene(route, navigator) {
-    // console.log('route', route);
-    // console.log('navigator', navigator);
     switch (route.screen) {
-      case "Login":
+      case 'Login':
         return <LoginView navigator={navigator} {...route.passProps} />
-      case "Home":
+      case 'Home':
         return <HomeView navigator={navigator} {...route.passProps} />
-      case "Rating":
+      case 'Rating':
         return <RatingView navigator={navigator} {...route.passProps} />
-      case "Shopper":
+      case 'Shopper':
         return <ShopperView navigator={navigator} {...route.passProps} />
-      case "AvailableExperts":
+      case 'AvailableExperts':
         return <AvailableExperts navigator={navigator} {...route.passProps} />
-      case "TopExpertsSearch":
+      case 'TopExpertsSearch':
         return <SearchViewExperts navigator={navigator} {...route.passProps} />
-      case "TopExperts":
+      case 'TopExperts':
         return <TopExperts navigator={navigator} {...route.passProps} />
-      case "ByCategory":
+      case 'ByCategory':
         return <CategoryView navigator={navigator} {...route.passProps} />
-      case "Chat":
+      case 'Chat':
        return <ChatView navigator={navigator} {...route.passProps} />
-      case "Profile":
+      case 'Profile':
         return <ProfileView navigator={navigator} {...route.passProps} />
-      case "Wishlist":
+      case 'Wishlist':
         return <Wishlist navigator={navigator} {...route.passProps} />
-      case "Tags":
+      case 'Tags':
         return <Tags navigator={navigator} {...route.passProps} />
       }
   }
@@ -70,43 +66,42 @@ class SavvyShopper extends Component {
         initialRoute={{screen: 'Login'}}
         renderScene={(route, nav) => {return this.renderScene(route, nav)}}
         navigationBar={
-        <Navigator.NavigationBar
-        routeMapper={{
-         LeftButton: (route, navigator, index, navState) =>
-          {  if (route.screen === "Login" || route.screen === "Home") {
+          <Navigator.NavigationBar
+            routeMapper={{
+            LeftButton: (route, navigator, index, navState) => {
+              if (route.screen === 'Login' || route.screen === 'Home') {
                 route.index = 0;
                 var currentRoutes = navigator.getCurrentRoutes(0);
                 return null;
-            } else if (route.screen === "Tags" || route.screen === "Chat" ) {
-             return (
-              <TouchableHighlight onPress={() => navigator.pop()}>
-               <Text style={styles.leftButton}>Back</Text>
-              </TouchableHighlight>
-            );
-         }},
-        RightButton: (route, navigator, index, navState) => {
-         },
-        Title: (route, navigator, index, navState) => {
-           if (route.screen === 'Login') {
+              } else if (route.screen === 'Tags' || route.screen === 'Chat' ) {
+              return (
+                <TouchableHighlight onPress={() => navigator.pop()}>
+                  <Text style={styles.leftButton}>Back</Text>
+                </TouchableHighlight>
+              );
+              }
+            },
+            RightButton: (route, navigator, index, navState) => {
+            },
+            Title: (route, navigator, index, navState) => {
+              if (route.screen === 'Login') {
 
-          } else {
-            return (
-            <View
-              style={styles.logo}>
-              <Logo
-                size={"logoMedium"}
-                logoLocation={require('./assets/imgs/savvyShopperLogoOnly.png')}
-              />
-            </View>
-            );
-
+              } else {
+                return (
+                  <View
+                    style={styles.logo}>
+                    <Logo
+                      size={'logoMedium'}
+                      logoLocation={require('./assets/imgs/savvyShopperLogoOnly.png')}
+                    />
+                  </View>
+                  );
+              }
+            },
           }
-        },
-       }}
-       style={{backgroundColor: 'white'}}
-      />
-      }
-      />
+        }
+       style={{backgroundColor: 'white'}}/>
+      }/>
     );
   }
 }
